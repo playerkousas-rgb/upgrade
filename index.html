@@ -318,6 +318,69 @@ footer{
   margin-top:2rem;
 }
 
+/* ── Size Table ── */
+.size-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.size-table,.budget-table-wrap table{
+  width:100%;border-collapse:collapse;margin:1rem 0;font-size:.9rem
+}
+.size-table th,.size-table td,.budget-table-wrap th,.budget-table-wrap td{
+  padding:.6rem .5rem;text-align:left;border-bottom:1px solid var(--line)
+}
+.size-table th,.budget-table-wrap th{
+  background:var(--scout-green);color:white;font-weight:600;font-size:.85rem
+}
+.size-table tr:nth-child(even),.budget-table-wrap tr:nth-child(even){
+  background:#faf8f3
+}
+.size-table tr:hover,.budget-table-wrap tr:hover{
+  background:#f0f7ed
+}
+
+/* ── Care Grid ── */
+.care-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:.8rem;margin-top:1rem
+}
+.care-item{
+  border:1px solid var(--line);border-radius:10px;
+  padding:.8rem 1rem;background:#fafafa
+}
+.care-item h3{margin:0 0 .5rem;font-size:1rem;color:var(--scout-olive)}
+.care-item ul{margin:.3rem 0;padding-left:1.2rem;font-size:.88rem;line-height:1.7}
+.care-item li{margin-bottom:.2rem}
+
+/* ── Mistake Grid ── */
+.mistake-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:.8rem;margin-top:1rem
+}
+.mistake-item{
+  border:1px solid var(--line);border-left:4px solid #e74c3c;
+  border-radius:8px;padding:.8rem 1rem;background:#fef9f7
+}
+.mistake-icon{font-size:1.4rem;margin-bottom:.3rem}
+.mistake-item h3{margin:0 0 .3rem;font-size:.95rem;color:#c0392b}
+.mistake-item p{margin:0;font-size:.88rem;color:#555;line-height:1.6}
+
+/* ── Timeline ── */
+.timeline{
+  position:relative;margin:1rem 0;padding-left:1.5rem
+}
+.timeline::before{
+  content:"";position:absolute;left:.4rem;top:.5rem;bottom:.5rem;
+  width:2px;background:var(--line)
+}
+.timeline-item{
+  position:relative;padding:.5rem 0 .8rem 0
+}
+.timeline-dot{
+  position:absolute;left:-1.4rem;top:.7rem;
+  width:1rem;height:1rem;border-radius:50%;
+  border:2px solid white;box-shadow:0 0 0 2px var(--line)
+}
+.timeline-item h3{margin:0 0 .3rem;color:var(--scout-green);font-size:1rem}
+.timeline-item p{margin:0;font-size:.9rem;color:#444;line-height:1.6}
+
 /* ── Responsive ── */
 @media(max-width:680px){
   .path{grid-template-columns:repeat(3,1fr)}
@@ -419,8 +482,350 @@ footer{
           <tr><td>星期日</td><td style="padding-left:1rem">10:00 – 18:00</td></tr>
         </table>
       </div>
+      <div class="shop-card">
+        <h3>購買流程 SOP</h3>
+        <ol style="margin:.3rem 0 .3rem 1.2rem;padding:0;font-size:.9rem;line-height:1.7">
+          <li>先向<strong>所屬旅團領袖</strong>查詢當季制服安排(部分旅團會統一訂購)</li>
+          <li>確認要買的物品清單(可參考本 APP)</li>
+          <li>親臨供應社或經網站訂購</li>
+          <li>試身(尤其恤衫、褲、皮鞋要現場試)</li>
+          <li>向團長查詢<strong>地域章、區章、旅章、小隊章</strong>購買/頒發安排</li>
+          <li>回家檢查所有徽章、帽章齊備</li>
+          <li>第一次集會前完成<strong>燙衫、擦鞋、定帽</strong></li>
+        </ol>
+      </div>
     </div>
     <p class="cite" style="margin-top:1rem">制服配件之<strong>帽、帽章、恤衫、長褲/短褲/裙褲/半截裙、皮帶、巾圈、領巾</strong>等均需向供應社購買;<strong>皮鞋、學校運動鞋</strong>可自行於鞋店購買。</p>
+  </div>
+
+  <!-- 升團過渡指南 -->
+  <div class="card" id="transition-guide">
+    <h2>升團過渡指南</h2>
+    <p>由一個支部升上另一個支部,家長要了解的不只是制服規格,仲有<strong>時程、考章、宣誓安排</strong>。以下係各升團情境的家長需知:</p>
+    <div id="transition-content"></div>
+  </div>
+
+  <!-- 尺碼對照表 -->
+  <div class="card">
+    <h2>尺碼對照表</h2>
+    <p>香港童軍物品供應社制服尺碼主要分<strong>兒童碼</strong>(細碼、中碼、大碼、加大碼)及<strong>成人碼</strong>(S/M/L/XL)。下表為一般參考,實際以試身為準。</p>
+    <div class="size-table-wrap">
+      <table class="size-table">
+        <thead>
+          <tr><th>尺碼</th><th>適用身高 (cm)</th><th>適用年齡 (約)</th><th>適用支部</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>細碼 (S)</td><td>110–122</td><td>5–7 歲</td><td>小童軍/幼童軍初階</td></tr>
+          <tr><td>中碼 (M)</td><td>122–137</td><td>7–10 歲</td><td>幼童軍</td></tr>
+          <tr><td>大碼 (L)</td><td>137–152</td><td>10–13 歲</td><td>幼童軍高/童軍初階</td></tr>
+          <tr><td>加大碼 (XL)</td><td>152–160</td><td>13–15 歲</td><td>童軍</td></tr>
+          <tr><td>成人碼 S</td><td>155–163</td><td>15+ 歲</td><td>深資/樂行/領袖</td></tr>
+          <tr><td>成人碼 M</td><td>163–170</td><td>成年</td><td>深資/樂行/領袖</td></tr>
+          <tr><td>成人碼 L</td><td>170–178</td><td>成年</td><td>樂行/領袖</td></tr>
+          <tr><td>成人碼 XL</td><td>178+</td><td>成年</td><td>領袖</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">
+      <strong>選碼貼士:</strong>
+      <ul style="margin:.3rem 0 .3rem 1.2rem;padding:0">
+        <li><strong>恤衫必買大一碼</strong>——童軍成長快,太大可以稍後改細,但太細要重買</li>
+        <li><strong>長褲/短褲</strong>:腰圍為準,留 1–2cm 位改</li>
+        <li><strong>軟帽</strong>:頭圍量度,首次戴要弄濕定型</li>
+        <li><strong>皮鞋</strong>:建議下午試(腳會較脹),預留少少位著襪</li>
+        <li><strong>裙褲/半截裙</strong>:女團員特別注意腰位及裙長</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 洗滌保養指南 -->
+  <div class="card">
+    <h2>洗滌保養指南</h2>
+    <p>童軍制服保養得宜可以用幾年。以下係每件物品的清洗及保養方法:</p>
+    <div class="care-grid">
+      <div class="care-item">
+        <h3>🧥 杏色恤衫</h3>
+        <ul>
+          <li>冷水機洗(30°C 以下),翻轉洗</li>
+          <li>不可用漂白劑</li>
+          <li>低溫熨燙(<strong>領、袋蓋、肩帶必燙</strong>)</li>
+          <li>避免陽光直曬以防褪色</li>
+        </ul>
+      </div>
+      <div class="care-item">
+        <h3>👖 長褲/短褲/裙褲/半截裙</h3>
+        <ul>
+          <li>冷水機洗,反面洗</li>
+          <li>中溫熨燙(中線要直)</li>
+          <li>乾後盡快掛起,避免摺痕</li>
+        </ul>
+      </div>
+      <div class="care-item">
+        <h3>🧢 軟帽 / 鴨舌帽</h3>
+        <ul>
+          <li><strong>不可機洗</strong></li>
+          <li>污漬用濕布局部擦拭</li>
+          <li>變形後可<strong>再弄濕重塑</strong>頭形</li>
+          <li>存放時勿壓扁,塞入帽托</li>
+        </ul>
+      </div>
+      <div class="care-item">
+        <h3>👔 皮帶</h3>
+        <ul>
+          <li>皮革保養油每半年擦一次</li>
+          <li>避免浸水</li>
+          <li>皮帶扣用乾布擦</li>
+        </ul>
+      </div>
+      <div class="care-item">
+        <h3>🧣 旅巾 / 領巾</h3>
+        <ul>
+          <li>手洗或機洗(放網袋)</li>
+          <li>陰乾,避免褪色</li>
+          <li>摺巾前完全晾乾</li>
+        </ul>
+      </div>
+      <div class="care-item">
+        <h3>👞 黑色皮鞋</h3>
+        <ul>
+          <li>集會後<strong>立即擦淨</strong>灰塵</li>
+          <li>每週用<strong>鞋油 + 鞋布</strong>打亮</li>
+          <li>塞入鞋撐保持形狀</li>
+          <li>濕鞋陰乾,不可烘乾</li>
+        </ul>
+      </div>
+      <div class="care-item">
+        <h3>🧦 長襪 / 短襪</h3>
+        <ul>
+          <li>反面洗,延長壽命</li>
+          <li>深綠色襪避免與淺色衣物同洗</li>
+        </ul>
+      </div>
+      <div class="care-item">
+        <h3>🎖️ 徽章</h3>
+        <ul>
+          <li>縫上後不要常拆</li>
+          <li>如要更換徽章,用<strong>拆線刀</strong>小心拆</li>
+          <li>不要用膠水或扣針代替縫線</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 預算參考 -->
+  <div class="card">
+    <h2>預算參考</h2>
+    <p>以下為<strong>約略參考價</strong>(2025 年資料),實際以香港童軍物品供應社當時定價為準。</p>
+    <div class="budget-table-wrap">
+      <table class="size-table">
+        <thead>
+          <tr><th>物品</th><th>全新加入(全套約)</th><th>升團補購(約)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>幼童軍全套(帽+帽章+恤+短褲+皮帶+襪+巾圈)</td><td>HKD 600–900</td><td>—</td></tr>
+          <tr><td>童軍全套(帽+帽章+恤+短褲+皮帶+襪+皮製巾圈)</td><td>HKD 650–950</td><td>—</td></tr>
+          <tr><td>童軍升深資(軟帽+帽章+領帶+長褲+短襪)</td><td>—</td><td>HKD 400–600</td></tr>
+          <tr><td>深資全套</td><td>HKD 750–1100</td><td>—</td></tr>
+          <tr><td>樂行升樂行(只換帽章+深綠領帶)</td><td>—</td><td>HKD 150–250</td></tr>
+          <tr><td>樂行升領袖(軟帽+帽章+深綠領帶)</td><td>—</td><td>HKD 200–400</td></tr>
+          <tr><td>皮鞋(自行到鞋店購買)</td><td>HKD 300–800</td><td>可沿用舊鞋</td></tr>
+          <tr><td>領袖金邊硬帽(女)</td><td>HKD 500–800</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">
+      <strong>💡 慳錢貼士:</strong>
+      <ul style="margin:.3rem 0 .3rem 1.2rem;padding:0">
+        <li>升團時<strong>恤衫、長褲(同款支部之間)、皮鞋、皮帶</strong>通常可沿用</li>
+        <li>Carousell/二手童軍群組可買到近全新制服(尤其童軍升深資轉條褲)</li>
+        <li>香港童軍總會設有<strong>「學生隊員制服資助計劃」</strong>(由民政及青年事務局資助),可向旅團領袖查詢</li>
+        <li>皮鞋<strong>必須全新或近全新</strong>(太舊/太多花痕唔合格)</li>
+        <li>學校皮鞋如合規格(黑色、無花紋、綁帶、低筒、平底)可沿用</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 常見穿著錯誤 -->
+  <div class="card">
+    <h2>⚠️ 常見穿著錯誤</h2>
+    <p>家長幫子女準備制服時,以下錯誤最常見。記得檢查清楚!</p>
+    <div class="mistake-grid">
+      <div class="mistake-item">
+        <div class="mistake-icon">❌</div>
+        <h3>軟帽戴成「廚師帽」</h3>
+        <p>帽後小尾<strong>要塞入帽內</strong>,不可外露翹起</p>
+      </div>
+      <div class="mistake-item">
+        <div class="mistake-icon">❌</div>
+        <h3>恤衫冇束入褲</h3>
+        <p>必須<strong>束入褲/裙內</strong>,皮帶清楚可見</p>
+      </div>
+      <div class="mistake-item">
+        <div class="mistake-icon">❌</div>
+        <h3>領巾巾圈位置太低</h3>
+        <p>巾圈應在<strong>喉部</strong>,不可低於鎖骨</p>
+      </div>
+      <div class="mistake-item">
+        <div class="mistake-icon">❌</div>
+        <h3>襪頭冇反摺</h3>
+        <p>長襪必須<strong>反摺約 3 厘米</strong>成襪邊</p>
+      </div>
+      <div class="mistake-item">
+        <div class="mistake-icon">❌</div>
+        <h3>皮鞋冇擦</h3>
+        <p>集會前<strong>必須擦亮</strong>,以備檢閱</p>
+      </div>
+      <div class="mistake-item">
+        <div class="mistake-icon">❌</div>
+        <h3>用扣針/膠水固定徽章</h3>
+        <p>必須<strong>用線縫牢</strong>,不可用膠水或扣針</p>
+      </div>
+      <div class="mistake-item">
+        <div class="mistake-icon">❌</div>
+        <h3>升團後戴舊支部徽章</h3>
+        <p>幼童軍徽章(如隊長章、進度章)需<strong>拆走</strong>,年星及金紫荊除外</p>
+      </div>
+      <div class="mistake-item">
+        <div class="mistake-icon">❌</div>
+        <h3>世界童軍會員章未宣誓就戴</h3>
+        <p>世界童軍會員章<strong>只可於宣誓後佩戴</strong></p>
+      </div>
+      <div class="mistake-item">
+        <div class="mistake-icon">❌</div>
+        <h3>皮帶扣位置偏歪</h3>
+        <p>皮帶扣必須<strong>置於正中</strong>,不可掛多餘匙扣</p>
+      </div>
+      <div class="mistake-item">
+        <div class="mistake-icon">❌</div>
+        <h3>穿運動短襪/船襪</h3>
+        <p>必須<strong>長襪(幼童軍/童軍)或短襪(深資/樂行/領袖)</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 重要時程 -->
+  <div class="card">
+    <h2>🗓️ 重要時程表</h2>
+    <p>童軍年度時間表,家長要 mark 低:</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:var(--grasshopper)"></div>
+        <h3>每年 9 月 — 招募期</h3>
+        <p>各旅團於 9 月新學年招募新成員,小童軍/幼童軍團通常接受 K1–P2 報名。</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:var(--cub)"></div>
+        <h3>入團後 3 個月內 — 會員章考核</h3>
+        <p>新成員須於入團後 3 個月內完成<strong>幼童軍會員章</strong>考核,通過後宣誓,正式成為幼童軍並開始佩戴制服。</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:var(--cub)"></div>
+        <h3>宣誓禮 — 正式宣誓</h3>
+        <p>會員章考核通過後,旅團會安排<strong>宣誓禮</strong>,宣誓後方可佩戴<strong>世界童軍會員章 + 旅巾</strong>。</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:var(--scout)"></div>
+        <h3>每年 7–8 月 — 升團考章期</h3>
+        <p>幼童軍團於暑假前考核升團,9 月新學年<strong>正式升為童軍</strong>。家長要預早 1–2 個月準備新制服。</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:var(--venture)"></div>
+        <h3>12–15 歲 — 升深資/樂行</h3>
+        <p>達到支部年齡(童軍 12+ / 深資 15+)並完成<strong>晉陸章考核</strong>後,可升團。</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:var(--rover)"></div>
+        <h3>18+ — 樂行童軍/領袖</h3>
+        <p>樂行 18+ / 領袖為成年成員。如想繼續參與可考慮報讀<strong>領袖訓練課程</strong>。</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:var(--leader)"></div>
+        <h3>每年 2 月及 10 月 — 大會操/檢閱</h3>
+        <p>總會/地域大型活動,全副武裝出席,家長記得提醒子女檢查制服。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 徽章完全手冊 -->
+  <div class="card">
+    <h2>🎖️ 徽章完全手冊</h2>
+    <p>童軍制服上的徽章有不同意思,以下是常見徽章的佩戴位置及頒發來源:</p>
+    <table class="size-table">
+      <thead>
+        <tr><th>徽章</th><th>佩戴位置</th><th>頒發/購買</th><th>備註</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>世界童軍會員章</td><td>左胸袋中央</td><td>供應社購買</td><td><strong>只可於宣誓後佩戴</strong></td></tr>
+        <tr><td>香港章</td><td>左胸袋蓋上,會員章上方 3cm</td><td>供應社購買</td><td>所有支部通用</td></tr>
+        <tr><td>地域章(港島/九龍/新界東/新界西)</td><td>右袖</td><td>旅團代訂</td><td>每地域一款</td></tr>
+        <tr><td>區章</td><td>右袖,地域章下方</td><td>旅團代訂</td><td>每區一款</td></tr>
+        <tr><td>旅章</td><td>右袖,區章下方</td><td><strong>由旅團頒發</strong></td><td>不可自行購買</td></tr>
+        <tr><td>小隊章</td><td>右袖,旅章下方</td><td><strong>由旅團頒發</strong></td><td>代表所屬小隊</td></tr>
+        <tr><td>進度章 / 專科章</td><td>右袖</td><td>供應社購買(考獲後)</td><td>各支部有不同款式</td></tr>
+        <tr><td>年星</td><td>左胸袋蓋上,香港章下方</td><td>供應社購買</td><td>每年 1 個,代表年資</td></tr>
+        <tr><td>金紫荊獎章</td><td>右胸袋(只適用童軍支部)</td><td>總會頒發</td><td>全港最高榮譽,極少人獲頒</td></tr>
+        <tr><td>晉陸章(深資/樂行)</td><td>右袖</td><td>總會頒發</td><td>晉陸後佩戴</td></tr>
+        <tr><td>職級肩章(領袖)</td><td>兩肩肩帶</td><td>總會/地域頒發</td><td>標示見習/助理/正式領袖</td></tr>
+        <tr><td>香港肩章(領袖)</td><td>兩肩肩帶</td><td>總會頒發</td><td>領袖專用</td></tr>
+      </tbody>
+    </table>
+    <div class="note">
+      <strong>徽章佩戴 3 大原則:</strong>
+      <ol style="margin:.3rem 0 .3rem 1.2rem;padding:0">
+        <li><strong>左胸袋</strong>放通用徽章(世界會員章、香港章、年星)</li>
+        <li><strong>右袖</strong>放地域/區/旅/小隊/進度章(由上至下:地域→區→旅→小隊→進度)</li>
+        <li><strong>必須用線縫牢</strong>,不可用膠水或扣針</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 領袖 6 款制服詳細 -->
+  <div class="card">
+    <h2>👔 領袖 6 款制服詳細對照</h2>
+    <p>領袖制服有 6 款,適用場合各有不同。新任領袖通常先買<strong>編號 3(常規)+ 編號 4(領帶)</strong>兩款已足夠應付大部份場合。</p>
+    <table class="size-table">
+      <thead>
+        <tr><th>編號</th><th>名稱</th><th>適用場合</th><th>男</th><th>女</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>1 禮服</strong></td><td>會操、周年會議、就職禮、婚禮或喪禮</td><td>長袖</td><td>深綠軟帽 + 草青色長袖 4 袋上衣 + 杏色長袖恤衫 + 長褲 + 領帶</td><td>深綠金邊硬帽 + 草青色長袖 4 袋上衣 + 杏色長袖恤衫 + 半截裙 + 領帶</td></tr>
+        <tr><td><strong>2 晚禮服</strong></td><td>領袖聚餐 Mess Night / 餐舞會</td><td colspan="2">夏:白色短身上衣 + 黑色長褲;冬:黑色短身上衣 + 黑色長褲。配<strong>銀色職級肩章 + 黑色硬帽</strong></td></tr>
+        <tr><td><strong>3 常规制服</strong></td><td>日常集會、訓練班</td><td>短袖</td><td>深綠軟帽 + 杏色短袖恤衫 + 長褲 + 領巾</td><td>深綠金邊硬帽 + 杏色短袖恤衫 + 半截裙 + 領巾</td></tr>
+        <tr><td><strong>4 領帶制服</strong></td><td>正式探訪、會議、周年大會</td><td>短袖</td><td>深綠軟帽 + 杏色短袖恤衫 + 長褲 + <strong>深綠領帶</strong></td><td>深綠軟帽(可選)+ 杏色短袖恤衫 + 半截裙 + <strong>深綠領帶</strong></td></tr>
+        <tr><td><strong>5 男短褲制服</strong></td><td>夏季戶外活動</td><td>短袖</td><td>深綠軟帽 + 杏色短袖恤衫 + <strong>短褲</strong> + <strong>深草青色長襪</strong></td><td>(不適用)</td></tr>
+        <tr><td><strong>6 女長褲制服</strong></td><td>戶外活動</td><td>短袖</td><td>(不適用)</td><td>深綠軟帽 + 杏色短袖恤衫 + <strong>長褲</strong> + <strong>黑色短襪</strong></td></tr>
+      </tbody>
+    </table>
+    <p class="cite">海童軍領袖:白頂帽 + 白色恤衫 + 深藍色長褲/半截裙;空童軍領袖:灰藍色軟帽 + 淺藍色恤衫 + 深藍色長褲/半截裙。</p>
+  </div>
+
+  <!-- 海童軍 / 空童軍簡介 -->
+  <div class="card">
+    <h2>🌊 海童軍 / ✈️ 空童軍 簡介</h2>
+    <p>香港童軍有兩個<strong>專屬支部</strong>——<strong>海童軍</strong>和<strong>空童軍</strong>,特色是制服顏色及額外專科訓練(航海/航空)。</p>
+    <details>
+      <summary>🌊 海童軍 Sea Scout</summary>
+      <p><strong>識別色:</strong>海軍藍 + 白色</p>
+      <p><strong>帽:</strong>海童軍男團員白頂帽 / 海童軍女團員白頂帽(連樂行海童軍帽章)</p>
+      <p><strong>恤衫:</strong>白色、短袖、兩胸袋、無褶、肩帶</p>
+      <p><strong>長褲/半截裙:</strong>深藍色</p>
+      <p><strong>皮帶:</strong>棕色(連童軍徽皮帶扣)</p>
+      <p><strong>襪:</strong>男黑色短襪 / 女肉色尼龍襪褲</p>
+      <p><strong>皮鞋:</strong>黑色、無花紋、綁帶(男)/ 非綁帶中跟(女)</p>
+      <p><strong>特色:</strong>專科訓練包括划艇、帆船、航海知識、急救等。</p>
+    </details>
+    <details>
+      <summary>✈️ 空童軍 Air Scout</summary>
+      <p><strong>識別色:</strong>灰藍 + 淺藍</p>
+      <p><strong>帽:</strong>灰藍色軟帽(連童軍帽章)</p>
+      <p><strong>恤衫:</strong>淺藍色、短袖、兩胸袋、無褶、肩帶</p>
+      <p><strong>長褲/半截裙:</strong>深藍色</p>
+      <p><strong>皮帶:</strong>棕色(連童軍徽皮帶扣)</p>
+      <p><strong>襪:</strong>男黑色短襪 / 女肉色尼龍襪褲</p>
+      <p><strong>皮鞋:</strong>黑色、無花紋、綁帶(男)/ 非綁帶中跟(女)</p>
+      <p><strong>特色:</strong>專科訓練包括航空知識、模型製作、模擬飛行、露營等。</p>
+    </details>
+    <p class="cite">本 APP「制服清單」以<strong>陸軍童軍</strong>(綠/棗紅)為主,海/空童軍家長請向所屬旅團領袖查詢詳細規格。</p>
   </div>
 
   <!-- 常見問題 -->
