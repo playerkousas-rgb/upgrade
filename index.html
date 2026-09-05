@@ -223,6 +223,8 @@ header p{margin:.3rem 0 0;opacity:.95;font-size:.95rem}
 .item.have .status{color:#5a8f3a;font-weight:600}
 .item.need .status{color:#d97706;font-weight:600}
 .item.check .status{color:#0284c7;font-weight:600}
+.item.owned{background:#ecf5e6}
+.item.owned .item-title::after{content:" ✅";color:#5a8f3a}
 .item-row{display:flex;align-items:center;justify-content:space-between;gap:1rem}
 .item-left{display:flex;align-items:center;gap:1rem;flex:1;min-width:0}
 .item-icon{
@@ -389,6 +391,7 @@ footer{
   .item-detail{padding:0 0 0 0}
   .item.expanded .item-detail{padding:0}
   .item-detail-inner{padding-left:1rem}
+  .item-row[style*="padding:0 1rem .5rem 64px"]{padding:0 .5rem .5rem .5rem !important}
   .summary{grid-template-columns:1fr 1fr 1fr}
   header h1{font-size:1.2rem}
   .brand img{width:48px;height:48px}
@@ -900,7 +903,8 @@ footer{
 <footer>
   <p>© 2026 Scout System · 制服準備指南</p>
   <p>制服資料來源:香港童軍總會 <a href="https://www.scout.org.hk" target="_blank" rel="noopener" style="color:var(--scout-green)">scout.org.hk</a></p>
-  <p class="cite">本 APP 為非官方輔助工具,制服規格以香港童軍總會最新《儀容與制服手冊》為準</p>
+  <p>訓練綱要:香港童軍資訊站 <a href="https://scoutsinfohub.org.hk/ScoutTrainingScheme/" target="_blank" rel="noopener" style="color:var(--scout-green)">scoutsinfohub.org.hk/ScoutTrainingScheme/</a></p>
+  <p class="cite">本 APP 為非官方輔助工具,制服規格以香港童軍總會最新《儀容與制服手冊》及《訓練綱要》為準</p>
 </footer>
 
 <script src="data.js"></script>

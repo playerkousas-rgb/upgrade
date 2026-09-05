@@ -6,6 +6,25 @@ let currentSection = "cub";   // 預設幼童軍
 let currentMode = "upgrade";  // 預設升團
 let currentGender = "male";
 
+// 已買/已有狀態(localStorage 持久化)
+const STORAGE_KEY = "scout_owned_v1";
+function loadOwned(){
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
+  catch(e){ return {}; }
+}
+function saveOwned(o){
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(o)); } catch(e){}
+}
+function isOwned(key){
+  const o = loadOwned();
+  return !!o[key];
+}
+function toggleOwned(key){
+  const o = loadOwned();
+  o[key] = !o[key];
+  saveOwned(o);
+}
+
 function $(id){ return document.getElementById(id); }
 
 /* ===========================================================
@@ -340,9 +359,11 @@ function render(){
   const listHTML = list.map(it => {
     const cls = it.status;
     const label = statusLabel[it.status] || it.status;
+    const ownedKey = `${currentSection}-${currentMode}-${currentGender}-${it.id}`;
+    const owned = isOwned(ownedKey);
     return `
-      <div class="item ${cls}" onclick="toggleItem(this)">
-        <div class="item-row">
+      <div class="item ${cls}${owned ? ' owned' : ''}" data-owned-key="${ownedKey}">
+        <div class="item-row" onclick="toggleItem(this.parentElement)">
           <div class="item-left">
             <div class="item-icon">${it.icon || "📦"}</div>
             <div style="min-width:0;flex:1">
@@ -354,6 +375,13 @@ function render(){
             <div class="status">${label}</div>
             <div class="arrow">›</div>
           </div>
+        </div>
+        <div class="item-row" style="padding:0 1rem .5rem 64px;border-top:1px dashed #eee;display:flex;align-items:center;justify-content:space-between;gap:.5rem">
+          <button onclick="event.stopPropagation();toggleOwned('${ownedKey}');render()"
+            style="padding:.4rem .8rem;border-radius:16px;font-size:.8rem;cursor:pointer;border:1.5px solid ${owned ? '#5a8f3a' : '#ccc'};background:${owned ? '#5a8f3a' : 'white'};color:${owned ? 'white' : '#666'}">
+            ${owned ? '✅ 已有/已買' : '⬜ mark 已有'}
+          </button>
+          <span style="font-size:.75rem;color:#888">${owned ? '呢件嘢你已有' : '如已有(兄弟姊妹共用),剔呢度'}</span>
         </div>
         <div class="item-detail"><div class="item-detail-inner">${it.detail || ""}</div></div>
       </div>
@@ -374,7 +402,7 @@ function render(){
 }
 
 function toggleItem(el){
-  const parent = el.parentElement;
+  const parent = el.parentElement || el;
   parent.querySelectorAll('.item.expanded').forEach(item => {
     if (item !== el) item.classList.remove('expanded');
   });
