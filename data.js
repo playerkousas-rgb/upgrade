@@ -910,10 +910,16 @@ const UNIFORMS = {
 
 // 預覽圖(已有 AI 插畫對應的支部/性別)
 const PREVIEW_IMG = {
+  "grasshopper-male":   null,  // 小童軍無制服插畫
+  "grasshopper-female": null,
   "cub-male":   "assets/images/cub-male.jpg",
   "cub-female": "assets/images/cub-female.jpg",
-  "scout-male": "assets/images/scout-male.jpg",
-  "scout-female":"assets/images/scout-female.jpg",
-  "venture-male":"assets/images/venture-male.jpg"
-  // venture-female / rover / leader 暫缺,用 placeholder
+  "scout-male":   "assets/images/scout-male.jpg",
+  "scout-female": "assets/images/scout-female.jpg",
+  "venture-male":   "assets/images/venture-male.jpg",
+  "venture-female": "assets/images/venture-female.jpg",
+  "rover-male":   "assets/images/rover-male.jpg",
+  "rover-female": "assets/images/rover-female.jpg",
+  "leader-male":   "assets/images/leader-male.jpg",
+  "leader-female": "assets/images/leader-female.jpg"
 };

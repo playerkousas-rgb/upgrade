@@ -61,11 +61,13 @@ function render(){
   // 3. 渲染 preview
   const previewKey = `${currentSection}-${gender}`;
   const previewImg = PREVIEW_IMG[previewKey];
+  // 小童軍用橙色 placeholder
+  const placeholderEmoji = currentSection === "grasshopper" ? "🧒" : "👕";
   let previewHTML = `
     <div class="preview">
       ${previewImg
         ? `<img src="${previewImg}" alt="${sec.name}${genderLabel}制服示意圖" loading="lazy">`
-        : `<div class="placeholder">👕</div>`}
+        : `<div class="placeholder" style="${currentSection === "grasshopper" ? "background:linear-gradient(135deg,#fff4e6,#ffe2c2);border-color:#ff7a1a" : ""}">${placeholderEmoji}</div>`}
       <div class="info">
         <h3>${sec.name} · ${genderLabel}</h3>
         <p><strong>${modeLabel}</strong></p>
