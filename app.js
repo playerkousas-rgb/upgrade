@@ -370,7 +370,15 @@ function render(){
   const listHTML = list.map(it => {
     const ownedKey = `${contextKey()}-${it.id}`;
     const owned = isOwned(ownedKey);
-    const iconHtml = it.img ? `<img src="${it.img}" alt="${it.title}" loading="lazy">` : (it.icon || "📦");
+    // 優先顯示供應社官方產品相；載入失敗則改用本地繪製示意圖
+    const fb = it.img || "";
+    const iconHtml = (it.shopThumb || it.img)
+      ? `<img src="${it.shopThumb || it.img}" alt="${it.title}" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='${fb}'">`
+      : (it.icon || "📦");
+    const bigImg = (it.shopImg || it.img)
+      ? `<figure class="item-fig"><img class="item-big" src="${it.shopImg || it.img}" alt="${it.title}" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='${fb}';this.nextElementSibling.textContent='示意圖（供應社官方相暫時無法載入）'">
+           <figcaption class="cite">${it.shopImg ? `供應社官方產品相 · <a href="${it.shopUrl}" target="_blank" rel="noopener">${it.shop.name} ↗</a>` : "示意圖"}</figcaption></figure>`
+      : "";
     return `
       <div class="item ${it.status}${owned ? ' owned' : ''}">
         <div class="item-row" onclick="toggleItem(this.parentElement)">
@@ -386,7 +394,7 @@ function render(){
           <span style="font-size:.75rem;color:#888">${owned ? '呢件嘢你已有' : '如已有（兄弟姊妹共用），剔呢度'}</span>
         </div>
         <div class="item-detail"><div class="item-detail-inner">
-          ${it.img ? `<img class="item-big" src="${it.img}" alt="${it.title}" loading="lazy">` : ""}
+          ${bigImg}
           ${it.detail || ""}
         </div></div>
       </div>`;
@@ -395,7 +403,7 @@ function render(){
   $("checklist").innerHTML = `
     <div class="checklist-title"><span class="badge" data-section="${currentSection}">${sec.name}</span><span>${modeLabel}${branchLabel} · ${genderLabel} · 共 ${list.length} 項</span></div>
     ${listHTML}
-    <div class="note"><strong>備註：</strong>制服組成根據香港童軍總會官網「制服」頁（中文版）。單件圖片為示意圖，實物以香港童軍物品供應社為準。
+    <div class="note"><strong>備註：</strong>制服組成根據香港童軍總會官網「制服」頁（中文版）。單件圖片優先顯示<strong>香港童軍物品供應社（SCOUT SHOP）官方產品相</strong>（點開每項可見產品編號及零售價）；如官方相暫時無法載入，會自動改用本地繪製示意圖。
     地域章、區章、旅章、小隊章可向<strong>所屬旅團領袖</strong>查詢頒發／購買安排。</div>`;
 }
 
@@ -411,19 +419,20 @@ function resetAllMarks(){
 }
 
 /* ===========================================================
-   預算（約略價，以供應社為準）
+   預算 — 以供應社官方零售價為主（SHOP 表），無官方價者用約略區間
    =========================================================== */
-const PRICE = {
-  "cap-cub-m":[60,90], "cap-cub-f":[60,90], "beret-green":[60,100], "beret-maroon":[60,100], "beret-greyblue":[60,100],
-  "cap-sea-scout":[80,150], "cap-sea-leader-m":[200,350], "cap-sea-leader-f":[200,350], "hat-leader-f":[400,700],
-  "capbadge-cub":[15,30], "capbadge-scout":[15,30], "capbadge-venture-sea":[15,30], "capbadge-rover-sea":[15,30], "capbadge-rank":[20,40], "capbadge-sea-leader":[20,40],
-  "shirt-beige":[120,200], "shirt-white":[120,200], "shirt-lightblue":[120,200],
-  "shorts-olive":[100,160], "shorts-navy":[100,160], "culottes-olive":[110,170], "culottes-navy":[110,170],
-  "trousers-olive":[160,260], "trousers-navy":[160,260], "skirt-olive":[140,220], "skirt-navy":[140,220],
-  "belt":[60,100], "socks-long-olive":[25,45], "socks-long-navy":[25,45], "socks-short-black":[15,40], "pantyhose":[20,60],
-  "shoes-lace":[250,600], "shoes-heel":[250,600], "woggle-scout":[15,30], "woggle-cub":[10,20],
-  "badges-youth":[40,80], "badges-leader":[60,120], "patrol-badge":[10,20], "epaulette-rank":[30,60], "scarf":[0,0]
+const PRICE_APPROX = {
+  "pantyhose":[20,60], "shoes-lace":[250,600], "shoes-heel":[250,600], "capbadge-cub":[0,0] /* 已隨幼童軍帽附送 */
 };
+function itemPrice(id){
+  const s = SHOP[id];
+  if(s && s.price != null){
+    const extra = (s.extra || []).reduce((t,x) => t + (x.price || 0), 0);
+    return { lo: s.price + extra, hi: s.price + extra, official: true };
+  }
+  const p = PRICE_APPROX[id] || [0,0];
+  return { lo: p[0], hi: p[1], official: false };
+}
 function renderBudget(){
   const el = $("budget-dynamic");
   if(!el) return;
@@ -431,11 +440,15 @@ function renderBudget(){
   const list = buildChecklist({ section: currentSection, branch: currentBranch, gender: currentGender, mode: currentMode, fromSection: currentFrom, fromBranch: currentFromBranch });
   const need = list.filter(i => i.status !== "have");
   let lo = 0, hi = 0;
-  const rows = need.map(i => { const p = PRICE[i.id] || [0,0]; lo += p[0]; hi += p[1]; return `<tr><td>${i.title}</td><td>${i.status === "check" ? "視乎旅團安排" : "約 HKD " + p[0] + "–" + p[1]}</td></tr>`; }).join("");
+  const rows = need.map(i => {
+    const p = itemPrice(i.id); lo += p.lo; hi += p.hi;
+    const txt = i.status === "check" ? "視乎旅團安排" : (p.official ? `HK$${p.lo}` : (p.lo === p.hi ? `約 HK$${p.lo}` : `約 HK$${p.lo}–${p.hi}`));
+    const src = p.official && i.shop ? ` <a class="cite" href="${i.shop.url}" target="_blank" rel="noopener">供應社 ${i.shop.code} ↗</a>` : "";
+    return `<tr><td>${i.title}</td><td>${txt}${src}</td></tr>`; }).join("");
   el.innerHTML = `<p style="margin:0 0 .6rem">你而家揀嘅係<strong>${currentMode === "upgrade" ? "升團補購" : "全新全購"}</strong>，需要準備嘅物品如下：</p>
     <table class="size-table"><thead><tr><th>物品</th><th>約略價錢</th></tr></thead><tbody>${rows}</tbody>
-    <tfoot><tr><th>合計（不含旅團頒發項目）</th><th>約 HKD ${lo}–${hi}</th></tr></tfoot></table>
-    <p class="cite">價格只屬約略參考，實際以香港童軍物品供應社為準。皮鞋、短襪、襪褲可於一般商店購買。</p>`;
+    <tfoot><tr><th>合計（不含旅團頒發項目）</th><th>${lo === hi ? `約 HK$${lo}` : `約 HK$${lo}–${hi}`}</th></tr></tfoot></table>
+    <p class="cite">標有「供應社編號」的價錢為 hkscoutshop.org.hk 網站 2026 年 9 月標示零售價，其餘為約略參考；實際以香港童軍物品供應社為準。皮鞋、短襪、襪褲可於一般商店購買。</p>`;
 }
 
 /* 官方整套制服實相 */
