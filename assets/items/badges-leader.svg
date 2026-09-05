@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+<rect width="640" height="400" fill="#ffffff"/>
+<ellipse cx="320" cy="362" rx="190" ry="14" fill="#000" opacity=".08"/>
+
+<g stroke-width="6">
+ <circle cx="180" cy="150" r="60" fill="#5b2a86" stroke="#fff"/>
+ <path d="M180 115 Q162 140 172 158 Q180 150 180 182 Q180 150 188 158 Q198 140 180 115 Z" fill="#fff"/>
+ <rect x="270" y="95" width="120" height="110" rx="10" fill="#c8102e" stroke="#fff"/>
+ <circle cx="330" cy="150" r="30" fill="#fff"/>
+ <path d="M330 130 Q322 140 325 150 Q330 145 330 165 Q330 145 335 150 Q338 140 330 130Z" fill="#c8102e"/>
+ <path d="M420 105 L540 105 L540 170 Q540 200 480 215 Q420 200 420 170 Z" fill="#0a5c36" stroke="#fff"/>
+ <rect x="150" y="235" width="150" height="60" rx="8" fill="#0a3a5c" stroke="#fff"/>
+ <rect x="330" y="235" width="180" height="60" rx="8" fill="#7a1f2b" stroke="#fff"/>
+</g>
+<text x="320" y="345" font-family="sans-serif" font-size="22" text-anchor="middle" fill="#555">基本徽章（領袖）</text>
+</svg>

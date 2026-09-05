@@ -1,925 +1,306 @@
 /* ===========================================================
-   童軍準備指南 — 完整資料庫
-   資料來源:香港童軍總會《儀容與制服手冊》2025 年版
+   童軍準備指南 — 制服資料庫
+   資料來源（全部為香港童軍總會中文官方資料）:
+   - 香港童軍總會官網「制服」頁（青少年成員 / 成年成員）
+     https://www.scout.org.hk/tc/youth-members/…/index.html?sid=2
+     https://www.scout.org.hk/tc/adult-members/leader/index.html?sid=2
+   - 青少年活動通告第 13/2023 號《支部成員徽章佩戴指引》
+   - 《童軍訓練綱要》附錄「徽章領取／購買」、「深資童軍先修章」
    =========================================================== */
 
-// 支部基本資料
+// 支部基本資料（年齡為總會官網 2025 年資料）
 const SECTIONS = {
-  grasshopper: {
-    name: "小童軍",
-    nameEn: "Grasshopper Scout",
-    age: "5.5–8 歲",
-    color: "#ff7a1a",
-    note: "小童軍支部由 2024 年起實行新指引,沒有指定制服。團集會時由所屬小童軍團長規定服裝。一般要求:單色 T 恤或活動服、單色短褲或長褲、運動鞋。",
-    upgradeFrom: null,
-    upgradeTo: "cub"
-  },
-  cub: {
-    name: "幼童軍",
-    nameEn: "Cub Scout",
-    age: "7.5–12 歲",
-    color: "#5a8f3a",
-    upgradeFrom: "grasshopper",
-    upgradeTo: "scout"
-  },
+  grasshopper: { name: "小童軍", nameEn: "Grasshopper Scout", age: "4–7 歲", color: "#ff7a1a",
+    note: "小童軍支部沒有指定制服。團集會時由所屬小童軍團長規定服裝。",
+    upgradeFrom: [], upgradeTo: "cub", hasBranch: false },
+  cub:     { name: "幼童軍",   nameEn: "Cub Scout",     age: "6–11 歲",  color: "#5a8f3a", upgradeFrom: ["grasshopper"], upgradeTo: "scout",   hasBranch: false },
+  scout:   { name: "童軍",     nameEn: "Scout",         age: "11–15 歲", color: "#0a5c36", upgradeFrom: ["cub"],         upgradeTo: "venture", hasBranch: true },
+  venture: { name: "深資童軍", nameEn: "Venture Scout", age: "15–20 歲", color: "#7a1f2b", upgradeFrom: ["scout"],       upgradeTo: "rover",   hasBranch: true },
+  rover:   { name: "樂行童軍", nameEn: "Rover Scout",   age: "18–25 歲", color: "#0a3a5c", upgradeFrom: ["venture"],     upgradeTo: "leader",  hasBranch: true },
+  // 領袖有 3 個來源：由深資升任 / 由樂行升任 / 全新加入
+  leader:  { name: "領袖",     nameEn: "Leader",        age: "成年成員", color: "#3a3a3a", upgradeFrom: ["venture","rover"], upgradeTo: null, hasBranch: true }
+};
+
+// 海 / 陸 / 空 類型
+const BRANCHES = {
+  land: { name: "陸童軍", short: "陸", icon: "🌲", desc: "最常見（綠色系）" },
+  sea:  { name: "海童軍", short: "海", icon: "⚓", desc: "白恤衫、深藍褲" },
+  air:  { name: "空童軍", short: "空", icon: "✈️", desc: "淺藍恤衫、灰藍軟帽" }
+};
+
+/* ===========================================================
+   單件制服 / 配件目錄
+   每件有 img（單件圖片）。id 相同 = 同一件物品，升團時可沿用。
+   =========================================================== */
+const ITEMS = {
+  /* ── 帽 ── */
+  "cap-cub-m": { title:"深綠色黃間條鴨舌帽", desc:"幼童軍男團員（連帽章）", icon:"🧢", img:"assets/items/cap-cub-m.jpg", buy:"supply",
+    detail:`<h4>幼童軍帽（男）</h4><p><strong>官方規格：</strong>深綠色、黃間條、鴨舌帽（連帽章）</p>
+      <ul><li>向後拉平，緊貼頭部</li><li>帽章在<strong>左眼正上方</strong></li></ul>` },
+  "cap-cub-f": { title:"深綠色圓形有邊帽", desc:"幼童軍女團員（連帽章）", icon:"👒", img:"assets/items/cap-cub-f.jpg", buy:"supply",
+    detail:`<h4>幼童軍帽（女）</h4><p><strong>官方規格：</strong>深綠色、圓形、有邊帽（連帽章）</p>
+      <ul><li>帽章在<strong>左眼正上方</strong></li></ul>` },
+  "beret-green": { title:"深綠色軟帽", desc:"童軍／樂行童軍／領袖（陸）", icon:"🧢", img:"assets/items/beret-green.jpg", buy:"supply",
+    detail:`<h4>深綠色軟帽</h4><p>童軍、樂行童軍及陸童軍領袖同用<strong>深綠色軟帽</strong>，只是帽章不同。</p>
+      <ul><li>向右拉平，緊貼頭部</li><li>帽後小尾塞入帽內，不可戴成「廚師帽」</li><li>首次使用前先弄濕定型</li><li>帽章在<strong>左眼正上方</strong></li></ul>` },
+  "beret-maroon": { title:"棗紅色軟帽", desc:"深資童軍（陸）", icon:"🧢", img:"assets/items/beret-maroon.jpg", buy:"supply",
+    detail:`<h4>棗紅色軟帽</h4><p><strong>官方規格：</strong>棗紅色軟帽（連童軍帽章）。深資童軍（陸）專用。</p>
+      <div class="tip">帽章是<strong>童軍帽章</strong>（與童軍支部相同），由童軍升團可把帽章拆下移到新帽。</div>` },
+  "beret-greyblue": { title:"灰藍色軟帽", desc:"空童軍／空童軍領袖", icon:"🧢", img:"assets/items/beret-greyblue.jpg", buy:"supply",
+    detail:`<h4>灰藍色軟帽</h4><p>空童軍、深資空童軍、樂行空童軍及空童軍領袖同用灰藍色軟帽（青少年連童軍帽章；領袖連職級帽章）。</p>` },
+  "cap-sea-scout": { title:"海童軍白頂帽（連海童軍帽帶）", desc:"童軍支部・海童軍", icon:"⚓", img:"assets/items/cap-sea-scout.jpg", buy:"supply",
+    detail:`<h4>海童軍白頂帽</h4><p><strong>官方規格：</strong>海童軍白頂帽（連海童軍帽帶）。童軍支部海童軍男女團員同款。</p>
+      <div class="warn">升深資海童軍後改用<strong>海童軍領袖白頂帽</strong>（另一款），不可沿用。</div>` },
+  "cap-sea-leader-m": { title:"海童軍男領袖白頂帽", desc:"深資／樂行／領袖・海（男）", icon:"⚓", img:"assets/items/cap-sea-leader-m.jpg", buy:"supply",
+    detail:`<h4>海童軍男領袖白頂帽</h4><p>深資海童軍、樂行海童軍及海童軍男領袖同用此帽，只是帽章不同（深資海童軍帽章／樂行海童軍帽章／海童軍領袖帽章）。</p>` },
+  "cap-sea-leader-f": { title:"海童軍女領袖白頂帽", desc:"深資／樂行／領袖・海（女）", icon:"⚓", img:"assets/items/cap-sea-leader-f.jpg", buy:"supply",
+    detail:`<h4>海童軍女領袖白頂帽</h4><p>深資海童軍、樂行海童軍及海童軍女領袖同用此帽，只是帽章不同。</p>` },
+  "hat-leader-f": { title:"深綠色金邊硬帽", desc:"女性成年成員（陸）", icon:"👒", img:"assets/items/hat-leader-f.jpg", buy:"supply",
+    detail:`<h4>深綠色金邊硬帽</h4><p><strong>官方規格：</strong>深綠色金邊硬帽（連職級帽章）。女領袖常規制服（編號 3）、領帶制服（編號 4）及禮服（編號 1）用。</p>
+      <div class="tip">女領袖長褲制服（編號 6）則改用<strong>深綠色軟帽</strong>。</div>` },
+
+  /* ── 帽章 ── */
+  "capbadge-cub": { title:"幼童軍帽章", desc:"金屬帽章", icon:"🎖️", img:"assets/items/capbadge-cub.svg", buy:"supply",
+    detail:`<h4>幼童軍帽章</h4><p>金屬幼童軍帽章，戴在<strong>左眼正上方</strong>。</p>` },
+  "capbadge-scout": { title:"童軍帽章", desc:"童軍／深資／樂行同用", icon:"🎖️", img:"assets/items/capbadge-scout.svg", buy:"supply",
+    detail:`<h4>童軍帽章</h4><p>根據總會官網，童軍、深資童軍（陸／空）、樂行童軍（陸／空）的軟帽全部是「連<strong>童軍帽章</strong>」。</p>
+      <div class="tip">即是說：由童軍升深資、深資升樂行，<strong>帽章可以沿用</strong>，只需換帽。</div>` },
+  "capbadge-venture-sea": { title:"深資海童軍帽章", desc:"深資海童軍專用", icon:"🎖️", img:"assets/items/capbadge-venture-sea.svg", buy:"supply",
+    detail:`<h4>深資海童軍帽章</h4><p>釘於海童軍領袖白頂帽上。</p>` },
+  "capbadge-rover-sea": { title:"樂行海童軍帽章", desc:"樂行海童軍專用", icon:"🎖️", img:"assets/items/capbadge-rover-sea.svg", buy:"supply",
+    detail:`<h4>樂行海童軍帽章</h4><p>釘於海童軍領袖白頂帽上。由深資海童軍升上來需更換帽章。</p>` },
+  "capbadge-rank": { title:"職級帽章", desc:"領袖（陸／空）", icon:"🎖️", img:"assets/items/capbadge-rank.svg", buy:"check",
+    detail:`<h4>職級帽章</h4><p>領袖軟帽／硬帽上戴<strong>職級帽章</strong>，款式視乎所獲委任的職級。</p>
+      <div class="warn">請於獲委任後向所屬旅團／區查詢應購買哪一款。</div>` },
+  "capbadge-sea-leader": { title:"海童軍領袖帽章", desc:"海童軍領袖", icon:"🎖️", img:"assets/items/capbadge-sea-leader.svg", buy:"check",
+    detail:`<h4>海童軍領袖帽章</h4><p>釘於海童軍男／女領袖白頂帽上。獲委任後向所屬旅團查詢。</p>` },
+
+  /* ── 恤衫 ── */
+  "shirt-beige": { title:"杏色短袖恤衫", desc:"兩胸袋、無褶、肩帶", icon:"👕", img:"assets/items/shirt-beige.jpg", buy:"supply",
+    detail:`<h4>杏色恤衫</h4><p><strong>官方規格：</strong>杏色、短袖、兩胸袋、無褶、肩帶。幼童軍到領袖（陸）全部同款。</p>
+      <ul><li>必須束入褲／裙內</li><li>戴領巾時最頂鈕要扣</li><li>建議買大一碼，青少年成長快</li></ul>` },
+  "shirt-white": { title:"白色短袖恤衫", desc:"海童軍・兩胸袋、無褶、肩帶", icon:"👕", img:"assets/items/shirt-white.svg", buy:"supply",
+    detail:`<h4>白色恤衫（海童軍）</h4><p><strong>官方規格：</strong>白色、短袖、兩胸袋、無褶、肩帶。海童軍、深資海童軍、樂行海童軍及海童軍領袖同款。</p>` },
+  "shirt-lightblue": { title:"淺藍色短袖恤衫", desc:"空童軍・兩胸袋、無褶、肩帶", icon:"👕", img:"assets/items/shirt-lightblue.svg", buy:"supply",
+    detail:`<h4>淺藍色恤衫（空童軍）</h4><p><strong>官方規格：</strong>淺藍色、短袖、兩胸袋、無褶、肩帶。空童軍、深資空童軍、樂行空童軍及空童軍領袖同款。</p>` },
+
+  /* ── 下身 ── */
+  "shorts-olive": { title:"草青色短褲", desc:"兩斜袋、兩後袋、有褶", icon:"🩳", img:"assets/items/shorts-olive.svg", buy:"supply",
+    detail:`<h4>草青色短褲</h4><p><strong>官方規格：</strong>草青色、兩斜袋、兩後袋、有褶。幼童軍及童軍（陸）男團員。</p><ul><li>穿在腰位，配棕色皮帶</li></ul>` },
+  "shorts-navy": { title:"深藍色短褲", desc:"海／空童軍男團員", icon:"🩳", img:"assets/items/shorts-navy.svg", buy:"supply",
+    detail:`<h4>深藍色短褲</h4><p><strong>官方規格：</strong>深藍色、兩斜袋、兩後袋、有褶。海童軍及空童軍男團員。</p>` },
+  "culottes-olive": { title:"草青色裙褲", desc:"側袋、弓字褶", icon:"👗", img:"assets/items/culottes-olive.svg", buy:"supply",
+    detail:`<h4>草青色裙褲</h4><p><strong>官方規格：</strong>草青色、側袋、弓字褶。幼童軍及童軍（陸）女團員。</p>` },
+  "culottes-navy": { title:"深藍色裙褲", desc:"海／空童軍女團員", icon:"👗", img:"assets/items/culottes-navy.svg", buy:"supply",
+    detail:`<h4>深藍色裙褲</h4><p><strong>官方規格：</strong>深藍色、側袋、弓字褶。海童軍及空童軍女團員。</p>` },
+  "trousers-olive": { title:"草青色長褲", desc:"兩斜袋、兩後袋、有褶", icon:"👖", img:"assets/items/trousers-olive.svg", buy:"supply",
+    detail:`<h4>草青色長褲</h4><p><strong>官方規格：</strong>草青色、兩斜袋、兩後袋、有褶。深資、樂行及領袖（陸）男性；女領袖長褲制服（編號 6）亦用。</p>` },
+  "trousers-navy": { title:"深藍色長褲", desc:"海／空・深資／樂行／領袖", icon:"👖", img:"assets/items/trousers-navy.svg", buy:"supply",
+    detail:`<h4>深藍色長褲</h4><p><strong>官方規格：</strong>深藍色、兩斜袋、兩後袋、有褶。深資／樂行海空童軍男團員及海空童軍男領袖。</p>` },
+  "skirt-olive": { title:"草青色半截裙", desc:"側袋、無褶、及膝", icon:"👗", img:"assets/items/skirt-olive.svg", buy:"supply",
+    detail:`<h4>草青色半截裙</h4><p><strong>官方規格：</strong>草青色、側袋、無褶、及膝。深資、樂行及領袖（陸）女性。</p>` },
+  "skirt-navy": { title:"深藍色半截裙", desc:"海／空・深資／樂行／領袖", icon:"👗", img:"assets/items/skirt-navy.svg", buy:"supply",
+    detail:`<h4>深藍色半截裙</h4><p><strong>官方規格：</strong>深藍色、側袋、無褶、及膝。深資／樂行海空童軍女團員及海空童軍女領袖。</p>` },
+
+  /* ── 皮帶 ── */
+  "belt": { title:"棕色皮帶（連童軍徽皮帶扣）", desc:"所有支部同款", icon:"👔", img:"assets/items/belt.svg", buy:"supply",
+    detail:`<h4>棕色皮帶</h4><p><strong>官方規格：</strong>棕色（連童軍徽皮帶扣）。由幼童軍到領袖、海陸空全部同款，一條用到底。</p><ul><li>皮帶扣置正中</li><li>不掛多餘匙扣</li></ul>` },
+
+  /* ── 襪 ── */
+  "socks-long-olive": { title:"深草青色長襪", desc:"幼童軍／童軍（陸）", icon:"🧦", img:"assets/items/socks-long-olive.svg", buy:"supply",
+    detail:`<h4>深草青色長襪</h4><p>拉至膝下，反摺約 3 厘米成襪邊。不可穿運動短襪或船襪。</p>` },
+  "socks-long-navy": { title:"深藍色長襪", desc:"海／空童軍", icon:"🧦", img:"assets/items/socks-long-navy.svg", buy:"supply",
+    detail:`<h4>深藍色長襪</h4><p>海童軍及空童軍（童軍支部）用深藍色長襪。</p>` },
+  "socks-short-black": { title:"黑色短襪", desc:"深資／樂行／領袖男性", icon:"🧦", img:"assets/items/socks-short-black.svg", buy:"any",
+    detail:`<h4>黑色短襪</h4><p><strong>官方規格：</strong>黑色、短襪。配長褲。一般黑色短襪即可，不一定要在供應社購買。</p>` },
+  "pantyhose": { title:"肉色尼龍襪褲", desc:"深資／樂行／領袖女性", icon:"🧦", img:"assets/items/pantyhose.svg", buy:"any",
+    detail:`<h4>肉色尼龍襪褲</h4><p><strong>官方規格：</strong>肉色、尼龍、無花、襪褲。自行到絲襪店購買即可。</p>` },
+
+  /* ── 皮鞋 ── */
+  "shoes-lace": { title:"黑色無花紋綁帶皮鞋", desc:"男性各支部／幼童軍及童軍女團員", icon:"👞", img:"assets/items/shoes-lace.svg", buy:"any",
+    detail:`<h4>黑色綁帶皮鞋</h4><p><strong>官方規格：</strong>黑色、無花紋、綁帶。合規格的學校皮鞋可以用。集會前要擦亮。</p>` },
+  "shoes-heel": { title:"黑色非綁帶中跟皮鞋", desc:"深資／樂行／領袖女性", icon:"👠", img:"assets/items/shoes-heel.svg", buy:"any",
+    detail:`<h4>黑色非綁帶中跟皮鞋</h4><p><strong>官方規格：</strong>黑色、無花紋、非綁帶、中跟。自行到鞋店購買。</p>
+      <div class="warn">由童軍升深資的女團員：綁帶皮鞋<strong>不合規格</strong>，要換中跟鞋。</div>` },
+
+  /* ── 領巾 / 巾圈 ── */
+  "scarf": { title:"旅巾", desc:"由旅團頒發", icon:"🧣", img:"assets/items/scarf.svg", buy:"group",
+    detail:`<h4>旅巾</h4><p>旅巾代表所屬旅團，一般於<strong>宣誓／會員章考核通過後由旅團頒發</strong>。同一旅升團可繼續用。</p>
+      <ul><li>戴在恤衫領外</li><li>巾圈位於喉部，不可太低</li></ul>` },
+  "woggle-cub": { title:"顏色巾圈（幼童軍）", desc:"官方：旅巾（連顏色巾圈）", icon:"⭕", img:"assets/items/woggle-cub.svg", buy:"check",
+    detail:`<h4>幼童軍顏色巾圈</h4><p>總會官網幼童軍制服為「旅巾（連<strong>顏色巾圈</strong>）」，顏色代表所屬小隊（六人小隊），由旅團安排。</p>` },
+  "woggle-scout": { title:"童軍巾圈", desc:"童軍／深資／樂行／領袖同用", icon:"⭕", img:"assets/items/woggle-scout.svg", buy:"supply",
+    detail:`<h4>童軍巾圈</h4><p>總會官網由童軍到領袖全部寫「旅巾（連<strong>童軍巾圈</strong>）」，即升團後可沿用。</p>
+      <div class="tip">童軍支部另有「小隊活動巾圈」，需出示童軍標準獎章或以上證書才可購買。</div>` },
+
+  /* ── 徽章 ── */
+  "badges-youth": { title:"基本徽章", desc:"世界童軍會員章、香港章、地域章、區章、旅章", icon:"🎖️", img:"assets/items/badges-youth.svg", buy:"mixed",
+    detail:`<h4>基本徽章（青少年支部）</h4><p>總會官網列明幼童軍至樂行童軍的基本徽章為：<strong>世界童軍會員章、香港章、地域章、區章、旅章</strong>。</p>
+      <ul>
+        <li>世界童軍會員章：左胸袋中央（<strong>宣誓後</strong>才可佩戴）</li>
+        <li>香港章：左胸袋上方</li>
+        <li>旅章、區章、地域章：右袖（由上至下）</li>
+      </ul>
+      <p>會員章、香港章在供應社購買；地域章、區章、旅章多數由旅團代購或頒發。升團時徽章如狀況良好可沿用（同一旅同一區）。</p>
+      <div class="tip">必須用線縫牢，不可用膠水或扣針。</div>` },
+  "patrol-badge": { title:"小隊章", desc:"童軍支部・由旅團頒發／供應社購買", icon:"🐾", img:"assets/items/patrol-badge.svg", buy:"group-or-supply",
+    detail:`<h4>小隊章</h4><p>只有<strong>童軍支部</strong>有小隊章（總會官網童軍制服徽章列表包括小隊章；深資／樂行沒有）。</p>
+      <p>根據《童軍訓練綱要》附錄，小隊章在供應社發售，購買時毋須出示文件；亦有旅團會直接頒發。佩戴在<strong>右袖</strong>。</p>` },
+  "badges-leader": { title:"領袖基本徽章", desc:"會員章、香港章、香港肩章／旅章、總會總部章／地域章／區章", icon:"🎖️", img:"assets/items/badges-leader.svg", buy:"mixed",
+    detail:`<h4>基本徽章（領袖常規制服）</h4><p>總會官網領袖常規制服（編號 3）徽章：<strong>世界童軍會員章、香港章、香港肩章／旅章、總會總部章／地域章／區章、職級肩章</strong>。</p>
+      <p>由青少年支部升任：世界童軍會員章、香港章可沿用；旅章／區章／地域章視乎服務單位，向旅團查詢。</p>
+      <div class="tip">榮譽童軍獎章／貝登堡獎章持有人成為領袖後，可終身佩戴相應的<strong>領袖標誌</strong>。</div>` },
+  "epaulette-rank": { title:"職級肩章", desc:"領袖・視乎委任職級", icon:"🎗️", img:"assets/items/epaulette-rank.svg", buy:"check",
+    detail:`<h4>職級肩章</h4><p>戴於兩肩肩帶，款式視乎獲委任的職級（見習領袖／助理領袖／領袖／總監等）。獲委任後向旅團查詢應購買哪款。</p>` }
+};
+
+/* ===========================================================
+   各支部 × 類型 × 性別 的官方制服組成（總會官網原文順序）
+   =========================================================== */
+const UNIFORM_SPEC = {
+  cub: { land: {
+    male:   ["cap-cub-m","capbadge-cub","shirt-beige","shorts-olive","belt","socks-long-olive","shoes-lace","scarf","woggle-cub","badges-youth"],
+    female: ["cap-cub-f","capbadge-cub","shirt-beige","culottes-olive","belt","socks-long-olive","shoes-lace","scarf","woggle-cub","badges-youth"] } },
   scout: {
-    name: "童軍",
-    nameEn: "Scout",
-    age: "12–16 歲",
-    color: "#0a5c36",
-    upgradeFrom: "cub",
-    upgradeTo: "venture"
+    land: {
+      male:   ["beret-green","capbadge-scout","shirt-beige","shorts-olive","belt","socks-long-olive","shoes-lace","scarf","woggle-scout","badges-youth","patrol-badge"],
+      female: ["beret-green","capbadge-scout","shirt-beige","culottes-olive","belt","socks-long-olive","shoes-lace","scarf","woggle-scout","badges-youth","patrol-badge"] },
+    sea: {
+      male:   ["cap-sea-scout","shirt-white","shorts-navy","belt","socks-long-navy","shoes-lace","scarf","woggle-scout","badges-youth","patrol-badge"],
+      female: ["cap-sea-scout","shirt-white","culottes-navy","belt","socks-long-navy","shoes-lace","scarf","woggle-scout","badges-youth","patrol-badge"] },
+    air: {
+      male:   ["beret-greyblue","capbadge-scout","shirt-lightblue","shorts-navy","belt","socks-long-navy","shoes-lace","scarf","woggle-scout","badges-youth","patrol-badge"],
+      female: ["beret-greyblue","capbadge-scout","shirt-lightblue","culottes-navy","belt","socks-long-navy","shoes-lace","scarf","woggle-scout","badges-youth","patrol-badge"] }
   },
   venture: {
-    name: "深資童軍",
-    nameEn: "Venture Scout",
-    age: "15–21 歲",
-    color: "#7a1f2b",
-    upgradeFrom: "scout",
-    upgradeTo: "rover"
+    land: {
+      male:   ["beret-maroon","capbadge-scout","shirt-beige","trousers-olive","belt","socks-short-black","shoes-lace","scarf","woggle-scout","badges-youth"],
+      female: ["beret-maroon","capbadge-scout","shirt-beige","skirt-olive","belt","pantyhose","shoes-heel","scarf","woggle-scout","badges-youth"] },
+    sea: {
+      male:   ["cap-sea-leader-m","capbadge-venture-sea","shirt-white","trousers-navy","belt","socks-short-black","shoes-lace","scarf","woggle-scout","badges-youth"],
+      female: ["cap-sea-leader-f","capbadge-venture-sea","shirt-white","skirt-navy","belt","pantyhose","shoes-heel","scarf","woggle-scout","badges-youth"] },
+    air: {
+      male:   ["beret-greyblue","capbadge-scout","shirt-lightblue","trousers-navy","belt","socks-short-black","shoes-lace","scarf","woggle-scout","badges-youth"],
+      female: ["beret-greyblue","capbadge-scout","shirt-lightblue","skirt-navy","belt","pantyhose","shoes-heel","scarf","woggle-scout","badges-youth"] }
   },
   rover: {
-    name: "樂行童軍",
-    nameEn: "Rover Scout",
-    age: "18–26 歲",
-    color: "#0a3a5c",
-    upgradeFrom: "venture",
-    upgradeTo: "leader"
+    land: {
+      male:   ["beret-green","capbadge-scout","shirt-beige","trousers-olive","belt","socks-short-black","shoes-lace","scarf","woggle-scout","badges-youth"],
+      female: ["beret-green","capbadge-scout","shirt-beige","skirt-olive","belt","pantyhose","shoes-heel","scarf","woggle-scout","badges-youth"] },
+    sea: {
+      male:   ["cap-sea-leader-m","capbadge-rover-sea","shirt-white","trousers-navy","belt","socks-short-black","shoes-lace","scarf","woggle-scout","badges-youth"],
+      female: ["cap-sea-leader-f","capbadge-rover-sea","shirt-white","skirt-navy","belt","pantyhose","shoes-heel","scarf","woggle-scout","badges-youth"] },
+    air: {
+      male:   ["beret-greyblue","capbadge-scout","shirt-lightblue","trousers-navy","belt","socks-short-black","shoes-lace","scarf","woggle-scout","badges-youth"],
+      female: ["beret-greyblue","capbadge-scout","shirt-lightblue","skirt-navy","belt","pantyhose","shoes-heel","scarf","woggle-scout","badges-youth"] }
   },
+  // 領袖：常規制服（編號 3）
   leader: {
-    name: "領袖",
-    nameEn: "Leader",
-    age: "成年成員",
-    color: "#3a3a3a",
-    upgradeFrom: "rover",
-    upgradeTo: null
+    land: {
+      male:   ["beret-green","capbadge-rank","shirt-beige","trousers-olive","belt","socks-short-black","shoes-lace","scarf","woggle-scout","badges-leader","epaulette-rank"],
+      female: ["hat-leader-f","capbadge-rank","shirt-beige","skirt-olive","belt","pantyhose","shoes-heel","scarf","woggle-scout","badges-leader","epaulette-rank"] },
+    sea: {
+      male:   ["cap-sea-leader-m","capbadge-sea-leader","shirt-white","trousers-navy","belt","socks-short-black","shoes-lace","scarf","woggle-scout","badges-leader","epaulette-rank"],
+      female: ["cap-sea-leader-f","capbadge-sea-leader","shirt-white","skirt-navy","belt","pantyhose","shoes-heel","scarf","woggle-scout","badges-leader","epaulette-rank"] },
+    air: {
+      male:   ["beret-greyblue","capbadge-rank","shirt-lightblue","trousers-navy","belt","socks-short-black","shoes-lace","scarf","woggle-scout","badges-leader","epaulette-rank"],
+      female: ["beret-greyblue","capbadge-rank","shirt-lightblue","skirt-navy","belt","pantyhose","shoes-heel","scarf","woggle-scout","badges-leader","epaulette-rank"] }
   }
 };
 
-// 各支部帽款
-const CAPS = {
-  grasshopper: { type: "none", desc: "無指定制服帽" },
-  cub_m: { name: "綠色黃間條鴨舌帽", desc: "綠色、黃間條、鴨舌帽(連帽章)", img: "cap-cub-m" },
-  cub_f: { name: "綠色圓頂闊邊帽", desc: "綠色、圓形、有邊、後面蝴蝶結(連帽章)", img: "cap-cub-f" },
-  scout_m: { name: "深綠色軟帽(男)", desc: "深綠色軟帽(連童軍帽章)", img: "cap-scout" },
-  scout_f: { name: "深綠色軟帽(女)", desc: "深綠色軟帽(連童軍帽章)", img: "cap-scout" },
-  venture_m: { name: "棗紅色軟帽(男)", desc: "棗紅色軟帽(連深資童軍帽章)", img: "cap-venture" },
-  venture_f: { name: "棗紅色軟帽(女)", desc: "棗紅色軟帽(連深資童軍帽章)", img: "cap-venture" },
-  rover_m: { name: "深綠色軟帽(男)", desc: "深綠色軟帽(連童軍帽章)", img: "cap-scout" },
-  rover_f: { name: "深綠色軟帽(女)", desc: "深綠色軟帽(連童軍帽章)", img: "cap-scout" },
-  leader_m: { name: "深綠色軟帽(男領袖)", desc: "深綠色軟帽(連職級帽章)", img: "cap-leader-m" },
-  leader_f: { name: "深綠色金邊硬帽(女領袖)", desc: "深綠色金邊硬帽(連職級帽章)", img: "cap-leader-f" }
+// 小童軍（無指定制服）
+const GRASSHOPPER_ITEM = {
+  id:"gh-clothes", title:"「小童軍」沒有正式制服，那要買什麼？", desc:"由所屬小童軍團長規定", status:"check", icon:"👕",
+  detail:`<h4>小童軍服裝安排</h4>
+    <p>小童軍支部<strong>沒有指定制服</strong>。團集會時由<strong>所屬小童軍團長</strong>規定服裝。一般要求：</p>
+    <ul><li><strong>上衣</strong>：單色 T 恤或活動服（部分旅團有自己一套活動服）</li><li><strong>褲</strong>：單色短褲或長褲</li><li><strong>鞋</strong>：運動鞋</li></ul>
+    <div class="tip">已宣誓小童軍可佩戴<strong>小童軍團員章 + 旅巾</strong>。</div>
+    <div class="warn">先向<strong>所屬旅團領袖</strong>查詢當季服裝安排。</div>`
 };
 
-// 各支部完整制服清單
-const UNIFORMS = {
+/* ===========================================================
+   產生清單：比較「原本制服」與「目標制服」
+   =========================================================== */
+function getSpec(section, branch, gender){
+  const s = UNIFORM_SPEC[section];
+  if(!s) return null;
+  const b = s[branch] || s.land;
+  return b ? (b[gender] || b.male) : null;
+}
 
-  /* ─────────────── 小童軍 (無指定制服) ─────────────── */
-  grasshopper: {
-    new: {
-      male: [
-        { id:"gh-clothes", title:"「小童軍」沒有正式制服,那要買什麼?", desc:"由所屬小童軍團長規定", status:"check", icon:"👕",
-          detail:`<h4>小童軍服裝安排</h4>
-            <p>小童軍支部由 2024 年起實行新指引,<strong>沒有指定制服</strong>。團集會時由<strong>所屬小童軍團長</strong>規定服裝。一般要求:</p>
-            <ul>
-              <li><strong>上衣</strong>:單色 T 恤或活動服(部分旅團會有自己一套戶外活動服)</li>
-              <li><strong>褲</strong>:單色短褲或長褲</li>
-              <li><strong>鞋</strong>:運動鞋</li>
-            </ul>
-            <div class="tip">已宣誓小童軍可佩戴<strong>小童軍團員章 + 旅巾</strong>。部分旅團也會有自己一套,不一定購買總會橙色的。詳情請向團長查詢。</div>
-            <div class="warn">先向<strong>所屬旅團領袖</strong>查詢當季制服安排(部分旅團會統一訂購)。</div>` }
-      ],
-      female: [
-        { id:"gh-f-clothes", title:"「小童軍」沒有正式制服,那要買什麼?", desc:"由所屬小童軍團長規定", status:"check", icon:"👕",
-          detail:`<h4>小童軍服裝安排</h4>
-            <p>小童軍支部由 2024 年起實行新指引,<strong>沒有指定制服</strong>。團集會時由<strong>所屬小童軍團長</strong>規定服裝。一般要求:</p>
-            <ul>
-              <li><strong>上衣</strong>:單色 T 恤或活動服(部分旅團會有自己一套戶外活動服)</li>
-              <li><strong>褲</strong>:單色短褲或長褲</li>
-              <li><strong>鞋</strong>:運動鞋</li>
-            </ul>
-            <div class="tip">已宣誓小童軍可佩戴<strong>小童軍團員章 + 旅巾</strong>。部分旅團也會有自己一套,不一定購買總會橙色的。詳情請向團長查詢。</div>
-            <div class="warn">先向<strong>所屬旅團領袖</strong>查詢當季制服安排(部分旅團會統一訂購)。</div>` }
-      ]
-    },
-    upgrade: {
-      male: null,
-      female: null
-    }
-  },
+// 取得升團來源（支部、類型）
+function buildChecklist(opts){
+  const { section, branch, gender, mode, fromSection, fromBranch } = opts;
+  if(section === "grasshopper") return [Object.assign({}, GRASSHOPPER_ITEM)];
+  const target = getSpec(section, branch, gender) || [];
+  const source = (mode === "upgrade" && fromSection && fromSection !== "grasshopper")
+    ? (getSpec(fromSection, fromBranch, gender) || []) : [];
+  const fromName = fromSection ? (SECTIONS[fromSection]?.name || "") + (SECTIONS[fromSection]?.hasBranch ? "（" + (BRANCHES[fromBranch]?.short || "陸") + "）" : "") : "";
 
-  /* ─────────────── 幼童軍 ─────────────── */
-  cub: {
-    new: {
-      male: [
-        { id:"cub-m-cap", title:"綠色黃間條鴨舌帽", desc:"幼童軍男團員指定帽款", status:"need", icon:"🧢",
-          detail:`<h4>幼童軍帽(男)</h4>
-            <p><strong>規格:</strong>綠色、黃間條、鴨舌帽(連帽章)</p>
-            <ul>
-              <li>向後拉平,緊貼頭部</li>
-              <li>帽章戴在<strong>左眼正上方</strong></li>
-              <li>由香港童軍物品供應社購買</li>
-            </ul>` },
-        { id:"cub-m-cap-badge", title:"幼童軍帽章", desc:"金屬帽章", status:"need", icon:"🎖️",
-          detail:`<h4>幼童軍帽章</h4>
-            <p>金屬幼童軍帽章,縫於帽上。帽章必須戴在<strong>左眼正上方</strong>。</p>` },
-        { id:"cub-m-shirt", title:"杏色短袖恤衫", desc:"兩胸袋、無褶、肩帶", status:"need", icon:"👕",
-          detail:`<h4>杏色恤衫</h4>
-            <p>杏色、短袖、兩胸袋、無褶、肩帶(冬天可穿長袖恤)</p>
-            <ul>
-              <li>建議買大一碼——童軍成長快,恤衫必須束入褲內</li>
-              <li>保持燙平,戴領巾時最頂鈕要扣</li>
-              <li><strong>徽章位置(幼童軍):</strong></li>
-              <li>世界童軍會員章:左胸袋中央(只可於宣誓後佩戴)</li>
-              <li>香港章:左胸袋蓋上,世界童軍會員章上方 3 厘米</li>
-              <li>地域章:右袖</li>
-              <li>區章、旅章:右袖(由旅團頒發)</li>
-            </ul>
-            <div class="tip">必須用線縫牢,不可用膠水或扣針。</div>` },
-        { id:"cub-m-shorts", title:"草青色短褲", desc:"男團員", status:"need", icon:"🩳",
-          detail:`<h4>短褲(男團員)</h4>
-            <p>草青色、兩斜袋、兩後袋、有褶</p>
-            <ul>
-              <li>穿在腰位(非臀部),配棕色皮帶</li>
-              <li>長度在膝蓋以上</li>
-            </ul>` },
-        { id:"cub-m-belt", title:"棕色皮帶(連童軍徽皮帶扣)", desc:"配童軍徽皮帶扣", status:"need", icon:"👔",
-          detail:`<h4>棕色皮帶</h4>
-            <p>棕色皮帶(連童軍徽皮帶扣)</p>
-            <ul>
-              <li>皮帶扣置於正中</li>
-              <li>保持清潔,不可掛多餘匙扣</li>
-            </ul>` },
-        { id:"cub-m-socks", title:"深草青色長襪", desc:"及膝直坑紋", status:"need", icon:"🧦",
-          detail:`<h4>深草青色長襪</h4>
-            <p>深草青色、直坑紋、襪頭摺下</p>
-            <ul>
-              <li>拉至膝蓋下,反摺約 3 厘米成襪邊</li>
-              <li>不可穿運動短襪或船襪</li>
-            </ul>` },
-        { id:"cub-m-shoes", title:"黑色無花紋綁帶皮鞋", desc:"低筒、平底", status:"need", icon:"👞",
-          detail:`<h4>黑色皮鞋</h4>
-            <p>黑色、無花紋、縛帶、低筒、平底</p>
-            <ul>
-              <li>必須可擦亮的皮鞋</li>
-              <li>集會前要擦亮,以備檢閱</li>
-              <li>學校皮鞋如合規格可沿用</li>
-            </ul>` },
-        { id:"cub-m-scarf", title:"旅巾", desc:"由旅團頒發", status:"check", icon:"🧣",
-          detail:`<h4>旅巾</h4>
-            <p>新隊員的旅巾將於<strong>會員章考核通過後</strong>由旅團頒發。</p>
-            <ul>
-              <li>旅巾戴在<strong>恤衫領外</strong></li>
-              <li>由長邊捲起,摺出 5 摺——巾圈上 2 摺、下 3 摺</li>
-              <li>巾圈位於喉部,不可太低</li>
-            </ul>` },
-        { id:"cub-m-woggle", title:"幼童軍塑膠巾圈", desc:"塑膠圓環", status:"check", icon:"⭕",
-          detail:`<h4>幼童軍塑膠巾圈</h4>
-            <p>塑膠幼童軍巾圈,用於固定旅巾。需向<strong>所屬小童軍團長</strong>查詢安排。</p>` },
-        { id:"cub-m-badges", title:"基本徽章", desc:"世界童軍會員章、香港章、地域章、區章", status:"need", icon:"🎖️",
-          detail:`<h4>基本徽章(幼童軍)</h4>
-            <p>必須購買:<strong>世界童軍會員章、香港章、地域章、區章</strong></p>
-            <p><strong>旅章</strong>由旅團頒發,無需自行購買。</p>
-            <ul>
-              <li>世界童軍會員章:左胸袋中央(只可於宣誓後佩戴)</li>
-              <li>香港章:左胸袋蓋上,世界童軍會員章上方 3 厘米</li>
-              <li>地域章:右袖</li>
-              <li>區章:右袖,地域章下方</li>
-              <li>旅章:右袖(由旅團頒發)</li>
-            </ul>
-            <div class="tip">必須用線縫牢,不可用膠水或扣針。<br>地域章、區章、旅章需向所屬旅團查詢購買。</div>` }
-      ],
-      female: [
-        { id:"cub-f-cap", title:"綠色圓頂闊邊帽", desc:"幼童軍女團員指定帽款", status:"need", icon:"👒",
-          detail:`<h4>幼童軍帽(女)</h4>
-            <p><strong>規格:</strong>綠色、圓形、有邊、後面蝴蝶結(連帽章)</p>
-            <ul>
-              <li>帽章戴在<strong>左眼正上方</strong></li>
-              <li>由香港童軍物品供應社購買</li>
-            </ul>` },
-        { id:"cub-f-cap-badge", title:"幼童軍帽章", desc:"金屬帽章", status:"need", icon:"🎖️",
-          detail:`<h4>幼童軍帽章</h4>
-            <p>金屬幼童軍帽章,縫於帽上。</p>` },
-        { id:"cub-f-shirt", title:"杏色短袖恤衫", desc:"兩胸袋、無褶、肩帶", status:"need", icon:"👕",
-          detail:`<h4>杏色恤衫</h4>
-            <p>杏色、短袖、兩胸袋、無褶、肩帶(冬天可穿長袖恤)——<strong>與男團員相同款式</strong>。</p>
-            <ul>
-              <li>必須束入裙褲內,皮帶要清楚可見</li>
-              <li>徽章位置與男團員相同</li>
-            </ul>` },
-        { id:"cub-f-culottes", title:"草青色裙褲(culottes)", desc:"女團員", status:"need", icon:"👗",
-          detail:`<h4>裙褲(女團員)</h4>
-            <p>草青色、側袋、弓字褶</p>
-            <ul>
-              <li>配皮帶,長度要端莊</li>
-              <li>外觀像裙,但褲管分明方便活動</li>
-            </ul>` },
-        { id:"cub-f-belt", title:"棕色皮帶(連童軍徽皮帶扣)", desc:"配童軍徽皮帶扣", status:"need", icon:"👔",
-          detail:`<h4>棕色皮帶</h4>
-            <p>與男團員規格相同。</p>` },
-        { id:"cub-f-socks", title:"深草青色長襪", desc:"及膝直坑紋", status:"need", icon:"🧦",
-          detail:`<h4>深草青色長襪</h4>
-            <p>深草青色、直坑紋、襪頭摺下——與男團員規格相同。</p>` },
-        { id:"cub-f-shoes", title:"黑色無花紋綁帶皮鞋", desc:"低筒、平底", status:"need", icon:"👞",
-          detail:`<h4>黑色皮鞋</h4>
-            <p>與男團員規格相同:黑色、無花紋、縛帶、低筒、平底。</p>` },
-        { id:"cub-f-scarf", title:"旅巾", desc:"由旅團頒發", status:"check", icon:"🧣",
-          detail:`<h4>旅巾</h4>
-            <p>由旅團頒發,會員章考核通過後發給。</p>` },
-        { id:"cub-f-woggle", title:"幼童軍塑膠巾圈", desc:"塑膠圓環", status:"check", icon:"⭕",
-          detail:`<h4>幼童軍塑膠巾圈</h4>
-            <p>由所屬旅團查詢安排。</p>` },
-        { id:"cub-f-badges", title:"基本徽章", desc:"世界童軍會員章、香港章、地域章、區章", status:"need", icon:"🎖️",
-          detail:`<h4>基本徽章(幼童軍)</h4>
-            <p>與男團員規格相同,佩戴位置不變。</p>` }
-      ]
-    },
-    upgrade: {
-      // 由小童軍升幼童軍 — 小童軍原本就無制服,所以等同「全新加入」
-      male: null,
-      female: null
+  return target.map(id => {
+    const it = ITEMS[id];
+    const had = source.includes(id);
+    let status, note = "";
+    if(mode === "upgrade" && source.length){
+      if(had){
+        status = "have";
+        note = `<div class="tip">✅ 與${fromName}<strong>同一款</strong>，如狀況良好可沿用。</div>`;
+        if(id === "badges-youth") note = `<div class="tip">✅ 世界童軍會員章、香港章、地域章、區章、旅章可沿用（同一旅）。<br><strong>要拆走</strong>舊支部的進度性獎章、活動／專科徽章、隊長章。服務年星保留。</div>`;
+        if(id === "scarf") note = `<div class="tip">✅ 同一旅升團可繼續用原有旅巾。</div>`;
+      } else {
+        status = "need";
+        note = `<div class="warn">🆕 ${fromName}沒有此款，需要購買／更換。</div>`;
+      }
+    } else {
+      status = "need";
     }
-  },
+    // 特殊：頒發／查詢類
+    if(id === "scarf" && status !== "have") status = "check";
+    if(["woggle-cub","capbadge-rank","capbadge-sea-leader","epaulette-rank"].includes(id) && status !== "have") status = "check";
+    if(id === "patrol-badge") { status = had ? "have" : "check"; }
+    if(id === "badges-leader") status = "need";
 
-  /* ─────────────── 童軍 ─────────────── */
-  scout: {
-    new: {
-      male: [
-        { id:"scout-m-cap", title:"深綠色軟帽", desc:"童軍男團員指定帽款", status:"need", icon:"🧢",
-          detail:`<h4>深綠色軟帽</h4>
-            <p>深綠色軟帽(連童軍帽章)</p>
-            <ul>
-              <li>向右拉平,緊貼頭部,不可鬆垮</li>
-              <li>帽後小尾要塞入帽內,切勿外露(不可戴成「廚師帽」)</li>
-              <li>首次使用前先弄濕定型,戴上塑出頭形</li>
-              <li>帽章戴在<strong>左眼正上方</strong></li>
-            </ul>
-            <div class="warn">幼童軍升團注意:必須更換,不可再戴幼童軍黃邊帽。</div>` },
-        { id:"scout-m-cap-badge", title:"童軍帽章", desc:"金屬帽章", status:"need", icon:"🎖️",
-          detail:`<h4>童軍帽章</h4>
-            <p>金屬童軍帽章,縫於軟帽上。需另行購買。</p>
-            <div class="warn">幼童軍升團:需更換為童軍帽章。</div>` },
-        { id:"scout-m-shirt", title:"杏色短袖恤衫", desc:"兩胸袋、無褶、肩帶", status:"need", icon:"👕",
-          detail:`<h4>杏色恤衫</h4>
-            <p>杏色、短袖、兩胸袋、無褶、肩帶</p>
-            <ul>
-              <li>建議買大一碼——童軍成長快,恤衫必須束入褲內</li>
-              <li>必須束入褲/裙內,皮帶要清楚可見</li>
-              <li>保持燙平,戴領巾時最頂鈕要扣</li>
-              <li><strong>徽章位置(童軍):</strong></li>
-              <li>世界童軍會員章:左胸袋中央(只可於宣誓後佩戴)</li>
-              <li>香港章:左胸袋蓋上,世界童軍會員章上方 3 厘米</li>
-              <li>地域章、區章:右袖(地域章在前,區章在後)</li>
-              <li>旅章、小隊章:右袖上方位置(由旅團頒發)</li>
-            </ul>
-            <div class="tip">必須用線縫牢,不可用膠水或扣針。</div>` },
-        { id:"scout-m-shorts", title:"草青色短褲", desc:"男團員", status:"need", icon:"🩳",
-          detail:`<h4>短褲(男團員)</h4>
-            <p>草青色、兩斜袋、兩後袋、有褶</p>
-            <ul>
-              <li>穿在腰位(非臀部),配棕色皮帶</li>
-              <li>長度在膝蓋以上</li>
-            </ul>` },
-        { id:"scout-m-belt", title:"棕色皮帶(連童軍徽皮帶扣)", desc:"配童軍徽皮帶扣", status:"need", icon:"👔",
-          detail:`<h4>棕色皮帶</h4>
-            <p>棕色皮帶(連童軍徽皮帶扣)。皮帶扣置於正中,不可掛多餘匙扣。</p>` },
-        { id:"scout-m-socks", title:"深草青色長襪", desc:"及膝", status:"need", icon:"🧦",
-          detail:`<h4>深草青色長襪</h4>
-            <p>深草青色及膝襪。拉至膝蓋下,反摺約 3 厘米成襪邊。</p>` },
-        { id:"scout-m-shoes", title:"黑色無花紋綁帶皮鞋", desc:"黑色、無花紋、綁帶", status:"need", icon:"👞",
-          detail:`<h4>黑色皮鞋</h4>
-            <p>黑色、無花紋、綁帶。集會前要擦亮,以備檢閱。學校皮鞋如合規格可沿用。</p>` },
-        { id:"scout-m-scarf", title:"旅巾", desc:"由旅團頒發", status:"check", icon:"🧣",
-          detail:`<h4>旅巾</h4>
-            <p>新隊員的旅巾將於<strong>會員章考核通過後</strong>由旅團頒發。</p>
-            <ul>
-              <li>旅巾戴在<strong>恤衫領外</strong></li>
-              <li>由長邊捲起,摺出 5 摺——巾圈上 2 摺、下 3 摺</li>
-              <li>巾圈位於喉部,不可太低</li>
-            </ul>` },
-        { id:"scout-m-woggle", title:"童軍皮製巾圈", desc:"皮製", status:"need", icon:"⭕",
-          detail:`<h4>童軍巾圈</h4>
-            <p>皮製童軍巾圈,用於固定旅巾。</p>
-            <div class="warn">幼童軍升團注意:與幼童軍塑膠巾圈不同,需更換為童軍皮製巾圈,不可沿用。</div>` },
-        { id:"scout-m-badges", title:"基本徽章", desc:"世界童軍會員章、香港章、地域章、區章", status:"need", icon:"🎖️",
-          detail:`<h4>基本徽章(童軍)</h4>
-            <p>必須購買:世界童軍會員章、香港章、地域章、區章</p>
-            <p><strong>旅章</strong>由旅團頒發,無需自行購買。</p>
-            <ul>
-              <li>世界童軍會員章:左胸袋中央(只可於宣誓後佩戴)</li>
-              <li>香港章:左胸袋蓋上,世界童軍會員章上方 3 厘米</li>
-              <li>地域章:右袖</li>
-              <li>區章:右袖,地域章下方</li>
-              <li>旅章、小隊章:右袖(由旅團頒發)</li>
-            </ul>
-            <div class="tip">必須用線縫牢,不可用膠水或扣針。</div>` }
-      ],
-      female: [
-        { id:"scout-f-cap", title:"深綠色軟帽", desc:"童軍女團員指定帽款", status:"need", icon:"🧢",
-          detail:`<h4>深綠色軟帽</h4>
-            <p>深綠色軟帽(連童軍帽章)——與男團員規格相同。向右拉平,帽後小尾要塞入帽內。</p>
-            <div class="warn">幼童軍升團注意:必須更換,不可再戴幼童軍綠色圓頂闊邊帽。</div>` },
-        { id:"scout-f-cap-badge", title:"童軍帽章", desc:"金屬帽章", status:"need", icon:"🎖️",
-          detail:`<h4>童軍帽章</h4>
-            <p>金屬童軍帽章。幼童軍升團需更換為童軍帽章。</p>` },
-        { id:"scout-f-shirt", title:"杏色短袖恤衫", desc:"兩胸袋、無褶、肩帶", status:"need", icon:"👕",
-          detail:`<h4>杏色恤衫</h4>
-            <p>與男團員相同款式:杏色、短袖、兩胸袋、無褶、肩帶。</p>` },
-        { id:"scout-f-culottes", title:"草青色裙褲(culottes)", desc:"女團員", status:"need", icon:"👗",
-          detail:`<h4>裙褲(女團員)</h4>
-            <p>草青色、側袋、弓字褶。配皮帶,長度要端莊。</p>
-            <div class="tip">幼童軍升團注意:童軍裙褲與幼童軍裙褲<strong>款式相同</strong>,如合身可沿用。</div>` },
-        { id:"scout-f-belt", title:"棕色皮帶(連童軍徽皮帶扣)", desc:"配童軍徽皮帶扣", status:"need", icon:"👔",
-          detail:`<h4>棕色皮帶</h4>
-            <p>與男團員規格相同。幼童軍升團可沿用。</p>` },
-        { id:"scout-f-socks", title:"深草青色長襪", desc:"及膝", status:"need", icon:"🧦",
-          detail:`<h4>深草青色長襪</h4>
-            <p>與男團員規格相同。幼童軍升團可沿用。</p>` },
-        { id:"scout-f-shoes", title:"黑色無花紋綁帶皮鞋", desc:"黑色、無花紋、綁帶", status:"need", icon:"👞",
-          detail:`<h4>黑色皮鞋</h4>
-            <p>與男團員規格相同。幼童軍升團可沿用。</p>` },
-        { id:"scout-f-scarf", title:"旅巾", desc:"由旅團頒發", status:"check", icon:"🧣",
-          detail:`<h4>旅巾</h4>
-            <p>由旅團頒發,會員章考核通過後發給。</p>` },
-        { id:"scout-f-woggle", title:"童軍皮製巾圈", desc:"皮製", status:"need", icon:"⭕",
-          detail:`<h4>童軍巾圈</h4>
-            <p>皮製童軍巾圈。幼童軍升團需更換為童軍皮製巾圈,不可沿用塑膠巾圈。</p>` },
-        { id:"scout-f-badges", title:"基本徽章", desc:"世界童軍會員章、香港章、地域章、區章", status:"need", icon:"🎖️",
-          detail:`<h4>基本徽章(童軍)</h4>
-            <p>與男團員規格相同,佩戴位置不變。</p>` }
-      ]
-    },
-    upgrade: {
-      // 由幼童軍升童軍
-      male: [
-        { id:"scout-m-cap", title:"深綠色軟帽", desc:"必須更換", status:"need", icon:"🧢",
-          detail:`<h4>深綠色軟帽(必須更換)</h4>
-            <p>幼童軍黃邊鴨舌帽<strong>不可沿用</strong>。需購買<strong>深綠色軟帽</strong>。</p>` },
-        { id:"scout-m-cap-badge", title:"童軍帽章", desc:"必須更換", status:"need", icon:"🎖️",
-          detail:`<h4>童軍帽章(必須更換)</h4>
-            <p>幼童軍帽章不可沿用,需購買<strong>童軍帽章</strong>縫於新軟帽上。</p>` },
-        { id:"scout-m-shirt", title:"杏色短袖恤衫", desc:"與幼童軍相同,可沿用", status:"have", icon:"👕",
-          detail:`<h4>杏色恤衫(可沿用)</h4>
-            <p><strong>與幼童軍恤衫完全相同!</strong>如合身只需更換徽章。建議檢查尺寸——童軍成長快,如太緊需更換。</p>` },
-        { id:"scout-m-shorts", title:"草青色短褲", desc:"與幼童軍相同,可沿用", status:"have", icon:"🩳",
-          detail:`<h4>短褲(可沿用)</h4>
-            <p>與幼童軍短褲相同,可沿用。穿在腰位(非臀部),配棕色皮帶。檢查是否仍合身。</p>` },
-        { id:"scout-m-belt", title:"棕色皮帶", desc:"可沿用", status:"have", icon:"👔",
-          detail:`<h4>棕色皮帶(可沿用)</h4>
-            <p>與幼童軍皮帶相同,無需重買。保持清潔,不可掛多餘匙扣。</p>` },
-        { id:"scout-m-socks", title:"深草青色長襪", desc:"顏色相同,可沿用", status:"have", icon:"🧦",
-          detail:`<h4>深草青色長襪(可沿用)</h4>
-            <p>顏色與幼童軍相同。如襪子已起毛球或破洞建議更換。</p>` },
-        { id:"scout-m-shoes", title:"黑色皮鞋", desc:"可沿用", status:"have", icon:"👞",
-          detail:`<h4>黑色皮鞋(可沿用)</h4>
-            <p>學校皮鞋如合規格可沿用。檢查鞋底有否過度磨損,集會前要擦亮。</p>` },
-        { id:"scout-m-scarf", title:"旅巾", desc:"可沿用", status:"have", icon:"🧣",
-          detail:`<h4>旅巾(可沿用)</h4>
-            <p>升團者可繼續沿用幼童軍時期的旅巾,無需重新購買。旅巾戴在<strong>恤衫領外</strong>。</p>` },
-        { id:"scout-m-woggle", title:"童軍皮製巾圈", desc:"必須更換", status:"need", icon:"⭕",
-          detail:`<h4>童軍巾圈(必須更換)</h4>
-            <p>與幼童軍塑膠巾圈不同,需更換為<strong>童軍皮製巾圈</strong>,不可沿用。</p>` },
-        { id:"scout-m-badges", title:"基本徽章", desc:"狀況良好可沿用", status:"have", icon:"🎖️",
-          detail:`<h4>基本徽章(可沿用)</h4>
-            <p>世界童軍會員章、香港章、地域章、區章<strong>如狀況良好可沿用</strong>。</p>
-            <div class="warn">緊記:拆走所有幼童軍徽章(隊長章、幼童軍進度章等),年星及金紫荊獎章除外。<br>旅章及小隊章由旅團頒發,無需自行購買。</div>` }
-      ],
-      female: [
-        { id:"scout-f-cap", title:"深綠色軟帽", desc:"必須更換", status:"need", icon:"🧢",
-          detail:`<h4>深綠色軟帽(必須更換)</h4>
-            <p>幼童軍綠色圓頂闊邊帽<strong>不可沿用</strong>。需購買<strong>深綠色軟帽</strong>。</p>` },
-        { id:"scout-f-cap-badge", title:"童軍帽章", desc:"必須更換", status:"need", icon:"🎖️",
-          detail:`<h4>童軍帽章(必須更換)</h4>
-            <p>幼童軍帽章不可沿用,需購買<strong>童軍帽章</strong>縫於新軟帽上。</p>` },
-        { id:"scout-f-shirt", title:"杏色短袖恤衫", desc:"與幼童軍相同,可沿用", status:"have", icon:"👕",
-          detail:`<h4>杏色恤衫(可沿用)</h4>
-            <p>與幼童軍恤衫相同,如合身可沿用。</p>` },
-        { id:"scout-f-culottes", title:"草青色裙褲", desc:"與幼童軍相同,可沿用", status:"have", icon:"👗",
-          detail:`<h4>裙褲(可沿用)</h4>
-            <p>童軍裙褲與幼童軍裙褲款式相同,如合身可沿用。</p>` },
-        { id:"scout-f-belt", title:"棕色皮帶", desc:"可沿用", status:"have", icon:"👔",
-          detail:`<h4>棕色皮帶(可沿用)</h4>
-            <p>與幼童軍皮帶相同,無需重買。</p>` },
-        { id:"scout-f-socks", title:"深草青色長襪", desc:"可沿用", status:"have", icon:"🧦",
-          detail:`<h4>深草青色長襪(可沿用)</h4>
-            <p>顏色與幼童軍相同。如襪子已起毛球或破洞建議更換。</p>` },
-        { id:"scout-f-shoes", title:"黑色皮鞋", desc:"可沿用", status:"have", icon:"👞",
-          detail:`<h4>黑色皮鞋(可沿用)</h4>
-            <p>學校皮鞋如合規格可沿用。檢查鞋底有否過度磨損。</p>` },
-        { id:"scout-f-scarf", title:"旅巾", desc:"可沿用", status:"have", icon:"🧣",
-          detail:`<h4>旅巾(可沿用)</h4>
-            <p>升團者可繼續沿用幼童軍時期的旅巾。</p>` },
-        { id:"scout-f-woggle", title:"童軍皮製巾圈", desc:"必須更換", status:"need", icon:"⭕",
-          detail:`<h4>童軍巾圈(必須更換)</h4>
-            <p>與幼童軍塑膠巾圈不同,需更換為<strong>童軍皮製巾圈</strong>。</p>` },
-        { id:"scout-f-badges", title:"基本徽章", desc:"狀況良好可沿用", status:"have", icon:"🎖️",
-          detail:`<h4>基本徽章(可沿用)</h4>
-            <p>世界童軍會員章、香港章、地域章、區章<strong>如狀況良好可沿用</strong>。</p>
-            <div class="warn">緊記:拆走所有幼童軍徽章(隊長章、幼童軍進度章等),年星及金紫荊獎章除外。</div>` }
-      ]
-    }
-  },
+    const buyLabel = {
+      supply: "香港童軍物品供應社購買",
+      any: "供應社或一般商店購買",
+      group: "由旅團頒發",
+      check: "向旅團／區查詢",
+      mixed: "供應社購買；旅章／區章／地域章向旅團查詢",
+      "group-or-supply": "由旅團頒發／供應社購買"
+    }[it.buy] || "";
+    return {
+      id, title: it.title, desc: it.desc, icon: it.icon, img: it.img, status,
+      detail: (it.detail || "") + note + (buyLabel ? `<p class="cite">🛒 ${buyLabel}</p>` : "")
+    };
+  });
+}
 
-  /* ─────────────── 深資童軍 ─────────────── */
-  venture: {
-    new: {
-      male: [
-        { id:"v-m-cap", title:"棗紅色軟帽", desc:"深資男團員指定帽款", status:"need", icon:"🧢",
-          detail:`<h4>棗紅色軟帽</h4>
-            <p>棗紅色軟帽(連深資童軍帽章)</p>
-            <ul>
-              <li>向右拉平,緊貼頭部,不可鬆垮</li>
-              <li>帽後小尾要塞入帽內,不可戴成「廚師帽」</li>
-              <li>帽章戴在<strong>左眼正上方</strong></li>
-            </ul>` },
-        { id:"v-m-cap-badge", title:"深資童軍帽章", desc:"金屬帽章", status:"need", icon:"🎖️",
-          detail:`<h4>深資童軍帽章</h4>
-            <p>金屬深資童軍帽章。</p>
-            <div class="warn">童軍升團注意:不可沿用童軍帽章,需更換為深資版本。</div>` },
-        { id:"v-m-shirt", title:"杏色短袖恤衫", desc:"與童軍相同款式", status:"need", icon:"👕",
-          detail:`<h4>杏色恤衫</h4>
-            <p>杏色、短袖、兩胸袋、無褶、肩帶——<strong>與童軍恤衫完全相同</strong>。</p>` },
-        { id:"v-m-trousers", title:"草青色長褲", desc:"深資男團員", status:"need", icon:"👖",
-          detail:`<h4>長褲(深資男團員)</h4>
-            <p>草青色、兩斜袋、兩後袋、有褶</p>
-            <ul>
-              <li>長度適中,配黑色短襪</li>
-              <li>穿在腰位,配棕色皮帶</li>
-            </ul>
-            <div class="warn">童軍升團注意:由短褲改為長褲,必須更換。</div>` },
-        { id:"v-m-belt", title:"棕色皮帶", desc:"與童軍相同", status:"need", icon:"👔",
-          detail:`<h4>棕色皮帶</h4>
-            <p>與童軍規格相同。</p>` },
-        { id:"v-m-socks", title:"黑色短襪", desc:"深資男團員", status:"need", icon:"🧦",
-          detail:`<h4>黑色短襪(深資男團員)</h4>
-            <p>黑色短襪。深資起改穿<strong>短襪 + 長褲</strong>。</p>
-            <div class="warn">童軍升團注意:由長襪改為短襪。</div>` },
-        { id:"v-m-shoes", title:"黑色無花紋綁帶皮鞋", desc:"與童軍相同", status:"need", icon:"👞",
-          detail:`<h4>黑色皮鞋</h4>
-            <p>與童軍規格相同:黑色、無花紋、綁帶。學校皮鞋如合規格可沿用。</p>` },
-        { id:"v-m-tie", title:"棗紅色領帶", desc:"深資童軍專屬", status:"need", icon:"👔",
-          detail:`<h4>棗紅色領帶</h4>
-            <p>深紅/棗紅色領帶,深資童軍專屬配件。</p>
-            <div class="warn">全新加入深資童軍必須購買。<br>童軍升團:童軍時期無需領帶,升團後必須購買。</div>` },
-        { id:"v-m-scarf", title:"旅巾", desc:"由旅團頒發", status:"check", icon:"🧣",
-          detail:`<h4>旅巾</h4>
-            <p>由旅團頒發,戴法與童軍時期相同。</p>` },
-        { id:"v-m-woggle", title:"皮製巾圈", desc:"與童軍相同", status:"need", icon:"⭕",
-          detail:`<h4>皮製巾圈</h4>
-            <p>與童軍皮製巾圈相同,深資可繼續使用。童軍升團者可沿用。</p>` },
-        { id:"v-m-badges", title:"基本徽章", desc:"世界童軍會員章、香港章、地域章、區章", status:"need", icon:"🎖️",
-          detail:`<h4>基本徽章(深資童軍)</h4>
-            <p>與童軍規格相同,佩戴位置不變。旅章由旅團頒發。</p>
-            <ul>
-              <li>世界童軍會員章:左胸袋中央</li>
-              <li>香港章:左胸袋蓋上,世界童軍會員章上方 3 厘米</li>
-              <li>地域章:右袖</li>
-              <li>區章:右袖,地域章下方</li>
-              <li>旅章:右袖(由旅團頒發)</li>
-            </ul>
-            <div class="tip">童軍升團可沿用原有徽章,只需追加深資專屬徽章(如晉陸章、活動章等)。</div>` }
-      ],
-      female: [
-        { id:"v-f-cap", title:"棗紅色軟帽", desc:"深資女團員指定帽款", status:"need", icon:"🧢",
-          detail:`<h4>棗紅色軟帽</h4>
-            <p>棗紅色軟帽(連深資童軍帽章)——與男團員相同。</p>` },
-        { id:"v-f-cap-badge", title:"深資童軍帽章", desc:"金屬帽章", status:"need", icon:"🎖️",
-          detail:`<h4>深資童軍帽章</h4>
-            <p>金屬深資童軍帽章。童軍升團需更換為深資版本。</p>` },
-        { id:"v-f-shirt", title:"杏色短袖恤衫", desc:"與童軍相同", status:"need", icon:"👕",
-          detail:`<h4>杏色恤衫</h4>
-            <p>與童軍恤衫完全相同。</p>` },
-        { id:"v-f-skirt", title:"草青色半截裙", desc:"深資女團員", status:"need", icon:"👗",
-          detail:`<h4>半截裙(深資女團員)</h4>
-            <p>草青色、側袋、無褶、<strong>及膝</strong></p>
-            <ul>
-              <li>配皮帶,長度及膝(不可過短或過長)</li>
-              <li>配肉色絲襪褲</li>
-            </ul>
-            <div class="warn">童軍升團注意:由裙褲(culottes)改為半截裙,必須更換。</div>` },
-        { id:"v-f-belt", title:"棕色皮帶", desc:"與童軍相同", status:"need", icon:"👔",
-          detail:`<h4>棕色皮帶</h4>
-            <p>與童軍規格相同。</p>` },
-        { id:"v-f-pantyhose", title:"肉色尼龍襪褲", desc:"深資女團員", status:"need", icon:"🧦",
-          detail:`<h4>肉色尼龍襪褲(深資女團員)</h4>
-            <p>肉色、尼龍、無花紋、襪褲(連褲襪)</p>
-            <div class="warn">童軍升團注意:由深綠長襪改為肉色襪褲,必須更換。<br>需自行到絲襪專門店購買。</div>` },
-        { id:"v-f-shoes", title:"黑色非綁帶中跟皮鞋", desc:"深資女團員", status:"need", icon:"👠",
-          detail:`<h4>黑色非綁帶中跟皮鞋(深資女團員)</h4>
-            <p>黑色、無花紋、<strong>非綁帶</strong>、<strong>中跟</strong>。slip-on 中跟款。</p>
-            <div class="warn">童軍升團注意:由綁帶低筒平底改為非綁帶中跟,鞋款必須更換。</div>` },
-        { id:"v-f-tie", title:"棗紅色領帶", desc:"深資女團員", status:"need", icon:"👔",
-          detail:`<h4>棗紅色領帶</h4>
-            <p>深紅/棗紅色領帶,深資女團員同樣佩戴。</p>
-            <div class="warn">童軍升團:童軍時期無需領帶,升團後必須購買。</div>` },
-        { id:"v-f-scarf", title:"旅巾", desc:"由旅團頒發", status:"check", icon:"🧣",
-          detail:`<h4>旅巾</h4>
-            <p>由旅團頒發。</p>` },
-        { id:"v-f-woggle", title:"皮製巾圈", desc:"與童軍相同", status:"need", icon:"⭕",
-          detail:`<h4>皮製巾圈</h4>
-            <p>與童軍皮製巾圈相同。</p>` },
-        { id:"v-f-badges", title:"基本徽章", desc:"與童軍相同", status:"need", icon:"🎖️",
-          detail:`<h4>基本徽章(深資童軍)</h4>
-            <p>與男團員規格相同,佩戴位置不變。旅章由旅團頒發。</p>
-            <div class="tip">童軍升團可沿用原有徽章。</div>` }
-      ]
-    },
-    upgrade: {
-      // 由童軍升深資
-      male: [
-        { id:"v-m-cap", title:"棗紅色軟帽", desc:"必須更換", status:"need", icon:"🧢",
-          detail:`<h4>棗紅色軟帽(必須更換)</h4>
-            <p>童軍深綠軟帽<strong>不可沿用</strong>,需購買<strong>棗紅色軟帽</strong>。</p>` },
-        { id:"v-m-cap-badge", title:"深資童軍帽章", desc:"必須更換", status:"need", icon:"🎖️",
-          detail:`<h4>深資童軍帽章(必須更換)</h4>
-            <p>童軍帽章不可沿用,需購買<strong>深資童軍帽章</strong>。</p>` },
-        { id:"v-m-shirt", title:"杏色短袖恤衫", desc:"可沿用", status:"have", icon:"👕",
-          detail:`<h4>杏色恤衫(可沿用)</h4>
-            <p>與童軍恤衫完全相同,可繼續使用。</p>` },
-        { id:"v-m-trousers", title:"草青色長褲", desc:"由短褲改長褲", status:"need", icon:"👖",
-          detail:`<h4>長褲(必須購買)</h4>
-            <p>由童軍短褲改為深資長褲。規格:草青色、兩斜袋、兩後袋、有褶。</p>
-            <div class="warn">童軍短褲不可沿用,必須購買深資長褲。</div>` },
-        { id:"v-m-belt", title:"棕色皮帶", desc:"可沿用", status:"have", icon:"👔",
-          detail:`<h4>棕色皮帶(可沿用)</h4>
-            <p>與童軍皮帶相同,可沿用。</p>` },
-        { id:"v-m-socks", title:"黑色短襪", desc:"由長襪改短襪", status:"need", icon:"🧦",
-          detail:`<h4>黑色短襪(必須購買)</h4>
-            <p>由童軍深綠長襪改為黑色短襪。深綠長襪不可沿用。</p>` },
-        { id:"v-m-shoes", title:"黑色綁帶皮鞋", desc:"可沿用", status:"have", icon:"👞",
-          detail:`<h4>黑色綁帶皮鞋(可沿用)</h4>
-            <p>規格與童軍相同:黑色、無花紋、綁帶。學校皮鞋如合規格可沿用。</p>` },
-        { id:"v-m-tie", title:"棗紅色領帶", desc:"必須購買", status:"need", icon:"👔",
-          detail:`<h4>棗紅色領帶(必須購買)</h4>
-            <p>童軍時期<strong>無需佩戴領帶</strong>。升團後必須購買<strong>棗紅色領帶</strong>。</p>` },
-        { id:"v-m-scarf", title:"旅巾", desc:"可沿用", status:"have", icon:"🧣",
-          detail:`<h4>旅巾(可沿用)</h4>
-            <p>可繼續沿用童軍時期的旅巾。</p>` },
-        { id:"v-m-woggle", title:"皮製巾圈", desc:"可沿用", status:"have", icon:"⭕",
-          detail:`<h4>皮製巾圈(可沿用)</h4>
-            <p>童軍皮製巾圈可沿用。</p>` },
-        { id:"v-m-badges", title:"基本徽章", desc:"可沿用", status:"have", icon:"🎖️",
-          detail:`<h4>基本徽章(可沿用)</h4>
-            <p>世界童軍會員章、香港章、地域章、區章如狀況良好可沿用。需追加<strong>深資晉陸章、活動章</strong>等深資專屬徽章。</p>
-            <div class="tip">旅章由旅團頒發,小隊章如有變更亦由旅團安排。</div>` }
-      ],
-      female: [
-        { id:"v-f-cap", title:"棗紅色軟帽", desc:"必須更換", status:"need", icon:"🧢",
-          detail:`<h4>棗紅色軟帽(必須更換)</h4>
-            <p>童軍深綠軟帽不可沿用,需購買棗紅色軟帽。</p>` },
-        { id:"v-f-cap-badge", title:"深資童軍帽章", desc:"必須更換", status:"need", icon:"🎖️",
-          detail:`<h4>深資童軍帽章(必須更換)</h4>
-            <p>需購買深資童軍帽章。</p>` },
-        { id:"v-f-shirt", title:"杏色短袖恤衫", desc:"可沿用", status:"have", icon:"👕",
-          detail:`<h4>杏色恤衫(可沿用)</h4>
-            <p>與童軍恤衫相同,可沿用。</p>` },
-        { id:"v-f-skirt", title:"草青色半截裙", desc:"由裙褲改半截裙", status:"need", icon:"👗",
-          detail:`<h4>半截裙(必須購買)</h4>
-            <p>由童軍裙褲(culottes)改為深資半截裙(及膝)。規格:草青色、側袋、無褶、及膝。</p>
-            <div class="warn">童軍裙褲不可沿用,必須購買半截裙。</div>` },
-        { id:"v-f-belt", title:"棕色皮帶", desc:"可沿用", status:"have", icon:"👔",
-          detail:`<h4>棕色皮帶(可沿用)</h4>
-            <p>與童軍皮帶相同,可沿用。</p>` },
-        { id:"v-f-pantyhose", title:"肉色尼龍襪褲", desc:"由長襪改襪褲", status:"need", icon:"🧦",
-          detail:`<h4>肉色尼龍襪褲(必須購買)</h4>
-            <p>由童軍深綠長襪改為肉色絲襪褲。需自行到絲襪專門店購買。</p>
-            <div class="warn">深綠長襪不可沿用。</div>` },
-        { id:"v-f-shoes", title:"黑色非綁帶中跟皮鞋", desc:"由綁帶改非綁帶", status:"need", icon:"👠",
-          detail:`<h4>黑色非綁帶中跟皮鞋(必須購買)</h4>
-            <p>由童軍綁帶低筒平底改為非綁帶中跟。鞋款必須更換。</p>
-            <div class="warn">童軍綁帶皮鞋不可沿用。</div>` },
-        { id:"v-f-tie", title:"棗紅色領帶", desc:"必須購買", status:"need", icon:"👔",
-          detail:`<h4>棗紅色領帶(必須購買)</h4>
-            <p>童軍時期無需佩戴領帶。升團後必須購買棗紅色領帶。</p>` },
-        { id:"v-f-scarf", title:"旅巾", desc:"可沿用", status:"have", icon:"🧣",
-          detail:`<h4>旅巾(可沿用)</h4>
-            <p>可沿用童軍時期的旅巾。</p>` },
-        { id:"v-f-woggle", title:"皮製巾圈", desc:"可沿用", status:"have", icon:"⭕",
-          detail:`<h4>皮製巾圈(可沿用)</h4>
-            <p>童軍皮製巾圈可沿用。</p>` },
-        { id:"v-f-badges", title:"基本徽章", desc:"可沿用", status:"have", icon:"🎖️",
-          detail:`<h4>基本徽章(可沿用)</h4>
-            <p>世界童軍會員章、香港章、地域章、區章如狀況良好可沿用。需追加深資專屬徽章。</p>` }
-      ]
-    }
-  },
-
-  /* ─────────────── 樂行童軍 ─────────────── */
-  rover: {
-    new: {
-      male: [
-        { id:"r-m-cap", title:"深綠色軟帽", desc:"樂行男團員指定帽款", status:"need", icon:"🧢",
-          detail:`<h4>深綠色軟帽</h4>
-            <p>深綠色軟帽(連童軍帽章)。樂行童軍帽款與童軍相同。</p>
-            <div class="tip">深資升樂行:可繼續沿用深資時期的軟帽,只更換帽章。</div>` },
-        { id:"r-m-cap-badge", title:"樂行童軍帽章", desc:"金屬帽章", status:"need", icon:"🎖️",
-          detail:`<h4>樂行童軍帽章</h4>
-            <p>金屬樂行童軍帽章。深資升樂行需更換為樂行版本。</p>
-            <div class="warn">深資升樂行:不可沿用深資帽章。</div>` },
-        { id:"r-m-shirt", title:"杏色短袖恤衫", desc:"與所有支部相同", status:"need", icon:"👕",
-          detail:`<h4>杏色恤衫</h4>
-            <p>杏色、短袖、兩胸袋、無褶、肩帶——<strong>與幼童軍/童軍/深資完全相同</strong>。</p>` },
-        { id:"r-m-trousers", title:"草青色長褲", desc:"樂行男團員", status:"need", icon:"👖",
-          detail:`<h4>長褲(樂行男團員)</h4>
-            <p>草青色、兩斜袋、兩後袋、有褶。與深資規格相同。</p>` },
-        { id:"r-m-belt", title:"棕色皮帶", desc:"與深資相同", status:"need", icon:"👔",
-          detail:`<h4>棕色皮帶</h4>
-            <p>與深資規格相同。</p>` },
-        { id:"r-m-socks", title:"黑色短襪", desc:"與深資相同", status:"need", icon:"🧦",
-          detail:`<h4>黑色短襪</h4>
-            <p>與深資規格相同。</p>` },
-        { id:"r-m-shoes", title:"黑色無花紋綁帶皮鞋", desc:"與深資相同", status:"need", icon:"👞",
-          detail:`<h4>黑色無花紋綁帶皮鞋</h4>
-            <p>與深資規格相同。</p>` },
-        { id:"r-m-scarf", title:"旅巾", desc:"由旅團頒發", status:"check", icon:"🧣",
-          detail:`<h4>旅巾</h4>
-            <p>由旅團頒發。深資升樂行可沿用。</p>` },
-        { id:"r-m-woggle", title:"皮製巾圈", desc:"與深資相同", status:"need", icon:"⭕",
-          detail:`<h4>皮製巾圈</h4>
-            <p>與深資規格相同,深資升樂行可沿用。</p>` },
-        { id:"r-m-badges", title:"基本徽章", desc:"世界童軍會員章、香港章、地域章、區章", status:"need", icon:"🎖️",
-          detail:`<h4>基本徽章(樂行童軍)</h4>
-            <p>與深資規格相同,佩戴位置不變。需追加樂行專屬徽章。</p>` }
-      ],
-      female: [
-        { id:"r-f-cap", title:"深綠色軟帽", desc:"樂行女團員指定帽款", status:"need", icon:"🧢",
-          detail:`<h4>深綠色軟帽</h4>
-            <p>深綠色軟帽(連童軍帽章)——與男團員相同。</p>` },
-        { id:"r-f-cap-badge", title:"樂行童軍帽章", desc:"金屬帽章", status:"need", icon:"🎖️",
-          detail:`<h4>樂行童軍帽章</h4>
-            <p>金屬樂行童軍帽章。深資升樂行需更換為樂行版本。</p>
-            <div class="warn">深資升樂行:不可沿用深資帽章。</div>` },
-        { id:"r-f-shirt", title:"杏色短袖恤衫", desc:"與深資相同", status:"need", icon:"👕",
-          detail:`<h4>杏色恤衫</h4>
-            <p>與深資恤衫完全相同。</p>` },
-        { id:"r-f-skirt", title:"草青色半截裙", desc:"樂行女團員", status:"need", icon:"👗",
-          detail:`<h4>半截裙(樂行女團員)</h4>
-            <p>草青色、側袋、無褶、及膝。與深資規格相同。</p>` },
-        { id:"r-f-belt", title:"棕色皮帶", desc:"與深資相同", status:"need", icon:"👔",
-          detail:`<h4>棕色皮帶</h4>
-            <p>與深資規格相同。</p>` },
-        { id:"r-f-pantyhose", title:"肉色尼龍襪褲", desc:"與深資相同", status:"need", icon:"🧦",
-          detail:`<h4>肉色尼龍襪褲</h4>
-            <p>與深資規格相同,需自行到絲襪專門店購買。</p>` },
-        { id:"r-f-shoes", title:"黑色非綁帶中跟皮鞋", desc:"與深資相同", status:"need", icon:"👠",
-          detail:`<h4>黑色非綁帶中跟皮鞋</h4>
-            <p>與深資規格相同:黑色、無花紋、非綁帶、中跟。</p>` },
-        { id:"r-f-scarf", title:"旅巾", desc:"由旅團頒發", status:"check", icon:"🧣",
-          detail:`<h4>旅巾</h4>
-            <p>由旅團頒發。深資升樂行可沿用。</p>` },
-        { id:"r-f-woggle", title:"皮製巾圈", desc:"與深資相同", status:"need", icon:"⭕",
-          detail:`<h4>皮製巾圈</h4>
-            <p>與深資規格相同。</p>` },
-        { id:"r-f-badges", title:"基本徽章", desc:"與深資相同", status:"need", icon:"🎖️",
-          detail:`<h4>基本徽章(樂行童軍)</h4>
-            <p>與深資規格相同。需追加樂行專屬徽章。</p>` }
-      ]
-    },
-    upgrade: {
-      // 由深資升樂行
-      male: [
-        { id:"r-m-cap-badge", title:"樂行童軍帽章", desc:"必須更換", status:"need", icon:"🎖️",
-          detail:`<h4>樂行童軍帽章(必須更換)</h4>
-            <p>深資帽章不可沿用,需購買<strong>樂行童軍帽章</strong>。軟帽本身可沿用深資的。</p>` },
-        { id:"r-m-shirt", title:"杏色短袖恤衫", desc:"可沿用", status:"have", icon:"👕",
-          detail:`<h4>杏色恤衫(可沿用)</h4>
-            <p>與深資恤衫相同。</p>` },
-        { id:"r-m-trousers", title:"草青色長褲", desc:"可沿用", status:"have", icon:"👖",
-          detail:`<h4>長褲(可沿用)</h4>
-            <p>與深資長褲相同。</p>` },
-        { id:"r-m-belt", title:"棕色皮帶", desc:"可沿用", status:"have", icon:"👔",
-          detail:`<h4>棕色皮帶(可沿用)</h4>
-            <p>與深資皮帶相同。</p>` },
-        { id:"r-m-socks", title:"黑色短襪", desc:"可沿用", status:"have", icon:"🧦",
-          detail:`<h4>黑色短襪(可沿用)</h4>
-            <p>與深資短襪相同。</p>` },
-        { id:"r-m-shoes", title:"黑色綁帶皮鞋", desc:"可沿用", status:"have", icon:"👞",
-          detail:`<h4>黑色綁帶皮鞋(可沿用)</h4>
-            <p>與深資皮鞋相同。</p>` },
-        { id:"r-m-tie", title:"無需領帶", desc:"樂行不戴領帶", status:"have", icon:"❌",
-          detail:`<h4>樂行童軍不佩戴領帶</h4>
-            <p>深資時期的棗紅色領帶<strong>升團後不需佩戴</strong>。可保留作紀念。</p>` },
-        { id:"r-m-scarf", title:"旅巾", desc:"可沿用", status:"have", icon:"🧣",
-          detail:`<h4>旅巾(可沿用)</h4>
-            <p>可沿用深資時期的旅巾。</p>` },
-        { id:"r-m-woggle", title:"皮製巾圈", desc:"可沿用", status:"have", icon:"⭕",
-          detail:`<h4>皮製巾圈(可沿用)</h4>
-            <p>深資皮製巾圈可沿用。</p>` },
-        { id:"r-m-badges", title:"基本徽章", desc:"可沿用", status:"have", icon:"🎖️",
-          detail:`<h4>基本徽章(可沿用)</h4>
-            <p>原有徽章如狀況良好可沿用。需追加樂行專屬徽章(如樂行晉陸章、活動章等)。</p>` }
-      ],
-      female: [
-        { id:"r-f-cap-badge", title:"樂行童軍帽章", desc:"必須更換", status:"need", icon:"🎖️",
-          detail:`<h4>樂行童軍帽章(必須更換)</h4>
-            <p>深資帽章不可沿用,需購買樂行童軍帽章。</p>` },
-        { id:"r-f-shirt", title:"杏色短袖恤衫", desc:"可沿用", status:"have", icon:"👕",
-          detail:`<h4>杏色恤衫(可沿用)</h4>
-            <p>與深資恤衫相同。</p>` },
-        { id:"r-f-skirt", title:"草青色半截裙", desc:"可沿用", status:"have", icon:"👗",
-          detail:`<h4>半截裙(可沿用)</h4>
-            <p>與深資半截裙相同。</p>` },
-        { id:"r-f-belt", title:"棕色皮帶", desc:"可沿用", status:"have", icon:"👔",
-          detail:`<h4>棕色皮帶(可沿用)</h4>
-            <p>與深資皮帶相同。</p>` },
-        { id:"r-f-pantyhose", title:"肉色尼龍襪褲", desc:"可沿用", status:"have", icon:"🧦",
-          detail:`<h4>肉色尼龍襪褲(可沿用)</h4>
-            <p>與深資襪褲相同。</p>` },
-        { id:"r-f-shoes", title:"黑色非綁帶中跟皮鞋", desc:"可沿用", status:"have", icon:"👠",
-          detail:`<h4>黑色非綁帶中跟皮鞋(可沿用)</h4>
-            <p>與深資皮鞋相同。</p>` },
-        { id:"r-f-tie", title:"無需領帶", desc:"樂行不戴領帶", status:"have", icon:"❌",
-          detail:`<h4>樂行童軍不佩戴領帶</h4>
-            <p>深資時期的棗紅色領帶升團後不需佩戴。</p>` },
-        { id:"r-f-scarf", title:"旅巾", desc:"可沿用", status:"have", icon:"🧣",
-          detail:`<h4>旅巾(可沿用)</h4>
-            <p>可沿用深資時期的旅巾。</p>` },
-        { id:"r-f-woggle", title:"皮製巾圈", desc:"可沿用", status:"have", icon:"⭕",
-          detail:`<h4>皮製巾圈(可沿用)</h4>
-            <p>深資皮製巾圈可沿用。</p>` },
-        { id:"r-f-badges", title:"基本徽章", desc:"可沿用", status:"have", icon:"🎖️",
-          detail:`<h4>基本徽章(可沿用)</h4>
-            <p>原有徽章如狀況良好可沿用。需追加樂行專屬徽章。</p>` }
-      ]
-    }
-  },
-
-  /* ─────────────── 領袖 ─────────────── */
-  leader: {
-    new: {
-      male: [
-        { id:"l-m-cap", title:"深綠色軟帽(領袖)", desc:"連職級帽章", status:"need", icon:"🧢",
-          detail:`<h4>領袖帽(男)</h4>
-            <p>深綠色軟帽(連<strong>職級帽章</strong>),領袖專用。</p>
-            <ul>
-              <li>帽章根據所屬<strong>職級</strong>(例如:見習領袖、助理領袖、領袖)而定</li>
-              <li>由所屬區/地域/總會頒發</li>
-            </ul>` },
-        { id:"l-m-shirt", title:"杏色短袖恤衫", desc:"與所有支部相同", status:"need", icon:"👕",
-          detail:`<h4>杏色恤衫(領袖)</h4>
-            <p>杏色、短袖、兩胸袋、無褶、肩帶。與所有青少年支部<strong>恤衫規格相同</strong>。</p>
-            <ul>
-              <li>徽章位置:世界童軍會員章(左胸袋中央)、香港章(左胸袋蓋上 3 厘米)、香港肩章(肩上)、職級肩章(肩上)</li>
-              <li>領袖亦可佩戴<strong>總會總部章/地域章/區章</strong>(取代青少年支部的小隊章)</li>
-            </ul>` },
-        { id:"l-m-trousers", title:"草青色長褲", desc:"領袖男裝", status:"need", icon:"👖",
-          detail:`<h4>長褲(男領袖)</h4>
-            <p>草青色、兩斜袋、兩後袋、有褶。配黑色短襪。</p>
-            <div class="tip">男領袖如需短褲制服(夏季戶外),可參考<strong>制服編號 5</strong>。</div>` },
-        { id:"l-m-belt", title:"棕色皮帶", desc:"與所有支部相同", status:"need", icon:"👔",
-          detail:`<h4>棕色皮帶</h4>
-            <p>與青少年支部規格相同。</p>` },
-        { id:"l-m-socks", title:"黑色短襪", desc:"領袖男裝", status:"need", icon:"🧦",
-          detail:`<h4>黑色短襪</h4>
-            <p>黑色短襪。</p>` },
-        { id:"l-m-shoes", title:"黑色無花紋綁帶皮鞋", desc:"領袖男裝", status:"need", icon:"👞",
-          detail:`<h4>黑色無花紋綁帶皮鞋</h4>
-            <p>黑色、無花紋、綁帶。與青少年支部規格相同。</p>` },
-        { id:"l-m-tie", title:"深綠色領帶", desc:"領袖專屬", status:"need", icon:"👔",
-          detail:`<h4>深綠色領帶</h4>
-            <p><strong>深綠色</strong>領帶,領袖專屬(童軍/深資為棗紅,領袖為深綠)。</p>
-            <div class="warn">如出席<strong>制服編號 4(領帶制服)</strong>,必須佩戴此領帶。如穿著編號 3(常規制服),改佩戴旅巾。</div>` },
-        { id:"l-m-badges", title:"基本徽章", desc:"世界童軍會員章、香港章、香港肩章、職級肩章", status:"need", icon:"🎖️",
-          detail:`<h4>基本徽章(領袖)</h4>
-            <p>領袖必備徽章:</p>
-            <ul>
-              <li><strong>世界童軍會員章</strong>:左胸袋中央</li>
-              <li><strong>香港章</strong>:左胸袋蓋上,世界童軍會員章上方 3 厘米</li>
-              <li><strong>香港肩章/旅章</strong>:肩章位置(由總會/旅團頒發)</li>
-              <li><strong>職級肩章</strong>:肩上(標示見習/助理/正式領袖)</li>
-              <li><strong>總會總部章/地域章/區章</strong>(如適用)</li>
-            </ul>
-            <div class="tip">部分徽章由總會/地域/區/旅團頒發,無需自行購買。</div>` }
-      ],
-      female: [
-        { id:"l-f-cap", title:"深綠色金邊硬帽(領袖)", desc:"連職級帽章", status:"need", icon:"👒",
-          detail:`<h4>領袖帽(女)</h4>
-            <p><strong>深綠色金邊硬帽</strong>(連<strong>職級帽章</strong>),女領袖專用。</p>
-            <ul>
-              <li>與男領袖軟帽不同,女領袖為<strong>金邊硬帽</strong></li>
-              <li>帽章根據所屬職級而定,由所屬區/地域/總會頒發</li>
-              <li>如配戴<strong>制服編號 4(領帶制服)</strong>,女領袖可用軟帽</li>
-            </ul>` },
-        { id:"l-f-shirt", title:"杏色短袖恤衫", desc:"與所有支部相同", status:"need", icon:"👕",
-          detail:`<h4>杏色恤衫(領袖)</h4>
-            <p>與青少年支部規格相同。徽章位置:世界童軍會員章、香港章、香港肩章、職級肩章、總會總部章/地域章/區章。</p>` },
-        { id:"l-f-skirt", title:"草青色半截裙", desc:"領袖女裝", status:"need", icon:"👗",
-          detail:`<h4>半截裙(女領袖)</h4>
-            <p>草青色、側袋、無褶、及膝。配肉色絲襪褲。</p>
-            <div class="tip">女領袖如需長褲制服(戶外活動),可參考<strong>制服編號 6(女性成員長褲制服)</strong>。</div>` },
-        { id:"l-f-belt", title:"棕色皮帶", desc:"與所有支部相同", status:"need", icon:"👔",
-          detail:`<h4>棕色皮帶</h4>
-            <p>與青少年支部規格相同。</p>` },
-        { id:"l-f-pantyhose", title:"肉色尼龍襪褲", desc:"領袖女裝", status:"need", icon:"🧦",
-          detail:`<h4>肉色尼龍襪褲</h4>
-            <p>肉色、尼龍、無花紋、襪褲。需自行到絲襪專門店購買。</p>` },
-        { id:"l-f-shoes", title:"黑色非綁帶中跟皮鞋", desc:"領袖女裝", status:"need", icon:"👠",
-          detail:`<h4>黑色非綁帶中跟皮鞋</h4>
-            <p>黑色、無花紋、非綁帶、中跟。slip-on 中跟款。</p>` },
-        { id:"l-f-tie", title:"深綠色領帶", desc:"領袖專屬", status:"need", icon:"👔",
-          detail:`<h4>深綠色領帶</h4>
-            <p>深綠色領帶,女領袖同樣佩戴。出席<strong>制服編號 4(領帶制服)</strong>必備。穿著編號 3(常規制服)則改佩戴旅巾。</p>` },
-        { id:"l-f-badges", title:"基本徽章", desc:"世界童軍會員章、香港章、香港肩章、職級肩章", status:"need", icon:"🎖️",
-          detail:`<h4>基本徽章(領袖)</h4>
-            <p>與男領袖規格相同。世界童軍會員章、香港章、香港肩章、職級肩章、總會總部章/地域章/區章。</p>` }
-      ]
-    },
-    upgrade: {
-      // 由樂行升領袖
-      male: [
-        { id:"l-m-cap", title:"深綠色軟帽(領袖)", desc:"必須更換", status:"need", icon:"🧢",
-          detail:`<h4>領袖帽(必須更換)</h4>
-            <p>樂行童軍軟帽<strong>不可沿用</strong>。需購買<strong>領袖專用軟帽(連職級帽章)</strong>。</p>
-            <div class="warn">職級帽章根據所屬職級(見習/助理/正式領袖)而定,由所屬區/地域/總會頒發。</div>` },
-        { id:"l-m-shirt", title:"杏色短袖恤衫", desc:"可沿用", status:"have", icon:"👕",
-          detail:`<h4>杏色恤衫(可沿用)</h4>
-            <p>與樂行恤衫完全相同,可沿用。</p>
-            <div class="warn">但徽章需更換為領袖專屬:<strong>世界童軍會員章 + 香港章 + 香港肩章 + 職級肩章 + 總會/地域/區章</strong>。</div>` },
-        { id:"l-m-trousers", title:"草青色長褲", desc:"可沿用", status:"have", icon:"👖",
-          detail:`<h4>長褲(可沿用)</h4>
-            <p>與樂行長褲相同。</p>` },
-        { id:"l-m-belt", title:"棕色皮帶", desc:"可沿用", status:"have", icon:"👔",
-          detail:`<h4>棕色皮帶(可沿用)</h4>
-            <p>與樂行皮帶相同。</p>` },
-        { id:"l-m-socks", title:"黑色短襪", desc:"可沿用", status:"have", icon:"🧦",
-          detail:`<h4>黑色短襪(可沿用)</h4>
-            <p>與樂行短襪相同。</p>` },
-        { id:"l-m-shoes", title:"黑色綁帶皮鞋", desc:"可沿用", status:"have", icon:"👞",
-          detail:`<h4>黑色綁帶皮鞋(可沿用)</h4>
-            <p>與樂行皮鞋相同。</p>` },
-        { id:"l-m-tie", title:"深綠色領帶", desc:"必須購買", status:"need", icon:"👔",
-          detail:`<h4>深綠色領帶(必須購買)</h4>
-            <p>樂行不戴領帶,升任領袖後必須購買<strong>深綠色領帶</strong>(與深資/樂行的棗紅色不同)。</p>` },
-        { id:"l-m-scarf", title:"旅巾(選用)", desc:"領袖可佩戴所屬旅巾", status:"check", icon:"🧣",
-          detail:`<h4>旅巾(選用)</h4>
-            <p>領袖如屬所屬旅團成員,可繼續佩戴<strong>所屬旅團的旅巾</strong>(出席所屬旅團活動時)。出席總會/地域/區活動時,一般不佩戴旅巾。</p>` },
-        { id:"l-m-badges", title:"領袖徽章", desc:"必須更換", status:"need", icon:"🎖️",
-          detail:`<h4>領袖徽章(必須更換)</h4>
-            <p>樂行時期的徽章不可沿用,需領袖專屬徽章:</p>
-            <ul>
-              <li><strong>世界童軍會員章</strong>:左胸袋中央</li>
-              <li><strong>香港章</strong>:左胸袋蓋上 3 厘米</li>
-              <li><strong>香港肩章/旅章</strong>:肩章位置</li>
-              <li><strong>職級肩章</strong>:肩上</li>
-              <li><strong>總會總部章/地域章/區章</strong></li>
-            </ul>
-            <div class="tip">部分徽章由總會/地域/區/旅團頒發,需時申請。詳情向所屬區總監查詢。</div>` }
-      ],
-      female: [
-        { id:"l-f-cap", title:"深綠色金邊硬帽(領袖)", desc:"必須更換", status:"need", icon:"👒",
-          detail:`<h4>深綠色金邊硬帽(必須更換)</h4>
-            <p>樂行軟帽<strong>不可沿用</strong>。需購買<strong>深綠色金邊硬帽</strong>(連職級帽章)。</p>
-            <div class="warn">金邊硬帽為女領袖專用,男領袖不適用。</div>` },
-        { id:"l-f-shirt", title:"杏色短袖恤衫", desc:"可沿用", status:"have", icon:"👕",
-          detail:`<h4>杏色恤衫(可沿用)</h4>
-            <p>與樂行恤衫相同。徽章需更換為領袖專屬。</p>` },
-        { id:"l-f-skirt", title:"草青色半截裙", desc:"可沿用", status:"have", icon:"👗",
-          detail:`<h4>半截裙(可沿用)</h4>
-            <p>與樂行半截裙相同。</p>` },
-        { id:"l-f-belt", title:"棕色皮帶", desc:"可沿用", status:"have", icon:"👔",
-          detail:`<h4>棕色皮帶(可沿用)</h4>
-            <p>與樂行皮帶相同。</p>` },
-        { id:"l-f-pantyhose", title:"肉色尼龍襪褲", desc:"可沿用", status:"have", icon:"🧦",
-          detail:`<h4>肉色尼龍襪褲(可沿用)</h4>
-            <p>與樂行襪褲相同。</p>` },
-        { id:"l-f-shoes", title:"黑色非綁帶中跟皮鞋", desc:"可沿用", status:"have", icon:"👠",
-          detail:`<h4>黑色非綁帶中跟皮鞋(可沿用)</h4>
-            <p>與樂行皮鞋相同。</p>` },
-        { id:"l-f-tie", title:"深綠色領帶", desc:"必須購買", status:"need", icon:"👔",
-          detail:`<h4>深綠色領帶(必須購買)</h4>
-            <p>樂行不戴領帶,升任領袖後必須購買深綠色領帶。</p>` },
-        { id:"l-f-scarf", title:"旅巾(選用)", desc:"領袖可佩戴所屬旅巾", status:"check", icon:"🧣",
-          detail:`<h4>旅巾(選用)</h4>
-            <p>領袖如屬所屬旅團成員,可繼續佩戴所屬旅團的旅巾。</p>` },
-        { id:"l-f-badges", title:"領袖徽章", desc:"必須更換", status:"need", icon:"🎖️",
-          detail:`<h4>領袖徽章(必須更換)</h4>
-            <p>需領袖專屬徽章,與男領袖規格相同。</p>` }
-      ]
-    }
-  }
+/* ===========================================================
+   官方整套制服實相（香港童軍總會官網 /uploads/member/）
+   =========================================================== */
+const OFFICIAL_PHOTOS = {
+  cub:     { land: { male:"Cub_B.jpg", female:"Cub_G.jpg" }, src:"https://www.scout.org.hk/tc/youth-members/cub-scouts/index.html?sid=2" },
+  scout:   { land: { male:"Scout_B.1.jpg", female:"Scout_G.1.jpg" }, sea: { male:"Scout_Sea_B.jpg", female:"Scout_Sea_G.jpg" }, air: { male:"Scout_Air_B.jpg", female:"Scout_Air_G.jpg" },
+             src:"https://www.scout.org.hk/tc/youth-members/scouts/index.html?sid=2" },
+  venture: { land: { male:"venture_scouts_B.jpg", female:"venture_scouts_G_dress.jpg" }, sea: { male:"venture_scouts_sea_B.jpg", female:"venture_scouts_sea_G_dress.jpg" }, air: { male:"venture_scouts_air_B.jpg", female:"venture_scouts_air_G_dress.jpg" },
+             src:"https://www.scout.org.hk/tc/youth-members/venture-scouts/index.html?sid=2" },
+  rover:   { land: { male:"rover_scouts_B.jpg", female:"rover_scouts_G_dress.jpg" }, sea: { male:"rover_scouts_sea_B.jpg", female:"rover_scouts_sea_G_dress.jpg" }, air: { male:"rover_scouts_air_B.jpg", female:"rover_scouts_air_G_dress.jpg" },
+             src:"https://www.scout.org.hk/tc/youth-members/rover-scouts/index.html?sid=2" },
+  leader:  { land: { male:"adult_uniform_3_B.jpg", female:"adult_uniform_3_G.jpg" }, sea: { male:"leader_sea_3_B.jpg", female:"leader_sea_3_G.jpg" }, air: { male:"leader_air_3_B.jpg", female:"leader_air_3_G.jpg" },
+             src:"https://www.scout.org.hk/tc/adult-members/leader/index.html?sid=2" }
 };
-
-// 預覽圖：總會官方制服實相（scout.org.hk），領袖暫用本 APP 插畫
-const PREVIEW_IMG = {
-  "grasshopper-male":   null,
-  "grasshopper-female": null,
-  "cub-male":   "https://www.scout.org.hk/uploads/member/Cub_B.jpg",
-  "cub-female": "https://www.scout.org.hk/uploads/member/Cub_G.jpg",
-  "scout-male":   "https://www.scout.org.hk/uploads/member/Scout_B.1.jpg",
-  "scout-female": "https://www.scout.org.hk/uploads/member/Scout_G.1.jpg",
-  "venture-male":   "https://www.scout.org.hk/uploads/member/venture_scouts_B.jpg",
-  "venture-female": "https://www.scout.org.hk/uploads/member/venture_scouts_G_dress.jpg",
-  "rover-male":   "https://www.scout.org.hk/uploads/member/rover_scouts_B.jpg",
-  "rover-female": "https://www.scout.org.hk/uploads/member/rover_scouts_G_dress.jpg",
-  "leader-male":   "assets/images/leader-male.jpg",
-  "leader-female": "assets/images/leader-female.jpg"
+const OFFICIAL_IMG_BASE = "https://www.scout.org.hk/uploads/member/";
+const LOCAL_FALLBACK = {
+  cub: { male:"assets/images/cub-male.jpg", female:"assets/images/cub-female.jpg" },
+  scout: { male:"assets/images/scout-male.jpg", female:"assets/images/scout-female.jpg" },
+  venture: { male:"assets/images/venture-male.jpg", female:"assets/images/venture-female.jpg" },
+  rover: { male:"assets/images/rover-male.jpg", female:"assets/images/rover-female.jpg" },
+  leader: { male:"assets/images/leader-male.jpg", female:"assets/images/leader-female.jpg" }
 };
-
-// 配件實相（總會官方頁；點開清單時作參考）
-const ITEM_PHOTOS = {
-  cub: { male: "https://www.scout.org.hk/uploads/member/Cub_B.jpg", female: "https://www.scout.org.hk/uploads/member/Cub_G.jpg", src: "https://www.scout.org.hk/tc/youth-members/cub-scouts/index.html?sid=2" },
-  scout: { male: "https://www.scout.org.hk/uploads/member/Scout_B.1.jpg", female: "https://www.scout.org.hk/uploads/member/Scout_G.1.jpg", src: "https://www.scout.org.hk/tc/youth-members/scouts/index.html?sid=2" },
-  venture: { male: "https://www.scout.org.hk/uploads/member/venture_scouts_B.jpg", female: "https://www.scout.org.hk/uploads/member/venture_scouts_G_dress.jpg", src: "https://www.scout.org.hk/tc/youth-members/venture-scouts/index.html?sid=2" },
-  rover: { male: "https://www.scout.org.hk/uploads/member/rover_scouts_B.jpg", female: "https://www.scout.org.hk/uploads/member/rover_scouts_G_dress.jpg", src: "https://www.scout.org.hk/tc/youth-members/rover-scouts/index.html?sid=2" },
-  leader: { male: "assets/images/leader-male.jpg", female: "assets/images/leader-female.jpg", src: "https://www.scout.org.hk/tc/adult-members/leader/index.html?sid=2" }
-};
+function officialPhoto(section, branch, gender){
+  const p = OFFICIAL_PHOTOS[section];
+  if(!p) return null;
+  const b = p[branch] || p.land;
+  const file = b && b[gender];
+  return { url: file ? OFFICIAL_IMG_BASE + file : null, src: p.src, fallback: LOCAL_FALLBACK[section]?.[gender] || null };
+}

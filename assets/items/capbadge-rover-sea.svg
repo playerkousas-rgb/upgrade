@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+<rect width="640" height="400" fill="#ffffff"/>
+<ellipse cx="320" cy="362" rx="190" ry="14" fill="#000" opacity=".08"/>
+
+<g stroke="#7a5b12" stroke-width="3">
+ <circle cx="320" cy="190" r="115" fill="#c0c0c0"/>
+ <circle cx="320" cy="190" r="98" fill="none" stroke="#fff" opacity=".5"/>
+ <path d="M320 100 Q280 150 300 190 Q320 170 320 240 Q320 170 340 190 Q360 150 320 100 Z" fill="#7a5b12"/>
+ <path d="M260 215 Q320 250 380 215 L375 235 Q320 265 265 235 Z" fill="#7a5b12"/>
+</g>
+<text x="320" y="345" font-family="sans-serif" font-size="22" text-anchor="middle" fill="#555">樂行海童軍帽章</text>
+</svg>
