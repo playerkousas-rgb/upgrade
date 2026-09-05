@@ -1,7 +1,7 @@
 {
-  "name": "香港童軍制服準備指南",
-  "short_name": "童軍制服指南",
-  "description": "由小童軍到領袖,6 個支部、6 種升團情境,家長一眼睇晒要買咩。",
+  "name": "童軍準備指南",
+  "short_name": "童軍準備指南",
+  "description": "由小童軍到領袖,6 個支部進團及升團準備指南。",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

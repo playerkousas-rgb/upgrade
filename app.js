@@ -1,5 +1,5 @@
 /* ===========================================================
-   香港童軍制服準備指南 — 主程式
+   童軍準備指南 — 主程式
    =========================================================== */
 
 let currentSection = "cub";   // 預設幼童軍
@@ -125,38 +125,34 @@ const BADGES_OVERVIEW = {
 };
 
 function renderBadgesOverview(){
-  let html = `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:.8rem;margin-top:.8rem">`;
-  for(const key in BADGES_OVERVIEW){
-    const b = BADGES_OVERVIEW[key];
-    html += `<div style="border:1px solid var(--line);border-left:4px solid ${b.color};border-radius:8px;padding:.8rem 1rem;background:#fafafa">
-      <h3 style="margin:0 0 .3rem;font-size:1rem;color:${b.color}">${b.name} <span style="font-size:.75rem;color:#888;font-weight:400">(${b.age})</span></h3>
-      <p style="margin:.2rem 0;font-size:.8rem"><strong>獎章制度:</strong>${b.type}</p>
-      <details style="margin:.3rem 0">
-        <summary style="font-size:.85rem;color:${b.color}">誓詞</summary>
-        <p style="font-size:.85rem;margin:.3rem 0;font-style:italic">${b.promise}</p>
-      </details>
-      <details style="margin:.3rem 0">
-        <summary style="font-size:.85rem;color:${b.color}">規律</summary>
-        <p style="font-size:.85rem;margin:.3rem 0;font-style:italic">${b.law}</p>
-      </details>
-      <details style="margin:.3rem 0">
-        <summary style="font-size:.85rem;color:${b.color}">進度性獎章(${b.badges.length}個)</summary>
-        <ul style="font-size:.85rem;line-height:1.7;margin:.3rem 0 0 1rem;padding:0">
-          ${b.badges.map(bg=>`<li><strong>${bg.name}</strong> — ${bg.desc}</li>`).join("")}
-        </ul>
-      </details>
-      <p style="font-size:.78rem;color:#666;margin:.4rem 0 0;border-top:1px dashed #ddd;padding-top:.3rem">${b.note}</p>
-    </div>`;
-  }
-  html += `</div>`;
-  return html;
+  const b = BADGES_OVERVIEW[currentSection];
+  if(!b) return '';
+  return `<div style="border:1px solid var(--line);border-left:4px solid ${b.color};border-radius:8px;padding:.8rem 1rem;background:#fafafa">
+    <h3 style="margin:0 0 .3rem;font-size:1rem;color:${b.color}">${b.name} <span style="font-size:.75rem;color:#888;font-weight:400">(${b.age})</span></h3>
+    <p style="margin:.2rem 0;font-size:.8rem"><strong>獎章制度:</strong>${b.type}</p>
+    <details style="margin:.3rem 0">
+      <summary style="font-size:.85rem;color:${b.color}">誓詞</summary>
+      <p style="font-size:.85rem;margin:.3rem 0;font-style:italic">${b.promise}</p>
+    </details>
+    <details style="margin:.3rem 0">
+      <summary style="font-size:.85rem;color:${b.color}">規律</summary>
+      <p style="font-size:.85rem;margin:.3rem 0;font-style:italic">${b.law}</p>
+    </details>
+    <details style="margin:.3rem 0">
+      <summary style="font-size:.85rem;color:${b.color}">進度性獎章(${b.badges.length}個)</summary>
+      <ul style="font-size:.85rem;line-height:1.7;margin:.3rem 0 0 1rem;padding:0">
+        ${b.badges.map(bg=>`<li><strong>${bg.name}</strong> — ${bg.desc}</li>`).join("")}
+      </ul>
+    </details>
+    <p style="font-size:.78rem;color:#666;margin:.4rem 0 0;border-top:1px dashed #ddd;padding-top:.3rem">${b.note}</p>
+  </div>`;
 }
 const TRANSITIONS = {
   grasshopper: {
     title: "由小童軍升幼童軍",
     color: "var(--cub)",
     items: [
-      { q: "升團條件?", a: "達到幼童軍年齡(2025 年 8 月起為<strong>6 歲</strong>)即可。通常於<strong>9 月新學年</strong>升團。" },
+      { q: "升團條件?", a: "達到幼童軍年齡(2025 年 8 月起為<strong>6 歲</strong>)即可。請向<strong>所屬旅團領袖</strong>查詢升團安排。" },
       { q: "幼童軍誓詞?", a: "<em>我願盡所能,對神明,對國家,盡責任;對別人,要幫助;對規律,必遵行。</em>" },
       { q: "幼童軍規律?", a: "<em>幼童軍,盡所能,先顧別人才顧己,日行一善富精神。</em>" },
       { q: "會員章考核?", a: "入團後 3 個月內完成。內容包括:童軍誓詞規律、徽章知識、簡單紮營/繩結等。" },
@@ -168,7 +164,7 @@ const TRANSITIONS = {
     title: "由小童軍升幼童軍",
     color: "var(--cub)",
     items: [
-      { q: "升團條件?", a: "達到幼童軍年齡(2025 年 8 月起為<strong>6 歲</strong>)即可。通常於<strong>9 月新學年</strong>升團。" },
+      { q: "升團條件?", a: "達到幼童軍年齡(2025 年 8 月起為<strong>6 歲</strong>)即可。請向<strong>所屬旅團領袖</strong>查詢升團安排。" },
       { q: "幼童軍誓詞?", a: "<em>我願盡所能,對神明,對國家,盡責任;對別人,要幫助;對規律,必遵行。</em>" },
       { q: "幼童軍規律?", a: "<em>幼童軍,盡所能,先顧別人才顧己,日行一善富精神。</em>" },
       { q: "會員章考核?", a: "入團後 3 個月內完成。內容包括:童軍誓詞規律、徽章知識、簡單紮營/繩結等。" },
@@ -256,6 +252,65 @@ function updateBadgesOverview(){
 updateBadgesOverview();
 
 /* ===========================================================
+   進度性獎章歷程圖 — 每個支部的考驗流程
+   =========================================================== */
+const BADGE_TIMELINES = {
+  grasshopper: null,
+  cub: [
+    { stage: "1", name: "幼童軍獎章", age: "入團後", color: "var(--cub)", desc: "入團後第一個目標,於團集會內完成各項活動" },
+    { stage: "2", name: "幼童軍歷奇章", age: "完成獎章後", color: "var(--cub)", desc: "需先完成幼童軍獎章" },
+    { stage: "3", name: "幼童軍高級歷奇章", age: "完成歷奇章後", color: "var(--cub)", desc: "需先完成幼童軍歷奇章" },
+    { stage: "⭐", name: "金紫荊獎章", age: "年滿 9.5 歲", color: "#FFD700", desc: "幼童軍支部<strong>最高榮譽</strong>。考核:戶外挑戰(露營必修)、歷險挑戰、領導才能" }
+  ],
+  scout: [
+    { stage: "1", name: "童軍探索獎章", age: "年滿 11 歲", color: "var(--scout)", desc: "需考獲會員章。項目:戶外挑戰、個人發展、社會服務" },
+    { stage: "2", name: "童軍標準獎章", age: "年滿 12 歲", color: "var(--scout)", desc: "需完成探索獎章部分項目" },
+    { stage: "3", name: "童軍高級獎章", age: "年滿 13 歲", color: "var(--scout)", desc: "需完成標準獎章項目" },
+    { stage: "⭐", name: "總領袖獎章", age: "年滿 14 歲", color: "#FFD700", desc: "童軍支部<strong>最高榮譽</strong>。需完成探索、標準、高級三獎章" }
+  ],
+  venture: [
+    { stage: "🔰", name: "深資童軍肩章", age: "入團後", color: "var(--venture)", desc: "先決條件:完成肩章方可報考深資童軍獎章" },
+    { stage: "1", name: "深資童軍獎章", age: "完成4個段章後", color: "var(--venture)", desc: "需考獲「責任」、「自立」、「活動」、「探險」4 個段章" },
+    { stage: "⭐", name: "榮譽童軍獎章", age: "完成深資獎章後", color: "#FFD700", desc: "深資支部<strong>最高榮譽</strong>(前身:Dragon Scout Award)。需完成深資獎章+4 段金帶" }
+  ],
+  rover: [
+    { stage: "🔰", name: "樂行童軍肩章", age: "入團後", color: "var(--rover)", desc: "先決條件:完成肩章方可報考樂行童軍獎章" },
+    { stage: "1", name: "樂行童軍獎章", age: "完成肩章後", color: "var(--rover)", desc: "項目:童軍知識、社區服務、戶外活動、個人興趣、人際關係、個人價值觀、認識世界、生活體驗" },
+    { stage: "⭐", name: "貝登堡獎章", age: "完成樂行獎章後", color: "#FFD700", desc: "樂行支部<strong>最高榮譽</strong>(以童軍創辦人命名)。項目:服務、童軍技能、探險、生活體驗" }
+  ],
+  leader: [
+    { stage: "🎓", name: "木章 Wood Badge", age: "完成訓練後", color: "var(--leader)", desc: "完成<strong>領袖訓練課程</strong>(基本訓練+在職訓練)後獲頒" },
+    { stage: "🏅", name: "優異服務獎勵", age: "長期服務後", color: "var(--leader)", desc: "表揚長期服務的領袖" },
+    { stage: "⭐", name: "總監嘉許 / 高級嘉許", age: "資深領袖", color: "#FFD700", desc: "由香港總監頒發" }
+  ]
+};
+
+function renderBadgeTimeline(){
+  const items = BADGE_TIMELINES[currentSection];
+  if(!items) return '';
+  const sec = SECTIONS[currentSection];
+  let html = `<h3 style="color:var(--scout-green);margin-top:1.5rem">📊 ${sec.name}進度性獎章歷程</h3>`;
+  html += `<div style="display:flex;flex-wrap:wrap;gap:.6rem;margin:.8rem 0;align-items:center">`;
+  items.forEach((item, idx) => {
+    html += `<div style="flex:1;min-width:120px;border:2px solid ${item.color};border-radius:10px;padding:.6rem;text-align:center;background:white">
+      <div style="font-size:1.5rem;margin-bottom:.2rem">${item.stage}</div>
+      <div style="font-weight:700;font-size:.85rem;color:${item.color}">${item.name}</div>
+      <div style="font-size:.75rem;color:#888;margin:.2rem 0">${item.age}</div>
+    </div>`;
+    if(idx < items.length - 1){
+      html += `<div style="font-size:1.2rem;color:#ccc;flex-shrink:0">→</div>`;
+    }
+  });
+  html += `</div>`;
+  html += `<details style="margin:.5rem 0"><summary style="font-size:.85rem;color:var(--scout-green)">查看詳細考驗內容</summary><ul style="font-size:.85rem;line-height:1.7;margin:.3rem 0 0 1rem;padding:0">`;
+  items.forEach(item => {
+    html += `<li><strong>${item.name}</strong> — ${item.desc}</li>`;
+  });
+  html += `</ul></details>`;
+  return html;
+}
+
+/* ===========================================================
    支部選擇
    =========================================================== */
 function selectSection(s){
@@ -273,8 +328,21 @@ function selectSection(s){
   } else {
     $("mode-upgrade").style.display = "";
   }
+  // 依支部顯示/隱藏區塊
+  document.querySelectorAll(".card[data-hide-for]").forEach(card => {
+    const hideFor = card.getAttribute("data-hide-for").split(",");
+    card.style.display = hideFor.includes(s) ? "none" : "";
+  });
+  // 依支部顯示/隱藏個別元素(FAQ、穿著錯誤等)
+  document.querySelectorAll("[data-show-for]").forEach(el => {
+    const showFor = el.getAttribute("data-show-for").split(",");
+    el.style.display = showFor.includes(s) ? "" : "none";
+  });
   render();
   updateTransition();
+  // 更新進度性獎章歷程圖
+  const timelineEl = document.getElementById("badge-timeline");
+  if(timelineEl) timelineEl.innerHTML = renderBadgeTimeline();
 }
 
 function selectMode(m){
@@ -326,12 +394,17 @@ function render(){
         <p>支部年齡: ${sec.age}</p>
         ${sec.note ? `<p style="font-size:.88rem;color:var(--scout-olive)">${sec.note}</p>` : ""}
         <ul>
-          ${mode === "upgrade" && sec.upgradeFrom
-            ? `<li>✅ <strong>可沿用</strong>大部分原有制服(帽、巾圈等需更換)</li>
-               <li>🔄 必須更換<strong>帽、帽章、巾圈</strong></li>
+          ${currentSection === "grasshopper"
+            ? `<li>📋 向<strong>所屬旅團領袖</strong>查詢當季服裝安排</li>
+               <li>🧣 旅巾、旅章由旅團頒發</li>`
+            : currentSection === "cub"
+            ? `<li>🛒 需購買<strong>完整制服套裝</strong></li>
+               <li>📋 旅巾、旅章由旅團頒發</li>`
+            : mode === "upgrade" && sec.upgradeFrom
+            ? `<li>🔄 必須更換<strong>帽、帽章、巾圈</strong></li>
                <li>🆕 升團後新增的配件需購買</li>`
             : `<li>🛒 需購買<strong>完整制服套裝</strong></li>
-               <li>📋 旅巾、帽章(部分)由旅團頒發</li>`}
+               <li>📋 旅巾、旅章(部分)由旅團頒發</li>`}
         </ul>
       </div>
     </div>
@@ -429,3 +502,6 @@ function resetAllMarks(){
 
 // 初始化
 selectSection("cub");
+// 初始渲染進度性獎章歷程圖
+const timelineEl = document.getElementById("badge-timeline");
+if(timelineEl) timelineEl.innerHTML = renderBadgeTimeline();

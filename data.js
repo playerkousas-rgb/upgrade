@@ -1,5 +1,5 @@
 /* ===========================================================
-   香港童軍制服準備指南 — 完整資料庫
+   童軍準備指南 — 完整資料庫
    資料來源:香港童軍總會《儀容與制服手冊》2025 年版
    =========================================================== */
 
@@ -10,7 +10,7 @@ const SECTIONS = {
     nameEn: "Grasshopper Scout",
     age: "5.5–8 歲",
     color: "#ff7a1a",
-    note: "小童軍支部由 2024 年起實行新指引,沒有指定正式制服。團集會時由所屬小童軍團長規定服裝。",
+    note: "小童軍支部由 2024 年起實行新指引,沒有指定制服。團集會時由所屬小童軍團長規定服裝。一般要求:單色 T 恤或活動服、單色短褲或長褲、運動鞋。",
     upgradeFrom: null,
     upgradeTo: "cub"
   },
@@ -78,37 +78,28 @@ const UNIFORMS = {
   grasshopper: {
     new: {
       male: [
-        { id:"gh-clothes", title:"集會服裝", desc:"由所屬小童軍團長規定", status:"check", icon:"👕",
-          detail:`<h4>小童軍集會服裝</h4>
-            <p>小童軍支部由 2024 年起實行新指引,<strong>沒有指定正式制服</strong>。一般要求:</p>
+        { id:"gh-clothes", title:"「小童軍」沒有正式制服,那要買什麼?", desc:"由所屬小童軍團長規定", status:"check", icon:"👕",
+          detail:`<h4>小童軍服裝安排</h4>
+            <p>小童軍支部由 2024 年起實行新指引,<strong>沒有指定制服</strong>。團集會時由<strong>所屬小童軍團長</strong>規定服裝。一般要求:</p>
             <ul>
-              <li><strong>上衣</strong>:橙色小童軍活動服;或單色、有領/圓領、短袖/長袖上衣</li>
-              <li><strong>褲</strong>:單色、短褲或長褲</li>
-              <li><strong>帽(非必須)</strong>:單色、闊邊漁夫帽或鴨咀帽(棒球帽)</li>
-              <li><strong>襪</strong>:單色、短襪或長襪</li>
+              <li><strong>上衣</strong>:單色 T 恤或活動服(部分旅團會有自己一套戶外活動服)</li>
+              <li><strong>褲</strong>:單色短褲或長褲</li>
               <li><strong>鞋</strong>:運動鞋</li>
-              <li><strong>背心/風褸(非必須)</strong>:簡單款式,佩戴小童軍團員章在左胸前</li>
             </ul>
-            <div class="tip">已宣誓小童軍可佩戴<strong>小童軍團員章 + 旅巾</strong>。未宣誓只可佩戴旅章、區章(如有)。</div>` },
-        { id:"gh-scarf", title:"旅巾", desc:"由所屬旅團提供", status:"check", icon:"🧣",
-          detail:`<h4>旅巾</h4>
-            <p><strong>由小童軍團長提供</strong>,宣誓後才可佩戴。假若穿著有領上衣,旅巾在衣領外,使用<strong>顏色巾圈</strong>固定。</p>` },
-        { id:"gh-badge", title:"小童軍團員章", desc:"宣誓後佩戴", status:"check", icon:"🎖️",
-          detail:`<h4>小童軍團員章</h4>
-            <p>佩戴在<strong>上衣左胸前</strong>位置。進步獎章佩戴在<strong>短袖上衣左袖縫線上方中央位置</strong>或長袖上衣相同位置。</p>
-            <div class="tip">除上列徽章外,不可佩戴其他徽章。除顏色巾圈外,不可使用其他支部制服配件。</div>` }
+            <div class="tip">已宣誓小童軍可佩戴<strong>小童軍團員章 + 旅巾</strong>。部分旅團也會有自己一套,不一定購買總會橙色的。詳情請向團長查詢。</div>
+            <div class="warn">先向<strong>所屬旅團領袖</strong>查詢當季制服安排(部分旅團會統一訂購)。</div>` }
       ],
       female: [
-        { id:"gh-f-clothes", title:"集會服裝", desc:"由所屬小童軍團長規定", status:"check", icon:"👕",
-          detail:`<h4>小童軍集會服裝</h4>
-            <p>與男團員規格相同。小童軍支部由 2024 年起實行新指引,沒有指定正式制服。一般要求:橙色小童軍活動服或單色上衣、單色短褲或長褲、運動鞋。</p>
-            <div class="tip">已宣誓小童軍可佩戴<strong>小童軍團員章 + 旅巾</strong>。</div>` },
-        { id:"gh-f-scarf", title:"旅巾", desc:"由所屬旅團提供", status:"check", icon:"🧣",
-          detail:`<h4>旅巾</h4>
-            <p>由小童軍團長提供,宣誓後才可佩戴。</p>` },
-        { id:"gh-f-badge", title:"小童軍團員章", desc:"宣誓後佩戴", status:"check", icon:"🎖️",
-          detail:`<h4>小童軍團員章</h4>
-            <p>佩戴在<strong>上衣左胸前</strong>位置。進步獎章佩戴在<strong>短袖上衣左袖縫線上方中央位置</strong>。</p>` }
+        { id:"gh-f-clothes", title:"「小童軍」沒有正式制服,那要買什麼?", desc:"由所屬小童軍團長規定", status:"check", icon:"👕",
+          detail:`<h4>小童軍服裝安排</h4>
+            <p>小童軍支部由 2024 年起實行新指引,<strong>沒有指定制服</strong>。團集會時由<strong>所屬小童軍團長</strong>規定服裝。一般要求:</p>
+            <ul>
+              <li><strong>上衣</strong>:單色 T 恤或活動服(部分旅團會有自己一套戶外活動服)</li>
+              <li><strong>褲</strong>:單色短褲或長褲</li>
+              <li><strong>鞋</strong>:運動鞋</li>
+            </ul>
+            <div class="tip">已宣誓小童軍可佩戴<strong>小童軍團員章 + 旅巾</strong>。部分旅團也會有自己一套,不一定購買總會橙色的。詳情請向團長查詢。</div>
+            <div class="warn">先向<strong>所屬旅團領袖</strong>查詢當季制服安排(部分旅團會統一訂購)。</div>` }
       ]
     },
     upgrade: {
