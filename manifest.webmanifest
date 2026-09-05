@@ -1,0 +1,19 @@
+{
+  "name": "香港童軍制服準備指南",
+  "short_name": "童軍制服指南",
+  "description": "由小童軍到領袖,6 個支部、6 種升團情境,家長一眼睇晒要買咩。",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f5f5f3",
+  "theme_color": "#0a5c36",
+  "lang": "zh-HK",
+  "categories": ["education", "lifestyle", "utilities"],
+  "icons": [
+    { "src": "assets/favicon-32.png", "sizes": "32x32", "type": "image/png", "purpose": "any" },
+    { "src": "assets/logo-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "assets/logo-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "assets/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any" }
+  ]
+}

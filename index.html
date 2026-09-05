@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a5c36">
+<title>香港童軍制服準備指南</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/logo-192.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="童軍制服指南">
+<meta name="description" content="香港童軍總會制服準備指南 — 涵蓋小童軍升幼童軍、幼童軍升童軍、童軍升深資童軍、深資升樂行、樂行升領袖。">
+<style>
+:root{
+  --scout-green:#0a5c36;
+  --scout-green-dark:#064020;
+  --scout-beige:#e8dcc4;
+  --scout-olive:#556b2f;
+  --scout-maroon:#7a1f2b;
+  --accent:#f9b233;
+  --grasshopper:#ff7a1a;   /* 小童軍 橙 */
+  --cub:#5a8f3a;            /* 幼童軍 綠 */
+  --scout:#0a5c36;          /* 童軍 深綠 */
+  --venture:#7a1f2b;        /* 深資 棗紅 */
+  --rover:#0a3a5c;          /* 樂行 深藍 */
+  --leader:#3a3a3a;         /* 領袖 黑灰 */
+  --text:#222;
+  --muted:#777;
+  --bg:#f5f5f3;
+  --card:#fff;
+  --line:#e8e4dc;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans HK","PingFang HK","Microsoft JhengHei",sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+
+/* ── Hero / Header ── */
+header{
+  background:linear-gradient(135deg,var(--scout-green) 0%,var(--scout-green-dark) 100%);
+  color:white;
+  padding:1.5rem 1rem 2rem;
+  text-align:center;
+  position:relative;
+}
+header::after{
+  content:"";
+  position:absolute;left:0;right:0;bottom:0;height:6px;
+  background:linear-gradient(90deg,
+    var(--grasshopper) 0% 16%,
+    var(--cub) 16% 33%,
+    var(--scout) 33% 50%,
+    var(--venture) 50% 66%,
+    var(--rover) 66% 83%,
+    var(--leader) 83% 100%);
+}
+.brand{display:flex;align-items:center;justify-content:center;gap:.8rem;margin-bottom:.5rem}
+.brand img{width:56px;height:56px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+header h1{margin:0;font-size:1.4rem;letter-spacing:1px;font-weight:700}
+header p{margin:.3rem 0 0;opacity:.95;font-size:.95rem}
+
+/* ── Container ── */
+.container{max-width:1000px;margin:0 auto;padding:1.2rem 1rem 3rem}
+
+/* ── Card ── */
+.card{
+  background:var(--card);
+  border-radius:14px;
+  box-shadow:0 2px 10px rgba(0,0,0,.06);
+  padding:1.4rem;
+  margin-bottom:1.2rem;
+}
+.card h2{color:var(--scout-green);margin:0 0 .5rem;font-size:1.25rem}
+.card h3{margin:1.2rem 0 .5rem;color:var(--scout-olive);font-size:1.05rem}
+.card p{margin:.4rem 0}
+.note{
+  background:#fff9e6;
+  border-left:4px solid var(--accent);
+  padding:.8rem 1rem;
+  margin:1rem 0;
+  border-radius:4px;
+  font-size:.95rem;
+}
+.cite{font-size:.8rem;color:var(--muted)}
+
+/* ── Section path (升團路徑) ── */
+.path{display:grid;grid-template-columns:repeat(5,1fr);gap:.4rem;margin:1rem 0}
+.path-step{
+  background:var(--card);
+  border:2px solid var(--line);
+  border-radius:10px;
+  padding:.7rem .4rem;
+  text-align:center;
+  cursor:pointer;
+  transition:.2s;
+  position:relative;
+  font-size:.85rem;
+}
+.path-step .dot{
+  width:18px;height:18px;border-radius:50%;margin:0 auto .4rem;
+  border:2px solid white;box-shadow:0 0 0 2px var(--line);
+}
+.path-step[data-section="grasshopper"] .dot{background:var(--grasshopper)}
+.path-step[data-section="cub"] .dot{background:var(--cub)}
+.path-step[data-section="scout"] .dot{background:var(--scout)}
+.path-step[data-section="venture"] .dot{background:var(--venture)}
+.path-step[data-section="rover"] .dot{background:var(--rover)}
+.path-step[data-section="leader"] .dot{background:var(--leader)}
+.path-step.active{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.12)}
+.path-step[data-section="grasshopper"].active{box-shadow:0 6px 18px rgba(255,122,26,.3)}
+.path-step[data-section="cub"].active{box-shadow:0 6px 18px rgba(90,143,58,.3)}
+.path-step[data-section="scout"].active{box-shadow:0 6px 18px rgba(10,92,54,.3)}
+.path-step[data-section="venture"].active{box-shadow:0 6px 18px rgba(122,31,43,.3)}
+.path-step[data-section="rover"].active{box-shadow:0 6px 18px rgba(10,58,92,.3)}
+.path-step[data-section="leader"].active{box-shadow:0 6px 18px rgba(58,58,58,.3)}
+.path-step .arrow{font-size:.7rem;color:var(--muted);margin-top:.2rem}
+.path-step small{display:block;color:var(--muted);font-size:.7rem;margin-top:.1rem}
+
+.path-step[data-section="grasshopper"].active{border-color:var(--grasshopper)}
+.path-step[data-section="cub"].active{border-color:var(--cub)}
+.path-step[data-section="scout"].active{border-color:var(--scout)}
+.path-step[data-section="venture"].active{border-color:var(--venture)}
+.path-step[data-section="rover"].active{border-color:var(--rover)}
+.path-step[data-section="leader"].active{border-color:var(--leader)}
+
+/* ── Mode toggle (全新加入 vs 升團) ── */
+.mode-toggle{
+  display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:1rem 0 .4rem;
+}
+.mode-btn{
+  padding:1rem;
+  border:2px solid var(--line);
+  border-radius:12px;
+  background:white;
+  cursor:pointer;
+  text-align:center;
+  font-weight:600;
+  font-size:1rem;
+  transition:.2s;
+}
+.mode-btn small{display:block;font-weight:400;font-size:.85rem;color:var(--muted);margin-top:.3rem}
+.mode-btn.active{border-color:var(--scout-green);background:var(--scout-green);color:white}
+.mode-btn.active small{color:rgba(255,255,255,.85)}
+
+/* ── Gender toggle ── */
+.gender-toggle{
+  display:flex;gap:.5rem;align-items:center;
+  margin:1rem 0;
+}
+.gender-toggle span{font-size:.95rem;color:var(--muted)}
+.gender-toggle button{
+  padding:.5rem 1.2rem;
+  border:1px solid #ccc;
+  background:white;
+  border-radius:20px;
+  cursor:pointer;
+  font-size:.95rem;
+  transition:.2s;
+}
+.gender-toggle button.active{background:var(--scout-olive);color:white;border-color:var(--scout-olive)}
+
+/* ── Section preview (插畫 + 描述) ── */
+.preview{
+  display:grid;grid-template-columns:200px 1fr;gap:1.2rem;align-items:center;
+  background:linear-gradient(135deg,#faf8f3 0%,#f0e8d4 100%);
+  border-radius:12px;
+  padding:1rem;
+  margin:1rem 0;
+}
+.preview img{width:100%;max-width:200px;border-radius:8px;background:white}
+.preview .info h3{margin:0 0 .4rem;color:var(--scout-green)}
+.preview .info p{margin:.2rem 0;font-size:.95rem}
+.preview .info ul{margin:.5rem 0;padding-left:1.2rem}
+.preview .info li{margin:.2rem 0;font-size:.9rem}
+.preview .placeholder{
+  width:200px;height:220px;border-radius:8px;background:white;
+  display:flex;align-items:center;justify-content:center;
+  font-size:5rem;border:2px dashed #ccc;
+}
+
+/* ── Checklist ── */
+.checklist-title{
+  display:flex;align-items:center;gap:.5rem;
+  margin:1.2rem 0 .5rem;
+  font-weight:700;color:var(--scout-green);
+  font-size:1.1rem;
+}
+.checklist-title .badge{
+  display:inline-block;
+  padding:.2rem .7rem;
+  border-radius:20px;
+  color:white;
+  font-size:.8rem;
+  font-weight:600;
+}
+.badge[data-section="grasshopper"]{background:var(--grasshopper)}
+.badge[data-section="cub"]{background:var(--cub)}
+.badge[data-section="scout"]{background:var(--scout)}
+.badge[data-section="venture"]{background:var(--venture)}
+.badge[data-section="rover"]{background:var(--rover)}
+.badge[data-section="leader"]{background:var(--leader)}
+
+.checklist{display:none;animation:fadeIn .3s}
+.checklist.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.item{
+  padding:1rem;
+  border-bottom:1px solid var(--line);
+  cursor:pointer;
+  transition:.2s;
+}
+.item:hover{background:#faf8f3}
+.item.have .status{color:#5a8f3a;font-weight:600}
+.item.need .status{color:#d97706;font-weight:600}
+.item.check .status{color:#0284c7;font-weight:600}
+.item.owned{background:#ecf5e6}
+.item.owned .item-title::after{content:" ✅";color:#5a8f3a}
+.item-row{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.item-left{display:flex;align-items:center;gap:1rem;flex:1;min-width:0}
+.item-icon{
+  width:48px;height:48px;border-radius:8px;
+  background:white;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  font-size:1.5rem;
+  border:1px solid var(--line);
+}
+.item-icon svg{width:30px;height:30px}
+.item-title{font-weight:600;font-size:1rem;line-height:1.3}
+.item-desc{font-size:.85rem;color:var(--muted);margin-top:.1rem}
+.arrow{color:#999;font-size:1.4rem;transition:transform .3s;flex-shrink:0}
+.item.expanded .arrow{transform:rotate(90deg)}
+.item-detail{
+  max-height:0;overflow:hidden;
+  transition:max-height .4s ease, padding .3s ease, margin .3s ease;
+  padding:0 0 0 64px;
+  color:#444;font-size:.92rem;line-height:1.8;
+}
+.item-detail-inner{padding:.8rem 0 0}
+.item-detail h4{margin:.6rem 0 .3rem;color:var(--scout-olive);font-size:.95rem}
+.item-detail ul{margin:.3rem 0 .6rem 1.2rem;padding:0}
+.item-detail ul li{margin-bottom:.3rem}
+.item-detail .tip{
+  background:#f0f7ed;border-left:3px solid var(--cub);
+  padding:.5rem .7rem;border-radius:4px;margin:.5rem 0;
+  font-size:.88rem;
+}
+.item-detail .warn{
+  background:#fff5f0;border-left:3px solid var(--accent);
+  padding:.5rem .7rem;border-radius:4px;margin:.5rem 0;
+  font-size:.88rem;
+}
+.item.expanded .item-detail{max-height:1200px}
+
+/* ── Quick summary card ── */
+.summary{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;
+  margin:1rem 0;
+}
+.summary div{
+  text-align:center;padding:.8rem .4rem;
+  border-radius:10px;font-size:.85rem;
+}
+.summary .need{background:#fff5e6;color:#a05a00}
+.summary .have{background:#ecf5e6;color:#3a6a1a}
+.summary .check{background:#e6f1f5;color:#1a5a7a}
+
+/* ── Shop / Sources ── */
+.shop-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:1rem;margin-top:1rem;
+}
+.shop-card{
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:1rem;
+  background:#fafafa;
+}
+.shop-card h3{margin:0 0 .4rem;color:var(--scout-green);font-size:1rem}
+.shop-card p{margin:.2rem 0;font-size:.9rem}
+.shop-card a{color:var(--scout-green);text-decoration:none;font-weight:600}
+.shop-card a:hover{text-decoration:underline}
+
+/* ── FAQ ── */
+details{
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:.8rem 1rem;
+  margin:.5rem 0;
+  background:white;
+}
+details summary{
+  cursor:pointer;
+  font-weight:600;
+  color:var(--scout-green);
+  list-style:none;
+  display:flex;align-items:center;justify-content:space-between;
+}
+details summary::after{content:"+";font-size:1.3rem;color:var(--muted);transition:.2s}
+details[open] summary::after{content:"−"}
+details p{margin:.5rem 0 0;font-size:.92rem;color:#444}
+
+/* ── Footer ── */
+footer{
+  text-align:center;
+  padding:1.5rem 1rem;
+  color:var(--muted);
+  font-size:.85rem;
+  border-top:1px solid var(--line);
+  margin-top:2rem;
+}
+
+/* ── Size Table ── */
+.size-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.size-table,.budget-table-wrap table{
+  width:100%;border-collapse:collapse;margin:1rem 0;font-size:.9rem
+}
+.size-table th,.size-table td,.budget-table-wrap th,.budget-table-wrap td{
+  padding:.6rem .5rem;text-align:left;border-bottom:1px solid var(--line)
+}
+.size-table th,.budget-table-wrap th{
+  background:var(--scout-green);color:white;font-weight:600;font-size:.85rem
+}
+.size-table tr:nth-child(even),.budget-table-wrap tr:nth-child(even){
+  background:#faf8f3
+}
+.size-table tr:hover,.budget-table-wrap tr:hover{
+  background:#f0f7ed
+}
+
+/* ── Care Grid ── */
+.care-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:.8rem;margin-top:1rem
+}
+.care-item{
+  border:1px solid var(--line);border-radius:10px;
+  padding:.8rem 1rem;background:#fafafa
+}
+.care-item h3{margin:0 0 .5rem;font-size:1rem;color:var(--scout-olive)}
+.care-item ul{margin:.3rem 0;padding-left:1.2rem;font-size:.88rem;line-height:1.7}
+.care-item li{margin-bottom:.2rem}
+
+/* ── Mistake Grid ── */
+.mistake-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:.8rem;margin-top:1rem
+}
+.mistake-item{
+  border:1px solid var(--line);border-left:4px solid #e74c3c;
+  border-radius:8px;padding:.8rem 1rem;background:#fef9f7
+}
+.mistake-icon{font-size:1.4rem;margin-bottom:.3rem}
+.mistake-item h3{margin:0 0 .3rem;font-size:.95rem;color:#c0392b}
+.mistake-item p{margin:0;font-size:.88rem;color:#555;line-height:1.6}
+
+/* ── Timeline ── */
+.timeline{
+  position:relative;margin:1rem 0;padding-left:1.5rem
+}
+.timeline::before{
+  content:"";position:absolute;left:.4rem;top:.5rem;bottom:.5rem;
+  width:2px;background:var(--line)
+}
+.timeline-item{
+  position:relative;padding:.5rem 0 .8rem 0
+}
+.timeline-dot{
+  position:absolute;left:-1.4rem;top:.7rem;
+  width:1rem;height:1rem;border-radius:50%;
+  border:2px solid white;box-shadow:0 0 0 2px var(--line)
+}
+.timeline-item h3{margin:0 0 .3rem;color:var(--scout-green);font-size:1rem}
+.timeline-item p{margin:0;font-size:.9rem;color:#444;line-height:1.6}
+
+/* ── Responsive ── */
+@media(max-width:680px){
+  .path{grid-template-columns:repeat(3,1fr)}
+  .preview{grid-template-columns:1fr;text-align:center}
+  .preview img,.preview .placeholder{margin:0 auto}
+  .item-detail{padding:0 0 0 0}
+  .item.expanded .item-detail{padding:0}
+  .item-detail-inner{padding-left:1rem}
+  .item-row[style*="padding:0 1rem .5rem 64px"]{padding:0 .5rem .5rem .5rem !important}
+  .summary{grid-template-columns:1fr 1fr 1fr}
+  header h1{font-size:1.2rem}
+  .brand img{width:48px;height:48px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <img src="assets/logo-192.png" alt="制服準備指南 LOGO" width="56" height="56">
+    <div style="text-align:left">
+      <h1>香港童軍制服準備指南</h1>
+      <p>由小童軍到領袖・家長一目了然</p>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Step 1: 揀升團情境 -->
+  <div class="card">
+    <h2>① 揀升團情境</h2>
+    <p>你現在要準備哪一支部?</p>
+    <div class="path">
+      <div class="path-step" data-section="grasshopper" onclick="selectSection('grasshopper')">
+        <div class="dot"></div>小童軍<small>5.5–8 歲</small>
+      </div>
+      <div class="path-step active" data-section="cub" onclick="selectSection('cub')">
+        <div class="dot"></div>幼童軍<small>7.5–12 歲</small>
+      </div>
+      <div class="path-step" data-section="scout" onclick="selectSection('scout')">
+        <div class="dot"></div>童軍<small>12–16 歲</small>
+      </div>
+      <div class="path-step" data-section="venture" onclick="selectSection('venture')">
+        <div class="dot"></div>深資童軍<small>15–21 歲</small>
+      </div>
+      <div class="path-step" data-section="rover" onclick="selectSection('rover')">
+        <div class="dot"></div>樂行童軍<small>18–26 歲</small>
+      </div>
+      <div class="path-step" data-section="leader" onclick="selectSection('leader')">
+        <div class="dot"></div>領袖<small>成年</small>
+      </div>
+    </div>
+    <p class="cite">支部年齡為 2025 年 8 月 1 日起香港童軍總會最新修訂</p>
+  </div>
+
+  <!-- Step 2: 揀模式 -->
+  <div class="card">
+    <h2>② 你屬於哪一種?</h2>
+    <div class="mode-toggle">
+      <button class="mode-btn active" id="mode-upgrade" onclick="selectMode('upgrade')">
+        升團
+        <small>由舊支部升上來</small>
+      </button>
+      <button class="mode-btn" id="mode-new" onclick="selectMode('new')">
+        全新加入
+        <small>從未穿過該支部制服</small>
+      </button>
+    </div>
+    <div class="gender-toggle" id="genderToggle">
+      <span>性別：</span>
+      <button class="active" onclick="setGender('male')" id="g-male">男</button>
+      <button onclick="setGender('female')" id="g-female">女</button>
+    </div>
+  </div>
+
+  <!-- Step 3: 結果 -->
+  <div class="card">
+    <h2>③ 制服清單</h2>
+    <div id="preview"></div>
+    <div id="summary"></div>
+    <div id="checklist"></div>
+  </div>
+
+  <!-- 哪裡買 -->
+  <div class="card">
+    <h2>哪裡購買制服</h2>
+    <p>為確保顏色及款式正確,請到<strong>香港童軍物品供應社</strong>購買制服配件。皮鞋、運動鞋可自行到鞋店選購。</p>
+    <div class="shop-grid">
+      <div class="shop-card">
+        <h3>香港童軍物品供應社 — 總店(尖沙咀)</h3>
+        <p><a href="http://www.hkscoutshop.org.hk/?p=52&lang=big5&info_type=map" target="_blank" rel="noopener">前往官方網站 ↗</a></p>
+        <p><strong>地址：</strong>九龍柯士甸道童軍徑香港童軍中心11樓</p>
+        <p><strong>港鐵：</strong>佐敦站 C2 出口</p>
+        <p><strong>電話：</strong>2957 6444</p>
+        <p><strong>營業時間：</strong></p>
+        <table style="margin-left:1rem;line-height:1.7">
+          <tr><td>星期一至五</td><td style="padding-left:1rem">11:30 – 19:30</td></tr>
+          <tr><td>星期六</td><td style="padding-left:1rem">11:00 – 19:00</td></tr>
+          <tr><td>星期日</td><td style="padding-left:1rem">10:00 – 18:00</td></tr>
+        </table>
+      </div>
+      <div class="shop-card">
+        <h3>購買流程 SOP</h3>
+        <ol style="margin:.3rem 0 .3rem 1.2rem;padding:0;font-size:.9rem;line-height:1.7">
+          <li>先向<strong>所屬旅團領袖</strong>查詢當季制服安排(部分旅團會統一訂購)</li>
+          <li>確認要買的物品清單(可參考本 APP)</li>
+          <li>親臨供應社或經網站訂購</li>
+          <li>試身(尤其恤衫、褲、皮鞋要現場試)</li>
+          <li>向團長查詢<strong>地域章、區章、旅章、小隊章</strong>購買/頒發安排</li>
+          <li>回家檢查所有徽章、帽章齊備</li>
+          <li>第一次集會前完成<strong>燙衫、擦鞋、定帽</strong></li>
+        </ol>
+      </div>
+    </div>
+    <p class="cite" style="margin-top:1rem">制服配件之<strong>帽、帽章、恤衫、長褲/短褲/裙褲/半截裙、皮帶、巾圈、領巾</strong>等均需向供應社購買;<strong>皮鞋、學校運動鞋</strong>可自行於鞋店購買。</p>
+  </div>
+
+  <!-- 升團過渡指南 (總綱) -->
+  <div class="card" id="transition-guide">
+    <h2>🎯 升團過渡指南(總綱)</h2>
+    <p>由一個支部升上另一個支部,家長要了解的不只是制服規格,仲有<strong>年齡、誓詞規律、考章、宣誓安排</strong>。以下係各升團情境的完整過渡須知:</p>
+
+    <!-- 進度性獎章總覽 -->
+    <h3 style="color:var(--scout-green);margin-top:1.5rem">📜 進度性獎章總覽</h3>
+    <p class="cite">資料來源:香港童軍總會《童軍訓練綱要》及政策、組織及規條</p>
+    <div id="badges-overview"></div>
+
+    <h3 style="color:var(--scout-green);margin-top:1.5rem">🔼 升團過渡詳情</h3>
+    <p>揀支部就會自動顯示對應嘅升團須知:</p>
+    <div id="transition-content"></div>
+  </div>
+
+  <!-- 尺碼提示(精簡版) -->
+  <div class="card">
+    <h2>📐 選碼小貼士</h2>
+    <p>選碼最重要係<strong>親身到 SCOUT SHOP 試身</strong>,職員會幫你度尺碼,提出專業意見。以下係一般參考:</p>
+    <ul style="line-height:1.9">
+      <li><strong>恤衫必買大一碼</strong>——童軍成長快,太大可改細,太細要重買</li>
+      <li><strong>長褲/短褲</strong>:腰圍為準,留 1–2cm 位改</li>
+      <li><strong>軟帽</strong>:頭圍量度,首次戴要弄濕定型</li>
+      <li><strong>皮鞋</strong>:建議下午試(腳會較脹),預留少少位著襪</li>
+      <li><strong>裙褲/半截裙</strong>:女團員特別注意腰位及裙長</li>
+      <li><strong>領袖金邊硬帽</strong>:女領袖試帽時要確定頭圍合適,帽不可太鬆</li>
+    </ul>
+    <div class="note">
+      <strong>💡 慳時間貼士:</strong>帶埋子女<strong>平日集會要著嘅皮鞋+長襪</strong>一齊去試身,咁就可以即場試埋褲長、裙長、鞋位。
+    </div>
+  </div>
+
+  <!-- 洗滌保養指南 -->
+  <div class="card">
+    <h2>洗滌保養指南</h2>
+    <p>童軍制服保養得宜可以用幾年。以下係每件物品的清洗及保養方法:</p>
+    <div class="care-grid">
+      <div class="care-item">
+        <h3>🧥 杏色恤衫</h3>
+        <ul>
+          <li>冷水機洗(30°C 以下),翻轉洗</li>
+          <li>不可用漂白劑</li>
+          <li>低溫熨燙(<strong>領、袋蓋、肩帶必燙</strong>)</li>
+          <li>避免陽光直曬以防褪色</li>
+        </ul>
+      </div>
+      <div class="care-item">
+        <h3>👖 長褲/短褲/裙褲/半截裙</h3>
+        <ul>
+          <li>冷水機洗,反面洗</li>
+          <li>中溫熨燙(中線要直)</li>
+          <li>乾後盡快掛起,避免摺痕</li>
+        </ul>
+      </div>
+      <div class="care-item">
+        <h3>🧢 軟帽 / 鴨舌帽</h3>
+        <ul>
+          <li><strong>不可機洗</strong></li>
+          <li>污漬用濕布局部擦拭</li>
+          <li>變形後可<strong>再弄濕重塑</strong>頭形</li>
+          <li>存放時勿壓扁,塞入帽托</li>
+        </ul>
+      </div>
+      <div class="care-item">
+        <h3>👔 皮帶</h3>
+        <ul>
+          <li>皮革保養油每半年擦一次</li>
+          <li>避免浸水</li>
+          <li>皮帶扣用乾布擦</li>
+        </ul>
+      </div>
+      <div class="care-item">
+        <h3>🧣 旅巾 / 領巾</h3>
+        <ul>
+          <li>手洗或機洗(放網袋)</li>
+          <li>陰乾,避免褪色</li>
+          <li>摺巾前完全晾乾</li>
+        </ul>
+      </div>
+      <div class="care-item">
+        <h3>👞 黑色皮鞋</h3>
+        <ul>
+          <li>集會後<strong>立即擦淨</strong>灰塵</li>
+          <li>每週用<strong>鞋油 + 鞋布</strong>打亮</li>
+          <li>塞入鞋撐保持形狀</li>
+          <li>濕鞋陰乾,不可烘乾</li>
+        </ul>
+      </div>
+      <div class="care-item">
+        <h3>🧦 長襪 / 短襪</h3>
+        <ul>
+          <li>反面洗,延長壽命</li>
+          <li>深綠色襪避免與淺色衣物同洗</li>
+        </ul>
+      </div>
+      <div class="care-item">
+        <h3>🎖️ 徽章</h3>
+        <ul>
+          <li>縫上後不要常拆</li>
+          <li>如要更換徽章,用<strong>拆線刀</strong>小心拆</li>
+          <li>不要用膠水或扣針代替縫線</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 預算參考 -->
+  <div class="card">
+    <h2>💰 預算參考</h2>
+    <p>以下為<strong>約略參考價</strong>(<strong>2025 年 9 月</strong> 參考價格,僅作預算參考)。<br>
+    <strong class="cite" style="color:#c0392b">⚠️ 制服價格可能會調整,實際以<a href="http://www.hkscoutshop.org.hk" target="_blank" rel="noopener">香港童軍物品供應社(SCOUT SHOP)</a>當時定價為準。</strong></p>
+    <div class="budget-table-wrap">
+      <table class="size-table">
+        <thead>
+          <tr><th>物品</th><th>全新加入(全套約)</th><th>升團補購(約)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>幼童軍全套(帽+帽章+恤+短褲+皮帶+襪+巾圈)</td><td>HKD 600–900</td><td>—</td></tr>
+          <tr><td>童軍全套(帽+帽章+恤+短褲+皮帶+襪+皮製巾圈)</td><td>HKD 650–950</td><td>—</td></tr>
+          <tr><td>童軍升深資(軟帽+帽章+領帶+長褲+短襪)</td><td>—</td><td>HKD 400–600</td></tr>
+          <tr><td>深資全套</td><td>HKD 750–1100</td><td>—</td></tr>
+          <tr><td>樂行升樂行(只換帽章)</td><td>—</td><td>HKD 50–100</td></tr>
+          <tr><td>樂行升領袖(軟帽+帽章+深綠領帶)</td><td>—</td><td>HKD 200–400</td></tr>
+          <tr><td>皮鞋(自行到鞋店購買)</td><td>HKD 300–800</td><td>可沿用舊鞋</td></tr>
+          <tr><td>領袖金邊硬帽(女)</td><td>HKD 500–800</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="cite" style="color:#c0392b;text-align:right">價格日期:2025 年 9 月 ・ 僅供參考,以 SCOUT SHOP 為準</p>
+    <div class="note">
+      <strong>💡 慳錢貼士:</strong>
+      <ul style="margin:.3rem 0 .3rem 1.2rem;padding:0">
+        <li>升團時<strong>恤衫、長褲(同款支部之間)、皮鞋、皮帶</strong>通常可沿用</li>
+        <li>Carousell/二手童軍群組可買到近全新制服(尤其童軍升深資轉條褲)</li>
+        <li>香港童軍總會設有<strong>「學生隊員制服資助計劃」</strong>(由民政及青年事務局資助),可向旅團領袖查詢</li>
+        <li>皮鞋<strong>必須全新或近全新</strong>(太舊/太多花痕唔合格)</li>
+        <li>學校皮鞋如合規格(黑色、無花紋、綁帶、低筒、平底)可沿用</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 常見穿著錯誤 -->
+  <div class="card">
+    <h2>⚠️ 常見穿著錯誤</h2>
+    <p>家長幫子女準備制服時,以下錯誤最常見。記得檢查清楚!</p>
+    <div class="mistake-grid">
+      <div class="mistake-item">
+        <div class="mistake-icon">❌</div>
+        <h3>軟帽戴成「廚師帽」</h3>
+        <p>帽後小尾<strong>要塞入帽內</strong>,不可外露翹起</p>
+      </div>
+      <div class="mistake-item">
+        <div class="mistake-icon">❌</div>
+        <h3>恤衫冇束入褲</h3>
+        <p>必須<strong>束入褲/裙內</strong>,皮帶清楚可見</p>
+      </div>
+      <div class="mistake-item">
+        <div class="mistake-icon">❌</div>
+        <h3>領巾巾圈位置太低</h3>
+        <p>巾圈應在<strong>喉部</strong>,不可低於鎖骨</p>
+      </div>
+      <div class="mistake-item">
+        <div class="mistake-icon">❌</div>
+        <h3>襪頭冇反摺</h3>
+        <p>長襪必須<strong>反摺約 3 厘米</strong>成襪邊</p>
+      </div>
+      <div class="mistake-item">
+        <div class="mistake-icon">❌</div>
+        <h3>皮鞋冇擦</h3>
+        <p>集會前<strong>必須擦亮</strong>,以備檢閱</p>
+      </div>
+      <div class="mistake-item">
+        <div class="mistake-icon">❌</div>
+        <h3>用扣針/膠水固定徽章</h3>
+        <p>必須<strong>用線縫牢</strong>,不可用膠水或扣針</p>
+      </div>
+      <div class="mistake-item">
+        <div class="mistake-icon">❌</div>
+        <h3>升團後戴舊支部徽章</h3>
+        <p>幼童軍徽章(如隊長章、進度章)需<strong>拆走</strong>,年星及金紫荊除外</p>
+      </div>
+      <div class="mistake-item">
+        <div class="mistake-icon">❌</div>
+        <h3>世界童軍會員章未宣誓就戴</h3>
+        <p>世界童軍會員章<strong>只可於宣誓後佩戴</strong></p>
+      </div>
+      <div class="mistake-item">
+        <div class="mistake-icon">❌</div>
+        <h3>皮帶扣位置偏歪</h3>
+        <p>皮帶扣必須<strong>置於正中</strong>,不可掛多餘匙扣</p>
+      </div>
+      <div class="mistake-item">
+        <div class="mistake-icon">❌</div>
+        <h3>穿運動短襪/船襪</h3>
+        <p>必須<strong>長襪(幼童軍/童軍)或短襪(深資/樂行/領袖)</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 重要時程 -->
+  <div class="card">
+    <h2>🗓️ 重要時程表</h2>
+    <p>童軍年度時間表,家長要 mark 低:</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:var(--grasshopper)"></div>
+        <h3>每年 9 月 — 招募期</h3>
+        <p>各旅團於 9 月新學年招募新成員,小童軍/幼童軍團通常接受 K1–P2 報名。</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:var(--cub)"></div>
+        <h3>入團後 3 個月內 — 會員章考核</h3>
+        <p>新成員須於入團後 3 個月內完成<strong>幼童軍會員章</strong>考核,通過後宣誓,正式成為幼童軍並開始佩戴制服。</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:var(--cub)"></div>
+        <h3>宣誓禮 — 正式宣誓</h3>
+        <p>會員章考核通過後,旅團會安排<strong>宣誓禮</strong>,宣誓後方可佩戴<strong>世界童軍會員章 + 旅巾</strong>。</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:var(--scout)"></div>
+        <h3>每年 7–8 月 — 升團考章期</h3>
+        <p>幼童軍團於暑假前考核升團,9 月新學年<strong>正式升為童軍</strong>。家長要預早 1–2 個月準備新制服。</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:var(--venture)"></div>
+        <h3>12–15 歲 — 升深資/樂行</h3>
+        <p>達到支部年齡(童軍 12+ / 深資 15+)並完成<strong>晉陸章考核</strong>後,可升團。</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:var(--rover)"></div>
+        <h3>18+ — 樂行童軍/領袖</h3>
+        <p>樂行 18+ / 領袖為成年成員。如想繼續參與可考慮報讀<strong>領袖訓練課程</strong>。</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:var(--leader)"></div>
+        <h3>每年 2 月及 10 月 — 大會操/檢閱</h3>
+        <p>總會/地域大型活動,全副武裝出席,家長記得提醒子女檢查制服。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 徽章完全手冊 -->
+  <div class="card">
+    <h2>🎖️ 徽章完全手冊</h2>
+    <p>童軍制服上的徽章有不同意思,以下是常見徽章的佩戴位置及頒發來源:</p>
+    <table class="size-table">
+      <thead>
+        <tr><th>徽章</th><th>佩戴位置</th><th>頒發/購買</th><th>備註</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>世界童軍會員章</td><td>左胸袋中央</td><td>供應社購買</td><td><strong>只可於宣誓後佩戴</strong></td></tr>
+        <tr><td>香港章</td><td>左胸袋蓋上,會員章上方 3cm</td><td>供應社購買</td><td>所有支部通用</td></tr>
+        <tr><td>地域章(港島/九龍/新界東/新界西)</td><td>右袖</td><td>旅團代訂</td><td>每地域一款</td></tr>
+        <tr><td>區章</td><td>右袖,地域章下方</td><td>旅團代訂</td><td>每區一款</td></tr>
+        <tr><td>旅章</td><td>右袖,區章下方</td><td><strong>由旅團頒發</strong></td><td>不可自行購買</td></tr>
+        <tr><td>小隊章</td><td>右袖,旅章下方</td><td><strong>由旅團頒發</strong></td><td>代表所屬小隊</td></tr>
+        <tr><td>進度章 / 專科章</td><td>右袖</td><td>供應社購買(考獲後)</td><td>各支部有不同款式</td></tr>
+        <tr><td>年星</td><td>左胸袋蓋上,香港章下方</td><td>供應社購買</td><td>每年 1 個,代表年資</td></tr>
+        <tr><td>金紫荊獎章</td><td>右胸袋(只適用童軍支部)</td><td>總會頒發</td><td>全港最高榮譽,極少人獲頒</td></tr>
+        <tr><td>晉陸章(深資/樂行)</td><td>右袖</td><td>總會頒發</td><td>晉陸後佩戴</td></tr>
+        <tr><td>職級肩章(領袖)</td><td>兩肩肩帶</td><td>總會/地域頒發</td><td>標示見習/助理/正式領袖</td></tr>
+        <tr><td>香港肩章(領袖)</td><td>兩肩肩帶</td><td>總會頒發</td><td>領袖專用</td></tr>
+      </tbody>
+    </table>
+    <div class="note">
+      <strong>徽章佩戴 3 大原則:</strong>
+      <ol style="margin:.3rem 0 .3rem 1.2rem;padding:0">
+        <li><strong>左胸袋</strong>放通用徽章(世界會員章、香港章、年星)</li>
+        <li><strong>右袖</strong>放地域/區/旅/小隊/進度章(由上至下:地域→區→旅→小隊→進度)</li>
+        <li><strong>必須用線縫牢</strong>,不可用膠水或扣針</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 領袖常規制服(海/陸/空) -->
+  <div class="card">
+    <h2>👔 領袖常規制服</h2>
+    <p>新任領袖通常只需買<strong>「常規制服」(編號 3)</strong>一款已足夠應付日常集會及訓練。<br>
+    領袖制服按<strong>海、陸、空</strong>3 個版本劃分,識別色及帽款各有不同:</p>
+    <table class="size-table">
+      <thead>
+        <tr><th>類型</th><th>識別色</th><th>帽款</th><th>恤衫</th><th>男領袖</th><th>女領袖</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>陸軍童軍領袖</strong><br>(最常見)</td>
+          <td>杏色 + 草青色</td>
+          <td>男:深綠軟帽<br>女:深綠金邊硬帽</td>
+          <td>杏色、短袖、兩胸袋、無褶、肩帶</td>
+          <td>深綠軟帽 + 杏色短袖恤衫 + 草青色長褲 + 棕色皮帶 + 黑色短襪 + 黑色綁帶皮鞋 + <strong>領巾</strong></td>
+          <td>深綠金邊硬帽 + 杏色短袖恤衫 + 草青色半截裙(及膝)+ 棕色皮帶 + 肉色襪褲 + 黑色非綁帶中跟皮鞋 + <strong>領巾</strong></td>
+        </tr>
+        <tr>
+          <td><strong>海童軍領袖</strong></td>
+          <td>白色 + 深藍色</td>
+          <td>海童軍男/女領袖<strong>白頂帽</strong>(連海童軍領袖帽章)</td>
+          <td><strong>白色</strong>、短袖、兩胸袋、無褶、肩帶</td>
+          <td>白頂帽 + 白色短袖恤衫 + <strong>深藍色</strong>長褲 + 棕色皮帶 + 黑色短襪 + 黑色綁帶皮鞋 + 領巾</td>
+          <td>白頂帽 + 白色短袖恤衫 + <strong>深藍色</strong>半截裙(及膝)+ 棕色皮帶 + 肉色襪褲 + 黑色非綁帶中跟皮鞋 + 領巾</td>
+        </tr>
+        <tr>
+          <td><strong>空童軍領袖</strong></td>
+          <td>淺藍色 + 深藍色</td>
+          <td>男:灰藍色軟帽<br>女:灰藍色軟帽/硬帽</td>
+          <td><strong>淺藍色</strong>、短袖、兩胸袋、無褶、肩帶</td>
+          <td>灰藍色軟帽 + <strong>淺藍色</strong>短袖恤衫 + <strong>深藍色</strong>長褲 + 棕色皮帶 + 黑色短襪 + 黑色綁帶皮鞋 + 領巾</td>
+          <td>灰藍色軟帽 + <strong>淺藍色</strong>短袖恤衫 + <strong>深藍色</strong>半截裙(及膝)+ 棕色皮帶 + 肉色襪褲 + 黑色非綁帶中跟皮鞋 + 領巾</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="note">
+      <strong>常規制服必備徽章:</strong>
+      <ul style="margin:.3rem 0 .3rem 1.2rem;padding:0">
+        <li>世界童軍會員章(左胸袋中央)</li>
+        <li>香港章(左胸袋蓋上 3cm)</li>
+        <li>香港肩章 / 旅章(肩章位置)</li>
+        <li>職級肩章(肩上,標示見習/助理/正式領袖)</li>
+        <li>總會總部章 / 地域章 / 區章(如適用)</li>
+        <li>海/空童軍領袖另佩戴<strong>海/空童軍帽章</strong></li>
+      </ul>
+    </div>
+    <p class="cite">特殊場合制服(禮服、晚禮服、領帶制服、短褲制服、長褲制服)只於典禮、聚餐、戶外活動等特定場合穿著,新任領袖整個生涯也可能用唔到。</p>
+  </div>
+
+  <!-- 海童軍 / 空童軍簡介 -->
+  <div class="card">
+    <h2>🌊 海童軍 / ✈️ 空童軍 簡介</h2>
+    <p>香港童軍有兩個<strong>專屬支部</strong>——<strong>海童軍</strong>和<strong>空童軍</strong>,特色是制服顏色及額外專科訓練(航海/航空)。</p>
+    <details>
+      <summary>🌊 海童軍 Sea Scout</summary>
+      <p><strong>識別色:</strong>海軍藍 + 白色</p>
+      <p><strong>帽:</strong>海童軍男團員白頂帽 / 海童軍女團員白頂帽(連樂行海童軍帽章)</p>
+      <p><strong>恤衫:</strong>白色、短袖、兩胸袋、無褶、肩帶</p>
+      <p><strong>長褲/半截裙:</strong>深藍色</p>
+      <p><strong>皮帶:</strong>棕色(連童軍徽皮帶扣)</p>
+      <p><strong>襪:</strong>男黑色短襪 / 女肉色尼龍襪褲</p>
+      <p><strong>皮鞋:</strong>黑色、無花紋、綁帶(男)/ 非綁帶中跟(女)</p>
+      <p><strong>特色:</strong>專科訓練包括划艇、帆船、航海知識、急救等。</p>
+    </details>
+    <details>
+      <summary>✈️ 空童軍 Air Scout</summary>
+      <p><strong>識別色:</strong>灰藍 + 淺藍</p>
+      <p><strong>帽:</strong>灰藍色軟帽(連童軍帽章)</p>
+      <p><strong>恤衫:</strong>淺藍色、短袖、兩胸袋、無褶、肩帶</p>
+      <p><strong>長褲/半截裙:</strong>深藍色</p>
+      <p><strong>皮帶:</strong>棕色(連童軍徽皮帶扣)</p>
+      <p><strong>襪:</strong>男黑色短襪 / 女肉色尼龍襪褲</p>
+      <p><strong>皮鞋:</strong>黑色、無花紋、綁帶(男)/ 非綁帶中跟(女)</p>
+      <p><strong>特色:</strong>專科訓練包括航空知識、模型製作、模擬飛行、露營等。</p>
+    </details>
+    <p class="cite">本 APP「制服清單」以<strong>陸軍童軍</strong>(綠/棗紅)為主,海/空童軍家長請向所屬旅團領袖查詢詳細規格。</p>
+  </div>
+
+  <!-- 常見問題 -->
+  <div class="card">
+    <h2>常見問題</h2>
+    <details>
+      <summary>升團時哪些物品一定要換新?</summary>
+      <p>基本上<strong>帽、帽章、巾圈</strong>必須更換(款式/支部徽章不同)。恤衫、褲、皮鞋、皮帶如狀況良好可沿用。<strong>幼童軍支部徽章</strong>(如幼童軍進度章)需拆走,只保留<strong>年星、金紫荊獎章、世界童軍會員章、香港章、地域章、區章</strong>等通用徽章。</p>
+    </details>
+    <details>
+      <summary>「小童軍」沒有正式制服,那要買什麼?</summary>
+      <p>小童軍支部由 2024 年起實行新指引,<strong>沒有指定制服</strong>。團集會時由<strong>所屬小童軍團長</strong>規定服裝。一般要求:<strong>單色 T 恤或活動服、單色短褲或長褲、運動鞋</strong>。已宣誓小童軍可佩戴<strong>小童軍團員章 + 旅巾</strong>。詳情請向團長查詢。</p>
+    </details>
+    <details>
+      <summary>領袖制服有幾款?怎樣分?</summary>
+      <p>香港童軍領袖共 6 款制服:<br>
+        <strong>編號1 禮服</strong>:典禮、會操、就職禮<br>
+        <strong>編號2 晚禮服</strong>:領袖聚餐 Mess Night<br>
+        <strong>編號3 常规制服</strong>:日常集會<br>
+        <strong>編號4 領帶制服</strong>:正式探訪/會議<br>
+        <strong>編號5 男領袖短褲制服</strong>:夏季戶外活動<br>
+        <strong>編號6 女領袖長褲制服</strong>:戶外活動<br>
+        另設<strong>海童軍領袖</strong>及<strong>空童軍領袖</strong>專屬制服,顏色為<strong>海軍藍</strong>及<strong>淺藍</strong>。</p>
+    </details>
+    <details>
+      <summary>海童軍 / 空童軍的制服有什麼不同?</summary>
+      <p>海童軍及空童軍屬<strong>專屬支部</strong>。海童軍:白頂帽 + 白色恤衫 + 深藍長褲/半截裙;空童軍:灰藍色軟帽 + 淺藍色恤衫 + 深藍長褲/半截裙。徽章位置相同。本 APP「制服清單」以<strong>陸軍童軍(綠/棗紅)</strong>為主,如屬海/空童軍請向所屬旅團領袖查詢。</p>
+    </details>
+    <details>
+      <summary>「世界童軍會員章」、「香港章」、「地域章」、「區章」怎樣分辨?</summary>
+      <p>
+        <strong>世界童軍會員章</strong>(紫色):全球通用,代表你是 WOSM 會員。只可於<strong>宣誓後</strong>佩戴。<br>
+        <strong>香港章</strong>(紅底白花):香港總會頒發,所有支部均佩戴。<br>
+        <strong>地域章</strong>(綠底):代表所屬地域(港島、九龍、新界東、新界西)。<br>
+        <strong>區章</strong>:代表所屬區。<br>
+        <strong>旅章</strong>(由旅團頒發):代表所屬旅。<br>
+        地域章、區章、旅章需向<strong>所屬旅團</strong>查詢購買。
+      </p>
+    </details>
+    <details>
+      <summary>有制服資助嗎?</summary>
+      <p>有!香港童軍總會設有<strong>「學生隊員制服資助計劃」</strong>(由民政及青年事務局資助),為<strong>幼童軍、童軍、深資童軍、樂行童軍</strong>提供制服及配件資助,包括恤衫、褲、皮帶、香港章、世界童軍會員章、帽、帽章、巾圈等。詳情可向所屬旅團領袖或查閱香港童軍總會行政通告第35/2022號。</p>
+    </details>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 Scout System · 制服準備指南</p>
+  <p>制服資料來源:香港童軍總會 <a href="https://www.scout.org.hk" target="_blank" rel="noopener" style="color:var(--scout-green)">scout.org.hk</a></p>
+  <p>訓練綱要:香港童軍資訊站 <a href="https://scoutsinfohub.org.hk/ScoutTrainingScheme/" target="_blank" rel="noopener" style="color:var(--scout-green)">scoutsinfohub.org.hk/ScoutTrainingScheme/</a></p>
+  <p class="cite">本 APP 為非官方輔助工具,制服規格以香港童軍總會最新《儀容與制服手冊》及《訓練綱要》為準</p>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

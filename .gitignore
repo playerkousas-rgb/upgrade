@@ -1,0 +1,11 @@
+# Generated 高清原圖,只保留 web 用的版本
+assets/logo-1024.png
+
+# Mac / Windows
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+node_modules/
