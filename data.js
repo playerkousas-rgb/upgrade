@@ -30,29 +30,29 @@ const BRANCHES = {
 
 /* ===========================================================
    單件制服 / 配件目錄
-   每件有 img（單件圖片）。id 相同 = 同一件物品，升團時可沿用。
+   圖片來源由 ITEM_REFERENCES / SHOP 提供；一般衣物可另設 img 示意圖。
    =========================================================== */
 const ITEMS = {
   /* ── 帽 ── */
-  "cap-cub-m": { title:"深綠色黃間條鴨舌帽", desc:"幼童軍男團員（連帽章）", icon:"🧢", img:"assets/items/cap-cub-m.jpg", buy:"supply",
+  "cap-cub-m": { title:"深綠色黃間條鴨舌帽", desc:"幼童軍男團員（連帽章）", icon:"🧢", buy:"supply",
     detail:`<h4>幼童軍帽（男）</h4><p><strong>官方規格：</strong>深綠色、黃間條、鴨舌帽（連帽章）</p>
-      <ul><li>向後拉平，緊貼頭部</li><li>帽章在<strong>左眼正上方</strong></li></ul>` },
-  "cap-cub-f": { title:"深綠色圓形有邊帽", desc:"幼童軍女團員（連帽章）", icon:"👒", img:"assets/items/cap-cub-f.jpg", buy:"supply",
+      <ul><li>端正戴好，帽舌向前</li><li>帽冠上的布質帽章朝<strong>正前方</strong></li></ul>` },
+  "cap-cub-f": { title:"深綠色圓形有邊帽", desc:"幼童軍女團員（連帽章）", icon:"👒", buy:"supply",
     detail:`<h4>幼童軍帽（女）</h4><p><strong>官方規格：</strong>深綠色、圓形、有邊帽（連帽章）</p>
-      <ul><li>帽章在<strong>左眼正上方</strong></li></ul>` },
-  "beret-green": { title:"深綠色軟帽", desc:"童軍／樂行童軍／領袖（陸）", icon:"🧢", img:"assets/items/beret-green.jpg", buy:"supply",
+      <ul><li>帽冠上的布質帽章朝<strong>正前方</strong></li></ul>` },
+  "beret-green": { title:"深綠色軟帽", desc:"童軍／樂行童軍／領袖（陸）", icon:"🧢", buy:"supply",
     detail:`<h4>深綠色軟帽</h4><p>童軍、樂行童軍及陸童軍領袖同用<strong>深綠色軟帽</strong>，只是帽章不同。</p>
       <ul><li>向右拉平，緊貼頭部</li><li>帽後小尾塞入帽內，不可戴成「廚師帽」</li><li>首次使用前先弄濕定型</li><li>帽章在<strong>左眼正上方</strong></li></ul>` },
   "beret-maroon": { title:"棗紅色軟帽", desc:"深資童軍（陸）", icon:"🧢", img:"assets/items/beret-maroon.jpg", buy:"supply",
     detail:`<h4>棗紅色軟帽</h4><p><strong>官方規格：</strong>棗紅色軟帽（連童軍帽章）。深資童軍（陸）專用。</p>
       <div class="tip">帽章是<strong>童軍帽章</strong>（與童軍支部相同），由童軍升團可把帽章拆下移到新帽。</div>` },
-  "beret-greyblue": { title:"灰藍色軟帽", desc:"空童軍／空童軍領袖", icon:"🧢", img:"assets/items/beret-greyblue.jpg", buy:"supply",
+  "beret-greyblue": { title:"灰藍色軟帽", desc:"空童軍／空童軍領袖", icon:"🧢", buy:"supply",
     detail:`<h4>灰藍色軟帽</h4><p>空童軍、深資空童軍、樂行空童軍及空童軍領袖同用灰藍色軟帽（青少年連童軍帽章；領袖連職級帽章）。</p>` },
   "cap-sea-scout": { title:"海童軍白頂帽（連海童軍帽帶）", desc:"童軍支部・海童軍", icon:"⚓", img:"assets/items/cap-sea-scout.jpg", buy:"supply",
     detail:`<h4>海童軍白頂帽</h4><p><strong>官方規格：</strong>海童軍白頂帽（連海童軍帽帶）。童軍支部海童軍男女團員同款。</p>
       <div class="warn">升深資海童軍後改用<strong>海童軍領袖白頂帽</strong>（另一款），不可沿用。</div>` },
   "cap-sea-leader-m": { title:"海童軍男領袖白頂帽", desc:"深資／樂行／領袖・海（男）", icon:"⚓", img:"assets/items/cap-sea-leader-m.jpg", buy:"supply",
-    detail:`<h4>海童軍男領袖白頂帽</h4><p>深資海童軍、樂行海童軍及海童軍男領袖同用此帽，只是帽章不同（深資海童軍帽章／樂行海童軍帽章／海童軍領袖帽章）。</p>` },
+    detail:`<h4>海童軍男領袖白頂帽</h4><p>深資海童軍、樂行海童軍及海童軍男領袖同用此帽，青少年使用深資／樂行海童軍帽章，成年領袖使用海童軍領袖帽章。</p>` },
   "cap-sea-leader-f": { title:"海童軍女領袖白頂帽", desc:"深資／樂行／領袖・海（女）", icon:"⚓", img:"assets/items/cap-sea-leader-f.jpg", buy:"supply",
     detail:`<h4>海童軍女領袖白頂帽</h4><p>深資海童軍、樂行海童軍及海童軍女領袖同用此帽，只是帽章不同。</p>` },
   "hat-leader-f": { title:"深綠色金邊硬帽", desc:"女性成年成員（陸）", icon:"👒", img:"assets/items/hat-leader-f.jpg", buy:"supply",
@@ -60,20 +60,20 @@ const ITEMS = {
       <div class="tip">女領袖長褲制服（編號 6）則改用<strong>深綠色軟帽</strong>。</div>` },
 
   /* ── 帽章 ── */
-  "capbadge-cub": { title:"幼童軍帽章", desc:"金屬帽章", icon:"🎖️", img:"assets/items/capbadge-cub.svg", buy:"supply",
-    detail:`<h4>幼童軍帽章</h4><p>金屬幼童軍帽章，戴在<strong>左眼正上方</strong>。</p>
-      <div class="tip">供應社的「男／女幼童軍帽」（編號 01171／01172，HK$50）已<strong>連帽章</strong>出售，供應社網站沒有獨立的幼童軍帽章產品；如帽章遺失可到供應社門市查詢補購。</div>` },
-  "capbadge-scout": { title:"童軍帽章", desc:"童軍／深資／樂行同用", icon:"🎖️", img:"assets/items/capbadge-scout.svg", buy:"supply",
+  "capbadge-cub": { title:"幼童軍帽章", desc:"布質帽章，已隨帽縫上（毋須另購）", icon:"🎖️", buy:"included",
+    detail:`<h4>幼童軍帽章</h4><p>《儀容與制服手冊》第 98 頁列明：幼童軍帽章是<strong>布質帽章，已縫於帽冠上</strong>，佩戴時朝正前方；不是另配的金屬帽章。</p>
+      <div class="tip">供應社的「男／女幼童軍帽」（編號 01171／01172，HK$50）已<strong>連帽章</strong>出售，毋須另購帽章；如布章損壞，請向旅團或供應社查詢。</div>` },
+  "capbadge-scout": { title:"童軍帽章", desc:"童軍／深資／樂行同用", icon:"🎖️", buy:"supply",
     detail:`<h4>童軍帽章</h4><p>根據總會官網，童軍、深資童軍（陸／空）、樂行童軍（陸／空）的軟帽全部是「連<strong>童軍帽章</strong>」。</p>
       <div class="tip">即是說：由童軍升深資、深資升樂行，<strong>帽章可以沿用</strong>，只需換帽。</div>` },
-  "capbadge-venture-sea": { title:"深資海童軍帽章", desc:"深資海童軍專用", icon:"🎖️", img:"assets/items/capbadge-venture-sea.svg", buy:"supply",
-    detail:`<h4>深資海童軍帽章</h4><p>釘於海童軍領袖白頂帽上。</p>` },
-  "capbadge-rover-sea": { title:"樂行海童軍帽章", desc:"樂行海童軍專用", icon:"🎖️", img:"assets/items/capbadge-rover-sea.svg", buy:"supply",
-    detail:`<h4>樂行海童軍帽章</h4><p>釘於海童軍領袖白頂帽上。由深資海童軍升上來需更換帽章。</p>` },
-  "capbadge-rank": { title:"職級帽章", desc:"領袖（陸／空）", icon:"🎖️", img:"assets/items/capbadge-rank.svg", buy:"check",
+  "capbadge-venture-sea": { title:"深資海童軍帽章", desc:"深資／樂行海童軍同款（官方手冊）", icon:"🎖️", buy:"supply",
+    detail:`<h4>深資海童軍帽章</h4><p>官方手冊第 102 頁將<strong>深資／樂行海童軍帽章</strong>列為同一款，戴於白頂帽正前方、白色帽頂與黑色帽圍之間。</p>` },
+  "capbadge-rover-sea": { title:"樂行海童軍帽章", desc:"深資／樂行海童軍同款（官方手冊）", icon:"🎖️", buy:"supply",
+    detail:`<h4>樂行海童軍帽章</h4><p>官方手冊第 102 頁將<strong>深資／樂行海童軍帽章</strong>列為同一款；由深資海童軍升團可沿用，升團前向旅團確認現行安排。</p>` },
+  "capbadge-rank": { title:"職級帽章", desc:"領袖（陸／空）", icon:"🎖️", buy:"check",
     detail:`<h4>職級帽章</h4><p>領袖軟帽／硬帽上戴<strong>職級帽章</strong>，款式視乎所獲委任的職級。</p>
       <div class="warn">請於獲委任後向所屬旅團／區查詢應購買哪一款。</div>` },
-  "capbadge-sea-leader": { title:"海童軍領袖帽章", desc:"海童軍領袖", icon:"🎖️", img:"assets/items/capbadge-sea-leader.svg", buy:"check",
+  "capbadge-sea-leader": { title:"海童軍領袖帽章", desc:"海童軍領袖", icon:"🎖️", buy:"check",
     detail:`<h4>海童軍領袖帽章</h4><p>釘於海童軍男／女領袖白頂帽上。獲委任後向所屬旅團查詢。</p>` },
 
   /* ── 恤衫 ── */
@@ -104,7 +104,7 @@ const ITEMS = {
     detail:`<h4>深藍色半截裙</h4><p><strong>官方規格：</strong>深藍色、側袋、無褶、及膝。深資／樂行海空童軍女團員及海空童軍女領袖。</p>` },
 
   /* ── 皮帶 ── */
-  "belt": { title:"棕色皮帶（連童軍徽皮帶扣）", desc:"所有支部同款", icon:"👔", img:"assets/items/belt.svg", buy:"supply",
+  "belt": { title:"棕色皮帶（連童軍徽皮帶扣）", desc:"所有支部同款", icon:"👔", buy:"supply",
     detail:`<h4>棕色皮帶</h4><p><strong>官方規格：</strong>棕色（連童軍徽皮帶扣）。由幼童軍到領袖、海陸空全部同款，一條用到底。</p><ul><li>皮帶扣置正中</li><li>不掛多餘匙扣</li></ul>` },
 
   /* ── 襪 ── */
@@ -130,12 +130,12 @@ const ITEMS = {
       <ul><li>戴在恤衫領外</li><li>巾圈位於喉部，不可太低</li></ul>` },
   "woggle-cub": { title:"顏色巾圈（幼童軍）", desc:"官方：旅巾（連顏色巾圈）", icon:"⭕", img:"assets/items/woggle-cub.svg", buy:"check",
     detail:`<h4>幼童軍顏色巾圈</h4><p>總會官網幼童軍制服為「旅巾（連<strong>顏色巾圈</strong>）」，顏色代表所屬小隊（六人小隊），由旅團安排。</p>` },
-  "woggle-scout": { title:"童軍巾圈", desc:"童軍／深資／樂行／領袖同用", icon:"⭕", img:"assets/items/woggle-scout.svg", buy:"supply",
+  "woggle-scout": { title:"童軍巾圈", desc:"童軍／深資／樂行／領袖同用", icon:"⭕", buy:"supply",
     detail:`<h4>童軍巾圈</h4><p>總會官網由童軍到領袖全部寫「旅巾（連<strong>童軍巾圈</strong>）」，即升團後可沿用。</p>
       <div class="tip">童軍支部另有「小隊活動巾圈」，需出示童軍標準獎章或以上證書才可購買。</div>` },
 
   /* ── 徽章 ── */
-  "badges-youth": { title:"基本徽章", desc:"世界童軍會員章、香港章、地域章、區章、旅章", icon:"🎖️", img:"assets/items/badges-youth.svg", buy:"mixed",
+  "badges-youth": { title:"基本徽章", desc:"世界童軍會員章、香港章、地域章、區章、旅章", icon:"🎖️", buy:"mixed",
     detail:`<h4>基本徽章（青少年支部）</h4><p>總會官網列明幼童軍至樂行童軍的基本徽章為：<strong>世界童軍會員章、香港章、地域章、區章、旅章</strong>。</p>
       <ul>
         <li>世界童軍會員章：左胸袋中央（<strong>宣誓後</strong>才可佩戴）</li>
@@ -144,14 +144,14 @@ const ITEMS = {
       </ul>
       <p>會員章、香港章在供應社購買；地域章、區章、旅章多數由旅團代購或頒發。升團時徽章如狀況良好可沿用（同一旅同一區）。</p>
       <div class="tip">必須用線縫牢，不可用膠水或扣針。</div>` },
-  "patrol-badge": { title:"小隊章", desc:"童軍支部・由旅團頒發／供應社購買", icon:"🐾", img:"assets/items/patrol-badge.svg", buy:"group-or-supply",
+  "patrol-badge": { title:"小隊章", desc:"童軍支部・由旅團頒發／供應社購買", icon:"🐾", buy:"group-or-supply",
     detail:`<h4>小隊章</h4><p>只有<strong>童軍支部</strong>有小隊章（總會官網童軍制服徽章列表包括小隊章；深資／樂行沒有）。</p>
       <p>根據《童軍訓練綱要》附錄，小隊章在供應社發售，購買時毋須出示文件；亦有旅團會直接頒發。佩戴在<strong>右袖</strong>。</p>` },
-  "badges-leader": { title:"領袖基本徽章", desc:"會員章、香港章、香港肩章／旅章、總會總部章／地域章／區章", icon:"🎖️", img:"assets/items/badges-leader.svg", buy:"mixed",
+  "badges-leader": { title:"領袖基本徽章", desc:"會員章、香港章、香港肩章／旅章、總會總部章／地域章／區章", icon:"🎖️", buy:"mixed",
     detail:`<h4>基本徽章（領袖常規制服）</h4><p>總會官網領袖常規制服（編號 3）徽章：<strong>世界童軍會員章、香港章、香港肩章／旅章、總會總部章／地域章／區章、職級肩章</strong>。</p>
       <p>由青少年支部升任：世界童軍會員章、香港章可沿用；旅章／區章／地域章視乎服務單位，向旅團查詢。</p>
       <div class="tip">榮譽童軍獎章／貝登堡獎章持有人成為領袖後，可終身佩戴相應的<strong>領袖標誌</strong>。</div>` },
-  "epaulette-rank": { title:"職級肩章", desc:"領袖・視乎委任職級", icon:"🎗️", img:"assets/items/epaulette-rank.svg", buy:"check",
+  "epaulette-rank": { title:"職級肩章", desc:"領袖・視乎委任職級", icon:"🎗️", buy:"check",
     detail:`<h4>職級肩章</h4><p>戴於兩肩肩帶，款式視乎獲委任的職級（見習領袖／助理領袖／領袖／總監等）。獲委任後向旅團查詢應購買哪款。</p>` }
 };
 
@@ -159,7 +159,7 @@ const ITEMS = {
    香港童軍物品供應社 (SCOUT SHOP, hkscoutshop.org.hk) 官方產品資料
    ─ 產品編號、零售價、官方產品相（資料擷取日期：2026-09-05）
    圖片直接引用供應社網站 files/mid/<id>_<n>.jpg（中圖）／files/thum/（細圖）；
-   如供應社伺服器拒絕外連或圖片失效，會自動改用本地繪製的示意圖。
+   已核對的帽章等參考圖直接從本地載入；不再以自製徽章圖代替失效的官方圖片。
    =========================================================== */
 const SHOP_BASE = "https://www.hkscoutshop.org.hk/";
 const SHOP = {
@@ -320,7 +320,9 @@ function buildChecklist(opts){
 
   return target.map(id => {
     const it = ITEMS[id];
-    const had = source.includes(id);
+    // 保留原有 item id / 已買紀錄；官方手冊將兩個海童軍帽章名稱列作同一款。
+    const seaYouthBadges = ["capbadge-venture-sea", "capbadge-rover-sea"];
+    const had = source.includes(id) || (seaYouthBadges.includes(id) && source.some(x => seaYouthBadges.includes(x)));
     let status, note = "";
     if(mode === "upgrade" && source.length){
       if(had){
@@ -337,12 +339,13 @@ function buildChecklist(opts){
     }
     // 特殊：頒發／查詢類
     if(id === "scarf" && status !== "have") status = "check";
-    if(["woggle-cub","capbadge-rank","capbadge-sea-leader","epaulette-rank"].includes(id) && status !== "have") status = "check";
+    if(["capbadge-cub","woggle-cub","capbadge-rank","capbadge-sea-leader","epaulette-rank"].includes(id) && status !== "have") status = "check";
     if(id === "patrol-badge") { status = had ? "have" : "check"; }
     if(id === "badges-leader") status = "need";
 
     const buyLabel = {
       supply: "香港童軍物品供應社購買",
+      included: "隨幼童軍帽附上，毋須另購",
       any: "供應社或一般商店購買",
       group: "由旅團頒發",
       check: "向旅團／區查詢",
@@ -359,7 +362,7 @@ function buildChecklist(opts){
         + `<p class="cite">價錢為供應社網站標示零售價（2026-09 擷取），以店內為準。</p></div>`;
     }
     return {
-      id, title: it.title, desc: it.desc, icon: it.icon, img: it.img, status,
+      id, title: it.title, desc: it.desc, icon: it.icon, img: it.img, reference: itemReference(id, gender), status,
       shop, shopImg: shop ? shop.img : null, shopThumb: shop ? shop.thumb : null, shopUrl: shop ? shop.url : null,
       detail: (it.detail || "") + note + (buyLabel ? `<p class="cite">🛒 ${buyLabel}</p>` : "") + shopHtml
     };
@@ -367,7 +370,7 @@ function buildChecklist(opts){
 }
 
 /* ===========================================================
-   官方整套制服實相（香港童軍總會官網 /uploads/member/）
+   官方整套制服參考圖（官網原圖為制服圖解，不稱作「實相」）
    =========================================================== */
 const OFFICIAL_PHOTOS = {
   cub:     { land: { male:"Cub_B.jpg", female:"Cub_G.jpg" }, src:"https://www.scout.org.hk/tc/youth-members/cub-scouts/index.html?sid=2" },
@@ -381,17 +384,75 @@ const OFFICIAL_PHOTOS = {
              src:"https://www.scout.org.hk/tc/adult-members/leader/index.html?sid=2" }
 };
 const OFFICIAL_IMG_BASE = "https://www.scout.org.hk/uploads/member/";
-const LOCAL_FALLBACK = {
-  cub: { male:"assets/images/cub-male.jpg", female:"assets/images/cub-female.jpg" },
-  scout: { male:"assets/images/scout-male.jpg", female:"assets/images/scout-female.jpg" },
-  venture: { male:"assets/images/venture-male.jpg", female:"assets/images/venture-female.jpg" },
-  rover: { male:"assets/images/rover-male.jpg", female:"assets/images/rover-female.jpg" },
-  leader: { male:"assets/images/leader-male.jpg", female:"assets/images/leader-female.jpg" }
+// Only an exact section / branch / gender match is allowed. Never substitute land for sea / air.
+const LOCAL_UNIFORMS = {
+  cub: { land: { male:"assets/reference/cub-male.webp", female:"assets/reference/cub-female.webp" } },
+  scout: { land: { female:"assets/reference/scout-land-female.webp" } },
+  venture: { air: { male:"assets/reference/venture-air-male.webp" } }
 };
 function officialPhoto(section, branch, gender){
   const p = OFFICIAL_PHOTOS[section];
-  if(!p) return null;
-  const b = p[branch] || p.land;
-  const file = b && b[gender];
-  return { url: file ? OFFICIAL_IMG_BASE + file : null, src: p.src, fallback: LOCAL_FALLBACK[section]?.[gender] || null };
+  const file = p?.[branch]?.[gender];
+  if(!file) return null;
+  const local = LOCAL_UNIFORMS[section]?.[branch]?.[gender];
+  const alt = `${SECTIONS[section].name}・${BRANCHES[branch].name}・${gender === "female" ? "女" : "男"}裝制服參考圖`;
+  const source = { alt, sourceUrl:p.src, sourceLabel:"總會制服頁 ↗", note:"官方制服圖解，非實物照片；規格以總會最新資料為準。" };
+  return { src:p.src, images:[
+    ...(local ? [{ ...source, src:local, label:"官方制服參考圖（本地）" }] : []),
+    { ...source, src:OFFICIAL_IMG_BASE + file, label:"官方制服參考圖" }
+  ] };
+}
+
+/* ===========================================================
+   已核對的本地參考圖 — 來源 / 裁切記錄見 assets/reference/README.md
+   不重畫徽號、不改色；不將手冊舊圖冒稱為現售產品相。
+   =========================================================== */
+const CAP_HANDBOOK = "https://uniform.scouting.org.hk/wp-content/uploads/2017/03/uniformhandbook_p96-106.pdf";
+function handbookImage(file, page, alt, note){
+  return { src:`assets/reference/${file}.webp`, alt, label:"官方手冊參考圖（本地）",
+    sourceUrl:`${CAP_HANDBOOK}#page=${page - 95}`, sourceLabel:`官方手冊 p.${page} ↗`, note };
+}
+function uniformCrop(file, section, alt, note){
+  return { src:`assets/reference/${file}.webp`, alt, label:"官方制服圖局部（本地）",
+    sourceUrl:OFFICIAL_PHOTOS[section].src, sourceLabel:"總會制服頁 ↗", note };
+}
+const ITEM_REFERENCES = {
+  "capbadge-cub": handbookImage("capbadge-cub", 98, "男幼童軍帽冠上已縫好的布質帽章（官方手冊圖解）", "圖示男幼童軍帽；布章已縫在帽冠，毋須另購。"),
+  "capbadge-scout": handbookImage("capbadge-scout", 102, "銀色童軍帽章（官方手冊原圖）", "手冊原圖裁切，非現售產品照片。"),
+  "capbadge-venture-sea": handbookImage("capbadge-sea-youth", 102, "深資／樂行海童軍帽章（官方手冊原圖）", "手冊將深資及樂行海童軍帽章列為同一款。"),
+  "capbadge-rover-sea": handbookImage("capbadge-sea-youth", 102, "深資／樂行海童軍帽章（官方手冊原圖）", "手冊將深資及樂行海童軍帽章列為同一款。"),
+  "capbadge-rank": handbookImage("capbadge-rank", 104, "綠色團長職級帽章例子（官方手冊原圖）", "只示範綠色團長款；職級不同，顏色／款式亦不同，請先向旅團確認。"),
+  "capbadge-sea-leader": handbookImage("capbadge-sea-leader", 105, "海童軍領袖帽章（官方手冊原圖）", "海童軍成年領袖款，與深資／樂行海童軍款不同。"),
+  "cap-cub-m": handbookImage("capbadge-cub", 98, "男幼童軍深綠色黃間條鴨舌帽（官方手冊圖解）", "穿戴圖局部；帽冠上已縫有布質帽章。"),
+  "cap-cub-f": uniformCrop("cap-cub-female", "cub", "女幼童軍深綠色圓形有邊帽（官方制服圖解）", "穿戴圖局部；帽冠上已縫有布質帽章。"),
+  "beret-green": uniformCrop("beret-green", "scout", "深綠色軟帽配童軍帽章（官方制服圖解）", "穿戴圖局部；圖示青少年童軍帽章，成年領袖須用職級帽章。"),
+  "beret-greyblue": uniformCrop("beret-greyblue", "venture", "灰藍色軟帽配童軍帽章（官方制服圖解）", "穿戴圖局部；圖示青少年童軍帽章，成年領袖須用職級帽章。"),
+  "belt": uniformCrop("belt", "venture", "棕色皮帶及童軍徽皮帶扣（官方制服圖解）", "穿戴圖局部，並非供應社現售產品照片。"),
+  "woggle-scout": uniformCrop("woggle-scout", "venture", "童軍巾圈（官方制服圖解）", "穿戴圖局部，並非供應社現售產品照片。"),
+  "badges-youth": uniformCrop("badges-common", "cub", "香港章及世界童軍會員章（官方制服圖解）", "只示範兩款通用徽章；地域章、區章、旅章請按所屬單位準備。"),
+  "badges-leader": uniformCrop("badges-common", "cub", "香港章及世界童軍會員章（官方制服圖解）", "只示範兩款通用徽章，並非完整領袖徽章套裝；其餘徽章按委任及服務單位準備。")
+};
+function itemReference(id, gender){
+  if(id === "capbadge-cub" && gender === "female"){
+    return { ...ITEM_REFERENCES["cap-cub-f"], alt:"女幼童軍帽冠上已縫好的布質帽章（官方制服圖解）" };
+  }
+  return ITEM_REFERENCES[id] || null;
+}
+function itemImageSources(item, thumbnail = false){
+  // Verified local references are primary, not a rescue image after a hotlink fails.
+  if(item.reference) return [item.reference];
+  const images = [];
+  const shopImage = thumbnail ? (item.shopThumb || item.shopImg) : item.shopImg;
+  if(shopImage){
+    images.push({ src:shopImage, alt:`${item.shop.name}（供應社產品圖片）`, label:"供應社產品圖片",
+      sourceUrl:item.shopUrl, sourceLabel:"查看供應社產品 ↗",
+      note:item.shop.name !== item.title ? `產品例子：${item.shop.name}；未必代表此項全部款式。` : "" });
+  }
+  // Only general clothing keeps a simple style illustration. Invented insignia have no img entry.
+  if(item.img){
+    images.push({ src:item.img, alt:`${item.title}（款式示意，非實物照片）`, label:"款式示意（非實物照片）",
+      sourceUrl:item.shopUrl, sourceLabel:"對照供應社產品 ↗",
+      note:shopImage ? "供應社圖片暫時未能載入；此示意圖不作顏色或細節依據。" : "僅供辨認款式；顏色及細節以實物和官方規格為準。" });
+  }
+  return images;
 }

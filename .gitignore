@@ -9,3 +9,7 @@ Thumbs.db
 .vscode/
 .idea/
 node_modules/
+
+# Browser test artifacts
+/test-results/
+/playwright-report/
