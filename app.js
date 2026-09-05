@@ -29,7 +29,7 @@ const BADGES_OVERVIEW = {
       { name: "🔰 會員章", desc: "宣誓後佩戴" },
       { name: "進步獎章", desc: "第一步（紅）→ 第二步（棕）→ 第三步（藍）→ 第四步（綠）" }
     ],
-    note: "小童軍支部<strong>沒有指定制服</strong>，訓練以遊戲、唱歌、故事等活動為主。"
+    note: "小童軍服裝只設<strong>領巾及簡單整齊的集會服裝</strong>；旅團亦可安排自家統一服飾，以旅團安排為準。"
   },
   cub: {
     name: "幼童軍", color: "var(--cub)", age: "6–11 歲",
@@ -71,7 +71,7 @@ const BADGES_OVERVIEW = {
       { name: "1️⃣ 深資童軍獎章", desc: "考獲「責任」「自立」「活動」「探險」四個段章" },
       { name: "⭐ 榮譽童軍獎章", desc: "<strong>深資童軍支部最高獎章</strong>（英文 Dragon Scout Award）。考獲深資童軍獎章及四個金帶。持有人日後任領袖可終身佩戴榮譽童軍領袖標誌" }
     ],
-    note: "深資童軍團以執行委員會制度自治自務。<strong>深資童軍不會有金紫荊獎章</strong>（那是幼童軍的）。"
+    note: "深資童軍團以執行委員會制度自治自務。"
   },
   rover: {
     name: "樂行童軍", color: "var(--rover)", age: "18–25 歲",
@@ -122,7 +122,7 @@ const TRANSITIONS = {
     title: "由小童軍升幼童軍", color: "var(--cub)",
     items: [
       { q: "升團條件？", a: "符合幼童軍年齡（6–11 歲）即可，實際日期向所屬旅團查詢。小童軍身分於年滿 8 歲當日自動結束。" },
-      { q: "要買什麼？", a: "小童軍沒有制服，所以等同<strong>全新加入幼童軍</strong>：帽、帽章、恤衫、短褲／裙褲、皮帶、長襪、皮鞋、基本徽章。旅巾及顏色巾圈由旅團安排。" },
+      { q: "要買什麼？", a: "小童軍只有活動服裝（運動鞋等），升幼童軍等同<strong>首次購買整套制服</strong>：帽、帽章、恤衫、短褲／裙褲、皮帶、長襪、皮鞋；旅巾及顏色巾圈由旅團安排。" },
       { q: "幼童軍徽章佩戴位置？", a: "會員章：左胸袋中央；香港章：左胸袋上方；服務年星：香港章旁；進度性獎章及金紫荊獎章：右胸袋；活動徽章：左袖；旅章、區章、地域章：右袖。（2023 年 4 月起新指引）" }
     ]
   },
@@ -306,16 +306,25 @@ function selectSection(s){
   document.querySelectorAll(".card[data-hide-for]").forEach(card => {
     card.style.display = card.getAttribute("data-hide-for").split(",").includes(s) ? "none" : "";
   });
-  document.querySelectorAll("[data-show-for]").forEach(el => {
-    el.style.display = el.getAttribute("data-show-for").split(",").includes(s) ? "" : "none";
-  });
+  applyVisibility();
   refresh();
   updateTransition();
   updateBadgesOverview();
   const timelineEl = $("badge-timeline");
   if(timelineEl) timelineEl.innerHTML = renderBadgeTimeline();
 }
-function refresh(){ renderControls(); render(); renderBudget(); renderOfficialPhoto(); }
+
+// 按「目標支部」及「性別」顯示／隱藏內容（data-show-for / data-show-gender）
+function applyVisibility(){
+  document.querySelectorAll("[data-show-for],[data-show-gender]").forEach(el => {
+    const f = el.getAttribute("data-show-for");
+    const g = el.getAttribute("data-show-gender");
+    const okF = !f || f.split(",").includes(currentSection);
+    const okG = !g || g.split(",").includes(currentGender);
+    el.style.display = (okF && okG) ? "" : "none";
+  });
+}
+function refresh(){ renderControls(); applyVisibility(); render(); renderBudget(); renderOfficialPhoto(); }
 
 /* ===========================================================
    主渲染
@@ -403,8 +412,7 @@ function render(){
   $("checklist").innerHTML = `
     <div class="checklist-title"><span class="badge" data-section="${currentSection}">${sec.name}</span><span>${modeLabel}${branchLabel} · ${genderLabel} · 共 ${list.length} 項</span></div>
     ${listHTML}
-    <div class="note"><strong>備註：</strong>制服組成根據香港童軍總會官網「制服」頁（中文版）。單件圖片優先顯示<strong>香港童軍物品供應社（SCOUT SHOP）官方產品相</strong>（點開每項可見產品編號及零售價）；如官方相暫時無法載入，會自動改用本地繪製示意圖。
-    地域章、區章、旅章、小隊章可向<strong>所屬旅團領袖</strong>查詢頒發／購買安排。</div>`;
+    <div class="note"><strong>備註：</strong>制服規格根據香港童軍總會官網「制服」頁。地域章、區章、旅章、小隊章及旅巾安排，請向<strong>所屬旅團領袖</strong>查詢。</div>`;
 }
 
 function toggleItem(el){
@@ -436,7 +444,10 @@ function itemPrice(id){
 function renderBudget(){
   const el = $("budget-dynamic");
   if(!el) return;
-  if(currentSection === "grasshopper"){ el.innerHTML = "<p>小童軍無指定制服，無需制服預算。</p>"; return; }
+  if(currentSection === "grasshopper"){
+    el.innerHTML = `<p style="margin:0">小童軍以<strong>旅團安排</strong>為準：小童軍活動服可於<a href="https://www.hkscoutshop.org.hk/" target="_blank" rel="noopener">供應社</a>購買（HK$75），單色衣物、運動鞋可自行選購，旅巾由旅團安排。</p>`;
+    return;
+  }
   const list = buildChecklist({ section: currentSection, branch: currentBranch, gender: currentGender, mode: currentMode, fromSection: currentFrom, fromBranch: currentFromBranch });
   const need = list.filter(i => i.status !== "have");
   let lo = 0, hi = 0;

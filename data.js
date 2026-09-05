@@ -11,7 +11,7 @@
 // 支部基本資料（年齡為總會官網 2025 年資料）
 const SECTIONS = {
   grasshopper: { name: "小童軍", nameEn: "Grasshopper Scout", age: "4–7 歲", color: "#ff7a1a",
-    note: "小童軍支部沒有指定制服。團集會時由所屬小童軍團長規定服裝。",
+    note: "小童軍服裝只設領巾及簡單整齊的集會服裝；旅團亦可安排自家統一服飾，以旅團安排為準。",
     upgradeFrom: [], upgradeTo: "cub", hasBranch: false },
   cub:     { name: "幼童軍",   nameEn: "Cub Scout",     age: "6–11 歲",  color: "#5a8f3a", upgradeFrom: ["grasshopper"], upgradeTo: "scout",   hasBranch: false },
   scout:   { name: "童軍",     nameEn: "Scout",         age: "11–15 歲", color: "#0a5c36", upgradeFrom: ["cub"],         upgradeTo: "venture", hasBranch: true },
@@ -202,6 +202,8 @@ const SHOP = {
   "scarf":        { id:391,  n:0, code:"07010", name:"香港童軍綠色領巾", price:55, note:"旅巾通常由旅團頒發；供應社只售總會綠色領巾。" },
   "woggle-scout": { id:3489, n:0, code:"01031", name:"頭層皮巾圈 (可調校大小)", price:19 },
   "woggle-cub":   { id:333,  n:0, code:"01062", name:"幼童軍塑膠巾圈", price:4 },
+  /* 小童軍 */
+  "gh-clothes":   { id:3084, n:0, name:"小童軍活動服", price:75, note:"旅團如安排自家統一服飾，以旅團安排為準。" },
   /* 徽章 */
   "badges-youth":  { id:1846, n:0, code:"01037", name:"世界童軍會員章", price:6,
     extra:[{id:1847,n:0,code:"01038",name:"香港章",price:6},{id:684,n:0,code:"23054",name:"港島地域章（例）",price:2.5},{id:689,n:0,code:"23104",name:"離島區區章（例）",price:6.5}] },
@@ -274,14 +276,22 @@ const UNIFORM_SPEC = {
   }
 };
 
-// 小童軍（無指定制服）
+// 小童軍（簡單整齊集會服裝，旅團可安排自家統一服飾）
 const GRASSHOPPER_ITEM = {
-  id:"gh-clothes", title:"「小童軍」沒有正式制服，那要買什麼？", desc:"由所屬小童軍團長規定", status:"check", icon:"👕",
-  detail:`<h4>小童軍服裝安排</h4>
-    <p>小童軍支部<strong>沒有指定制服</strong>。團集會時由<strong>所屬小童軍團長</strong>規定服裝。一般要求：</p>
-    <ul><li><strong>上衣</strong>：單色 T 恤或活動服（部分旅團有自己一套活動服）</li><li><strong>褲</strong>：單色短褲或長褲</li><li><strong>鞋</strong>：運動鞋</li></ul>
-    <div class="tip">已宣誓小童軍可佩戴<strong>小童軍團員章 + 旅巾</strong>。</div>
-    <div class="warn">先向<strong>所屬旅團領袖</strong>查詢當季服裝安排。</div>`
+  id:"gh-clothes", title:"小童軍要準備什麼服裝？", desc:"簡單整齊集會服裝＋旅巾（以旅團安排為準）", status:"check", icon:"👕",
+  detail:`<h4>小童軍服裝（總會官網「制服」頁）</h4>
+    <p>總會官網列明：小童軍服裝<strong>只設領巾及簡單整齊的集會服裝</strong>，保留小童軍對正式穿著童軍制服的憧憬。</p>
+    <ul>
+      <li><strong>上衣</strong>：橙色小童軍活動服，或單色、有領／圓領、短袖／長袖上衣</li>
+      <li><strong>褲</strong>：單色、短褲或長褲</li>
+      <li><strong>鞋</strong>：運動鞋</li>
+      <li><strong>襪</strong>：單色、短襪或長襪</li>
+      <li><strong>帽（非必須）</strong>：單色、闊邊漁夫帽或鴨咀帽</li>
+      <li><strong>領巾</strong>：已宣誓小童軍佩戴旅巾（連顏色巾圈）</li>
+      <li><strong>徽章</strong>：小童軍團員章戴上衣左胸前（宣誓後）；進步獎章戴左袖</li>
+    </ul>
+    <div class="tip">旅團可安排自家統一服飾，實際以<strong>所屬旅團安排</strong>為準；旅巾、團員章須待宣誓後才可佩戴。</div>
+    <div class="warn">除顏色巾圈外，小童軍不可使用其他支部制服配件（例如皮帶、制服帽）。</div>`
 };
 
 /* ===========================================================
@@ -297,7 +307,12 @@ function getSpec(section, branch, gender){
 // 取得升團來源（支部、類型）
 function buildChecklist(opts){
   const { section, branch, gender, mode, fromSection, fromBranch } = opts;
-  if(section === "grasshopper") return [Object.assign({}, GRASSHOPPER_ITEM)];
+  if(section === "grasshopper"){
+    const gh = Object.assign({}, GRASSHOPPER_ITEM);
+    const ghShop = shopInfo("gh-clothes");
+    if(ghShop){ gh.shop = ghShop; gh.shopImg = ghShop.img; gh.shopUrl = ghShop.url; }
+    return [gh];
+  }
   const target = getSpec(section, branch, gender) || [];
   const source = (mode === "upgrade" && fromSection && fromSection !== "grasshopper")
     ? (getSpec(fromSection, fromBranch, gender) || []) : [];
