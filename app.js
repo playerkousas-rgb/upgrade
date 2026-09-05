@@ -18,6 +18,48 @@ function toggleOwned(key){ const o = loadOwned(); o[key] = !o[key]; saveOwned(o)
 function $(id){ return document.getElementById(id); }
 
 /* ===========================================================
+   各 PART 開合 — 原生 details 支援滑鼠、觸控及鍵盤
+   =========================================================== */
+const PARTS_STORAGE_KEY = "scout_parts_v1";
+function getParts(){ return Array.from(document.querySelectorAll(".container > details.part")); }
+function getVisibleParts(){ return getParts().filter(part => getComputedStyle(part).display !== "none"); }
+function savePartStates(){
+  const states = Object.fromEntries(getParts().map(part => [part.id, part.open]));
+  try { localStorage.setItem(PARTS_STORAGE_KEY, JSON.stringify(states)); } catch(e){}
+}
+function updatePartControls(){
+  const visible = getVisibleParts();
+  $("expand-all-parts").disabled = visible.every(part => part.open);
+  $("collapse-all-parts").disabled = visible.every(part => !part.open);
+}
+function setAllParts(open){
+  // 只操作目前支部適用的部分，不改動被篩選隱藏的內容。
+  getVisibleParts().forEach(part => { part.open = open; });
+  savePartStates();
+  updatePartControls();
+}
+function initParts(){
+  let saved = {};
+  try {
+    const value = JSON.parse(localStorage.getItem(PARTS_STORAGE_KEY) || "{}");
+    if(value && typeof value === "object" && !Array.isArray(value)) saved = value;
+  } catch(e){}
+  getParts().forEach(part => {
+    // 沒有有效紀錄時，沿用 HTML 預設（只展開步驟 ①、②）。
+    if(typeof saved[part.id] === "boolean") part.open = saved[part.id];
+    part.addEventListener("toggle", event => {
+      if(event.target !== part) return; // 不處理內層 FAQ 等細項的事件。
+      savePartStates();
+      updatePartControls();
+    });
+  });
+  $("expand-all-parts").addEventListener("click", () => setAllParts(true));
+  $("collapse-all-parts").addEventListener("click", () => setAllParts(false));
+  $("part-toolbar").hidden = false;
+  updatePartControls();
+}
+
+/* ===========================================================
    進度性獎章總覽 — 資料來源：香港童軍總會各支部訓練綱要（中文版）
    =========================================================== */
 const BADGES_OVERVIEW = {
@@ -152,7 +194,7 @@ const TRANSITIONS = {
       { q: "升團條件？", a: "符合樂行童軍年齡（18–25 歲）即可，毋須先考榮譽童軍獎章。深資童軍身分於年滿 21 歲當日自動結束。" },
       { q: "先揀陸／海／空", a: "樂行童軍同樣分<strong>樂行童軍、樂行海童軍、樂行空童軍</strong>。" },
       { q: "升陸樂行要買什麼？", a: "只需<strong>把棗紅色軟帽換成深綠色軟帽</strong>，童軍帽章可移過去。其餘（恤衫、長褲／半截裙、皮帶、襪、皮鞋、旅巾、巾圈）全部同款可沿用。" },
-      { q: "升海／空樂行要買什麼？", a: "海：白頂帽可沿用，只需換<strong>樂行海童軍帽章</strong>。空：全部同款，毋須購買。" },
+      { q: "升海／空樂行要買什麼？", a: "海：白頂帽可沿用；官方手冊將<strong>深資／樂行海童軍帽章</strong>列為同一款，升團前向旅團確認。空：全部同款，毋須購買。" },
       { q: "徽章點處理？", a: "拆走深資童軍肩章、段章及金帶、深資童軍獎章。如考獲<strong>榮譽童軍獎章</strong>，按總會安排佩戴（向旅團查詢）。服務年星保留。" }
     ]
   },
@@ -323,8 +365,63 @@ function applyVisibility(){
     const okG = !g || g.split(",").includes(currentGender);
     el.style.display = (okF && okG) ? "" : "none";
   });
+  updatePartControls();
 }
 function refresh(){ renderControls(); applyVisibility(); render(); renderBudget(); renderOfficialPhoto(); }
+
+/* ===========================================================
+   圖片：來源標示跟隨實際圖片；失敗時保留來源連結，不循環、不用空 src。
+   =========================================================== */
+function escapeHtml(value){
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  }[char]));
+}
+function renderReferenceImage(images, className, thumbnail = false){
+  const sources = images.filter((image, index) => image.src && images.findIndex(x => x.src === image.src) === index);
+  const first = sources[0];
+  const label = first?.label || "暫未提供參考圖";
+  return `<figure class="reference-image ${className}" data-image-sources="${escapeHtml(JSON.stringify(sources))}" data-image-index="0"${thumbnail ? ' aria-hidden="true"' : ''}>
+    ${first ? `<img src="${escapeHtml(first.src)}" alt="${thumbnail ? '' : escapeHtml(first.alt)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="handleImageError(this)">` : ''}
+    <div class="image-unavailable"${first ? ' hidden' : ''}>${thumbnail ? '圖片' : '<span>參考圖暫時未能載入</span><small>請查看來源或下方產品頁</small>'}</div>
+    ${thumbnail ? '' : `<figcaption class="cite image-caption">
+      <span class="image-caption-label">${escapeHtml(label)}</span>
+      <a class="image-source"${first?.sourceUrl ? ` href="${escapeHtml(first.sourceUrl)}"` : ' hidden'} target="_blank" rel="noopener">${escapeHtml(first?.sourceLabel)}</a>
+      <span class="image-note"${first?.note ? '' : ' hidden'}>${escapeHtml(first?.note)}</span>
+    </figcaption>`}
+  </figure>`;
+}
+function updateImageCaption(frame, source, unavailable = false){
+  const caption = frame.querySelector('.image-caption');
+  if(!caption) return;
+  caption.querySelector('.image-caption-label').textContent = unavailable ? "參考圖暫時未能載入" : source.label;
+  const link = caption.querySelector('.image-source');
+  link.hidden = !source.sourceUrl;
+  if(source.sourceUrl){ link.href = source.sourceUrl; link.textContent = source.sourceLabel; }
+  const note = caption.querySelector('.image-note');
+  note.textContent = unavailable ? "未能載入圖片；仍可透過來源頁核對款式及規格。" : (source.note || "");
+  note.hidden = !note.textContent;
+}
+function handleImageError(image){
+  const frame = image.closest('.reference-image');
+  if(!frame) return;
+  const sources = JSON.parse(frame.dataset.imageSources);
+  const nextIndex = Number(frame.dataset.imageIndex) + 1;
+  const next = sources[nextIndex];
+  if(next){
+    frame.dataset.imageIndex = String(nextIndex);
+    if(!frame.classList.contains('image-thumb')) image.alt = next.alt;
+    updateImageCaption(frame, next);
+    image.src = next.src;
+    return;
+  }
+  // No trustworthy image remains. A neutral notice is better than an invented insignia.
+  image.onerror = null;
+  image.remove();
+  frame.classList.add('is-unavailable');
+  frame.querySelector('.image-unavailable').hidden = false;
+  updateImageCaption(frame, sources[nextIndex - 1] || {}, true);
+}
 
 /* ===========================================================
    主渲染
@@ -349,7 +446,7 @@ function render(){
   if(currentSection === "grasshopper"){
     imgHtml = `<div class="placeholder" style="background:linear-gradient(135deg,#fff4e6,#ffe2c2);border-color:#ff7a1a">🧒</div>`;
   } else {
-    imgHtml = `<img src="${photo.url}" alt="${sec.name}${genderLabel}官方制服" loading="lazy" onerror="this.onerror=null;this.src='${photo.fallback || ""}'">`;
+    imgHtml = renderReferenceImage(photo?.images || [], "uniform-preview");
   }
   $("preview").innerHTML = `<div class="preview">${imgHtml}
     <div class="info">
@@ -357,7 +454,6 @@ function render(){
       <p><strong>${modeLabel}</strong></p>
       <p>支部年齡：${sec.age}</p>
       ${sec.note ? `<p style="font-size:.88rem;color:var(--scout-olive)">${sec.note}</p>` : ""}
-      ${currentSection !== "grasshopper" ? `<p class="cite">圖：香港童軍總會官網制服頁 <a href="${photo.src}" target="_blank" rel="noopener">↗</a></p>` : ""}
     </div></div>`;
 
   // 統計
@@ -379,17 +475,10 @@ function render(){
   const listHTML = list.map(it => {
     const ownedKey = `${contextKey()}-${it.id}`;
     const owned = isOwned(ownedKey);
-    // 優先顯示供應社官方產品相；載入失敗則改用本地繪製示意圖
-    const fb = it.img || "";
-    const iconHtml = (it.shopThumb || it.img)
-      ? `<img src="${it.shopThumb || it.img}" alt="${it.title}" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='${fb}'">`
-      : (it.icon || "📦");
-    const bigImg = (it.shopImg || it.img)
-      ? `<figure class="item-fig"><img class="item-big" src="${it.shopImg || it.img}" alt="${it.title}" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='${fb}';this.nextElementSibling.textContent='示意圖（供應社官方相暫時無法載入）'">
-           <figcaption class="cite">${it.shopImg ? `供應社官方產品相 · <a href="${it.shopUrl}" target="_blank" rel="noopener">${it.shop.name} ↗</a>` : "示意圖"}</figcaption></figure>`
-      : "";
+    const iconHtml = renderReferenceImage(itemImageSources(it, true), "image-thumb", true);
+    const bigImg = renderReferenceImage(itemImageSources(it), "item-fig");
     return `
-      <div class="item ${it.status}${owned ? ' owned' : ''}">
+      <div class="item ${it.status}${owned ? ' owned' : ''}" data-item-id="${it.id}">
         <div class="item-row" onclick="toggleItem(this.parentElement)">
           <div class="item-left">
             <div class="item-icon">${iconHtml}</div>
@@ -453,7 +542,7 @@ function renderBudget(){
   let lo = 0, hi = 0;
   const rows = need.map(i => {
     const p = itemPrice(i.id); lo += p.lo; hi += p.hi;
-    const txt = i.status === "check" ? "視乎旅團安排" : (p.official ? `HK$${p.lo}` : (p.lo === p.hi ? `約 HK$${p.lo}` : `約 HK$${p.lo}–${p.hi}`));
+    const txt = i.id === "capbadge-cub" ? "已連帽，毋須另購" : i.status === "check" ? "視乎旅團安排" : (p.official ? `HK$${p.lo}` : (p.lo === p.hi ? `約 HK$${p.lo}` : `約 HK$${p.lo}–${p.hi}`));
     const src = p.official && i.shop ? ` <a class="cite" href="${i.shop.url}" target="_blank" rel="noopener">供應社 ${i.shop.code} ↗</a>` : "";
     return `<tr><td>${i.title}</td><td>${txt}${src}</td></tr>`; }).join("");
   el.innerHTML = `<p style="margin:0 0 .6rem">你而家揀嘅係<strong>${currentMode === "upgrade" ? "升團補購" : "全新全購"}</strong>，需要準備嘅物品如下：</p>
@@ -462,18 +551,18 @@ function renderBudget(){
     <p class="cite">標有「供應社編號」的價錢為 hkscoutshop.org.hk 網站 2026 年 9 月標示零售價，其餘為約略參考；實際以香港童軍物品供應社為準。皮鞋、短襪、襪褲可於一般商店購買。</p>`;
 }
 
-/* 官方整套制服實相 */
+/* 官方整套制服參考圖（不是實物照片） */
 function renderOfficialPhoto(){
   const el = $("official-photo-box");
   if(!el) return;
   if(currentSection === "grasshopper"){ el.innerHTML = ""; return; }
   const photo = officialPhoto(currentSection, currentBranch, currentGender);
   const secName = SECTIONS[currentSection].name + (SECTIONS[currentSection].hasBranch ? "・" + BRANCHES[currentBranch].name : "");
-  el.innerHTML = `<div class="note"><strong>📷 ${secName} 官方制服實相（香港童軍總會官網）</strong>
+  el.innerHTML = `<div class="note"><strong>${secName} 官方制服參考圖</strong>
     <p style="margin:.4rem 0">整套對照：帽、恤衫、褲／裙、皮帶、襪、皮鞋、領巾。</p>
-    <img src="${photo.url}" alt="官方制服實相" style="max-width:260px;width:100%;border-radius:10px;background:#fff" loading="lazy" onerror="this.onerror=null;this.src='${photo.fallback || ""}'">
-    <p class="cite"><a href="${photo.src}" target="_blank" rel="noopener">scout.org.hk 制服頁 ↗</a></p></div>`;
+    ${renderReferenceImage(photo?.images || [], "uniform-full")}</div>`;
 }
 
 // 初始化
 selectSection("cub");
+initParts();

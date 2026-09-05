@@ -33,7 +33,7 @@
 - 6 個支部 × 來源(升團/全新加入)× **原本陸/海/空 × 升去陸/海/空** × 男/女
 - 領袖有 **3 個來源**:由深資升任 / 由樂行升任 / 全新加入
 - 以「官方制服組成表」自動比較原本與目標,同款 = 可沿用,不同 = 需購買
-- 每件單品有**圖片**(`assets/items/`),展開可看規格、購買途徑、升團注意
+- 單品附來源可追溯的**參考圖／產品圖片**，展開可看規格、購買途徑及升團注意；未能取得可靠圖片時保留來源連結，不以自製徽號代替
 - 自動統計:需購買 / 可沿用 / 向團長查詢;預算按實際要買的物品計算
 - **家長可 mark 邊啲已有**(支援兄弟姊妹共用),localStorage 持久化
 
@@ -53,7 +53,12 @@
 - 常見問題 FAQ(7 條)
 
 ### 4. 視覺
-- 10 張統一風格 AI 制服插畫
+- 每個 PART 均可按標題獨立展開／收起（支援觸控、Enter／Space）
+- 初次開啟只展開步驟 ①、②，其餘收起；可一鍵展開／收起目前顯示的所有部分
+- 自動記住各部分的開合狀態；切換支部、性別或重新整理不會重設開合選擇
+- 帽章等 14 個配件項目直接使用本地官方手冊／制服圖局部，毋須等外站失敗才 fallback
+- 4 個準確制服組合已有本地官方圖解；其餘只嘗試對應官方圖片，不再以 AI 陸童軍圖代替海／空制服
+- 圖片註明來源及性質，官方圖解不再稱作「實相」
 - 6 支部用 6 種顏色區分
 - 自家設計 LOGO(綠色 U + 軟帽 + 貝登堡徽)
 - 響應式(手機/平板/桌面)
@@ -79,19 +84,34 @@ upgrade/
     ├── logo-512.png
     ├── apple-touch-icon.png
     ├── favicon-32.png
-    ├── items/   (單件制服/配件圖片:帽、帽章、恤衫、褲/裙、皮帶、襪、鞋、巾圈、徽章)
-    └── images/  (10 張 AI 插畫,作官方圖載入失敗時的後備)
-        ├── cub-male.jpg
-        ├── cub-female.jpg
-        ├── scout-male.jpg
-        ├── scout-female.jpg
-        ├── venture-male.jpg
-        ├── venture-female.jpg
-        ├── rover-male.jpg
-        ├── rover-female.jpg
-        ├── leader-male.jpg
-        └── leader-female.jpg
+    ├── reference/ (15 張已核對的本地官方參考圖 + 來源及裁切記錄 README.md)
+    ├── items/     (一般衣物的款式示意圖；不準確的徽號 SVG 已移除)
+    └── images/    (舊 AI 整套制服插畫，已停用，不再作圖片後備)
 ```
+
+---
+
+## 🧪 瀏覽器回歸測試
+
+網站仍是純靜態 HTML／JavaScript，毋須建置。
+
+- `tests/parts.spec.js`：19 項，涵蓋各部分開合、全部開合、支部篩選、內層 FAQ、已有物品紀錄、狀態儲存、鍵盤操作及手機排版。
+- `tests/images.spec.js`：18 項，涵蓋全部帽章、15 個本地圖檔解碼、來源標示、制服組合匹配、本地及外站圖片失效、後備圖失效不循環、320／390px 排版。
+- 測試預設阻擋所有外站請求，不依賴供應社允許圖片外連。若另安裝 `@fontsource/noto-sans-hk`，圖片手機測試會使用真實繁中字符字寬。
+
+```bash
+# 只需安裝測試工具；不會改動網站依賴
+npm install --no-save --package-lock=false @playwright/test
+npx playwright install --with-deps chromium
+
+# 終端一：啟動靜態網站
+python3 -m http.server 8000 --bind 0.0.0.0
+
+# 終端二：執行測試
+npx playwright test tests/parts.spec.js tests/images.spec.js --workers=1
+```
+
+如網站使用其他網址，可用 `TEST_BASE_URL` 指定測試目標。
 
 ---
 
@@ -123,7 +143,9 @@ upgrade/
 - 制服規格以香港童軍總會最新《儀容與制服手冊》為準
 - 訓練綱要根據《童軍訓練綱要》及政策、組織及規條整理
 - 制服價格隨時調整,實際以[香港童軍物品供應社(SCOUT SHOP)](http://www.hkscoutshop.org.hk) 為準
-- 單件制服圖片:優先直接引用供應社網站的**官方產品相**(`data.js` 的 `SHOP` 表,含產品編號、零售價、產品頁連結,2026-09 擷取);若供應社伺服器拒絕外連或圖片失效,`<img onerror>` 會自動改用 `assets/items/` 內的本地繪製示意圖
+- 圖片以準確及可核對為先：帽章等使用本地官方參考圖，來源及裁切記錄見 [`assets/reference/README.md`](assets/reference/README.md)，不冒稱現售產品照片
+- 其他項目嘗試供應社產品圖片；一般衣物才保留清楚標示「非實物照片」的款式示意後備。小隊章及職級肩章無可靠本地圖時只保留官方產品入口，不用自製徽號
+- 外站或本地圖載入失敗時保留來源／產品連結；不使用空 `src`、無限重試或跨支部／性別的錯圖
 - 預算表以 `SHOP` 表的官方零售價計算;皮鞋、襪褲等非供應社貨品才用約略區間
 - 如有疑問,請向<strong>所屬旅團領袖</strong>查詢
 
@@ -131,5 +153,5 @@ upgrade/
 
 © 2026 Scout System · 童軍準備指南
 
-制服規格版權 © 香港童軍總會 Scout Association of Hong Kong
+制服規格及官方參考圖版權 © 香港童軍總會 Scout Association of Hong Kong
 訓練綱要整理自公開文件,僅作教育用途。
