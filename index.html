@@ -610,37 +610,17 @@ footer{
     </div>
   </div>
 
-  <!-- 預算參考 -->
+  <!-- 預算參考：只顯示家長而家要買嘅 -->
   <div class="card" data-hide-for="grasshopper">
-    <h2>💰 預算參考</h2>
-    <p>以下為<strong>約略參考價</strong>(<strong>2025 年 9 月</strong> 參考價格,僅作預算參考)。<br>
-    <strong class="cite" style="color:#c0392b">⚠️ 制服價格可能會調整,實際以<a href="http://www.hkscoutshop.org.hk" target="_blank" rel="noopener">香港童軍物品供應社(SCOUT SHOP)</a>當時定價為準。</strong></p>
-    <div class="budget-table-wrap">
-      <table class="size-table">
-        <thead>
-          <tr><th>物品</th><th>全新加入(全套約)</th><th>升團補購(約)</th></tr>
-        </thead>
-        <tbody>
-          <tr data-show-for="cub"><td>幼童軍全套(帽+帽章+恤+短褲+皮帶+襪+巾圈)</td><td>HKD 600–900</td><td>—</td></tr>
-          <tr data-show-for="scout,venture,rover,leader"><td>童軍全套(帽+帽章+恤+短褲+皮帶+襪+皮製巾圈)</td><td>HKD 650–950</td><td>—</td></tr>
-          <tr data-show-for="scout,venture,rover,leader"><td>童軍升深資(軟帽+帽章+領帶+長褲+短襪)</td><td>—</td><td>HKD 400–600</td></tr>
-          <tr data-show-for="venture,rover,leader"><td>深資全套</td><td>HKD 750–1100</td><td>—</td></tr>
-          <tr data-show-for="rover,leader"><td>樂行升樂行(只換帽章)</td><td>—</td><td>HKD 50–100</td></tr>
-          <tr data-show-for="rover,leader"><td>樂行升領袖(軟帽+帽章+深綠領帶)</td><td>—</td><td>HKD 200–400</td></tr>
-          <tr><td>皮鞋(自行到鞋店購買)</td><td>HKD 300–800</td><td>可沿用舊鞋</td></tr>
-          <tr data-show-for="leader"><td>領袖金邊硬帽(女)</td><td>HKD 500–800</td><td>—</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="cite" style="color:#c0392b;text-align:right">價格日期:2025 年 9 月 ・ 僅供參考,以 SCOUT SHOP 為準</p>
+    <h2>💰 預算參考（家長要準備幾多）</h2>
+    <p>跟住上面揀嘅<strong>升團補購</strong>或<strong>全新全購</strong>顯示。唔使睇其他支部嘅全套意思。<br>
+    <strong class="cite" style="color:#c0392b">⚠️ 約略價（2025 年 9 月）。實際以<a href="http://www.hkscoutshop.org.hk" target="_blank" rel="noopener">SCOUT SHOP</a>為準。</strong></p>
+    <div id="budget-dynamic" class="budget-table-wrap"></div>
     <div class="note">
-      <strong>💡 慳錢貼士:</strong>
+      <strong>💡 家長只需記：</strong>升團 = 只買清單入面「需購買」嗰幾件；全新加入 = 全購該支部制服。沿用嘅唔使再買。
       <ul style="margin:.3rem 0 .3rem 1.2rem;padding:0">
-        <li data-show-for="scout,venture,rover,leader">升團時<strong>恤衫、長褲(同款支部之間)、皮鞋、皮帶</strong>通常可沿用</li>
-        <li data-show-for="scout,venture,rover,leader">Carousell/二手童軍群組可買到近全新制服(尤其童軍升深資轉條褲)</li>
-        <li>香港童軍總會設有<strong>「學生隊員制服資助計劃」</strong>(由民政及青年事務局資助),可向旅團領袖查詢</li>
-        <li data-show-for="cub,scout,venture,rover,leader">皮鞋<strong>必須全新或近全新</strong>(太舊/太多花痕唔合格)</li>
-        <li data-show-for="cub,scout,venture,rover,leader">學校皮鞋如合規格(黑色、無花紋、綁帶、低筒、平底)可沿用</li>
+        <li>總會有<strong>學生隊員制服資助計劃</strong>,可向旅團查詢</li>
+        <li>皮鞋合規格可沿用學校皮鞋</li>
       </ul>
     </div>
   </div>
