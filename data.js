@@ -899,18 +899,27 @@ const UNIFORMS = {
   }
 };
 
-// 預覽圖(已有 AI 插畫對應的支部/性別)
+// 預覽圖：總會官方制服實相（scout.org.hk），領袖暫用本 APP 插畫
 const PREVIEW_IMG = {
-  "grasshopper-male":   null,  // 小童軍無制服插畫
+  "grasshopper-male":   null,
   "grasshopper-female": null,
-  "cub-male":   "assets/images/cub-male.jpg",
-  "cub-female": "assets/images/cub-female.jpg",
-  "scout-male":   "assets/images/scout-male.jpg",
-  "scout-female": "assets/images/scout-female.jpg",
-  "venture-male":   "assets/images/venture-male.jpg",
-  "venture-female": "assets/images/venture-female.jpg",
-  "rover-male":   "assets/images/rover-male.jpg",
-  "rover-female": "assets/images/rover-female.jpg",
+  "cub-male":   "https://www.scout.org.hk/uploads/member/Cub_B.jpg",
+  "cub-female": "https://www.scout.org.hk/uploads/member/Cub_G.jpg",
+  "scout-male":   "https://www.scout.org.hk/uploads/member/Scout_B.1.jpg",
+  "scout-female": "https://www.scout.org.hk/uploads/member/Scout_G.1.jpg",
+  "venture-male":   "https://www.scout.org.hk/uploads/member/venture_scouts_B.jpg",
+  "venture-female": "https://www.scout.org.hk/uploads/member/venture_scouts_G_dress.jpg",
+  "rover-male":   "https://www.scout.org.hk/uploads/member/rover_scouts_B.jpg",
+  "rover-female": "https://www.scout.org.hk/uploads/member/rover_scouts_G_dress.jpg",
   "leader-male":   "assets/images/leader-male.jpg",
   "leader-female": "assets/images/leader-female.jpg"
+};
+
+// 配件實相（總會官方頁；點開清單時作參考）
+const ITEM_PHOTOS = {
+  cub: { male: "https://www.scout.org.hk/uploads/member/Cub_B.jpg", female: "https://www.scout.org.hk/uploads/member/Cub_G.jpg", src: "https://www.scout.org.hk/tc/youth-members/cub-scouts/index.html?sid=2" },
+  scout: { male: "https://www.scout.org.hk/uploads/member/Scout_B.1.jpg", female: "https://www.scout.org.hk/uploads/member/Scout_G.1.jpg", src: "https://www.scout.org.hk/tc/youth-members/scouts/index.html?sid=2" },
+  venture: { male: "https://www.scout.org.hk/uploads/member/venture_scouts_B.jpg", female: "https://www.scout.org.hk/uploads/member/venture_scouts_G_dress.jpg", src: "https://www.scout.org.hk/tc/youth-members/venture-scouts/index.html?sid=2" },
+  rover: { male: "https://www.scout.org.hk/uploads/member/rover_scouts_B.jpg", female: "https://www.scout.org.hk/uploads/member/rover_scouts_G_dress.jpg", src: "https://www.scout.org.hk/tc/youth-members/rover-scouts/index.html?sid=2" },
+  leader: { male: "assets/images/leader-male.jpg", female: "assets/images/leader-female.jpg", src: "https://www.scout.org.hk/tc/adult-members/leader/index.html?sid=2" }
 };
