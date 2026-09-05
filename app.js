@@ -342,12 +342,23 @@ function render(){
   const needCount = list.filter(i=>i.status==="need").length;
   const haveCount = list.filter(i=>i.status==="have").length;
   const checkCount = list.filter(i=>i.status==="check").length;
+  const ownedCount = list.filter(i=>isOwned(`${currentSection}-${currentMode}-${currentGender}-${i.id}`)).length;
   $("summary").innerHTML = `
     <div class="summary">
       <div class="need">需購買<br><strong style="font-size:1.4rem">${needCount}</strong> 項</div>
       <div class="have">可沿用<br><strong style="font-size:1.4rem">${haveCount}</strong> 項</div>
       <div class="check">向團長查詢<br><strong style="font-size:1.4rem">${checkCount}</strong> 項</div>
     </div>
+    ${ownedCount > 0 ? `
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:.8rem;margin-top:.6rem;padding:.6rem .8rem;background:#f0f7ed;border-radius:8px;font-size:.85rem;flex-wrap:wrap">
+      <span>✅ 已 mark 已有/已買:<strong>${ownedCount}</strong> / ${list.length} 項</span>
+      <button onclick="resetAllMarks()"
+        style="padding:.4rem .8rem;border:1.5px solid #e74c3c;background:white;color:#e74c3c;border-radius:16px;font-size:.8rem;cursor:pointer;font-weight:600">
+        🗑 一鍵清紀錄
+      </button>
+    </div>
+    <p class="cite" style="margin-top:.3rem;text-align:right">第 2 個小孩要重新準備?清紀錄由頭開始</p>
+    ` : ''}
   `;
 
   // 5. 渲染 check-list
@@ -407,6 +418,13 @@ function toggleItem(el){
     if (item !== el) item.classList.remove('expanded');
   });
   el.classList.toggle('expanded');
+}
+
+// 一鍵清所有 mark 紀錄(支援第 2 個小孩重新準備)
+function resetAllMarks(){
+  if(!confirm("確定要清晒所有 mark 紀錄嗎?\n\n(支援第 2 個小孩重新準備)\n\n此操作無法復原!")) return;
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e){}
+  render();
 }
 
 // 初始化
