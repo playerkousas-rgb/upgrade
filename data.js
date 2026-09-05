@@ -280,9 +280,9 @@ const UNIFORM_SPEC = {
 const GRASSHOPPER_ITEM = {
   id:"gh-clothes", title:"小童軍要準備什麼服裝？", desc:"簡單整齊集會服裝＋旅巾（以旅團安排為準）", status:"check", icon:"👕",
   detail:`<h4>小童軍服裝（總會官網「制服」頁）</h4>
-    <p>總會官網列明：小童軍服裝<strong>只設領巾及簡單整齊的集會服裝</strong>，保留小童軍對正式穿著童軍制服的憧憬。</p>
+    <p>總會官網列明：小童軍服裝<strong>只設領巾及簡單整齊的集會服裝</strong>。<strong>旅團可安排自家統一服飾，實際以所屬旅團安排為準</strong>；旅團未有指定時，一般安排如下：</p>
     <ul>
-      <li><strong>上衣</strong>：橙色小童軍活動服，或單色、有領／圓領、短袖／長袖上衣</li>
+      <li><strong>上衣</strong>：旅團統一活動服；或橙色小童軍活動服／單色、有領／圓領、短袖／長袖上衣</li>
       <li><strong>褲</strong>：單色、短褲或長褲</li>
       <li><strong>鞋</strong>：運動鞋</li>
       <li><strong>襪</strong>：單色、短襪或長襪</li>
@@ -290,7 +290,7 @@ const GRASSHOPPER_ITEM = {
       <li><strong>領巾</strong>：已宣誓小童軍佩戴旅巾（連顏色巾圈）</li>
       <li><strong>徽章</strong>：小童軍團員章戴上衣左胸前（宣誓後）；進步獎章戴左袖</li>
     </ul>
-    <div class="tip">旅團可安排自家統一服飾，實際以<strong>所屬旅團安排</strong>為準；旅巾、團員章須待宣誓後才可佩戴。</div>
+    <div class="tip">旅巾、小童軍團員章須待<strong>宣誓後</strong>才可佩戴。</div>
     <div class="warn">除顏色巾圈外，小童軍不可使用其他支部制服配件（例如皮帶、制服帽）。</div>`
 };
 
