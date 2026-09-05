@@ -446,7 +446,11 @@ footer{
   <!-- Step 2: 揀模式 / 來源 / 海陸空 / 性別 -->
   <div class="card">
     <h2>② 你屬於哪一種？</h2>
-    <p class="cite">領袖有 3 個來源（由深資升任／由樂行升任／全新加入）；童軍、深資、樂行、領袖都分<strong>陸、海、空</strong>，制服顏色不同，要先揀清楚「原本是」和「升去」哪一種，才知道要買什麼。</p>
+    <p class="cite">
+      <span data-show-for="scout,venture,rover,leader">領袖有 3 個來源（由深資升任／由樂行升任／全新加入）；童軍、深資、樂行、領袖都分<strong>陸、海、空</strong>，制服顏色不同，要先揀清楚「原本是」和「升去」哪一種，才知道要買什麼。</span>
+      <span data-show-for="cub">幼童軍不分陸／海／空，只需揀「由小童軍升團」或「全新加入」，再揀性別。</span>
+      <span data-show-for="grasshopper">小童軍毋須揀來源，直接睇下方服裝說明。</span>
+    </p>
     <div id="controls"></div>
   </div>
 
@@ -462,20 +466,26 @@ footer{
   <!-- 哪裡買 -->
   <div class="card">
     <h2>哪裡購買制服</h2>
-    <p>為確保顏色及款式正確,請到<strong>香港童軍物品供應社</strong>購買制服配件。皮鞋、運動鞋可自行到鞋店選購。</p>
+    <p>
+      <span data-show-for="cub,scout,venture,rover,leader">為確保顏色及款式正確，制服及配件請到<strong>香港童軍物品供應社</strong>購買。皮鞋可自行到鞋店選購（合規格的學校皮鞋可用）。</span>
+      <span data-show-for="grasshopper">小童軍服裝以<strong>旅團安排</strong>為準（旅團可安排自家統一服飾）。小童軍活動服可於供應社購買；單色衣物、運動鞋可自行選購。</span>
+    </p>
     <div class="shop-grid">
       <div class="shop-card">
         <h3>香港童軍物品供應社 — 總店(尖沙咀)</h3>
-        <p><a href="http://www.hkscoutshop.org.hk/?p=52&lang=big5&info_type=map" target="_blank" rel="noopener">前往官方網站 ↗</a></p>
+        <p style="font-size:1.05rem"><strong>網址：</strong><a href="https://www.hkscoutshop.org.hk/" target="_blank" rel="noopener">www.hkscoutshop.org.hk ↗</a></p>
+        <p><a href="https://www.hkscoutshop.org.hk/?p=52&lang=big5&info_type=map" target="_blank" rel="noopener">前往官方網站(地圖) ↗</a></p>
         <p><strong>地址：</strong>九龍柯士甸道童軍徑香港童軍中心11樓</p>
         <p><strong>港鐵：</strong>佐敦站 C2 出口</p>
-        <p><strong>電話：</strong>2957 6444</p>
+        <p><strong>電話：</strong><a href="tel:+85229576444">2957 6444</a></p>
         <p><strong>營業時間：</strong></p>
         <table style="margin-left:1rem;line-height:1.7">
           <tr><td>星期一至五</td><td style="padding-left:1rem">11:30 – 19:30</td></tr>
           <tr><td>星期六</td><td style="padding-left:1rem">11:00 – 19:00</td></tr>
           <tr><td>星期日</td><td style="padding-left:1rem">10:00 – 18:00</td></tr>
+          <tr><td>公眾假期</td><td style="padding-left:1rem">休息</td></tr>
         </table>
+        <p class="cite">特別營業安排以供應社官網「最新消息」為準。</p>
       </div>
       <div class="shop-card">
         <h3>購買流程 SOP</h3>
@@ -484,13 +494,14 @@ footer{
           <li>確認要買的物品清單(可參考本 APP)</li>
           <li>親臨供應社或經網站訂購</li>
           <li>試身(尤其恤衫、褲、皮鞋要現場試)</li>
-          <li>向團長查詢<strong>地域章、區章、旅章、小隊章</strong>購買/頒發安排</li>
+          <li data-show-for="cub,scout,venture,rover,leader">向團長查詢<strong>地域章、區章、旅章</strong>(童軍支部另有小隊章)購買/頒發安排</li>
           <li data-show-for="cub,scout,venture,rover,leader">回家檢查所有徽章、帽章齊備</li>
           <li data-show-for="cub,scout,venture,rover,leader">第一次集會前完成<strong>燙衫、擦鞋、定帽</strong></li>
         </ol>
       </div>
     </div>
-    <p class="cite" style="margin-top:1rem">制服配件之<strong>帽、帽章、恤衫、長褲/短褲/裙褲/半截裙、皮帶、巾圈、領巾</strong>等均需向供應社購買;<strong>皮鞋、學校運動鞋</strong>可自行於鞋店購買。</p>
+    <p class="cite" data-show-for="cub,scout,venture,rover,leader" style="margin-top:1rem">制服配件之<strong>帽、帽章、恤衫、長褲/短褲/裙褲/半截裙、皮帶、巾圈、領巾</strong>等均需向供應社購買;<strong>皮鞋</strong>可自行於鞋店購買(合規格學校皮鞋可用)。</p>
+    <p class="cite" data-show-for="grasshopper" style="margin-top:1rem">小童軍除顏色巾圈外，不可使用其他支部制服配件(例如皮帶、制服帽)。</p>
   </div>
 
   <!-- 升團過渡指南 (總綱) -->
@@ -520,8 +531,8 @@ footer{
       <li data-show-for="cub,scout,venture,rover,leader"><strong>長褲/短褲</strong>:腰圍為準,留 1–2cm 位改</li>
       <li data-show-for="scout,venture,rover,leader"><strong>軟帽</strong>:頭圍量度,首次戴要弄濕定型</li>
       <li data-show-for="cub,scout,venture,rover,leader"><strong>皮鞋</strong>:建議下午試(腳會較脹),預留少少位著襪</li>
-      <li data-show-for="cub,scout,venture,rover,leader"><strong>裙褲/半截裙</strong>:女團員特別注意腰位及裙長</li>
-      <li data-show-for="leader"><strong>領袖金邊硬帽</strong>:女領袖試帽時要確定頭圍合適,帽不可太鬆</li>
+      <li data-show-for="cub,scout,venture,rover,leader" data-show-gender="female"><strong>裙褲/半截裙</strong>:女團員特別注意腰位及裙長</li>
+      <li data-show-for="leader" data-show-gender="female"><strong>領袖金邊硬帽</strong>:女領袖試帽時要確定頭圍合適,帽不可太鬆</li>
     </ul>
     <div class="note">
       <strong>💡 慳時間貼士:</strong>帶埋子女<strong>平日集會要著嘅皮鞋+長襪</strong>一齊去試身,咁就可以即場試埋褲長、裙長、鞋位。
@@ -534,7 +545,7 @@ footer{
     <p>童軍制服保養得宜可以用幾年。以下係每件物品的清洗及保養方法:</p>
     <div class="care-grid">
       <div class="care-item" data-show-for="cub,scout,venture,rover,leader">
-        <h3>🧥 杏色恤衫</h3>
+        <h3>👕 恤衫（杏色／白色／淺藍色）</h3>
         <ul>
           <li>冷水機洗(30°C 以下),翻轉洗</li>
           <li>不可用漂白劑</li>
@@ -606,12 +617,12 @@ footer{
   <div class="card" data-hide-for="grasshopper">
     <h2>💰 預算參考（家長要準備幾多）</h2>
     <p>跟住上面揀嘅<strong>升團補購</strong>或<strong>全新全購</strong>顯示。唔使睇其他支部嘅全套意思。<br>
-    <strong class="cite" style="color:#c0392b">⚠️ 約略價（2025 年 9 月）。實際以<a href="http://www.hkscoutshop.org.hk" target="_blank" rel="noopener">SCOUT SHOP</a>為準。</strong></p>
+    <strong class="cite" style="color:#c0392b">⚠️ 約略價（2026 年 9 月）。實際以<a href="https://www.hkscoutshop.org.hk/" target="_blank" rel="noopener">SCOUT SHOP</a>為準。</strong></p>
     <div id="budget-dynamic" class="budget-table-wrap"></div>
     <div class="note">
       <strong>💡 家長只需記：</strong>升團 = 只買清單入面「需購買」嗰幾件；全新加入 = 全購該支部制服。沿用嘅唔使再買。
       <ul style="margin:.3rem 0 .3rem 1.2rem;padding:0">
-        <li>總會有<strong>學生隊員制服資助計劃</strong>,可向旅團查詢</li>
+        <li data-show-for="cub,scout,venture,rover">總會有<strong>學生隊員制服資助計劃</strong>(由民政及青年事務局資助,對象為幼童軍、童軍、深資童軍及樂行童軍),可向旅團查詢</li>
         <li>皮鞋合規格可沿用學校皮鞋</li>
       </ul>
     </div>
@@ -695,7 +706,7 @@ footer{
         <tr data-show-for="scout"><td>小隊章</td><td>右袖</td><td><strong>由旅團頒發／供應社購買</strong></td><td>只有童軍支部有；供應社購買毋須出示文件</td></tr>
         <tr data-show-for="cub,scout,venture,rover"><td>進度性獎章及支部最高獎章</td><td>右胸袋中央</td><td>供應社購買（須出示證書）</td><td>幼童軍：金紫荊獎章／童軍：總領袖獎章／深資：榮譽童軍獎章／樂行：貝登堡獎章</td></tr>
         <tr data-show-for="cub,scout"><td>金紫荊獎章</td><td>右胸袋中央</td><td>總會審批簽發</td><td><strong>幼童軍支部最高獎章</strong>。升童軍後可購買「金紫荊獎章標誌」（出示證書副本）戴於右胸袋上方</td></tr>
-        <tr data-show-for="scout,venture"><td>總領袖獎章</td><td>右胸袋中央</td><td>青少年活動署送贈，供應社代派</td><td><strong>童軍支部最高獎章</strong>（深資童軍不會有金紫荊獎章）</td></tr>
+        <tr data-show-for="scout,venture"><td>總領袖獎章</td><td>右胸袋中央</td><td>青少年活動署送贈，供應社代派</td><td><strong>童軍支部最高獎章</strong></td></tr>
         <tr data-show-for="venture,rover,leader"><td>榮譽童軍獎章</td><td>右胸袋中央</td><td>總會審批簽發</td><td><strong>深資童軍支部最高獎章</strong>。持有人任領袖可終身戴榮譽童軍領袖標誌</td></tr>
         <tr data-show-for="rover,leader"><td>貝登堡獎章</td><td>右胸袋中央</td><td>總會審批簽發</td><td><strong>樂行童軍支部最高獎章</strong>。持有人任領袖可戴貝登堡領袖標誌</td></tr>
         <tr data-show-for="cub"><td>童軍先修章</td><td>右胸袋上方</td><td>供應社購買（須出示證書）</td><td>年滿 10 歲半的幼童軍可考，為升童軍做準備</td></tr>
@@ -723,7 +734,7 @@ footer{
   </div>
 
   <!-- 領袖常規制服(海/陸/空) -->
-  <div class="card" data-show-for="venture,rover,leader">
+  <div class="card" data-show-for="leader">
     <h2>👔 領袖常規制服（編號 3）— 陸／海／空</h2>
     <p>新任領袖通常只需買<strong>常規制服（編號 3）</strong>一款已足夠日常集會。以下為香港童軍總會官網（中文版）列出的規格：</p>
     <table class="size-table">
@@ -735,7 +746,7 @@ footer{
         <tr><td><strong>皮帶</strong></td><td colspan="3">棕色（連童軍徽皮帶扣）</td></tr>
         <tr><td><strong>襪</strong></td><td colspan="3">男：黑色短襪／女：肉色尼龍襪褲</td></tr>
         <tr><td><strong>皮鞋</strong></td><td colspan="3">男：黑色無花紋綁帶／女：黑色無花紋非綁帶中跟</td></tr>
-        <tr><td><strong>領巾</strong></td><td colspan="3">領巾／旅巾（連童軍巾圈）</td></tr>
+        <tr><td><strong>領巾</strong></td><td colspan="3">陸：領巾（連童軍巾圈）<br>海／空：旅巾（連童軍巾圈）</td></tr>
         <tr><td><strong>徽章</strong></td><td colspan="3">世界童軍會員章、香港章、香港肩章／旅章、總會總部章／地域章／區章、職級肩章</td></tr>
         <tr><td><strong>領帶（只限編號 4 領帶制服）</strong></td><td>深綠色</td><td>黑色</td><td>深藍色</td></tr>
       </tbody>
@@ -744,7 +755,7 @@ footer{
   </div>
 
   <!-- 海童軍 / 空童軍簡介 -->
-  <div class="card" data-hide-for="grasshopper,cub">
+  <div class="card" data-show-for="scout">
     <h2>🌊 海童軍 / ✈️ 空童軍 簡介</h2>
     <p>根據香港童軍總會，青少年成員由童軍支部起有<strong>童軍、海童軍及空童軍</strong>之分；深資、樂行及領袖同樣分陸、海、空。制服顏色各有不同，但徽章位置相同。</p>
     <details>
@@ -769,15 +780,27 @@ footer{
   <!-- 常見問題 -->
   <div class="card">
     <h2>常見問題</h2>
-    <details data-show-for="scout,venture,rover,leader">
-      <summary>升團時哪些物品一定要換新?</summary>
-      <p>視乎升哪一級：幼童軍→童軍要換<strong>帽、帽章、巾圈</strong>；童軍→深資要換<strong>帽、長褲／半截裙、襪（女：中跟鞋）</strong>；深資→樂行只需換<strong>帽</strong>；升任領袖要加<strong>職級帽章、職級肩章</strong>（女領袖換金邊硬帽）。舊支部的進度性獎章、活動／專科徽章要拆走，<strong>服務年星、世界童軍會員章、香港章、地域章、區章、旅章</strong>保留。</p>
+    <details data-show-for="scout">
+      <summary>升童軍時哪些物品一定要換新?</summary>
+      <p>一定要換：<strong>帽及帽章、巾圈</strong>（陸：深綠色軟帽＋童軍帽章；海：海童軍白頂帽；空：灰藍色軟帽）。恤衫、短褲／裙褲、皮帶、長襪、皮鞋與幼童軍同款可沿用（升海／空則恤衫、下身、長襪要換色）。舊支部的進度性獎章、活動徽章要拆走，<strong>服務年星、世界童軍會員章、香港章、地域章、區章、旅章</strong>保留。</p>
+    </details>
+    <details data-show-for="venture">
+      <summary>升深資童軍時哪些物品一定要換新?</summary>
+      <p>一定要換：<strong>帽</strong>（陸：棗紅色軟帽；海：海童軍領袖白頂帽＋深資海童軍帽章；空：灰藍色軟帽同款可沿用）及<strong>下身改穿長褲／半截裙</strong>、<strong>襪</strong>（男：黑色短襪；女：肉色襪褲＋黑色中跟皮鞋）。杏色恤衫、皮帶、旅巾、童軍巾圈、童軍帽章可沿用。拆走童軍的進度性獎章、專科徽章、小隊章，<strong>服務年星、世界童軍會員章、香港章、地域章、區章、旅章</strong>保留。</p>
+    </details>
+    <details data-show-for="rover">
+      <summary>升樂行童軍時哪些物品一定要換新?</summary>
+      <p>陸：只把<strong>棗紅色軟帽換成深綠色軟帽</strong>（童軍帽章可移過去）；海：白頂帽可沿用，只換<strong>樂行海童軍帽章</strong>；空：全部同款可沿用。其餘恤衫、長褲／半截裙、皮帶、襪、皮鞋、旅巾、巾圈全部可沿用。拆走深資童軍肩章、段章及金帶、深資童軍獎章。</p>
+    </details>
+    <details data-show-for="leader">
+      <summary>升任領袖時哪些物品一定要換新?</summary>
+      <p>基本沿用原有制服，另加購<strong>職級帽章</strong>及<strong>職級肩章</strong>（視乎獲委任職級，向旅團查詢）；女領袖（陸）改用<strong>深綠色金邊硬帽</strong>，男領袖（陸）如由深資升任，棗紅色軟帽要換深綠色軟帽。深資／樂行（陸／空）的恤衫、長褲／半截裙、皮帶、襪、皮鞋、旅巾可沿用。</p>
     </details>
     <details data-show-for="grasshopper">
-      <summary>「小童軍」沒有正式制服,那要買什麼?</summary>
-      <p>小童軍支部由 2024 年起實行新指引,<strong>沒有指定制服</strong>。團集會時由<strong>所屬小童軍團長</strong>規定服裝。一般要求:<strong>單色 T 恤或活動服、單色短褲或長褲、運動鞋</strong>。已宣誓小童軍可佩戴<strong>小童軍團員章 + 旅巾</strong>。詳情請向團長查詢。</p>
+      <summary>小童軍的服裝規定是什麼?</summary>
+      <p>總會官網列明：小童軍服裝<strong>只設領巾及簡單整齊的集會服裝</strong>——<strong>橙色小童軍活動服</strong>或單色有領／圓領上衣、<strong>單色短褲或長褲、運動鞋</strong>；已宣誓小童軍佩戴<strong>小童軍團員章＋旅巾（連顏色巾圈）</strong>。旅團可安排自家統一服飾，實際以<strong>所屬旅團安排</strong>為準。注意：除顏色巾圈外，小童軍不可使用其他支部制服配件（例如皮帶、制服帽）。</p>
     </details>
-    <details data-show-for="scout,venture,rover,leader">
+    <details data-show-for="leader">
       <summary>領袖制服有幾款?怎樣分?</summary>
       <p>香港童軍總會成年成員制服共 6 個編號：<br>
         <strong>編號 1 禮服</strong>：典禮儀式（會操、周年會議、就職禮等）<br>
@@ -803,9 +826,9 @@ footer{
         地域章、區章、旅章需向<strong>所屬旅團</strong>查詢購買。
       </p>
     </details>
-    <details>
+    <details data-show-for="cub,scout,venture,rover">
       <summary>有制服資助嗎?</summary>
-      <p>有!香港童軍總會設有<strong>「學生隊員制服資助計劃」</strong>(由民政及青年事務局資助),為<strong>幼童軍、童軍、深資童軍、樂行童軍</strong>提供制服及配件資助,包括恤衫、褲、皮帶、香港章、世界童軍會員章、帽、帽章、巾圈等。詳情可向所屬旅團領袖或查閱香港童軍總會行政通告第35/2022號。</p>
+      <p>有!香港童軍總會設有<strong>「學生隊員制服資助計劃」</strong>(由民政及青年事務局資助),為有經濟需要的<strong>幼童軍、童軍、深資童軍、樂行童軍</strong>隊員提供制服及配件資助(領袖及小童軍不適用)。詳情可向所屬旅團領袖查詢，或於總會官網「表格」頁下載申請表。</p>
     </details>
   </div>
 
@@ -814,7 +837,8 @@ footer{
 <footer>
   <p>© 2026 Scout System · 童軍準備指南</p>
   <p>制服資料來源:香港童軍總會 <a href="https://www.scout.org.hk" target="_blank" rel="noopener" style="color:var(--scout-green)">scout.org.hk</a></p>
-  <p>訓練綱要:香港童軍資訊站 <a href="https://scoutsinfohub.org.hk/ScoutTrainingScheme/" target="_blank" rel="noopener" style="color:var(--scout-green)">scoutsinfohub.org.hk/ScoutTrainingScheme/</a></p>
+  <p>制服購買:香港童軍物品供應社(SCOUT SHOP) <a href="https://www.hkscoutshop.org.hk/" target="_blank" rel="noopener" style="color:var(--scout-green)">www.hkscoutshop.org.hk</a></p>
+  <p>《儀容與制服手冊》: <a href="https://uniform.scouting.org.hk/" target="_blank" rel="noopener" style="color:var(--scout-green)">uniform.scouting.org.hk</a></p>
   <p class="cite">本 APP 為非官方輔助工具。制服規格以香港童軍總會官網（中文版）、《儀容與制服手冊》及各支部《訓練綱要》為準；徽章位置根據青少年活動通告第 13/2023 號。單件圖片為示意圖。</p>
 </footer>
 
