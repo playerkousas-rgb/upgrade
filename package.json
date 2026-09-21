@@ -1,0 +1,15 @@
+{
+  "name": "scout-upgrade-guide",
+  "version": "1.0.0",
+  "private": true,
+  "description": "童軍準備指南 — 純靜態 PWA。零運行期依賴、無 build 步驟,直接部署根目錄。",
+  "scripts": {
+    "check": "node scripts/check.js",
+    "smoke": "node scripts/smoke.js",
+    "test": "playwright test tests/parts.spec.js tests/images.spec.js --workers=1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "jsdom": "^24.0.0"
+  }
+}
