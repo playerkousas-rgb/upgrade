@@ -1,0 +1,36 @@
+# ============================================================
+# Vercel 部署排除清單 — 純靜態站,只上傳運行時需要的檔案
+# 匹配到的檔案／資料夾不會上傳,避免膨脹 Vercel 部署配額。
+# 新增檔案前請先對照「防增肥守則」(README.md §部署與防增肥)。
+# ============================================================
+
+# 文件(不在運行時使用)
+*.md
+
+# 瀏覽器回歸測試(開發專用)
+tests/
+
+# 開發工具鏈 — 本專案零運行期依賴,不應有任何 node_modules
+node_modules/
+package.json
+package-lock.json
+scripts/
+.vercelignore
+.gitignore
+.git/
+
+# 防止未來誤提交的死重(備份／日誌／暫存／上傳)
+uploads/
+*.log
+*.bak
+*.tmp
+*.old
+*.swp
+.DS_Store
+Thumbs.db
+
+# 重復的建置快取/產物(若日後引入 build 工具)
+dist/
+build/
+.cache/
+.vercel/

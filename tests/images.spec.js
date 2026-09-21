@@ -32,13 +32,13 @@ test.beforeEach(async ({ page }) => {
 });
 
 const badgeCases = [
-  ['cub', 'land', 'male', 'capbadge-cub', 'capbadge-cub.webp'],
-  ['cub', 'land', 'female', 'capbadge-cub', 'cap-cub-female.webp'],
-  ['scout', 'land', 'male', 'capbadge-scout', 'capbadge-scout.webp'],
-  ['venture', 'sea', 'male', 'capbadge-venture-sea', 'capbadge-sea-youth.webp'],
-  ['rover', 'sea', 'female', 'capbadge-rover-sea', 'capbadge-sea-youth.webp'],
-  ['leader', 'air', 'male', 'capbadge-rank', 'capbadge-rank.webp'],
-  ['leader', 'sea', 'female', 'capbadge-sea-leader', 'capbadge-sea-leader.webp'],
+  ['cub', 'land', 'male', 'capbadge-cub', 'capbadge-cub.avif'],
+  ['cub', 'land', 'female', 'capbadge-cub', 'cap-cub-female.avif'],
+  ['scout', 'land', 'male', 'capbadge-scout', 'capbadge-scout.avif'],
+  ['venture', 'sea', 'male', 'capbadge-venture-sea', 'capbadge-sea-youth.avif'],
+  ['rover', 'sea', 'female', 'capbadge-rover-sea', 'capbadge-sea-youth.avif'],
+  ['leader', 'air', 'male', 'capbadge-rank', 'capbadge-rank.avif'],
+  ['leader', 'sea', 'female', 'capbadge-sea-leader', 'capbadge-sea-leader.avif'],
 ];
 for (const [section, branch, gender, id, file] of badgeCases) {
   test(`${section}/${branch}/${gender}: cap badge loads locally, not via a fake fallback`, async ({ page }) => {
@@ -77,7 +77,7 @@ test('every shipped reference is present, decodes, and has an attributed source'
     return refs;
   });
   for (const ref of references) {
-    expect(ref.src).toMatch(/^assets\/reference\/[a-z-]+\.webp$/);
+    expect(ref.src).toMatch(/^assets\/reference\/[a-z-]+\.avif$/);
     expect(ref.sourceUrl).toMatch(/^https:\/\/(www\.scout|uniform\.scouting)\.org\.hk\//);
     expect(ref.alt).toBeTruthy();
     expect(ref.note).toBeTruthy();
@@ -87,7 +87,9 @@ test('every shipped reference is present, decodes, and has an attributed source'
   for (const src of paths) {
     const response = await request.get(`${baseURL.replace(/\/$/, '')}/${src}`);
     expect(response.status()).toBe(200);
-    expect(response.headers()['content-type']).toContain('image/webp');
+    // 以 ISOBMFF major brand 驗證是真正的 AVIF(不依賴本地 server 的 MIME 表)
+    const body = Buffer.from(await response.body());
+    expect(body.subarray(8, 12).toString('latin1')).toBe('avif');
     expect(await page.evaluate(async src => {
       const image = new Image();
       image.src = src;
@@ -100,10 +102,10 @@ test('every shipped reference is present, decodes, and has an attributed source'
 test('four exact uniform references survive blocked external images', async ({ page }) => {
   await page.goto(baseURL);
   for (const [section, branch, gender, file] of [
-    ['cub', 'land', 'male', 'cub-male.webp'],
-    ['cub', 'land', 'female', 'cub-female.webp'],
-    ['scout', 'land', 'female', 'scout-land-female.webp'],
-    ['venture', 'air', 'male', 'venture-air-male.webp'],
+    ['cub', 'land', 'male', 'cub-male.avif'],
+    ['cub', 'land', 'female', 'cub-female.avif'],
+    ['scout', 'land', 'female', 'scout-land-female.avif'],
+    ['venture', 'air', 'male', 'venture-air-male.avif'],
   ]) {
     await choose(page, section, branch, gender);
     for (const selector of ['#preview', '#official-photo-box']) {
@@ -152,9 +154,9 @@ test('all uniform mappings match section, branch and gender; no land-only fallba
 });
 
 test('a missing local uniform may use only its matching official image, and updates the caption', async ({ page }) => {
-  const bytes = fs.readFileSync(path.join(__dirname, '../assets/reference/cub-female.webp'));
-  await page.route('**/assets/reference/cub-female.webp', route => route.abort());
-  await page.route('https://www.scout.org.hk/uploads/member/Cub_G.jpg', route => route.fulfill({ contentType: 'image/webp', body: bytes }));
+  const bytes = fs.readFileSync(path.join(__dirname, '../assets/reference/cub-female.avif'));
+  await page.route('**/assets/reference/cub-female.avif', route => route.abort());
+  await page.route('https://www.scout.org.hk/uploads/member/Cub_G.jpg', route => route.fulfill({ contentType: 'image/avif', body: bytes }));
   await page.goto(baseURL);
   await choose(page, 'cub', 'land', 'female');
   const frame = page.locator('#preview .reference-image');
@@ -169,7 +171,7 @@ test('a missing local uniform may use only its matching official image, and upda
 test('a missing local badge shows an honest notice and keeps its handbook link', async ({ page }) => {
   let attempts = 0;
   const requests = [];
-  await page.route('**/assets/reference/capbadge-scout.webp', route => { attempts++; return route.abort(); });
+  await page.route('**/assets/reference/capbadge-scout.avif', route => { attempts++; return route.abort(); });
   page.on('request', request => requests.push(request.url()));
   await page.goto(baseURL);
   await choose(page, 'scout');
@@ -189,7 +191,7 @@ test('ordinary clothing fallback is labelled as an illustration without losing i
   await choose(page, 'cub');
   const item = await expandItem(page, 'shirt-beige');
   const frame = item.locator('.item-fig');
-  await expect(frame.locator('img')).toHaveAttribute('src', 'assets/items/shirt-beige.jpg');
+  await expect(frame.locator('img')).toHaveAttribute('src', 'assets/items/shirt-beige.avif');
   await loaded(frame.locator('img'));
   await expect(frame.locator('img')).toHaveAttribute('alt', /非實物照片/);
   await expect(frame.locator('.image-caption-label')).toHaveText('款式示意（非實物照片）');
@@ -200,7 +202,7 @@ test('ordinary clothing fallback is labelled as an illustration without losing i
 test('when both product and illustration fail, there is no broken image, empty src, or retry loop', async ({ page }) => {
   let attempts = 0;
   const errors = [];
-  await page.route('**/assets/items/shirt-beige.jpg', route => { attempts++; return route.abort(); });
+  await page.route('**/assets/items/shirt-beige.avif', route => { attempts++; return route.abort(); });
   page.on('pageerror', error => errors.push(error.message));
   await page.goto(baseURL);
   await choose(page, 'cub');

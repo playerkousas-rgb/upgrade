@@ -1,6 +1,19 @@
 # Generated 高清原圖,只保留 web 用的版本
 assets/logo-1024.png
 
+# 死重 / 備份 / 日誌(防增肥,勿提交)
+*.bak
+*.tmp
+*.old
+*.log
+*.swp
+uploads/
+
+# 建置產物(本專案純靜態,不應有;如日後引入 build 工具)
+dist/
+build/
+.cache/
+
 # Mac / Windows
 .DS_Store
 Thumbs.db
