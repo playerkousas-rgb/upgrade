@@ -92,8 +92,8 @@ upgrade/
     ├── logo-512.png
     ├── apple-touch-icon.png
     ├── favicon-32.png
-    ├── reference/ (15 張已核對的本地官方參考圖 + 來源及裁切記錄 README.md)
-    └── items/     (一般衣物的款式示意圖；不準確的徽號 SVG 已移除)
+    ├── reference/ (15 張已核對的本地官方參考圖 AVIF + 來源及裁切記錄 README.md)
+    └── items/     (單品制服圖 AVIF＋一般衣物款式示意 SVG；不準確的徽號 SVG 已移除)
 ```
 
 ---
@@ -138,9 +138,9 @@ python3 -m http.server 8000 --bind 0.0.0.0
 `.gitignore` 同步排除這些模式，防止先進倉庫再進部署。
 
 ### 資產守則（最易出肥重的地方）
-1. **每個 `assets/` 檔案必須被 `index.html`／`app.js`／`data.js`／`manifest.webmanifest` 引用**（`data.js` 以 base 名動態拼出的 `assets/reference/*.webp` 亦算）。`npm run check` 會反查死重，**不允許任何未引用檔案存在**。
+1. **每個 `assets/` 檔案必須被 `index.html`／`app.js`／`data.js`／`manifest.webmanifest` 引用**（`data.js` 以 base 名動態拼出的 `assets/reference/*.avif` 亦算）。`npm run check` 會反查死重，**不允許任何未引用檔案存在**。
 2. 新增圖片前：先問「有無已有本地官方參考圖可用？」。有 → 沿用；沒有 → 才新增，並同時更新 `ITEM_REFERENCES`／`LOCAL_UNIFORMS`、`tests/images.spec.js` 及（如涉及官方裁切）`assets/reference/README.md` 的來源記錄。
-3. 圖片格式：參考圖用 **WebP**；一律不得用未壓縮的原圖入倉。
+3. 圖片格式：照片類一律用 **AVIF**（quality 70；2026 年所有 evergreen 瀏覽器均支援：Chrome 85+／Safari 16+／Firefox 93+）。新增照片後執行：`npm i --no-save --package-lock=false sharp && node scripts/to-avif.js <檔案>`（會自動解碼驗證、較大的檔案保留原檔）。一律不得用未壓縮的原圖入倉；PWA 圖示維持 PNG（apple-touch-icon 只能 PNG）。
 4. **不得**復活 `assets/images/`（已停用的舊 AI 插畫，2026-09 已移除）；`npm run check` 會攔截。
 5. 不提交任何備份／暫存檔（`*.bak`／`*.tmp`／`*.old`）；用 Git 做版本控制，不留檔案副本。
 
@@ -161,18 +161,20 @@ npm run test    # 有 Chromium 時必須全綠（37 項）
 三關全過才可推送／部署。
 
 ### 2026-09 瘦身記錄（本次）
-移除 17 個死重檔案，共 **396 KB**（約佔瘦身前 1.6 MB 的 24%）：
+移除 17 個死重檔案（**396 KB**）＋ 21 張照片轉 AVIF（**261 KB**），上線總量 **1,416 KB → 約 760 KB（-46%）**：
 
 | 檔案 | 原因 |
 |---|---|
 | `assets/images/` 全 10 張（208 KB） | 舊 AI 整套制服插畫，早已停用，代碼零引用（測試反而斷言不得引用此目錄） |
-| `assets/items/beret-green.jpg`（59 KB） | 已被本地官方裁切圖 `reference/beret-green.webp` 取代 |
-| `assets/items/cap-cub-m.jpg`（56 KB） | 已被 `reference/capbadge-cub.webp` 取代 |
-| `assets/items/cap-cub-f.jpg`（48 KB） | 已被 `reference/cap-cub-female.webp` 取代 |
-| `assets/items/beret-greyblue.jpg`（42 KB） | 已被 `reference/beret-greyblue.webp` 取代 |
+| `assets/items/beret-green.jpg`（59 KB） | 已被本地官方裁切圖 `reference/beret-green.avif` 取代 |
+| `assets/items/cap-cub-m.jpg`（56 KB） | 已被 `reference/capbadge-cub.avif` 取代 |
+| `assets/items/cap-cub-f.jpg`（48 KB） | 已被 `reference/cap-cub-female.avif` 取代 |
+| `assets/items/beret-greyblue.jpg`（42 KB） | 已被 `reference/beret-greyblue.avif` 取代 |
 | `assets/items/tie-black/green/navy.svg`（1.4 KB） | 代碼中根本沒有領帶單品，零引用 |
 
-新增守衛：`.vercelignore`、`vercel.json`（快取／安全 headers）、`scripts/check.js`（反死重守門）、`scripts/smoke.js`（jsdom 功能測試）、`package.json`（僅 devDependencies）。
+**AVIF 轉換（21 張照片，-261 KB）**：`assets/reference/` 15 張 webp → avif（四張全身制服圖 86–88 KB → 45–59 KB）、`assets/items/` 6 張 jpg → avif（供應社產品圖 28–54 KB → 10–24 KB）。全部經「解碼驗證＋逐張平均 RGB 統計比對（Δ≤0.002）」確認與原檔同尺寸、色彩忠實；其中 4 張小帽章 AVIF 比 WebP 略大（+2.2 KB），為保持代碼模板統一仍採用 AVIF。新增 `scripts/to-avif.js` 作為日後照片入倉的標準轉碼工具。
+
+新增守衛：`.vercelignore`、`vercel.json`（快取／安全 headers）、`scripts/check.js`（反死重守門）、`scripts/smoke.js`（jsdom 功能測試）、`scripts/to-avif.js`（AVIF 轉碼）、`package.json`（僅 devDependencies）。
 
 修復：`.item.expanded .item-detail` 的 `max-height` 由 1200px 提高到 3000px（320px 窄視點下最長單品＝220px 圖＋說明＋供應社框，1200px 上限配 `overflow:hidden` 有裁切風險）；README 的 PWA「離線可用」更正為實際狀態。
 

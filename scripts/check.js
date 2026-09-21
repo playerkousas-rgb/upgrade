@@ -29,7 +29,7 @@ for (const f of ['data.js', 'app.js', 'scripts/check.js']) {
 
 console.log('── 2. 代碼引用的資產必須存在 ──');
 const ENTRY_FILES = ['index.html', 'app.js', 'data.js', 'manifest.webmanifest'];
-const REF_RE = /assets\/[A-Za-z0-9_./-]+\.(?:jpe?g|png|webp|svg|gif|ico|css|js|webmanifest)/g;
+const REF_RE = /assets\/[A-Za-z0-9_./-]+\.(?:jpe?g|png|webp|avif|svg|gif|ico|css|js|webmanifest)/g;
 const codeRefs = new Set();
 for (const f of ENTRY_FILES) {
   const m = read(f).match(REF_RE);
@@ -56,7 +56,7 @@ let dead = 0;
 for (const abs of walk(path.join(ROOT, 'assets'))) {
   const rel = path.relative(ROOT, abs).split(path.sep).join('/');
   if (rel.endsWith('README.md')) continue;
-  // 字面引用,或 data.js 以 base 名動態拼出(assets/reference/${file}.webp)
+  // 字面引用,或 data.js 以 base 名動態拼出(assets/reference/${file}.avif)
   const used = codeCorpus.includes(rel) || codeCorpus.includes(`assets/${rel}`)
     || dataJs.includes(path.basename(rel, path.extname(rel)));
   if (used) ok(rel);

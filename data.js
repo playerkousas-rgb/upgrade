@@ -43,19 +43,19 @@ const ITEMS = {
   "beret-green": { title:"深綠色軟帽", desc:"童軍／樂行童軍／領袖（陸）", icon:"🧢", buy:"supply",
     detail:`<h4>深綠色軟帽</h4><p>童軍、樂行童軍及陸童軍領袖同用<strong>深綠色軟帽</strong>，只是帽章不同。</p>
       <ul><li>向右拉平，緊貼頭部</li><li>帽後小尾塞入帽內，不可戴成「廚師帽」</li><li>首次使用前先弄濕定型</li><li>帽章在<strong>左眼正上方</strong></li></ul>` },
-  "beret-maroon": { title:"棗紅色軟帽", desc:"深資童軍（陸）", icon:"🧢", img:"assets/items/beret-maroon.jpg", buy:"supply",
+  "beret-maroon": { title:"棗紅色軟帽", desc:"深資童軍（陸）", icon:"🧢", img:"assets/items/beret-maroon.avif", buy:"supply",
     detail:`<h4>棗紅色軟帽</h4><p><strong>官方規格：</strong>棗紅色軟帽（連童軍帽章）。深資童軍（陸）專用。</p>
       <div class="tip">帽章是<strong>童軍帽章</strong>（與童軍支部相同），由童軍升團可把帽章拆下移到新帽。</div>` },
   "beret-greyblue": { title:"灰藍色軟帽", desc:"空童軍／空童軍領袖", icon:"🧢", buy:"supply",
     detail:`<h4>灰藍色軟帽</h4><p>空童軍、深資空童軍、樂行空童軍及空童軍領袖同用灰藍色軟帽（青少年連童軍帽章；領袖連職級帽章）。</p>` },
-  "cap-sea-scout": { title:"海童軍白頂帽（連海童軍帽帶）", desc:"童軍支部・海童軍", icon:"⚓", img:"assets/items/cap-sea-scout.jpg", buy:"supply",
+  "cap-sea-scout": { title:"海童軍白頂帽（連海童軍帽帶）", desc:"童軍支部・海童軍", icon:"⚓", img:"assets/items/cap-sea-scout.avif", buy:"supply",
     detail:`<h4>海童軍白頂帽</h4><p><strong>官方規格：</strong>海童軍白頂帽（連海童軍帽帶）。童軍支部海童軍男女團員同款。</p>
       <div class="warn">升深資海童軍後改用<strong>海童軍領袖白頂帽</strong>（另一款），不可沿用。</div>` },
-  "cap-sea-leader-m": { title:"海童軍男領袖白頂帽", desc:"深資／樂行／領袖・海（男）", icon:"⚓", img:"assets/items/cap-sea-leader-m.jpg", buy:"supply",
+  "cap-sea-leader-m": { title:"海童軍男領袖白頂帽", desc:"深資／樂行／領袖・海（男）", icon:"⚓", img:"assets/items/cap-sea-leader-m.avif", buy:"supply",
     detail:`<h4>海童軍男領袖白頂帽</h4><p>深資海童軍、樂行海童軍及海童軍男領袖同用此帽，青少年使用深資／樂行海童軍帽章，成年領袖使用海童軍領袖帽章。</p>` },
-  "cap-sea-leader-f": { title:"海童軍女領袖白頂帽", desc:"深資／樂行／領袖・海（女）", icon:"⚓", img:"assets/items/cap-sea-leader-f.jpg", buy:"supply",
+  "cap-sea-leader-f": { title:"海童軍女領袖白頂帽", desc:"深資／樂行／領袖・海（女）", icon:"⚓", img:"assets/items/cap-sea-leader-f.avif", buy:"supply",
     detail:`<h4>海童軍女領袖白頂帽</h4><p>深資海童軍、樂行海童軍及海童軍女領袖同用此帽，只是帽章不同。</p>` },
-  "hat-leader-f": { title:"深綠色金邊硬帽", desc:"女性成年成員（陸）", icon:"👒", img:"assets/items/hat-leader-f.jpg", buy:"supply",
+  "hat-leader-f": { title:"深綠色金邊硬帽", desc:"女性成年成員（陸）", icon:"👒", img:"assets/items/hat-leader-f.avif", buy:"supply",
     detail:`<h4>深綠色金邊硬帽</h4><p><strong>官方規格：</strong>深綠色金邊硬帽（連職級帽章）。女領袖常規制服（編號 3）、領帶制服（編號 4）及禮服（編號 1）用。</p>
       <div class="tip">女領袖長褲制服（編號 6）則改用<strong>深綠色軟帽</strong>。</div>` },
 
@@ -77,7 +77,7 @@ const ITEMS = {
     detail:`<h4>海童軍領袖帽章</h4><p>釘於海童軍男／女領袖白頂帽上。獲委任後向所屬旅團查詢。</p>` },
 
   /* ── 恤衫 ── */
-  "shirt-beige": { title:"杏色短袖恤衫", desc:"兩胸袋、無褶、肩帶", icon:"👕", img:"assets/items/shirt-beige.jpg", buy:"supply",
+  "shirt-beige": { title:"杏色短袖恤衫", desc:"兩胸袋、無褶、肩帶", icon:"👕", img:"assets/items/shirt-beige.avif", buy:"supply",
     detail:`<h4>杏色恤衫</h4><p><strong>官方規格：</strong>杏色、短袖、兩胸袋、無褶、肩帶。幼童軍到領袖（陸）全部同款。</p>
       <ul><li>必須束入褲／裙內</li><li>戴領巾時最頂鈕要扣</li><li>建議買大一碼，青少年成長快</li></ul>` },
   "shirt-white": { title:"白色短袖恤衫", desc:"海童軍・兩胸袋、無褶、肩帶", icon:"👕", img:"assets/items/shirt-white.svg", buy:"supply",
@@ -386,9 +386,9 @@ const OFFICIAL_PHOTOS = {
 const OFFICIAL_IMG_BASE = "https://www.scout.org.hk/uploads/member/";
 // Only an exact section / branch / gender match is allowed. Never substitute land for sea / air.
 const LOCAL_UNIFORMS = {
-  cub: { land: { male:"assets/reference/cub-male.webp", female:"assets/reference/cub-female.webp" } },
-  scout: { land: { female:"assets/reference/scout-land-female.webp" } },
-  venture: { air: { male:"assets/reference/venture-air-male.webp" } }
+  cub: { land: { male:"assets/reference/cub-male.avif", female:"assets/reference/cub-female.avif" } },
+  scout: { land: { female:"assets/reference/scout-land-female.avif" } },
+  venture: { air: { male:"assets/reference/venture-air-male.avif" } }
 };
 function officialPhoto(section, branch, gender){
   const p = OFFICIAL_PHOTOS[section];
@@ -409,11 +409,11 @@ function officialPhoto(section, branch, gender){
    =========================================================== */
 const CAP_HANDBOOK = "https://uniform.scouting.org.hk/wp-content/uploads/2017/03/uniformhandbook_p96-106.pdf";
 function handbookImage(file, page, alt, note){
-  return { src:`assets/reference/${file}.webp`, alt, label:"官方手冊參考圖（本地）",
+  return { src:`assets/reference/${file}.avif`, alt, label:"官方手冊參考圖（本地）",
     sourceUrl:`${CAP_HANDBOOK}#page=${page - 95}`, sourceLabel:`官方手冊 p.${page} ↗`, note };
 }
 function uniformCrop(file, section, alt, note){
-  return { src:`assets/reference/${file}.webp`, alt, label:"官方制服圖局部（本地）",
+  return { src:`assets/reference/${file}.avif`, alt, label:"官方制服圖局部（本地）",
     sourceUrl:OFFICIAL_PHOTOS[section].src, sourceLabel:"總會制服頁 ↗", note };
 }
 const ITEM_REFERENCES = {

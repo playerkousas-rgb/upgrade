@@ -17,7 +17,7 @@ const fail = msg => { console.error(`  ✗ ${msg}`); failures++; };
 const check = (cond, msg) => (cond ? ok(msg) : fail(msg));
 
 const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.webmanifest': 'application/manifest+json',
-  '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.svg': 'image/svg+xml' };
+  '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.avif': 'image/avif', '.svg': 'image/svg+xml' };
 
 function startServer() {
   const server = http.createServer((req, res) => {
@@ -109,7 +109,7 @@ function startServer() {
 
   console.log('── 本地參考圖 / 官方圖映射 ──');
   const local = window.officialPhoto('cub', 'land', 'male').images;
-  check(local[0].src === 'assets/reference/cub-male.webp', '幼童軍男本地圖優先');
+  check(local[0].src === 'assets/reference/cub-male.avif', '幼童軍男本地圖優先');
   check(local.length === 2, '本地圖失敗可回退官方原圖');
   check(window.officialPhoto('rover', 'air', 'female') !== null, '樂行空女有官方原圖路徑');
   check(window.officialPhoto('scout', 'unknown', 'male') === null, '未知類型回傳 null');
@@ -121,8 +121,8 @@ function startServer() {
     return [...s];
   })()`);
   check(refSet.length === 15, `15 張本地參考圖（實際 ${refSet.length}）`);
-  check(refSet.every(p => p.startsWith('assets/reference/') && p.endsWith('.webp')),
-    '參考圖全部為本地 webp');
+  check(refSet.every(p => p.startsWith('assets/reference/') && p.endsWith('.avif')),
+    '參考圖全部為本地 avif');
 
   console.log('── 預算 ──');
   check($('budget-dynamic').textContent.includes('合計'), '領袖預算表有合計');
