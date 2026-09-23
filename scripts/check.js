@@ -18,7 +18,7 @@ const fail = msg => { console.error(`  ✗ ${msg}`); failures++; };
 const read = f => fs.readFileSync(path.join(ROOT, f), 'utf8');
 
 console.log('── 1. JS 語法 ──');
-for (const f of ['data.js', 'app.js', 'scripts/check.js']) {
+for (const f of ['data.js', 'locale-en.js', 'app.js', 'scripts/check.js']) {
   try {
     execFileSync(process.execPath, ['--check', path.join(ROOT, f)], { stdio: 'pipe' });
     ok(f);
@@ -28,7 +28,7 @@ for (const f of ['data.js', 'app.js', 'scripts/check.js']) {
 }
 
 console.log('── 2. 代碼引用的資產必須存在 ──');
-const ENTRY_FILES = ['index.html', 'app.js', 'data.js', 'manifest.webmanifest'];
+const ENTRY_FILES = ['index.html', 'app.js', 'data.js', 'locale-en.js', 'manifest.webmanifest'];
 const REF_RE = /assets\/[A-Za-z0-9_./-]+\.(?:jpe?g|png|webp|avif|svg|gif|ico|css|js|webmanifest)/g;
 const codeRefs = new Set();
 for (const f of ENTRY_FILES) {

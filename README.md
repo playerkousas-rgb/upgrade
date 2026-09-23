@@ -68,15 +68,24 @@
 - 自家 LOGO icon(192/512/180/32)
 - 暫不啟用離線快取（無 service worker），避免部署更新後瀏覽器被舊快取鎖住；啟用方法見下方「部署與防增肥守則」
 
+### 6. 🌐 雙語（繁體中文 ／ English）
+- 右上角常駐圓形語言掣：中文介面顯示 **EN**，英文介面顯示 **中文**，一按即切換整站
+- 全站雙語：制服清單、單品規格、升團過渡 Q&A、進度性獎章、預算表、常見問題、保養指南等
+- 語言選擇以 `localStorage`（`scout-guide-lang-v1`）記住，下次開啟自動沿用；`<html lang>` 同步更新
+- 中英文資料各自獨立（`LOCALES["zh-HK"]` / `LOCALES.en`），改一邊不會影響另一邊
+
+---
+
 ---
 
 ## 📂 檔案結構
 
 ```
 upgrade/
-├── index.html            (主頁面, 51K, 991 行)
-├── data.js               (單品目錄 ITEMS + 各支部×海陸空×性別 制服組成 UNIFORM_SPEC + 比較邏輯)
-├── app.js                (主程式:來源/海陸空/性別控制、清單、獎章總覽、過渡 Q&A、預算)
+├── index.html            (主頁面 + 全部 CSS + 靜態內容骨架, 51K, 1002 行)
+├── data.js               (語言包骨架 LOCALES + 單品目錄 ITEMS + 制服組成 UNIFORM_SPEC + 參考圖 + 比較邏輯)
+├── locale-en.js          (英文語言包:EN 版 ITEMS / SHOP / 支部資料 / UI 字串 / 靜態 HTML 對照表)
+├── app.js                (主程式:語言切換、來源/海陸空/性別控制、清單、獎章總覽、過渡 Q&A、預算)
 ├── manifest.webmanifest  (PWA 設定)
 ├── vercel.json           (Vercel 部署:快取/安全 response headers)
 ├── .vercelignore         (Vercel 部署排除清單,防止肥重檔案上線)
@@ -95,6 +104,41 @@ upgrade/
     ├── reference/ (15 張已核對的本地官方參考圖 AVIF + 來源及裁切記錄 README.md)
     └── items/     (單品制服圖 AVIF＋一般衣物款式示意 SVG；不準確的徽號 SVG 已移除)
 ```
+
+---
+
+## 🌐 雙語架構（Bilingual architecture）
+
+與 AYP 指南一致的「右上角 EN／中文」做法：**資料與介面文字全部收進語言包**，介面本身不內嵌任何語言字串。
+
+### 語言包
+
+| 語言 | 位置 | 說明 |
+|---|---|---|
+| `zh-HK` | `data.js` 的 `LOCALES["zh-HK"]` | 原始中文版，直接沿用檔內既有的 `SECTIONS`／`ITEMS`／`SHOP` 等常數 |
+| `en` | `locale-en.js` 的 `LOCALE_EN` | 英文版，檔尾以 `LOCALES.en = LOCALE_EN` 掛上 |
+
+每個語言包包含：`APP`（標題／描述）、`SECTIONS`、`BRANCHES`、`ITEMS`、`SHOP`、`GRASSHOPPER_ITEM`、
+`ITEM_REFERENCES`、`BADGES_OVERVIEW`、`TRANSITIONS`、`BADGE_TIMELINES`、`UI`（介面字串）及 `HTML`（靜態文字對照表）。
+
+### 三個層次的翻譯
+
+1. **資料／JS 產生的內容** — `app.js` 與 `data.js` 一律經 `L()`（語言包）與 `UI()`（介面字串）取值，
+   切換語言時 `renderAll()` 重新渲染，狀態（支部／海陸空／性別／來源／已買紀錄／PART 開合）完全保留。
+2. **`index.html` 的靜態文字** — 以「文字節點原文（去空白）」做 key，查 `LOCALES[lang].HTML` 對應翻譯。
+   第一次套用時會把所有文字節點的中文原文記下來，所以切回中文是**還原原文**而非再翻一次；
+   沒對應的翻譯會保留中文（不會出現空白）。
+3. **CSS 產生的文字**（PART 的「展開／收起」）— 以 `html[lang="en"]` 選擇器提供英文版，
+   保留 `getComputedStyle(...).content` 可讀到的字串常值。
+
+### 加新文案時要做的三件事
+
+1. 中文：直接寫在 `data.js`（資料）或 `index.html`（靜態文字）／`app.js`（介面邏輯）— 照舊。
+2. 英文（資料）：在 `locale-en.js` 的對應區塊補上同一個 key。
+3. 英文（靜態文字）：在 `locale-en.js` 的 `HTML` 對照表補一筆；`npm run smoke` 會自動檢查「切到英文後仍殘留中文」，
+   有漏網會直接報錯並列出未翻譯的字串。
+
+> `IMG_TEXT`（參考圖的共用字串）在 `locale-en.js` 最頂就先設好，因為 `ITEM_REFERENCES` 建立時就會用到。
 
 ---
 
@@ -126,7 +170,9 @@ python3 -m http.server 8000 --bind 0.0.0.0
 
 ## 📦 部署與防增肥守則（Vercel）— 改版前必讀
 
-> 目標：Vercel 部署配恆常保持極小（目前上線內容 < 1.1 MB），且**任何改版不得引致死重檔案回巢**。
+>
+> 目標：Vercel 部署配恆常保持極小（目前上線內容約 **867 KB**，其中圖片約 620 KB、文字／程式約 238 KB），
+> 且**任何改版不得引致死重檔案回巢**。
 
 ### 部署模型
 - **純靜態站：零運行期依賴、零 build 步驟**。Vercel 直接部署根目錄，不應執行任何 `npm install`。
@@ -138,7 +184,7 @@ python3 -m http.server 8000 --bind 0.0.0.0
 `.gitignore` 同步排除這些模式，防止先進倉庫再進部署。
 
 ### 資產守則（最易出肥重的地方）
-1. **每個 `assets/` 檔案必須被 `index.html`／`app.js`／`data.js`／`manifest.webmanifest` 引用**（`data.js` 以 base 名動態拼出的 `assets/reference/*.avif` 亦算）。`npm run check` 會反查死重，**不允許任何未引用檔案存在**。
+1. **每個 `assets/` 檔案必須被 `index.html`／`app.js`／`data.js`／`locale-en.js`／`manifest.webmanifest` 引用**（`data.js` 以 base 名動態拼出的 `assets/reference/*.avif` 亦算）。`npm run check` 會反查死重，**不允許任何未引用檔案存在**。
 2. 新增圖片前：先問「有無已有本地官方參考圖可用？」。有 → 沿用；沒有 → 才新增，並同時更新 `ITEM_REFERENCES`／`LOCAL_UNIFORMS`、`tests/images.spec.js` 及（如涉及官方裁切）`assets/reference/README.md` 的來源記錄。
 3. 圖片格式：照片類一律用 **AVIF**（quality 70；2026 年所有 evergreen 瀏覽器均支援：Chrome 85+／Safari 16+／Firefox 93+）。新增照片後執行：`npm i --no-save --package-lock=false sharp && node scripts/to-avif.js <檔案>`（會自動解碼驗證、較大的檔案保留原檔）。一律不得用未壓縮的原圖入倉；PWA 圖示維持 PNG（apple-touch-icon 只能 PNG）。
 4. **不得**復活 `assets/images/`（已停用的舊 AI 插畫，2026-09 已移除）；`npm run check` 會攔截。

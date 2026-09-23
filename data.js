@@ -8,6 +8,16 @@
    - 《童軍訓練綱要》附錄「徽章領取／購買」、「深資童軍先修章」
    =========================================================== */
 
+// 參考圖的共用字串（handbookImage / uniformCrop 用）
+const IMG_TEXT = {
+  "zh-HK": {
+    handbookLabel: "官方手冊參考圖（本地）",
+    handbookSource: (page) => `官方手冊 p.${page} ↗`,
+    cropLabel: "官方制服圖局部（本地）",
+    cropSource: "總會制服頁 ↗"
+  }
+};
+
 // 支部基本資料（年齡為總會官網 2025 年資料）
 const SECTIONS = {
   grasshopper: { name: "小童軍", nameEn: "Grasshopper Scout", age: "4–7 歲", color: "#ff7a1a",
@@ -217,7 +227,7 @@ const SHOP = {
 function shopImg(p, size){ return p ? `${SHOP_BASE}files/${size || "mid"}/${p.id}_${p.n || 0}.jpg` : null; }
 function shopUrl(p){ return p ? `${SHOP_BASE}index.php?p=6&id=${p.id}` : null; }
 function shopInfo(itemId){
-  const p = SHOP[itemId];
+  const p = L().SHOP[itemId];
   if(!p) return null;
   return { ...p, img: shopImg(p), thumb: shopImg(p, "thum"), url: shopUrl(p) };
 }
@@ -307,8 +317,9 @@ function getSpec(section, branch, gender){
 // 取得升團來源（支部、類型）
 function buildChecklist(opts){
   const { section, branch, gender, mode, fromSection, fromBranch } = opts;
+  const t = UI(), loc = L();
   if(section === "grasshopper"){
-    const gh = Object.assign({}, GRASSHOPPER_ITEM);
+    const gh = Object.assign({}, loc.GRASSHOPPER_ITEM);
     const ghShop = shopInfo("gh-clothes");
     if(ghShop){ gh.shop = ghShop; gh.shopImg = ghShop.img; gh.shopUrl = ghShop.url; }
     return [gh];
@@ -316,10 +327,12 @@ function buildChecklist(opts){
   const target = getSpec(section, branch, gender) || [];
   const source = (mode === "upgrade" && fromSection && fromSection !== "grasshopper")
     ? (getSpec(fromSection, fromBranch, gender) || []) : [];
-  const fromName = fromSection ? (SECTIONS[fromSection]?.name || "") + (SECTIONS[fromSection]?.hasBranch ? "（" + (BRANCHES[fromBranch]?.short || "陸") + "）" : "") : "";
+  const fromSec = fromSection ? loc.SECTIONS[fromSection] : null;
+  const fromShort = fromSec && fromSec.hasBranch ? (loc.BRANCHES[fromBranch]?.short || t.branchFallbackShort) : "";
+  const fromName = fromSec ? t.fromLabel(fromSec.name, fromShort) : "";
 
   return target.map(id => {
-    const it = ITEMS[id];
+    const it = loc.ITEMS[id];
     // 保留原有 item id / 已買紀錄；官方手冊將兩個海童軍帽章名稱列作同一款。
     const seaYouthBadges = ["capbadge-venture-sea", "capbadge-rover-sea"];
     const had = source.includes(id) || (seaYouthBadges.includes(id) && source.some(x => seaYouthBadges.includes(x)));
@@ -327,12 +340,12 @@ function buildChecklist(opts){
     if(mode === "upgrade" && source.length){
       if(had){
         status = "have";
-        note = `<div class="tip">✅ 與${fromName}<strong>同一款</strong>，如狀況良好可沿用。</div>`;
-        if(id === "badges-youth") note = `<div class="tip">✅ 世界童軍會員章、香港章、地域章、區章、旅章可沿用（同一旅）。<br><strong>要拆走</strong>舊支部的進度性獎章、活動／專科徽章、隊長章。服務年星保留。</div>`;
-        if(id === "scarf") note = `<div class="tip">✅ 同一旅升團可繼續用原有旅巾。</div>`;
+        note = t.noteReuse(fromName);
+        if(id === "badges-youth") note = t.noteBadgesReuse;
+        if(id === "scarf") note = t.noteScarfReuse;
       } else {
         status = "need";
-        note = `<div class="warn">🆕 ${fromName}沒有此款，需要購買／更換。</div>`;
+        note = t.noteNeed(fromName);
       }
     } else {
       status = "need";
@@ -343,23 +356,15 @@ function buildChecklist(opts){
     if(id === "patrol-badge") { status = had ? "have" : "check"; }
     if(id === "badges-leader") status = "need";
 
-    const buyLabel = {
-      supply: "香港童軍物品供應社購買",
-      included: "隨幼童軍帽附上，毋須另購",
-      any: "供應社或一般商店購買",
-      group: "由旅團頒發",
-      check: "向旅團／區查詢",
-      mixed: "供應社購買；旅章／區章／地域章向旅團查詢",
-      "group-or-supply": "由旅團頒發／供應社購買"
-    }[it.buy] || "";
+    const buyLabel = t.buyLabels[it.buy] || "";
     const shop = shopInfo(id);
     let shopHtml = "";
     if(shop){
-      const row = (x) => `<li><a href="${shopUrl(x)}" target="_blank" rel="noopener">${x.name}</a>${x.code ? `（編號 ${x.code}）` : ""}${x.price != null ? ` HK$${x.price}` : ""}</li>`;
-      shopHtml = `<div class="shop-box"><strong>🛒 供應社官方產品</strong><ul>${row(shop)}${(shop.extra || []).map(row).join("")}</ul>`
-        + ((shop.alt && shop.alt.length) ? `<p class="cite">其他款式：${shop.alt.map(x => `<a href="${shopUrl(x)}" target="_blank" rel="noopener">${x.name}</a>${x.price != null ? ` HK$${x.price}` : ""}`).join("、")}</p>` : "")
+      const row = (x) => `<li><a href="${shopUrl(x)}" target="_blank" rel="noopener">${x.name}</a>${t.shopCode(x.code)}${t.shopPrice(x.price)}</li>`;
+      shopHtml = `<div class="shop-box"><strong>${t.shopBoxTitle}</strong><ul>${row(shop)}${(shop.extra || []).map(row).join("")}</ul>`
+        + ((shop.alt && shop.alt.length) ? `<p class="cite">${t.shopAlts}${shop.alt.map(x => `<a href="${shopUrl(x)}" target="_blank" rel="noopener">${x.name}</a>${t.shopPrice(x.price)}`).join(t.shopAltSep)}</p>` : "")
         + (shop.note ? `<p class="cite">${shop.note}</p>` : "")
-        + `<p class="cite">價錢為供應社網站標示零售價（2026-09 擷取），以店內為準。</p></div>`;
+        + `<p class="cite">${t.shopPriceNote}</p></div>`;
     }
     return {
       id, title: it.title, desc: it.desc, icon: it.icon, img: it.img, reference: itemReference(id, gender), status,
@@ -395,11 +400,12 @@ function officialPhoto(section, branch, gender){
   const file = p?.[branch]?.[gender];
   if(!file) return null;
   const local = LOCAL_UNIFORMS[section]?.[branch]?.[gender];
-  const alt = `${SECTIONS[section].name}・${BRANCHES[branch].name}・${gender === "female" ? "女" : "男"}裝制服參考圖`;
-  const source = { alt, sourceUrl:p.src, sourceLabel:"總會制服頁 ↗", note:"官方制服圖解，非實物照片；規格以總會最新資料為準。" };
+  const t = UI(), loc = L();
+  const alt = t.uniformAlt(loc.SECTIONS[section].name, loc.BRANCHES[branch].name, t.genderShort(gender));
+  const source = { alt, sourceUrl:p.src, sourceLabel:t.uniformSourceLabel, note:t.uniformNote };
   return { src:p.src, images:[
-    ...(local ? [{ ...source, src:local, label:"官方制服參考圖（本地）" }] : []),
-    { ...source, src:OFFICIAL_IMG_BASE + file, label:"官方制服參考圖" }
+    ...(local ? [{ ...source, src:local, label:t.uniformLocalLabel }] : []),
+    { ...source, src:OFFICIAL_IMG_BASE + file, label:t.uniformRemoteLabel }
   ] };
 }
 
@@ -408,51 +414,404 @@ function officialPhoto(section, branch, gender){
    不重畫徽號、不改色；不將手冊舊圖冒稱為現售產品相。
    =========================================================== */
 const CAP_HANDBOOK = "https://uniform.scouting.org.hk/wp-content/uploads/2017/03/uniformhandbook_p96-106.pdf";
-function handbookImage(file, page, alt, note){
-  return { src:`assets/reference/${file}.avif`, alt, label:"官方手冊參考圖（本地）",
-    sourceUrl:`${CAP_HANDBOOK}#page=${page - 95}`, sourceLabel:`官方手冊 p.${page} ↗`, note };
+function handbookImage(lang, file, page, alt, note){
+  const t = IMG_TEXT[lang] || IMG_TEXT["zh-HK"];
+  return { src:`assets/reference/${file}.avif`, alt, label:t.handbookLabel,
+    sourceUrl:`${CAP_HANDBOOK}#page=${page - 95}`, sourceLabel:t.handbookSource(page), note };
 }
-function uniformCrop(file, section, alt, note){
-  return { src:`assets/reference/${file}.avif`, alt, label:"官方制服圖局部（本地）",
-    sourceUrl:OFFICIAL_PHOTOS[section].src, sourceLabel:"總會制服頁 ↗", note };
+function uniformCrop(lang, file, section, alt, note){
+  const t = IMG_TEXT[lang] || IMG_TEXT["zh-HK"];
+  return { src:`assets/reference/${file}.avif`, alt, label:t.cropLabel,
+    sourceUrl:OFFICIAL_PHOTOS[section].src, sourceLabel:t.cropSource, note };
 }
 const ITEM_REFERENCES = {
-  "capbadge-cub": handbookImage("capbadge-cub", 98, "男幼童軍帽冠上已縫好的布質帽章（官方手冊圖解）", "圖示男幼童軍帽；布章已縫在帽冠，毋須另購。"),
-  "capbadge-scout": handbookImage("capbadge-scout", 102, "銀色童軍帽章（官方手冊原圖）", "手冊原圖裁切，非現售產品照片。"),
-  "capbadge-venture-sea": handbookImage("capbadge-sea-youth", 102, "深資／樂行海童軍帽章（官方手冊原圖）", "手冊將深資及樂行海童軍帽章列為同一款。"),
-  "capbadge-rover-sea": handbookImage("capbadge-sea-youth", 102, "深資／樂行海童軍帽章（官方手冊原圖）", "手冊將深資及樂行海童軍帽章列為同一款。"),
-  "capbadge-rank": handbookImage("capbadge-rank", 104, "綠色團長職級帽章例子（官方手冊原圖）", "只示範綠色團長款；職級不同，顏色／款式亦不同，請先向旅團確認。"),
-  "capbadge-sea-leader": handbookImage("capbadge-sea-leader", 105, "海童軍領袖帽章（官方手冊原圖）", "海童軍成年領袖款，與深資／樂行海童軍款不同。"),
-  "cap-cub-m": handbookImage("capbadge-cub", 98, "男幼童軍深綠色黃間條鴨舌帽（官方手冊圖解）", "穿戴圖局部；帽冠上已縫有布質帽章。"),
-  "cap-cub-f": uniformCrop("cap-cub-female", "cub", "女幼童軍深綠色圓形有邊帽（官方制服圖解）", "穿戴圖局部；帽冠上已縫有布質帽章。"),
-  "beret-green": uniformCrop("beret-green", "scout", "深綠色軟帽配童軍帽章（官方制服圖解）", "穿戴圖局部；圖示青少年童軍帽章，成年領袖須用職級帽章。"),
-  "beret-greyblue": uniformCrop("beret-greyblue", "venture", "灰藍色軟帽配童軍帽章（官方制服圖解）", "穿戴圖局部；圖示青少年童軍帽章，成年領袖須用職級帽章。"),
-  "belt": uniformCrop("belt", "venture", "棕色皮帶及童軍徽皮帶扣（官方制服圖解）", "穿戴圖局部，並非供應社現售產品照片。"),
-  "woggle-scout": uniformCrop("woggle-scout", "venture", "童軍巾圈（官方制服圖解）", "穿戴圖局部，並非供應社現售產品照片。"),
-  "badges-youth": uniformCrop("badges-common", "cub", "香港章及世界童軍會員章（官方制服圖解）", "只示範兩款通用徽章；地域章、區章、旅章請按所屬單位準備。"),
-  "badges-leader": uniformCrop("badges-common", "cub", "香港章及世界童軍會員章（官方制服圖解）", "只示範兩款通用徽章，並非完整領袖徽章套裝；其餘徽章按委任及服務單位準備。")
+  "capbadge-cub": handbookImage("zh-HK", "capbadge-cub", 98, "男幼童軍帽冠上已縫好的布質帽章（官方手冊圖解）", "圖示男幼童軍帽；布章已縫在帽冠，毋須另購。"),
+  "capbadge-scout": handbookImage("zh-HK", "capbadge-scout", 102, "銀色童軍帽章（官方手冊原圖）", "手冊原圖裁切，非現售產品照片。"),
+  "capbadge-venture-sea": handbookImage("zh-HK", "capbadge-sea-youth", 102, "深資／樂行海童軍帽章（官方手冊原圖）", "手冊將深資及樂行海童軍帽章列為同一款。"),
+  "capbadge-rover-sea": handbookImage("zh-HK", "capbadge-sea-youth", 102, "深資／樂行海童軍帽章（官方手冊原圖）", "手冊將深資及樂行海童軍帽章列為同一款。"),
+  "capbadge-rank": handbookImage("zh-HK", "capbadge-rank", 104, "綠色團長職級帽章例子（官方手冊原圖）", "只示範綠色團長款；職級不同，顏色／款式亦不同，請先向旅團確認。"),
+  "capbadge-sea-leader": handbookImage("zh-HK", "capbadge-sea-leader", 105, "海童軍領袖帽章（官方手冊原圖）", "海童軍成年領袖款，與深資／樂行海童軍款不同。"),
+  "cap-cub-m": handbookImage("zh-HK", "capbadge-cub", 98, "男幼童軍深綠色黃間條鴨舌帽（官方手冊圖解）", "穿戴圖局部；帽冠上已縫有布質帽章。"),
+  "cap-cub-f": uniformCrop("zh-HK", "cap-cub-female", "cub", "女幼童軍深綠色圓形有邊帽（官方制服圖解）", "穿戴圖局部；帽冠上已縫有布質帽章。"),
+  "beret-green": uniformCrop("zh-HK", "beret-green", "scout", "深綠色軟帽配童軍帽章（官方制服圖解）", "穿戴圖局部；圖示青少年童軍帽章，成年領袖須用職級帽章。"),
+  "beret-greyblue": uniformCrop("zh-HK", "beret-greyblue", "venture", "灰藍色軟帽配童軍帽章（官方制服圖解）", "穿戴圖局部；圖示青少年童軍帽章，成年領袖須用職級帽章。"),
+  "belt": uniformCrop("zh-HK", "belt", "venture", "棕色皮帶及童軍徽皮帶扣（官方制服圖解）", "穿戴圖局部，並非供應社現售產品照片。"),
+  "woggle-scout": uniformCrop("zh-HK", "woggle-scout", "venture", "童軍巾圈（官方制服圖解）", "穿戴圖局部，並非供應社現售產品照片。"),
+  "badges-youth": uniformCrop("zh-HK", "badges-common", "cub", "香港章及世界童軍會員章（官方制服圖解）", "只示範兩款通用徽章；地域章、區章、旅章請按所屬單位準備。"),
+  "badges-leader": uniformCrop("zh-HK", "badges-common", "cub", "香港章及世界童軍會員章（官方制服圖解）", "只示範兩款通用徽章，並非完整領袖徽章套裝；其餘徽章按委任及服務單位準備。")
 };
+
 function itemReference(id, gender){
+  const refs = L().ITEM_REFERENCES;
   if(id === "capbadge-cub" && gender === "female"){
-    return { ...ITEM_REFERENCES["cap-cub-f"], alt:"女幼童軍帽冠上已縫好的布質帽章（官方制服圖解）" };
+    return { ...refs["cap-cub-f"], alt: UI().femaleCubBadgeAlt };
   }
-  return ITEM_REFERENCES[id] || null;
+  return refs[id] || null;
 }
 function itemImageSources(item, thumbnail = false){
   // Verified local references are primary, not a rescue image after a hotlink fails.
+  const t = UI();
   if(item.reference) return [item.reference];
   const images = [];
   const shopImage = thumbnail ? (item.shopThumb || item.shopImg) : item.shopImg;
   if(shopImage){
-    images.push({ src:shopImage, alt:`${item.shop.name}（供應社產品圖片）`, label:"供應社產品圖片",
-      sourceUrl:item.shopUrl, sourceLabel:"查看供應社產品 ↗",
-      note:item.shop.name !== item.title ? `產品例子：${item.shop.name}；未必代表此項全部款式。` : "" });
+    images.push({ src:shopImage, alt:t.shopImageAlt(item.shop.name), label:t.shopImageLabel,
+      sourceUrl:item.shopUrl, sourceLabel:t.shopImageSource,
+      note:item.shop.name !== item.title ? t.shopImageNote(item.shop.name) : "" });
   }
   // Only general clothing keeps a simple style illustration. Invented insignia have no img entry.
   if(item.img){
-    images.push({ src:item.img, alt:`${item.title}（款式示意，非實物照片）`, label:"款式示意（非實物照片）",
-      sourceUrl:item.shopUrl, sourceLabel:"對照供應社產品 ↗",
-      note:shopImage ? "供應社圖片暫時未能載入；此示意圖不作顏色或細節依據。" : "僅供辨認款式；顏色及細節以實物和官方規格為準。" });
+    images.push({ src:item.img, alt:t.itemImageAlt(item.title), label:t.itemImageLabel,
+      sourceUrl:item.shopUrl, sourceLabel:t.itemImageSource,
+      note:shopImage ? t.itemImageNoteFallback : t.itemImageNoteOnly });
   }
   return images;
 }
+
+/* ===========================================================
+   支部資料（進度性獎章總覽 / 升團過渡 Q&A / 獎章歷程圖）
+   原置於 app.js，為方便雙語化改放 data.js
+   =========================================================== */
+/* ===========================================================
+   進度性獎章總覽 — 資料來源：香港童軍總會各支部訓練綱要（中文版）
+   =========================================================== */
+const BADGES_OVERVIEW = {
+  grasshopper: {
+    name: "小童軍", color: "var(--grasshopper)", age: "4–7 歲",
+    promise: "我願參加小童軍，愛神愛人愛國家。", law: "小童軍日行一善。", motto: "準備",
+    type: "會員章 + 進步獎章（四步）",
+    badges: [
+      { name: "🔰 會員章", desc: "宣誓後佩戴" },
+      { name: "進步獎章", desc: "第一步（紅）→ 第二步（棕）→ 第三步（藍）→ 第四步（綠）" }
+    ],
+    note: "小童軍服裝只設<strong>領巾及簡單整齊的集會服裝</strong>；旅團亦可安排自家統一服飾，以旅團安排為準。"
+  },
+  cub: {
+    name: "幼童軍", color: "var(--cub)", age: "6–11 歲",
+    promise: "我願盡所能；對神明，對國家，盡責任；對別人，要幫助；對規律，必遵行。",
+    law: "幼童軍，盡所能，先顧別人才顧己，日行一善富精神。", motto: "準備",
+    type: "會員章 + 4 個進度性獎章（金紫荊獎章為支部最高獎章）",
+    badges: [
+      { name: "🔰 會員章", desc: "入團後考取，宣誓後佩戴" },
+      { name: "1️⃣ 幼童軍獎章", desc: "考獲會員章後 6 個月內完成" },
+      { name: "2️⃣ 幼童軍歷奇章", desc: "考獲幼童軍獎章後 1 年內完成" },
+      { name: "3️⃣ 幼童軍高級歷奇章", desc: "考獲歷奇章後 1 年半內完成" },
+      { name: "⭐ 金紫荊獎章", desc: "<strong>幼童軍支部最高獎章</strong>。年滿 9 歲半及完成歷奇章方可申請。考獲後只佩戴金紫荊獎章於右胸袋" },
+      { name: "🔗 童軍先修章", desc: "年滿 10 歲半可考取，認識童軍支部活動，為升童軍做準備" }
+    ],
+    note: "另有活動徽章（一級制／三級制），戴於左袖。"
+  },
+  scout: {
+    name: "童軍", color: "var(--scout)", age: "11–15 歲",
+    promise: "我願以信譽為誓，竭盡所能；對神明，對國家，盡責任；對別人，要幫助；對規律，必遵行。",
+    law: "童軍信用為人敬。童軍待人要忠誠。童軍友善兼親切。童軍相處如手足。童軍勇敢不怕難。童軍愛物更惜陰。童軍自重又重人。", motto: "準備",
+    type: "會員章 + 4 個進度性獎章（總領袖獎章為支部最高獎章）",
+    badges: [
+      { name: "🔰 會員章", desc: "入團後考取，宣誓後佩戴" },
+      { name: "1️⃣ 童軍探索獎章", desc: "年滿 11 歲及考獲會員章後開始" },
+      { name: "2️⃣ 童軍標準獎章", desc: "完成探索獎章後" },
+      { name: "3️⃣ 童軍高級獎章", desc: "完成標準獎章後" },
+      { name: "⭐ 總領袖獎章", desc: "<strong>童軍支部最高獎章</strong>。由青少年活動署送贈，供應社代為派發" },
+      { name: "🔗 深資童軍先修章", desc: "年滿 14 歲半可考取，認識深資童軍支部，為升深資做準備" }
+    ],
+    note: "海童軍必須選修「海上活動」；空童軍必須選修「航空活動」。另有專科徽章（興趣／技能／服務／教導組）。"
+  },
+  venture: {
+    name: "深資童軍", color: "var(--venture)", age: "15–20 歲",
+    promise: "我願以信譽為誓，竭盡所能；對神明，對國家，盡責任；對別人，要幫助；對規律，必遵行。",
+    law: "與童軍相同。", motto: "準備",
+    type: "深資童軍肩章 + 2 個進度性獎章（榮譽童軍獎章為支部最高獎章）",
+    badges: [
+      { name: "🔰 深資童軍肩章", desc: "先決條件，完成後方可考進度性獎章" },
+      { name: "1️⃣ 深資童軍獎章", desc: "考獲「責任」「自立」「活動」「探險」四個段章" },
+      { name: "⭐ 榮譽童軍獎章", desc: "<strong>深資童軍支部最高獎章</strong>（英文 Dragon Scout Award）。考獲深資童軍獎章及四個金帶。持有人日後任領袖可終身佩戴榮譽童軍領袖標誌" }
+    ],
+    note: "深資童軍團以執行委員會制度自治自務。"
+  },
+  rover: {
+    name: "樂行童軍", color: "var(--rover)", age: "18–25 歲",
+    promise: "我願以信譽為誓，竭盡所能；對神明，對國家，盡責任；對別人，要幫助；對規律，必遵行。",
+    law: "與童軍相同。", motto: "服務",
+    type: "樂行童軍肩章 + 2 個進度性獎章（貝登堡獎章為支部最高獎章）",
+    badges: [
+      { name: "🔰 樂行童軍肩章", desc: "先決條件" },
+      { name: "1️⃣ 樂行童軍獎章", desc: "童軍知識、社區服務、戶外活動、個人興趣、人際關係、個人價值觀、認識世界、生活體驗" },
+      { name: "⭐ 貝登堡獎章", desc: "<strong>樂行童軍支部最高獎章</strong>。服務、童軍技能、探險、生活體驗。持有人日後任領袖可佩戴貝登堡領袖標誌" }
+    ],
+    note: "樂行童軍可同時兼任其他支部、區和地域領袖的工作。"
+  },
+  leader: {
+    name: "領袖", color: "var(--leader)", age: "成年成員",
+    promise: "我願以信譽為誓，竭盡所能；對神明，對國家，盡責任；對別人，要幫助；對規律，必遵行。",
+    law: "與童軍相同。", motto: "服務",
+    type: "非進度性：領袖訓練（木章）+ 授勳及嘉獎制度",
+    badges: [
+      { name: "🎓 木章", desc: "完成領袖訓練後獲頒（木章、木章巾、木章巾圈）" },
+      { name: "🏅 長期服務獎勵", desc: "服務章（最少 3 年）、長期服務獎章（15 年）" },
+      { name: "🏅 功績獎勵", desc: "優良服務獎章 → 優異服務獎章 → 功績榮譽獎章 → 功績榮譽十字章；銅／銀／金獅勳章" },
+      { name: "⭐ 香港總監嘉許／高級嘉許", desc: "由香港總監批准頒發" }
+    ],
+    note: "領袖有 3 個來源：<strong>由深資童軍升任、由樂行童軍升任、全新加入</strong>。榮譽童軍／貝登堡獎章持有人可終身佩戴相應領袖標誌。"
+  }
+};
+
+
+/* ===========================================================
+   升團過渡 Q&A
+   =========================================================== */
+const TRANSITIONS = {
+  cub: {
+    title: "由小童軍升幼童軍", color: "var(--cub)",
+    items: [
+      { q: "升團條件？", a: "符合幼童軍年齡（6–11 歲）即可，實際日期向所屬旅團查詢。小童軍身分於年滿 8 歲當日自動結束。" },
+      { q: "要買什麼？", a: "小童軍只有活動服裝（運動鞋等），升幼童軍等同<strong>首次購買整套制服</strong>：帽、帽章、恤衫、短褲／裙褲、皮帶、長襪、皮鞋；旅巾及顏色巾圈由旅團安排。" },
+      { q: "幼童軍徽章佩戴位置？", a: "會員章：左胸袋中央；香港章：左胸袋上方；服務年星：香港章旁；進度性獎章及金紫荊獎章：右胸袋；活動徽章：左袖；旅章、區章、地域章：右袖。（2023 年 4 月起新指引）" }
+    ]
+  },
+  scout: {
+    title: "由幼童軍升童軍", color: "var(--scout)",
+    items: [
+      { q: "升團條件？", a: "符合童軍年齡（11–15 歲）即可，毋須先考金紫荊獎章。幼童軍身分於年滿 12 歲當日自動結束。年滿 10 歲半的幼童軍可先考<strong>童軍先修章</strong>認識童軍支部。" },
+      { q: "先揀陸／海／空", a: "童軍支部分<strong>童軍、海童軍及空童軍</strong>，制服顏色不同：陸＝杏色恤衫＋草青色短褲／裙褲＋深綠色軟帽；海＝白色恤衫＋深藍色短褲／裙褲＋白頂帽；空＝淺藍色恤衫＋深藍色短褲／裙褲＋灰藍色軟帽。升團前先問清楚所屬旅團是哪一種。" },
+      { q: "升陸童軍要買什麼？", a: "必買：<strong>深綠色軟帽、童軍帽章、童軍巾圈</strong>。恤衫、短褲／裙褲、皮帶、長襪、皮鞋與幼童軍<strong>同款</strong>，合身可沿用。" },
+      { q: "升海／空童軍要買什麼？", a: "幾乎全套新買：白色（海）／淺藍色（空）恤衫、深藍色短褲／裙褲、深藍色長襪、白頂帽（海）／灰藍色軟帽（空）、童軍巾圈。只有皮帶、皮鞋、旅巾可沿用。" },
+      { q: "徽章點處理？", a: "拆走幼童軍進度性獎章、活動徽章、隊長章。<strong>金紫荊獎章屬幼童軍獎章，升童軍後不再佩戴獎章本身</strong>，但可購買「金紫荊獎章標誌」（需出示證書副本）佩戴於右胸袋上方。服務年星保留。世界童軍會員章、香港章、地域章、區章、旅章可沿用。" },
+      { q: "小隊章？", a: "童軍開始有小隊制，<strong>小隊章由旅團頒發或在供應社購買</strong>（毋須出示文件），佩戴於右袖。" }
+    ]
+  },
+  venture: {
+    title: "由童軍升深資童軍", color: "var(--venture)",
+    items: [
+      { q: "升團條件？", a: "符合深資童軍年齡（15–20 歲）即可，毋須先考總領袖獎章。童軍身分於年滿 16 歲當日自動結束。年滿 14 歲半的童軍可先考<strong>深資童軍先修章</strong>。" },
+      { q: "先揀陸／海／空", a: "深資童軍同樣分<strong>深資童軍、深資海童軍、深資空童軍</strong>。海／空的深資改用<strong>海童軍領袖白頂帽</strong>（與童軍支部的白頂帽不同款）／灰藍色軟帽。" },
+      { q: "升陸深資要買什麼？", a: "必買：<strong>棗紅色軟帽、草青色長褲（男）／草青色半截裙（女）、黑色短襪（男）／肉色襪褲＋黑色中跟皮鞋（女）</strong>。恤衫、皮帶、旅巾、童軍巾圈、童軍帽章可沿用。<strong>深資童軍不戴領帶</strong>（官方制服是旅巾）。" },
+      { q: "徽章點處理？", a: "拆走童軍進度性獎章、專科徽章、小隊章、隊長章。深資童軍<strong>不會有金紫荊獎章</strong>；如童軍時期考獲總領袖獎章，可按總會安排佩戴支部最高獎章標誌（向旅團查詢）。服務年星保留。" }
+    ]
+  },
+  rover: {
+    title: "由深資童軍升樂行童軍", color: "var(--rover)",
+    items: [
+      { q: "升團條件？", a: "符合樂行童軍年齡（18–25 歲）即可，毋須先考榮譽童軍獎章。深資童軍身分於年滿 21 歲當日自動結束。" },
+      { q: "先揀陸／海／空", a: "樂行童軍同樣分<strong>樂行童軍、樂行海童軍、樂行空童軍</strong>。" },
+      { q: "升陸樂行要買什麼？", a: "只需<strong>把棗紅色軟帽換成深綠色軟帽</strong>，童軍帽章可移過去。其餘（恤衫、長褲／半截裙、皮帶、襪、皮鞋、旅巾、巾圈）全部同款可沿用。" },
+      { q: "升海／空樂行要買什麼？", a: "海：白頂帽可沿用；官方手冊將<strong>深資／樂行海童軍帽章</strong>列為同一款，升團前向旅團確認。空：全部同款，毋須購買。" },
+      { q: "徽章點處理？", a: "拆走深資童軍肩章、段章及金帶、深資童軍獎章。如考獲<strong>榮譽童軍獎章</strong>，按總會安排佩戴（向旅團查詢）。服務年星保留。" }
+    ]
+  },
+  leader: {
+    title: "升任領袖", color: "var(--leader)",
+    items: [
+      { q: "領袖有 3 個來源", a: "<strong>① 由深資童軍升任</strong>（深資身分於 21 歲結束）<br><strong>② 由樂行童軍升任</strong>（樂行可同時兼任領袖）<br><strong>③ 全新加入</strong>（成年人直接申請成為領袖）。三種情況要買的東西不同，請在上面揀正確來源。" },
+      { q: "先揀陸／海／空", a: "領袖制服同樣分<strong>陸、海、空</strong>：陸＝杏色恤衫＋草青色長褲／半截裙＋深綠色軟帽（女：深綠色金邊硬帽）；海＝白色恤衫＋深藍色長褲／半截裙＋海童軍領袖白頂帽；空＝淺藍色恤衫＋深藍色長褲／半截裙＋灰藍色軟帽。" },
+      { q: "要買齊 6 款制服嗎？", a: "不需要。新任領袖先買<strong>常規制服（編號 3）</strong>已足夠日常集會。禮服（編號 1）、晚禮服（編號 2）、領帶制服（編號 4）、短褲制服（編號 5）、長褲制服（編號 6）只在特定場合穿著。" },
+      { q: "由深資／樂行（陸）升任要買什麼？", a: "男：恤衫、長褲、皮帶、短襪、皮鞋、旅巾、巾圈全部同款可沿用，只需買<strong>職級帽章</strong>（深綠色軟帽：樂行可沿用；深資的棗紅帽要換）。女：要買<strong>深綠色金邊硬帽</strong>＋職級帽章。另加職級肩章、香港肩章／旅章。" },
+      { q: "領袖領帶是什麼顏色？", a: "只有<strong>領帶制服（編號 4）及禮服</strong>才戴領帶：陸＝深綠色；海＝黑色；空＝深藍色。常規制服戴旅巾。" },
+      { q: "榮譽童軍／貝登堡獎章持有人", a: "成為領袖後可終身佩戴<strong>榮譽童軍領袖標誌</strong>或<strong>貝登堡領袖標誌</strong>（兩者皆有則只戴榮譽童軍標誌）。青少年時期的寰宇童軍章可繼續戴於右袖。" }
+    ]
+  }
+};
+TRANSITIONS.grasshopper = TRANSITIONS.cub;
+
+
+/* ===========================================================
+   進度性獎章歷程圖
+   =========================================================== */
+const BADGE_TIMELINES = {
+  grasshopper: [
+    { stage: "🔰", name: "會員章", age: "宣誓後", color: "var(--grasshopper)", desc: "宣誓後佩戴" },
+    { stage: "1-4", name: "進步獎章", age: "第一步至第四步", color: "var(--grasshopper)", desc: "紅 → 棕 → 藍 → 綠" }
+  ],
+  cub: [
+    { stage: "🔰", name: "會員章", age: "入團後", color: "var(--cub)", desc: "宣誓後佩戴" },
+    { stage: "1", name: "幼童軍獎章", age: "會員章後 6 個月內", color: "var(--cub)", desc: "追蹤、繩結、郊野守則、日行一善、護理和救傷、誓詞規律" },
+    { stage: "2", name: "幼童軍歷奇章", age: "獎章後 1 年內", color: "var(--cub)", desc: "戶外活動、運動與愛好、幫助他人、照顧自己等" },
+    { stage: "3", name: "幼童軍高級歷奇章", age: "歷奇章後 1 年半內", color: "var(--cub)", desc: "同上範疇的進階" },
+    { stage: "⭐", name: "金紫荊獎章", age: "年滿 9 歲半＋完成歷奇章", color: "#FFD700", desc: "幼童軍支部最高獎章" }
+  ],
+  scout: [
+    { stage: "🔰", name: "會員章", age: "入團後", color: "var(--scout)", desc: "宣誓後佩戴" },
+    { stage: "1", name: "童軍探索獎章", age: "年滿 11 歲", color: "var(--scout)", desc: "戶外挑戰、個人發展、社會、環境" },
+    { stage: "2", name: "童軍標準獎章", age: "探索獎章後", color: "var(--scout)", desc: "加入「世界認識」「新體驗」" },
+    { stage: "3", name: "童軍高級獎章", age: "標準獎章後", color: "var(--scout)", desc: "參與一項從未嘗試之活動" },
+    { stage: "⭐", name: "總領袖獎章", age: "高級獎章後", color: "#FFD700", desc: "童軍支部最高獎章，需考獲一個教導組專科徽章" }
+  ],
+  venture: [
+    { stage: "🔰", name: "深資童軍肩章", age: "入團後", color: "var(--venture)", desc: "先決條件" },
+    { stage: "1", name: "深資童軍獎章", age: "四段章完成後", color: "var(--venture)", desc: "責任、自立、活動、探險段章" },
+    { stage: "⭐", name: "榮譽童軍獎章", age: "深資獎章＋四金帶", color: "#FFD700", desc: "深資童軍支部最高獎章" }
+  ],
+  rover: [
+    { stage: "🔰", name: "樂行童軍肩章", age: "入團後", color: "var(--rover)", desc: "先決條件" },
+    { stage: "1", name: "樂行童軍獎章", age: "肩章後", color: "var(--rover)", desc: "童軍知識、社區服務、戶外活動等 8 項" },
+    { stage: "⭐", name: "貝登堡獎章", age: "樂行獎章後", color: "#FFD700", desc: "樂行童軍支部最高獎章" }
+  ],
+  leader: [
+    { stage: "🎓", name: "木章", age: "完成領袖訓練", color: "var(--leader)", desc: "木章、木章巾、木章巾圈" },
+    { stage: "🏅", name: "服務章／長期服務獎章", age: "3 年／15 年", color: "var(--leader)", desc: "長期服務獎勵" },
+    { stage: "⭐", name: "功績獎勵／總監嘉許", age: "資深領袖", color: "#FFD700", desc: "優良／優異服務獎章、獅勳章、香港總監嘉許" }
+  ]
+};
+
+
+/* ===========================================================
+   語言包 / Locales
+   ─ "zh-HK"：原始中文版，直接沿用本檔上方的資料常數
+   ─ "en"   ：英文版，由 locale-en.js 掛上（LOCALES.en = LOCALE_EN）
+   切換語言：app.js 的 setLang() → renderAll()
+   =========================================================== */
+
+const LOCALES = {
+
+/* ═══════════════════════════ 繁體中文（香港） ═══════════════════════════ */
+"zh-HK": {
+
+  htmlLang: "zh-HK",
+  langLabel: "中文",
+  switchToLabel: "EN",
+
+  APP: {
+    name: "童軍準備指南",
+    shortName: "童軍準備",
+    tagline: "由小童軍到領袖・家長一目了然",
+    description: "童軍準備指南 — 涵蓋小童軍到領袖的進團、升團制服準備、徽章佩戴及過渡須知。",
+    appleTitle: "童軍準備指南",
+    logoAlt: "制服準備指南 LOGO"
+  },
+
+  SECTIONS, BRANCHES, ITEMS, SHOP, GRASSHOPPER_ITEM,
+  ITEM_REFERENCES, BADGES_OVERVIEW, TRANSITIONS, BADGE_TIMELINES,
+
+  /* 靜態 HTML 文字對照（zh-HK 以 index.html 原文為準，故此處留空） */
+  HTML: {},
+
+  UI: {
+    /* ── 共用 ── */
+    male: "男", female: "女",
+    genderShort: (g) => g === "female" ? "女" : "男",
+    genderLabel: "性別：",
+    genderMemberMale: "男團員", genderMemberFemale: "女團員",
+    genderLeaderMale: "男領袖", genderLeaderFemale: "女領袖",
+    sectionAge: "支部年齡：",
+    countUnit: " 項",
+    branchFallbackShort: "陸",
+    nameSep: "・",
+    branchLabel: (name) => `・${name}`,
+    partExpand: "展開", partCollapse: "收起",
+    toolbarAria: "目前顯示部分的開合控制",
+    toolbarHint: "按各部分標題展開／收起，只睇你需要嘅內容。",
+    expandAll: "全部展開", collapseAll: "全部收起",
+
+    /* ── 步驟 ② 控制列 ── */
+    controlsTitle: "你屬於哪一種？",
+    grasshopperNoUniform: "小童軍沒有指定制服，亦無升團來源，直接看下方說明。",
+    sourceFrom: (name, isLeader) => `由${name}升${isLeader ? "任" : "團"}`,
+    sourceFromGrasshopper: "由小童軍升團",
+    sourceSmallGrasshopper: "小童軍無制服，等同全新加入",
+    sourceSmallReuse: "可沿用同款物品",
+    newJoin: "全新加入",
+    newJoinSmall: "從未穿過童軍制服",
+    fromBranchLabel: "原本是：",
+    toBranchLabelUpgrade: "升去：",
+    toBranchLabelNew: "加入：",
+    branchHint: "同一旅團通常整旅同一類型；如不確定，先問所屬旅團領袖。",
+
+    /* ── 模式 / 預覽 ── */
+    modeUpgrade: (from, isLeader) => `由 ${from} 升${isLeader ? "任" : "團"}`,
+    modeNew: "全新加入",
+    fromLabel: (name, short) => short ? `${name}（${short}）` : name,
+
+    /* ── 統計 ── */
+    statusNeed: "需購買", statusHave: "可沿用", statusCheck: "向團長查詢",
+    ownedSummary: (n, total) => `✅ 已 mark 已有／已買：<strong>${n}</strong> / ${total} 項`,
+    resetMarks: "🗑 一鍵清紀錄",
+    resetConfirm: "確定要清晒所有 mark 紀錄嗎？\n\n此操作無法復原！",
+
+    /* ── 清單項目 ── */
+    markOwned: "✅ 已有／已買",
+    markOwnedNone: "⬜ mark 已有",
+    ownedHint: "呢件嘢你已有",
+    ownedHintNone: "如已有（兄弟姊妹共用），剔呢度",
+    checklistTitle: (mode, branch, gender, n) => `${mode}${branch} · ${gender} · 共 ${n} 項`,
+    checklistNote: "<strong>備註：</strong>制服規格根據香港童軍總會官網「制服」頁。地域章、區章、旅章、小隊章及旅巾安排，請向<strong>所屬旅團領袖</strong>查詢。",
+
+    /* ── 沿用／新買提示 ── */
+    noteReuse: (from) => `<div class="tip">✅ 與${from}<strong>同一款</strong>，如狀況良好可沿用。</div>`,
+    noteBadgesReuse: `<div class="tip">✅ 世界童軍會員章、香港章、地域章、區章、旅章可沿用（同一旅）。<br><strong>要拆走</strong>舊支部的進度性獎章、活動／專科徽章、隊長章。服務年星保留。</div>`,
+    noteScarfReuse: `<div class="tip">✅ 同一旅升團可繼續用原有旅巾。</div>`,
+    noteNeed: (from) => `<div class="warn">🆕 ${from}沒有此款，需要購買／更換。</div>`,
+    buyLabels: {
+      supply: "香港童軍物品供應社購買",
+      included: "隨幼童軍帽附上，毋須另購",
+      any: "供應社或一般商店購買",
+      group: "由旅團頒發",
+      check: "向旅團／區查詢",
+      mixed: "供應社購買；旅章／區章／地域章向旅團查詢",
+      "group-or-supply": "由旅團頒發／供應社購買"
+    },
+
+    /* ── 供應社產品框 ── */
+    shopBoxTitle: "🛒 供應社官方產品",
+    shopCode: (code) => code ? `（編號 ${code}）` : "",
+    shopPrice: (p) => p != null ? ` HK$${p}` : "",
+    shopAlts: "其他款式：",
+    shopAltSep: "、",
+    shopPriceNote: "價錢為供應社網站標示零售價（2026-09 擷取），以店內為準。",
+
+    /* ── 預算 ── */
+    budgetGrasshopper: `小童軍以<strong>旅團安排</strong>為準：小童軍活動服可於<a href="https://www.hkscoutshop.org.hk/" target="_blank" rel="noopener">供應社</a>購買（HK$75），單色衣物、運動鞋可自行選購，旅巾由旅團安排。`,
+    priceIncluded: "已連帽，毋須另購",
+    priceDependsGroup: "視乎旅團安排",
+    priceOfficial: (p) => `HK$${p}`,
+    priceApprox: (lo, hi) => lo === hi ? `約 HK$${lo}` : `約 HK$${lo}–${hi}`,
+    shopCodeLink: (code) => ` 供應社 ${code} ↗`,
+    budgetModeUpgrade: "升團補購", budgetModeNew: "全新全購",
+    budgetHead: (mode) => `你而家揀嘅係<strong>${mode}</strong>，需要準備嘅物品如下：`,
+    budgetColItem: "物品", budgetColPrice: "約略價錢",
+    budgetTotal: "合計（不含旅團頒發項目）",
+    budgetFootNote: "標有「供應社編號」的價錢為 hkscoutshop.org.hk 網站 2026 年 9 月標示零售價，其餘為約略參考；實際以香港童軍物品供應社為準。皮鞋、短襪、襪褲可於一般商店購買。",
+
+    /* ── 官方制服參考圖 ── */
+    officialRefTitle: (name) => `${name} 官方制服參考圖`,
+    officialRefDesc: "整套對照：帽、恤衫、褲／裙、皮帶、襪、皮鞋、領巾。",
+
+    /* ── 圖片 ── */
+    imgNoRef: "暫未提供參考圖",
+    imgUnavailableThumb: "圖片",
+    imgUnavailable: "參考圖暫時未能載入",
+    imgUnavailableHint: "請查看來源或下方產品頁",
+    imgUnavailableNote: "未能載入圖片；仍可透過來源頁核對款式及規格。",
+    shopImageAlt: (name) => `${name}（供應社產品圖片）`,
+    shopImageLabel: "供應社產品圖片",
+    shopImageSource: "查看供應社產品 ↗",
+    shopImageNote: (name) => `產品例子：${name}；未必代表此項全部款式。`,
+    itemImageAlt: (title) => `${title}（款式示意，非實物照片）`,
+    itemImageLabel: "款式示意（非實物照片）",
+    itemImageSource: "對照供應社產品 ↗",
+    itemImageNoteFallback: "供應社圖片暫時未能載入；此示意圖不作顏色或細節依據。",
+    itemImageNoteOnly: "僅供辨認款式；顏色及細節以實物和官方規格為準。",
+    uniformAlt: (sec, br, g) => `${sec}・${br}・${g}裝制服參考圖`,
+    uniformSourceLabel: "總會制服頁 ↗",
+    uniformNote: "官方制服圖解，非實物照片；規格以總會最新資料為準。",
+    uniformLocalLabel: "官方制服參考圖（本地）",
+    uniformRemoteLabel: "官方制服參考圖",
+    femaleCubBadgeAlt: "女幼童軍帽冠上已縫好的布質帽章（官方制服圖解）",
+
+    /* ── 進度性獎章總覽 / 歷程 ── */
+    badgeSystem: "獎章制度：",
+    promise: "誓詞",
+    law: "規律",
+    badgesCount: (n) => `獎章（${n} 項）`,
+    badgeJourney: (name) => `📊 ${name}獎章歷程`,
+    viewDetails: "查看詳細內容",
+
+    /* ── 語言掣 ── */
+    langToggleAria: "切換語言 / Switch language"
+  }
+}
+
+};
+
+/* ═══════════ 語言狀態 / Language state ═══════════ */
+let LANG = "zh-HK";
+function L(){ return LOCALES[LANG]; }
+function UI(){ return L().UI; }
