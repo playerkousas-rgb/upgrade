@@ -154,6 +154,63 @@ function startServer() {
   check(visibleParts.every(p => p.open), `全部展開(只限目前顯示的 ${visibleParts.length} 個 PART)`);
   check(hiddenParts.every(p => p.open === false), '被篩選隱藏的 PART 不受全部展開影響(與 Playwright 測試一致)');
 
+  console.log('── 英文版 (locale-en.js) ──');
+  const langBtn = d.getElementById('fab-lang');
+  check(!!langBtn, '右上角語言掣存在');
+  check(langBtn && langBtn.textContent === 'EN', '中文介面時語言掣顯示「EN」');
+  check(window.eval('typeof LOCALES === "object" && !!LOCALES.en'), '英文語言包已掛上');
+  check(window.eval('Object.keys(LOCALES.en.ITEMS).length') === window.eval('Object.keys(LOCALES["zh-HK"].ITEMS).length'),
+    '英文 ITEMS 數量與中文一致');
+  check(window.eval('Object.keys(LOCALES.en.SHOP).length') === window.eval('Object.keys(LOCALES["zh-HK"].SHOP).length'),
+    '英文 SHOP 數量與中文一致');
+
+  window.setLang('en');
+  check(window.eval('LANG') === 'en', 'LANG 已切換為 en');
+  check(d.documentElement.lang === 'en', '<html lang="en">');
+  check(d.title === 'Scout Uniform Guide', '英文 <title>：' + d.title);
+  check(d.querySelector('header .brand h1').textContent === 'Scout Uniform Guide', '英文標題列');
+  check(d.querySelector('header .brand p').textContent.indexOf('Grasshopper') !== -1, '英文副題');
+  check($('expand-all-parts').textContent === 'Expand all', '開合工具列已翻譯');
+  check(d.querySelector('#part-situation h2').textContent.indexOf('Pick your joining situation') !== -1, 'PART ①標題已翻譯');
+  const cssText = Array.from(d.querySelectorAll('style')).map(el => el.textContent).join('\n');
+  check(cssText.indexOf('html[lang="en"] .part-toggle::before{content:"Expand"}') !== -1 &&
+        cssText.indexOf('html[lang="en"] .part[open] > summary .part-toggle::before{content:"Collapse"}') !== -1,
+    'PART 開合提示已提供英文版（CSS html[lang="en"]）');
+  check(d.querySelector('#checklist .item').textContent.indexOf('To buy') !== -1 ||
+        d.querySelector('#checklist .item').textContent.indexOf('Reuse') !== -1, '清單狀態標籤已翻譯');
+  check(d.querySelector('#badges-overview').textContent.indexOf('Membership badge') !== -1, '進度性獎章總覽已翻譯');
+  check(d.querySelector('#transition-content').textContent.indexOf('Grasshopper Scout') !== -1, '升團過渡 Q&A 已翻譯');
+  check(d.querySelector('#badge-timeline').textContent.indexOf('badge journey') !== -1, '獎章歷程圖已翻譯');
+  check($('budget-dynamic').textContent.indexOf('Total') !== -1, '預算表已翻譯');
+  check(langBtn && langBtn.textContent === '中文', '英文介面時語言掣顯示「中文」');
+  check(window.localStorage.getItem('scout-guide-lang-v1') === 'en', '語言設定已寫入 localStorage');
+
+  // 靜態 HTML 覆蓋率：切到英文後仍然有中文的純文字（只容許已知的網址／時間／符號）
+  const ALLOWED = ['www.hkscoutshop.org.hk ↗', '11:30 – 19:30', '11:00 – 19:00', '10:00 – 18:00',
+    '❌', '2957 6444', 'SCOUT SHOP', 'scout.org.hk', 'uniform.scouting.org.hk', 'www.hkscoutshop.org.hk', ')',
+    '中文']; // 語言掣在英文介面顯示「中文」，屬預期
+  const cjkLeft = window.eval(`(() => {
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
+    const out = [];
+    while (walker.nextNode()) {
+      const node = walker.currentNode;
+      if (node.parentElement && /^(SCRIPT|STYLE)$/.test(node.parentElement.tagName)) continue;
+      const text = node.data.trim();
+      if (text && /[\u3400-\u9FFF]/.test(text)) out.push(text);
+    }
+    return out;
+  })()`);
+  const notTranslated = cjkLeft.filter(text => ALLOWED.indexOf(text) === -1);
+  check(notTranslated.length === 0,
+    `英文版靜態文字已全部翻譯（${cjkLeft.length} 個容許保留，其餘 ${notTranslated.length} 個：${notTranslated.slice(0, 5).join(' | ')}）`);
+
+  window.setLang('zh-HK');
+  check(window.eval('LANG') === 'zh-HK', '可切回中文');
+  check(d.title === '童軍準備指南', '中文 <title> 還原');
+  check(d.querySelector('header .brand h1').textContent === '童軍準備指南', '中文標題列還原');
+  check($('expand-all-parts').textContent === '全部展開', '開合工具列還原');
+  check(d.querySelector('#badge-timeline').textContent.indexOf('獎章歷程') !== -1, '獎章歷程圖還原');
+
   console.log('');
   if (windowErrors.length) fail(`執行期間錯誤:${windowErrors.slice(0, 3).join(' | ')}`);
   server.close();

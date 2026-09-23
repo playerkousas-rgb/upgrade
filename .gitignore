@@ -22,6 +22,7 @@ Thumbs.db
 .vscode/
 .idea/
 node_modules/
+package-lock.json   # devDependencies 鎖檔,與 .vercelignore 一致:不進倉庫、不進部署
 
 # Browser test artifacts
 /test-results/

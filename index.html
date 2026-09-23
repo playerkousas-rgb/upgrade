@@ -366,7 +366,9 @@ details:not(.part) > p{margin:.5rem 0 0;font-size:.92rem;color:#444}
   color:var(--scout-green);font-size:.8rem;font-weight:600;white-space:nowrap;
 }
 .part-toggle::before{content:"展開"}
+html[lang="en"] .part-toggle::before{content:"Expand"}
 .part[open] > summary .part-toggle::before{content:"收起"}
+html[lang="en"] .part[open] > summary .part-toggle::before{content:"Collapse"}
 .part-toggle::after{
   content:"";width:.5rem;height:.5rem;margin:-.2rem .2rem 0;
   border-right:2px solid currentColor;border-bottom:2px solid currentColor;
@@ -452,6 +454,13 @@ footer{
 .timeline-item h3{margin:0 0 .3rem;color:var(--scout-green);font-size:1rem}
 .timeline-item p{margin:0;font-size:.9rem;color:#444;line-height:1.6}
 
+/* ── 浮動語言掣（右上 EN／中文）── */
+.fab{position:fixed;right:.9rem;z-index:80;border:none;border-radius:50px;font-weight:800;cursor:pointer;
+  box-shadow:0 4px 14px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;gap:.3rem;font-family:inherit}
+#fab-lang{top:calc(.7rem + env(safe-area-inset-top));background:rgba(255,255,255,.95);color:var(--scout-green);
+  border:2px solid #fff;width:44px;height:44px;font-size:.82rem;padding:0}
+@media print{.fab,#fab-lang{display:none}}
+
 /* ── Responsive ── */
 @media(max-width:680px){
   .part > summary{padding:1rem;gap:.7rem}
@@ -475,6 +484,7 @@ footer{
 <body>
 
 <header>
+  <button type="button" class="fab" id="fab-lang" aria-label="切換語言 / Switch language">EN</button>
   <div class="brand">
     <img src="assets/logo-192.png" alt="制服準備指南 LOGO" width="56" height="56">
     <div style="text-align:left">
@@ -986,6 +996,7 @@ footer{
 </footer>
 
 <script src="data.js"></script>
+<script src="locale-en.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
