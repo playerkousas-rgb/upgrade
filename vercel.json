@@ -15,19 +15,19 @@
       ]
     },
     {
-      "source": "/(.*)\\.(html|webmanifest|js)$",
+      "source": "/(.*)\\.(html|webmanifest|js)",
       "headers": [
         { "key": "Cache-Control", "value": "no-cache" }
       ]
     },
     {
-      "source": "/(.*)\\.(png|jpe?g|webp|avif|svg|gif|ico)$",
+      "source": "/(.*)\\.(png|jpe?g|webp|avif|svg|gif|ico)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=604800" }
       ]
     },
     {
-      "source": "/(favicon\\.ico|assets/(favicon-16x16|favicon-32x32|apple-touch-icon)\\.png|assets/(logo-192|icon-192|icon-512)\\.avif)$",
+      "source": "/(favicon\\.ico|assets/(?:favicon-16x16|favicon-32x32|apple-touch-icon)\\.png|assets/(?:logo-192|icon-192|icon-512)\\.avif)",
       "headers": [
         { "key": "Cache-Control", "value": "no-cache" }
       ]
