@@ -108,6 +108,10 @@ const ITEMS = {
     detail:`<h4>草青色長褲</h4><p><strong>官方規格：</strong>草青色、兩斜袋、兩後袋、有褶。深資、樂行及領袖（陸）男性；女領袖長褲制服（編號 6）亦用。</p>` },
   "trousers-navy": { title:"深藍色長褲", desc:"海／空・深資／樂行／領袖", icon:"👖", img:"assets/items/trousers-navy.svg", buy:"supply",
     detail:`<h4>深藍色長褲</h4><p><strong>官方規格：</strong>深藍色、兩斜袋、兩後袋、有褶。深資／樂行海空童軍男團員及海空童軍男領袖。</p>` },
+  "trousers-olive-f": { title:"草青色女裝長褲", desc:"女裝剪裁（新綱要：可代替半截裙）", icon:"👖", img:"assets/items/trousers-olive.svg", buy:"supply",
+    detail:`<h4>草青色女裝長褲</h4><p><strong>官方規格：</strong>草青色女裝長褲（供應社 01158）。2026 年 8 月 15 日生效的新綱要：深資、樂行及領袖（陸）女團員下半身可任選<strong>半截裙</strong>或<strong>長褲</strong>，兩者只需買一款。</p>
+      <ul><li>揀長褲：配<strong>黑色短襪＋黑色綁帶皮鞋</strong>（毋須襪褲／中跟鞋）</li><li>揀半截裙：配肉色襪褲＋黑色中跟皮鞋</li></ul>
+      <div class="tip">用上方「下半身」掣可即時切換裙／褲，清單同預算會跟住更新；實際以旅團安排為準。</div>` },
   "skirt-olive": { title:"草青色半截裙", desc:"側袋、無褶、及膝（新綱要可改選長褲）", icon:"👗", img:"assets/items/skirt-olive.svg", buy:"supply",
     detail:`<h4>草青色半截裙</h4><p><strong>官方規格：</strong>草青色、側袋、無褶、及膝。深資、樂行及領袖（陸）女性。</p>
       <div class="tip">2026 年 8 月 15 日生效的新綱要：女團員下半身可任選<strong>半截裙</strong>或<strong>草青色長褲</strong>。揀長褲配<strong>黑色短襪＋黑色綁帶皮鞋</strong>（毋須襪褲／中跟鞋）；揀半截裙配<strong>肉色襪褲＋黑色中跟皮鞋</strong>。以旅團安排為準。</div>
@@ -205,6 +209,7 @@ const SHOP = {
   "culottes-olive":  { id:374, n:2, code:"01156", name:"草青色弓字褶裙褲", price:79 },
   "culottes-navy":   { id:339, n:2, code:"01074", name:"深藍色弓字褶裙褲", price:129 },
   "trousers-olive":  { id:375, n:2, code:"01157", name:"草青色長褲", price:119, alt:[{id:376,n:2,code:"01158",name:"草青色女裝長褲",price:119}] },
+  "trousers-olive-f":{ id:376, n:2, code:"01158", name:"草青色女裝長褲", price:119 },
   "trousers-navy":   { id:340, n:0, code:"01075", name:"深藍色長褲", price:149 },
   "skirt-olive":     { id:328, n:2, code:"01051", name:"草青色半截裙", price:89 },
   "skirt-navy":      { id:345, n:2, code:"01080", name:"深藍色半截裙", price:96 },
@@ -319,6 +324,32 @@ function getSpec(section, branch, gender){
   return b ? (b[gender] || b.male) : null;
 }
 
+/* ===========================================================
+   2026 新綱要：女團員下半身「半截裙／長褲」二選一
+   只適用於 深資／樂行／領袖 女團員；揀長褲時同時換鞋襪，
+   女領袖（陸）長褲制服（編號 6）另改用深綠色軟帽。
+   =========================================================== */
+const LOWER_BODY = {
+  land: { skirt:"skirt-olive", skirtShoes:["pantyhose","shoes-heel"], trousers:"trousers-olive-f", trousersShoes:["socks-short-black","shoes-lace"] },
+  sea:  { skirt:"skirt-navy",  skirtShoes:["pantyhose","shoes-heel"], trousers:"trousers-navy",     trousersShoes:["socks-short-black","shoes-lace"] },
+  air:  { skirt:"skirt-navy",  skirtShoes:["pantyhose","shoes-heel"], trousers:"trousers-navy",     trousersShoes:["socks-short-black","shoes-lace"] }
+};
+const LOWER_BODY_SECTIONS = ["venture","rover","leader"];
+function hasLowerBodyChoice(section, branch, gender, ids){
+  const map = LOWER_BODY[branch];
+  if(!map || gender !== "female" || !LOWER_BODY_SECTIONS.includes(section)) return false;
+  return (ids || getSpec(section, branch, gender) || []).includes(map.skirt);
+}
+function applyLowerBodyChoice(ids, section, branch, gender, choice){
+  const map = LOWER_BODY[branch];
+  if(!map || choice !== "trousers" || !hasLowerBodyChoice(section, branch, gender, ids)) return ids.slice();
+  const swap = { [map.skirt]: map.trousers,
+                 [map.skirtShoes[0]]: map.trousersShoes[0],
+                 [map.skirtShoes[1]]: map.trousersShoes[1] };
+  if(section === "leader" && branch === "land") swap["hat-leader-f"] = "beret-green"; // 女領袖長褲制服（編號 6）用軟帽
+  return ids.map(id => swap[id] || id);
+}
+
 // 取得升團來源（支部、類型）
 function buildChecklist(opts){
   const { section, branch, gender, mode, fromSection, fromBranch } = opts;
@@ -329,7 +360,10 @@ function buildChecklist(opts){
     if(ghShop){ gh.shop = ghShop; gh.shopImg = ghShop.img; gh.shopUrl = ghShop.url; }
     return [gh];
   }
-  const target = getSpec(section, branch, gender) || [];
+  const spec = getSpec(section, branch, gender) || [];
+  // 2026 新綱要：女團員揀長褲（預設半截裙）。
+  const trousersChosen = opts.bottom === "trousers" && hasLowerBodyChoice(section, branch, gender, spec);
+  const target = applyLowerBodyChoice(spec, section, branch, gender, opts.bottom);
   const source = (mode === "upgrade" && fromSection && fromSection !== "grasshopper")
     ? (getSpec(fromSection, fromBranch, gender) || []) : [];
   const fromSec = fromSection ? loc.SECTIONS[fromSection] : null;
@@ -704,6 +738,11 @@ const LOCALES = {
     male: "男", female: "女",
     genderShort: (g) => g === "female" ? "女" : "男",
     genderLabel: "性別：",
+    lowerBodyLabel: "下半身：",
+    lowerBodySkirt: "半截裙",
+    lowerBodyTrousers: "長褲",
+    lowerBodyHint: "2026 年 8 月 15 日生效的新綱要：深資／樂行／領袖女團員可任選半截裙或長褲，二選一、毋須兩件都買；以旅團安排為準。",
+    noteLeaderTrousersHat: `<div class="tip">女領袖長褲制服（編號 6）改用<strong>深綠色軟帽</strong>；穿半截裙（編號 3）時才用深綠色金邊硬帽。</div>`,
     genderMemberMale: "男團員", genderMemberFemale: "女團員",
     genderLeaderMale: "男領袖", genderLeaderFemale: "女領袖",
     sectionAge: "支部年齡：",

@@ -34,6 +34,7 @@
 - 領袖有 **3 個來源**:由深資升任 / 由樂行升任 / 全新加入
 - 以「官方制服組成表」自動比較原本與目標,同款 = 可沿用,不同 = 需購買
 - 單品附來源可追溯的**參考圖／產品圖片**，展開可看規格、購買途徑及升團注意；未能取得可靠圖片時保留來源連結，不以自製徽號代替
+- **2026 新綱要:女團員「半截裙／長褲」二選一**（深資／樂行／領袖・陸海空）— 控制列出「下半身」切換掣,揀長褲會即時換成女裝長褲（陸：供應社 01158）＋黑色短襪＋綁帶皮鞋,並更新清單同預算;女領袖（陸）長褲制服（編號 6）同時改用深綠色軟帽
 - 自動統計:需購買 / 可沿用 / 向團長查詢;預算按實際要買的物品計算
 - **家長可 mark 邊啲已有**(支援兄弟姊妹共用),localStorage 持久化
 
@@ -203,7 +204,7 @@ python3 -m http.server 8000 --bind 0.0.0.0
 ```bash
 npm run check   # 必須全綠
 npm run smoke   # 必須全綠
-npm run test    # 有 Chromium 時必須全綠（37 項）
+npm run test    # 有 Chromium 時必須全綠（38 項）
 ```
 三關全過才可推送／部署。
 
@@ -231,9 +232,26 @@ npm run test    # 有 Chromium 時必須全綠（37 項）
 
 ## 🎨 LOGO 設計
 
-- **綠色字母 U**(取 Uniform/Upgrade 之義)
-- 右上角融入<strong>深綠軟帽 + 金色貝登堡徽章</strong>
-- 杏色背景,與香港童軍制服主色呼應
+- **綠色童軍短袖恤衫**（兩胸袋、衫鈕）＋ 中間**上升箭頭**（升團／upgrade 之意）
+- 杏色（`#e8dcc4`，即 `--scout-beige`）圓角底，與香港童軍制服主色呼應
+
+### 圖示產生（改 LOGO 前必讀）
+一次性由 1024px 母版產生，**唔可以只用一張圖縮小**（縮到 16px 會變一團）：
+
+```bash
+# 1. 母版（1024×1024，2026-10-02 已存在 git 歷史，唔使再畫）
+git show 62eb1adc:assets/icon-512.png > /tmp/master.png   # 恤衫 LOGO 原圖
+# 2. 去掉白/灰底 → 透明（只由四角 floodfill，唔會食到恤衫白色）
+convert /tmp/master.png -alpha set -bordercolor white -border 2 -fuzz 15% -fill none \
+  -draw "matte 0,0 floodfill" -draw "matte 1027,0 floodfill" -draw "matte 0,1027 floodfill" -draw "matte 1027,1027 floodfill" \
+  -shave 2x2 /tmp/master-alpha.png
+# 3. 16/32/48/180 用 PNG8（平面色、size 細）；192/512 用 AVIF
+#    r = 22% 邊長，杏色圓角底：-fill "#e8dcc4" -draw "roundrectangle 0,0,$((s-1)),$((s-1)),$r,$r"
+# 4. favicon.ico = 16/32/48 三個 PNG8 frame 打包（約 3.3KB）
+# 5. 遞增 index.html / manifest.webmanifest 嘅 ?v=（今次 ?v=4），否則瀏覽器會沿用舊圖
+```
+
+**歷史教訓**：`assets/logo-192.avif`、`icon-*.avif` 曾被舊版「U 字母＋軟帽」LOGO 覆蓋（PR #7 標題寫「修正 favicon」，實際上把圖示換錯），而 16/32/180 一直冇由 1024px 母版正確產生。改圖示時請對照 `favicon.ico` 解碼出嚟嘅實際圖像，唔好只睇 file size／「有冇更新」。
 
 ---
 
@@ -248,6 +266,8 @@ npm run test    # 有 Chromium 時必須全綠（37 項）
 | 5. 總綱化 | 升團過渡指南改用訓練綱要為基礎,加進度性獎章總覽 |
 | 6. 互動 mark | 家長可 mark 邊啲已有(支援兄弟姊妹共用) |
 | 7. 海陸空 + 領袖 3 來源 | 改用官方制服組成表自動比較;每件單品加圖片;修正金紫荊/先修章/小隊章/年星資料 |
+| 8. 2026 新綱要 | 深資／樂行／領袖女團員加「半截裙／長褲」二選一（真．切換掣，非文字註明） |
+| 9. 圖示回歸修正 | PR #7 誤把 LOGO 換成舊版「U 字母＋軟帽」；今次還原為恤衫 LOGO，並由 1024px 母版重新產生 16/32/48/180/192/512（`?v=4`） |
 
 ---
 

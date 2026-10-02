@@ -209,6 +209,21 @@ test.describe('touch input', () => {
   });
 });
 
+test('new scheme: female Venture members can switch between skirt and trousers', async ({ page }) => {
+  await page.goto(baseURL);
+  await page.locator('.path-step[data-section="venture"]').click();
+  await page.evaluate(() => { setSource('scout'); setBranch('to', 'land'); setGender('female'); });
+  await expect(page.locator('#checklist [data-item-id="skirt-olive"]')).toBeAttached();
+  await page.evaluate(() => setBottom('trousers'));
+  await expect(page.locator('#checklist [data-item-id="trousers-olive-f"]')).toBeAttached();
+  await expect(page.locator('#checklist [data-item-id="skirt-olive"]')).toHaveCount(0);
+  await expect(page.locator('#checklist')).toContainText('01158');
+  await expect(page.locator('#budget-dynamic')).toContainText('119');
+  await page.evaluate(() => setBottom('skirt'));
+  await expect(page.locator('#checklist [data-item-id="skirt-olive"]')).toBeAttached();
+  await expect(page.locator('#checklist [data-item-id="trousers-olive-f"]')).toHaveCount(0);
+});
+
 test.describe('without JavaScript', () => {
   test.use({ javaScriptEnabled: false });
   test('PARTs remain usable and inactive bulk controls stay hidden', async ({ page }) => {
