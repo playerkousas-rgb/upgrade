@@ -171,7 +171,7 @@ python3 -m http.server 8000 --bind 0.0.0.0
 ## 📦 部署與防增肥守則（Vercel）— 改版前必讀
 
 >
-> 目標：Vercel 部署配恆常保持極小（目前上線內容約 **867 KB**，其中圖片約 620 KB、文字／程式約 238 KB），
+> 目標：Vercel 部署配恆常保持極小（目前上線內容約 **690 KB**，其中圖片約 436 KB、文字／程式約 250 KB；圖示已全面 AVIF 化），
 > 且**任何改版不得引致死重檔案回巢**。
 
 ### 部署模型
@@ -186,13 +186,14 @@ python3 -m http.server 8000 --bind 0.0.0.0
 ### 資產守則（最易出肥重的地方）
 1. **每個 `assets/` 檔案必須被 `index.html`／`app.js`／`data.js`／`locale-en.js`／`manifest.webmanifest` 引用**（`data.js` 以 base 名動態拼出的 `assets/reference/*.avif` 亦算）。`npm run check` 會反查死重，**不允許任何未引用檔案存在**。
 2. 新增圖片前：先問「有無已有本地官方參考圖可用？」。有 → 沿用；沒有 → 才新增，並同時更新 `ITEM_REFERENCES`／`LOCAL_UNIFORMS`、`tests/images.spec.js` 及（如涉及官方裁切）`assets/reference/README.md` 的來源記錄。
-3. 圖片格式：照片類一律用 **AVIF**（quality 70；2026 年所有 evergreen 瀏覽器均支援：Chrome 85+／Safari 16+／Firefox 93+）。新增照片後執行：`npm i --no-save --package-lock=false sharp && node scripts/to-avif.js <檔案>`（會自動解碼驗證、較大的檔案保留原檔）。一律不得用未壓縮的原圖入倉；PWA 圖示維持 PNG（apple-touch-icon 只能 PNG）。
+3. 圖片格式：照片類一律用 **AVIF**（quality 70；2026 年所有 evergreen 瀏覽器均支援：Chrome 85+／Safari 16+／Firefox 93+）。新增照片後執行：`npm i --no-save --package-lock=false sharp && node scripts/to-avif.js <檔案>`（會自動解碼驗證、較大的檔案保留原檔）。一律不得用未壓縮的原圖入倉。品牌／PWA 大圖示（`logo-192`、`icon-192`、`icon-512`）同樣用 **AVIF**；只有 `apple-touch-icon`（iOS 只認 PNG）及 16/32px favicon、`favicon.ico` 因平台限制維持 PNG/ICO。`npm run check` 會攔截任何 >64KB 的 PNG/JPG/WebP，防止肥重圖示再入倉。
 4. **不得**復活 `assets/images/`（已停用的舊 AI 插畫，2026-09 已移除）；`npm run check` 會攔截。
 5. 不提交任何備份／暫存檔（`*.bak`／`*.tmp`／`*.old`）；用 Git 做版本控制，不留檔案副本。
 
 ### 快取策略（vercel.json）
 - HTML／JS／manifest：`Cache-Control: no-cache`（每次部署立即生效）。
 - 圖片（png/jpg/webp/svg/ico）：`public, max-age=604800`（CDN 快取一週）。
+- **圖示（favicon / apple-touch-icon / PWA icon）：`no-cache`**，且 `<link>`／manifest 一律帶 `?v=` 版本號。換圖示時遞增 `?v=`，瀏覽器即會重新載入，不會沿用舊 LOGO／favicon（舊版曾因根目錄路徑 404＋一週快取導致 favicon 不更新）。
 - 全站附 `X-Content-Type-Options: nosniff`、`Referrer-Policy`。
 
 ### PWA 離線功能（刻意未啟用）

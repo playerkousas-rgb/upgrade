@@ -124,6 +124,19 @@ function startServer() {
   check(refSet.every(p => p.startsWith('assets/reference/') && p.endsWith('.avif')),
     '參考圖全部為本地 avif');
 
+  console.log('── 新綱要內容（2026 年 8 月 15 日生效） ──');
+  window.selectSection('cub');
+  window.setSource(null);
+  check($('badges-overview').textContent.includes('幼童軍體驗章'), '幼童軍總覽含新增「幼童軍體驗章」');
+  window.selectSection('venture');
+  window.setSource('scout');
+  window.setGender('female');
+  check($('badges-overview').textContent.includes('活動策劃'), '深資總覽含新段章「活動策劃」');
+  const skirt = d.querySelector('#checklist [data-item-id="skirt-olive"]');
+  check(!!skirt, '深資女清單含下半身項目');
+  check(!!skirt && skirt.textContent.includes('長褲'), '深資女下半身標示可改選長褲');
+  window.setGender('male');
+
   console.log('── 預算 ──');
   check($('budget-dynamic').textContent.includes('合計'), '領袖預算表有合計');
   window.selectSection('cub');

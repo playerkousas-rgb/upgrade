@@ -61,18 +61,33 @@ for (const abs of walk(path.join(ROOT, 'assets'))) {
     || dataJs.includes(path.basename(rel, path.extname(rel)));
   if (used) ok(rel);
   else { fail(`未被任何代碼引用的死重檔案:${rel}`); dead++; }
+  // 防增肥:照片/大圖必須用 AVIF;PNG 只容許細小圖示(≤64KB)。
+  if (/\.(png|jpe?g|webp)$/i.test(rel)) {
+    const sz = fs.statSync(abs).size;
+    if (sz > 64 * 1024) { fail(`過大的光柵圖,請轉為 AVIF:${rel}（${(sz / 1024).toFixed(0)}KB > 64KB）`); dead++; }
+  }
 }
 
-console.log('── 4. PWA manifest ──');
+console.log('── 4. PWA manifest + 圖示路徑 ──');
+// 快取清除用的 ?v= 查詢字串不影響磁碟路徑，驗證前先移除。
+const stripQuery = (p) => p.split('?')[0];
+const checkAssetPath = (ref, label) => {
+  const rel = stripQuery(ref);
+  if (fs.existsSync(path.join(ROOT, rel))) ok(`${label} → ${ref}`);
+  else { fail(`${label} 指向不存在的檔案:${ref}`); dead++; }
+};
 try {
   const manifest = JSON.parse(read('manifest.webmanifest'));
-  for (const icon of manifest.icons) {
-    if (fs.existsSync(path.join(ROOT, icon.src))) ok(icon.src);
-    else { fail(`manifest 圖示不存在:${icon.src}`); dead++; }
-  }
+  for (const icon of manifest.icons) checkAssetPath(icon.src, 'manifest 圖示');
 } catch (e) {
   fail(`manifest.webmanifest 不是有效 JSON:${e.message}`);
 }
+// index.html 的 <link rel="icon|apple-touch-icon|manifest"> 也必須存在
+for (const m of read('index.html').matchAll(/<link[^>]*rel="(?:icon|apple-touch-icon|manifest)"[^>]*href="([^"]+)"/g)) {
+  checkAssetPath(m[1], 'index.html 圖示');
+}
+// 瀏覽器會自動請求根目錄 /favicon.ico，必須存在
+checkAssetPath('favicon.ico', '根目錄 favicon.ico');
 
 console.log('── 5. 防增肥守門 ──');
 const BLOAT_PATTERNS = [
