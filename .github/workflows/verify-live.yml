@@ -1,0 +1,50 @@
+# ============================================================
+# 驗證生產站（Vercel）係唔係真係同倉庫一致 —— 用 SHA-256 逐個檔案比對，
+# 唔靠肉眼、唔靠「應該更新咗」。開 PR 時自動跑一次，亦可手動執行：
+#   Actions → 「驗證生產站」→ Run workflow
+# 注意：此檢查只作參考，唔會 Fail（生產部署可能比 main 落後幾分鐘）。
+# ============================================================
+name: 驗證生產站 (Verify live deployment)
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-live:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # 生產站跟 main 部署；PR 時要比對 base（main），唔係 PR 本身。
+          ref: ${{ github.event.pull_request.base.sha || github.sha }}
+      - name: 對比生產站檔案（SHA-256）
+        run: |
+          BASE=https://upgrade-ashen.vercel.app
+          FILES="index.html data.js locale-en.js app.js manifest.webmanifest favicon.ico assets/favicon-32x32.png assets/favicon-16x16.png assets/apple-touch-icon.png assets/icon-192.avif assets/icon-512.avif assets/logo-192.avif"
+          mismatch=0
+          for f in $FILES; do
+            if ! curl -fsS --max-time 30 "$BASE/$f" -o /tmp/live; then
+              echo "::error::$f 抓唔到（生產站無此檔或連線失敗）"
+              mismatch=1
+              continue
+            fi
+            live=$(sha256sum /tmp/live | cut -d' ' -f1)
+            repo=$(sha256sum "$f" | cut -d' ' -f1)
+            if [ "$live" = "$repo" ]; then
+              echo "✅ $f 一致（$repo）"
+            else
+              echo "❌ $f 唔一致：live=$live / repo=$repo"
+              mismatch=1
+            fi
+          done
+          echo "----------------------------------------"
+          if [ "$mismatch" = "0" ]; then
+            echo "✅ 生產站全部檔案同 main 嘅最新 commit 一致。"
+          else
+            echo "⚠️ 有檔案唔一致：可能未部署完、CDN 快取，或生產站落後 main。"
+          fi
+          exit 0
