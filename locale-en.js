@@ -114,10 +114,14 @@ const LOCALE_EN = {
       detail:`<h4>Olive green trousers</h4><p><strong>Official specification:</strong> olive green, two side pockets, two hip pockets, pleated. For male Venture Scouts, Rover Scouts and Leaders (Land); also used with the female Leader’s trouser uniform (No. 6).</p>` },
     "trousers-navy": { title:"Navy blue trousers", desc:"Sea / Air · Venture / Rover / Leader", icon:"👖", img:"assets/items/trousers-navy.svg", buy:"supply",
       detail:`<h4>Navy blue trousers</h4><p><strong>Official specification:</strong> navy blue, two side pockets, two hip pockets, pleated. For male Venture / Rover Sea and Air Scouts and male Sea / Air Scout Leaders.</p>` },
-    "skirt-olive": { title:"Olive green skirt", desc:"Side pockets, no pleats, knee length", icon:"👗", img:"assets/items/skirt-olive.svg", buy:"supply",
-      detail:`<h4>Olive green skirt</h4><p><strong>Official specification:</strong> olive green, side pockets, no pleats, knee length. For female Venture Scouts, Rover Scouts and Leaders (Land).</p>` },
-    "skirt-navy": { title:"Navy blue skirt", desc:"Sea / Air · Venture / Rover / Leader", icon:"👗", img:"assets/items/skirt-navy.svg", buy:"supply",
-      detail:`<h4>Navy blue skirt</h4><p><strong>Official specification:</strong> navy blue, side pockets, no pleats, knee length. For female Venture / Rover Sea and Air Scouts and female Sea / Air Scout Leaders.</p>` },
+    "skirt-olive": { title:"Olive green skirt", desc:"Side pockets, no pleats, knee length (new scheme allows trousers)", icon:"👗", img:"assets/items/skirt-olive.svg", buy:"supply",
+      detail:`<h4>Olive green skirt</h4><p><strong>Official specification:</strong> olive green, side pockets, no pleats, knee length. For female Venture Scouts, Rover Scouts and Leaders (Land).</p>
+        <div class="tip">Under the new scheme effective 15 August 2026, girls may choose either the <strong>skirt</strong> or <strong>olive green trousers</strong>. With trousers wear <strong>black short socks + black lace-up shoes</strong> (no pantyhose / court shoes needed); with the skirt wear flesh-coloured pantyhose + mid-heel court shoes. Follow your Group’s arrangement.</div>
+        <p class="cite">Trouser alternative: olive green ladies’ trousers (Shop 01158, HK$119).</p>` },
+    "skirt-navy": { title:"Navy blue skirt", desc:"Sea / Air · Venture / Rover / Leader (new scheme allows trousers)", icon:"👗", img:"assets/items/skirt-navy.svg", buy:"supply",
+      detail:`<h4>Navy blue skirt</h4><p><strong>Official specification:</strong> navy blue, side pockets, no pleats, knee length. For female Venture / Rover Sea and Air Scouts and female Sea / Air Scout Leaders.</p>
+        <div class="tip">Under the new scheme effective 15 August 2026, girls may choose either the <strong>skirt</strong> or <strong>navy blue trousers</strong>. With trousers wear <strong>black short socks + black lace-up shoes</strong>; with the skirt wear flesh-coloured pantyhose + mid-heel court shoes. Follow your Group’s arrangement.</div>
+        <p class="cite">Trouser alternative: navy blue trousers (Shop 01075, HK$149).</p>` },
 
     /* ── Belt ── */
     "belt": { title:"Brown belt (with Scout emblem buckle)", desc:"Same model in every Section", icon:"👔", buy:"supply",
@@ -143,7 +147,8 @@ const LOCALE_EN = {
     /* ── Neckerchief / woggle ── */
     "scarf": { title:"Group scarf", desc:"Issued by the Group", icon:"🧣", img:"assets/items/scarf.svg", buy:"group",
       detail:`<h4>Group scarf</h4><p>The Group scarf represents your Group and is normally <strong>presented by the Group after your investiture / membership badge assessment</strong>. It can be carried over if you move up within the same Group.</p>
-        <ul><li>Worn outside the shirt collar</li><li>The woggle sits at the throat — never lower</li></ul>` },
+        <ul><li>Worn outside the shirt collar</li><li>The woggle sits at the throat — never lower</li></ul>
+        <div class="tip">Under the new scheme effective 15 August 2026, Venture / Rover uniforms add a <strong>necktie</strong> option (Land = maroon / green, Air = navy, Sea = black). The Group scarf remains the everyday norm — whether a tie is worn follows your Group’s arrangement.</div>` },
     "woggle-cub": { title:"Colour woggle (Cub Scout)", desc:"Official: Group scarf (with a colour woggle)", icon:"⭕", img:"assets/items/woggle-cub.svg", buy:"check",
       detail:`<h4>Cub Scout colour woggle</h4><p>The Association website lists the Cub Scout uniform as “Group scarf (with a <strong>colour woggle</strong>)”; the colour stands for your Six and is arranged by the Group.</p>` },
     "woggle-scout": { title:"Scout woggle", desc:"Shared by Scout / Venture / Rover / Leader", icon:"⭕", buy:"supply",
@@ -265,62 +270,69 @@ const LOCALE_EN = {
     grasshopper: {
       name: "Grasshopper Scout", color: "var(--grasshopper)", age: "4–7 years",
       promise: "I promise to join the Grasshopper Scouts, to love God, to love others and to love my country.", law: "A Grasshopper Scout does a good turn every day.", motto: "Be Prepared",
-      type: "Membership badge + progress badges (four steps)",
+      scheme: "Grasshopper Scout Activity Guide, 3rd ed. (effective 15 August 2026)",
+      type: "Little Grasshopper Award (seven areas)",
       badges: [
-        { name: "🔰 Membership badge", desc: "Worn after investiture" },
-        { name: "Progress badges", desc: "Step 1 (red) → Step 2 (brown) → Step 3 (blue) → Step 4 (green)" }
+        { name: "🌱 Little Grasshopper Award", desc: "New under the Guide; complete two experiences in each of the seven areas" },
+        { name: "🔗 To Cub Scouts", desc: "The Little Grasshopper Award exempts part of the Cub Adventure Award" }
       ],
-      note: "Grasshopper Scout dress consists only of a <strong>neckerchief and simple, tidy meeting dress</strong>; a Group may also arrange its own uniform dress — the Group’s arrangement prevails."
+      note: "Seven areas: outdoors, health, knowing self & helping others, science, creativity, community and the Scout family. Grasshopper Scout dress consists only of a <strong>neckerchief and simple, tidy meeting dress</strong>; a Group may also arrange its own uniform dress — the Group’s arrangement prevails."
     },
     cub: {
       name: "Cub Scout", color: "var(--cub)", age: "6–11 years",
       promise: "I promise to do my best: to do my duty to God and to my country; to help other people; and to keep the Cub Scout Law.", law: "A Cub Scout always does their best, thinks of others before themselves, and does a good turn every day.", motto: "Be Prepared",
-      type: "Membership badge + 4 progressive proficiency badges (the Golden Bauhinia Award is the Section’s top award)",
+      scheme: "Cub Scout Training Scheme, 10th ed. (effective 15 August 2026)",
+      type: "Membership badge + 4 progressive badges (the Golden Bauhinia Award is the Section’s top award)",
       badges: [
-        { name: "🔰 Membership badge", desc: "Earned after joining, worn after investiture" },
-        { name: "1️⃣ Cub Scout Award", desc: "Completed within 6 months of the Membership badge" },
-        { name: "2️⃣ Cub Scout Adventure Award", desc: "Within 1 year of the Cub Scout Award" },
-        { name: "3️⃣ Cub Scout Advanced Adventure Award", desc: "Within 1½ years of the Adventure Award" },
-        { name: "⭐ Golden Bauhinia Award", desc: "<strong>The Cub Scout Section’s top award</strong>. Must be at least 9½ years old and have completed the Adventure Award to apply. Once earned, only the Golden Bauhinia Award is worn, on the right breast pocket" },
+        { name: "🔰 Membership badge", desc: "Earned after joining, worn after investiture (about 2–3 months)" },
+        { name: "1️⃣ Cub Scout Experience Award", desc: "New; experiencing and knowing, about 12–15 months" },
+        { name: "2️⃣ Cub Scout Adventure Award", desc: "Practising and acting, about 15–18 months" },
+        { name: "3️⃣ Cub Scout Advanced Adventure Award", desc: "Deepening skills, about 15–18 months" },
+        { name: "⭐ Golden Bauhinia Award", desc: "<strong>The Cub Scout Section’s top award</strong>. All items must be completed before the 12th birthday. Once earned, only the Golden Bauhinia Award is worn, on the right breast pocket" },
         { name: "🔗 Scout Link Award", desc: "Can be earned from age 10½; introduces Scout Section activities and prepares you for moving up" }
       ],
-      note: "There are also activity badges (single-level / three-level), worn on the left sleeve."
+      note: "Seven learning areas = 4 core (Scoutcraft, caring for self & others, country & community, Scout family — each earns a core-area badge) + 3 interest (arts, science & nature, sport & hobbies). Two-year transition until 14 August 2028."
     },
     scout: {
       name: "Scout", color: "var(--scout)", age: "11–15 years",
       promise: "On my honour I promise that I will do my best: to do my duty to God and to my country; to help other people; and to keep the Scout Law.", law: "A Scout’s honour is to be trusted. A Scout is loyal. A Scout is friendly and courteous. A Scout is a brother to all Scouts. A Scout is brave. A Scout cares for the world and all living things. A Scout has self-respect and respect for others.", motto: "Be Prepared",
-      type: "Membership badge + 4 progressive proficiency badges (the Chief Scout’s Award is the Section’s top award)",
+      scheme: "Scout Training Scheme, 4th ed. (effective 15 August 2026)",
+      type: "Membership badge + 4 progressive badges (the Chief Scout’s Award is the Section’s top award)",
       badges: [
-        { name: "🔰 Membership badge", desc: "Earned after joining, worn after investiture" },
-        { name: "1️⃣ Scout Discovery Award", desc: "Starts at age 11 with the Membership badge" },
-        { name: "2️⃣ Scout Standard Award", desc: "After completing the Discovery Award" },
-        { name: "3️⃣ Scout Advanced Award", desc: "After completing the Standard Award" },
-        { name: "⭐ Chief Scout’s Award", desc: "<strong>The Scout Section’s top award</strong>. Presented by the Youth Programme Department and distributed by the Scout Shop" },
-        { name: "🔗 Venture Scout Link Award", desc: "Can be earned from age 14½; introduces the Venture Scout Section and prepares you for moving up" }
+        { name: "🔰 Membership badge", desc: "Includes “Safe from Harm”; about 1.5 months" },
+        { name: "1️⃣ Scout Pathfinder Award", desc: "Experiencing; about 4 months" },
+        { name: "2️⃣ Scout Standard Award", desc: "Knowledge; about 8 months" },
+        { name: "3️⃣ Scout Advanced Award", desc: "Deeper knowledge and responsibility; about 12 months" },
+        { name: "⭐ Chief Scout’s Award", desc: "<strong>The Scout Section’s top award</strong>; planning and leadership; about 12 months. All items must be completed before the 16th birthday" },
+        { name: "🔗 Venture Scout Link Award", desc: "Can be earned from age 14½; a Scout may start the Venture Membership badge up to 3 months before moving up" }
       ],
-      note: "Sea Scouts must take “Water Activities”; Air Scouts must take “Air Activities”. There are also proficiency badges (Interest / Skill / Service / Instructor groups)."
+      note: "Six training areas: outdoor challenge, mind-body-arts, exploring new knowledge, leadership, international outlook and social responsibility. Sea Scouts take “Water Activities”, Air Scouts take “Air Activities”. Two-year transition until 14 August 2028."
     },
     venture: {
       name: "Venture Scout", color: "var(--venture)", age: "15–20 years",
       promise: "On my honour I promise that I will do my best: to do my duty to God and to my country; to help other people; and to keep the Scout Law.", law: "Same as the Scout Section.", motto: "Be Prepared",
-      type: "Venture Scout shoulder badge + 2 progressive proficiency badges (the Dragon Scout Award is the Section’s top award)",
+      scheme: "Venture Scout Training Scheme, 11th ed. (effective 15 August 2026)",
+      type: "Membership badge + shoulder badge + 4 stage badges (the Dragon Scout Award is the Section’s top award)",
       badges: [
+        { name: "🔰 Membership badge", desc: "New; a Scout may earn it up to 3 months before moving up" },
         { name: "🔰 Venture Scout shoulder badge", desc: "A prerequisite — must be completed before any progressive badge" },
-        { name: "1️⃣ Venture Scout Award", desc: "Earn the four stage badges: Responsibility, Self-reliance, Activity and Exploration" },
+        { name: "1️⃣ Venture Scout Award", desc: "Earn the four stage badges: Activity Planning, Community Service, Versatile Skills and Outdoor Adventure (formerly Responsibility / Self-reliance / Activity / Exploration); each stage badge leads to its gold cord" },
         { name: "⭐ Dragon Scout Award", desc: "<strong>The Venture Scout Section’s top award</strong>. Requires the Venture Scout Award and four gold cords. Holders may wear the Dragon Scout Leader’s insignia for life if they later become Leaders" }
       ],
-      note: "Venture Scout Units are self-governing through an executive committee."
+      note: "Stage badges and gold cords have a three-year transition until 14 August 2029. Venture Scout Units are self-governing through an executive committee."
     },
     rover: {
       name: "Rover Scout", color: "var(--rover)", age: "18–25 years",
       promise: "On my honour I promise that I will do my best: to do my duty to God and to my country; to help other people; and to keep the Scout Law.", law: "Same as the Scout Section.", motto: "To Serve",
-      type: "Rover Scout shoulder badge + 2 progressive proficiency badges (the Baden-Powell Award is the Section’s top award)",
+      scheme: "Rover Scout Training Scheme, 5th ed. (effective 15 August 2026)",
+      type: "Membership badge + shoulder badge + 7 challenge areas (the Baden-Powell Award is the Section’s top award)",
       badges: [
-        { name: "🔰 Rover Scout shoulder badge", desc: "A prerequisite" },
-        { name: "1️⃣ Rover Scout Award", desc: "Scout knowledge, community service, outdoor activities, personal interests, relationships, personal values, world awareness, life experience" },
-        { name: "⭐ Baden-Powell Award", desc: "<strong>The Rover Scout Section’s top award</strong>. Service, Scout skills, exploration, life experience. Holders may wear the Baden-Powell Leader’s insignia if they later become Leaders" }
+        { name: "🔰 Membership badge", desc: "About 3 months" },
+        { name: "🔰 Rover Scout shoulder badge", desc: "Complete the Rover induction course; Link-badge holders are treated as done on joining" },
+        { name: "1️⃣ Rover Scout Award", desc: "Complete any 4 of the 7 challenge areas" },
+        { name: "⭐ Baden-Powell Award", desc: "<strong>The Rover Scout Section’s top award</strong>. Complete all 7 challenge areas. Holders may wear the Baden-Powell Leader’s insignia if they later become Leaders" }
       ],
-      note: "Rover Scouts may at the same time hold appointments in other Sections, Districts and Regions."
+      note: "7 challenge areas: prospective-leader training, Scout skills, service, international outlook, interests & skills, well-being and challenge. Completing Wood Badge stage 2 allows the Gilwell woggle. Three-year transition until 14 August 2029."
     },
     leader: {
       name: "Leader", color: "var(--leader)", age: "Adult member",
@@ -360,9 +372,10 @@ const LOCALE_EN = {
     venture: {
       title: "Scout → Venture Scout", color: "var(--venture)",
       items: [
-        { q: "What are the conditions for moving up?", a: "You simply need to be within the Venture Scout age range (15–20); you do not need to earn the Chief Scout’s Award first. Scout membership ends automatically on your 16th birthday. Scouts aged 14½ or over can earn the <strong>Venture Scout Link Award</strong> first." },
+        { q: "What are the conditions for moving up?", a: "You simply need to be within the Venture Scout age range (15–20); you do not need to earn the Chief Scout’s Award first. Scout membership ends automatically on your 16th birthday. Scouts aged 14½ or over can earn the <strong>Venture Scout Link Award</strong> first; from 15 August 2026 a Scout may also start the <strong>Venture Membership badge up to 3 months before moving up</strong>." },
         { q: "Pick Land / Sea / Air first", a: "The Venture Scout Section is likewise divided into <strong>Venture Scout, Venture Sea Scout and Venture Air Scout</strong>. Sea and Air Venture Scouts change to the <strong>Sea Scout Leader white-top cap</strong> (a different model from the Scout Section white-top cap) / the grey-blue beret." },
-        { q: "What do I need to buy for Land Venture?", a: "Must buy: <strong>maroon beret, olive green trousers (male) / olive green skirt (female), black short socks (male) / flesh-coloured pantyhose + black mid-heel shoes (female)</strong>. The shirt, belt, Group scarf, Scout woggle and Scout cap badge can be carried over. <strong>Venture Scouts do not wear a tie</strong> (the official uniform uses the Group scarf)." },
+        { q: "What do I need to buy for Land Venture?", a: "Must buy: <strong>maroon beret, olive green trousers (male), black short socks (male)</strong>; girls may choose either the <strong>olive green skirt (with flesh-coloured pantyhose + black mid-heel shoes)</strong> or <strong>olive green trousers (with black short socks + black lace-up shoes)</strong>. The shirt, belt, Group scarf, Scout woggle and Scout cap badge can be carried over. The new scheme adds a necktie option (Land = maroon), but the Group scarf remains the everyday norm." },
+        { q: "What about the new scheme’s stage badges?", a: "The scheme effective 15 August 2026 adds a <strong>Venture Membership badge</strong> and renames the stage badges to Activity Planning, Community Service, Versatile Skills and Outdoor Adventure; the old stage badges have a three-year transition until 14 August 2029." },
         { q: "What happens to my badges?", a: "Remove the Scout progressive badges, proficiency badges, patrol badge and Patrol Leader badge. Venture Scouts <strong>never wear the Golden Bauhinia Award</strong>; if you earned the Chief Scout’s Award as a Scout, the Section top award insignia may be worn as arranged by the Association (check with your Group). Service stars are kept." }
       ]
     },
@@ -373,7 +386,8 @@ const LOCALE_EN = {
         { q: "Pick Land / Sea / Air first", a: "The Rover Scout Section is likewise divided into <strong>Rover Scout, Rover Sea Scout and Rover Air Scout</strong>." },
         { q: "What do I need to buy for Land Rover?", a: "You only need to <strong>swap the maroon beret for the dark green beret</strong>; the Scout cap badge can be transferred. Everything else (shirt, trousers / skirt, belt, socks, shoes, Group scarf, woggle) is the same model and can be carried over." },
         { q: "What do I need to buy for Sea / Air Rover?", a: "Sea: the white-top cap can be carried over; the official handbook lists the <strong>Venture and Rover Sea Scout cap badges as the same design</strong>, so check current practice with your Group before moving up. Air: everything is the same model, nothing to buy." },
-        { q: "What happens to my badges?", a: "Remove the Venture Scout shoulder badge, stage badges and gold cords, and the Venture Scout Award. If you earned the <strong>Dragon Scout Award</strong>, wear it as arranged by the Association (check with your Group). Service stars are kept." }
+        { q: "What happens to my badges?", a: "Remove the Venture Scout shoulder badge, stage badges and gold cords, and the Venture Scout Award. If you earned the <strong>Dragon Scout Award</strong>, wear it as arranged by the Association (check with your Group). Service stars are kept." },
+        { q: "What about the new scheme’s awards?", a: "The scheme effective 15 August 2026 has 7 challenge areas (prospective-leader training, Scout skills, service, international outlook, interests & skills, well-being and challenge): complete any 4 for the <strong>Rover Scout Award</strong>, all 7 for the <strong>Baden-Powell Award</strong>; the old scheme has a three-year transition until 14 August 2029. Completing Wood Badge stage 2 allows the Gilwell woggle." }
       ]
     },
     leader: {
@@ -392,32 +406,33 @@ const LOCALE_EN = {
   /* ── Badge journey charts ── */
   BADGE_TIMELINES: {
     grasshopper: [
-      { stage: "🔰", name: "Membership badge", age: "After investiture", color: "var(--grasshopper)", desc: "Worn after investiture" },
-      { stage: "1-4", name: "Progress badges", age: "Step 1 to Step 4", color: "var(--grasshopper)", desc: "Red → brown → blue → green" }
+      { stage: "🌱", name: "Little Grasshopper Award", age: "Two experiences in each of 7 areas", color: "var(--grasshopper)", desc: "New Guide (effective Aug 2026)" }
     ],
     cub: [
-      { stage: "🔰", name: "Membership badge", age: "After joining", color: "var(--cub)", desc: "Worn after investiture" },
-      { stage: "1", name: "Cub Scout Award", age: "Within 6 months of the Membership badge", color: "var(--cub)", desc: "Tracking, knots, country code, good turns, care and first aid, promise and law" },
-      { stage: "2", name: "Cub Scout Adventure Award", age: "Within 1 year of the Award", color: "var(--cub)", desc: "Outdoor activities, sport and hobbies, helping others, looking after yourself" },
-      { stage: "3", name: "Cub Scout Advanced Adventure Award", age: "Within 1½ years of the Adventure Award", color: "var(--cub)", desc: "Advanced level of the same areas" },
-      { stage: "⭐", name: "Golden Bauhinia Award", age: "9½ years old + Adventure Award", color: "#FFD700", desc: "The Cub Scout Section’s top award" }
+      { stage: "🔰", name: "Membership badge", age: "About 2–3 months", color: "var(--cub)", desc: "Worn after investiture" },
+      { stage: "1", name: "Cub Scout Experience Award", age: "About 12–15 months", color: "var(--cub)", desc: "New; experiencing and knowing" },
+      { stage: "2", name: "Cub Scout Adventure Award", age: "About 15–18 months", color: "var(--cub)", desc: "Practising and acting" },
+      { stage: "3", name: "Cub Scout Advanced Adventure Award", age: "About 15–18 months", color: "var(--cub)", desc: "Deepening skills" },
+      { stage: "⭐", name: "Golden Bauhinia Award", age: "Before the 12th birthday", color: "#FFD700", desc: "The Cub Scout Section’s top award" }
     ],
     scout: [
-      { stage: "🔰", name: "Membership badge", age: "After joining", color: "var(--scout)", desc: "Worn after investiture" },
-      { stage: "1", name: "Scout Discovery Award", age: "From 11 years old", color: "var(--scout)", desc: "Outdoor challenge, personal development, society, environment" },
-      { stage: "2", name: "Scout Standard Award", age: "After the Discovery Award", color: "var(--scout)", desc: "Adds “world awareness” and “new experiences”" },
-      { stage: "3", name: "Scout Advanced Award", age: "After the Standard Award", color: "var(--scout)", desc: "Take part in an activity you have never tried" },
-      { stage: "⭐", name: "Chief Scout’s Award", age: "After the Advanced Award", color: "#FFD700", desc: "The Scout Section’s top award; requires an Instructor-group proficiency badge" }
+      { stage: "🔰", name: "Membership badge", age: "About 1.5 months", color: "var(--scout)", desc: "Includes “Safe from Harm”" },
+      { stage: "1", name: "Scout Pathfinder Award", age: "About 4 months", color: "var(--scout)", desc: "Experiencing and gaining a sense of achievement" },
+      { stage: "2", name: "Scout Standard Award", age: "About 8 months", color: "var(--scout)", desc: "Knowledge" },
+      { stage: "3", name: "Scout Advanced Award", age: "About 12 months", color: "var(--scout)", desc: "Deeper knowledge and responsibility" },
+      { stage: "⭐", name: "Chief Scout’s Award", age: "About 12 months", color: "#FFD700", desc: "The Scout Section’s top award; before the 16th birthday" }
     ],
     venture: [
-      { stage: "🔰", name: "Venture Scout shoulder badge", age: "After joining", color: "var(--venture)", desc: "A prerequisite" },
-      { stage: "1", name: "Venture Scout Award", age: "After the four stage badges", color: "var(--venture)", desc: "Responsibility, Self-reliance, Activity and Exploration stage badges" },
+      { stage: "🔰", name: "Membership badge", age: "After joining", color: "var(--venture)", desc: "New" },
+      { stage: "🔰", name: "Venture Scout shoulder badge", age: "A prerequisite", color: "var(--venture)", desc: "Before any progressive badge" },
+      { stage: "1", name: "Venture Scout Award", age: "After the four stage badges", color: "var(--venture)", desc: "Activity Planning, Community Service, Versatile Skills, Outdoor Adventure" },
       { stage: "⭐", name: "Dragon Scout Award", age: "Venture Award + four gold cords", color: "#FFD700", desc: "The Venture Scout Section’s top award" }
     ],
     rover: [
-      { stage: "🔰", name: "Rover Scout shoulder badge", age: "After joining", color: "var(--rover)", desc: "A prerequisite" },
-      { stage: "1", name: "Rover Scout Award", age: "After the shoulder badge", color: "var(--rover)", desc: "Scout knowledge, community service, outdoor activities and 5 other areas" },
-      { stage: "⭐", name: "Baden-Powell Award", age: "After the Rover Award", color: "#FFD700", desc: "The Rover Scout Section’s top award" }
+      { stage: "🔰", name: "Membership badge", age: "About 3 months", color: "var(--rover)", desc: "Knowing Scouting and the Rover Section" },
+      { stage: "🔰", name: "Rover Scout shoulder badge", age: "About 3–6 months", color: "var(--rover)", desc: "Complete the induction course" },
+      { stage: "1", name: "Rover Scout Award", age: "4 of 7 areas", color: "var(--rover)", desc: "About 12–18 months" },
+      { stage: "⭐", name: "Baden-Powell Award", age: "All 7 areas", color: "#FFD700", desc: "The Rover Scout Section’s top award" }
     ],
     leader: [
       { stage: "🎓", name: "Wood Badge", age: "After completing Leader training", color: "var(--leader)", desc: "Wood badge, wood badge neckerchief, wood badge woggle" },
@@ -625,7 +640,7 @@ const LOCALE_EN = {
     "年齡、誓詞規律、考章、宣誓安排": "ages, the Promise and Law, badge assessments and investiture arrangements",
     "。以下係各升團情境的完整過渡須知:": ". Here are the complete transition notes for each moving-up situation:",
     "📜 進度性獎章總覽": "📜 Progressive badge overview",
-    "資料來源:香港童軍總會《童軍訓練綱要》及政策、組織及規條": "Source: the Scout Association of Hong Kong Scout Training Scheme and Policy, Organisation and Rules",
+    "資料來源:香港童軍總會新修訂各支部《訓練綱要》（2026 年 8 月 15 日生效）及政策、組織及規條": "Source: the revised Training Schemes of each Section of the Scout Association of Hong Kong (effective 15 August 2026) and Policy, Organisation and Rules",
     "🔼 升團過渡詳情": "🔼 Moving-up transition details",
     "揀支部就會自動顯示對應嘅升團須知:": "Pick a Section and the matching transition notes appear automatically:",
 
@@ -971,7 +986,8 @@ const LOCALE_EN = {
     "制服資料來源:香港童軍總會": "Uniform data source: Scout Association of Hong Kong ",
     "制服購買:香港童軍物品供應社(SCOUT SHOP)": "Uniform purchases: Hong Kong Scout Shop (SCOUT SHOP) ",
     "《儀容與制服手冊》:": "Uniform Handbook:",
-    "本 APP 為非官方輔助工具。制服規格以香港童軍總會官網（中文版）、《儀容與制服手冊》及各支部《訓練綱要》為準；徽章位置根據青少年活動通告第 13/2023 號。圖片按來源標示；帽章等使用本地官方參考圖，其他款式示意圖不作顏色及細節依據。": "This app is an unofficial aid. Uniform specifications follow the Scout Association of Hong Kong website (Chinese version), the Uniform Handbook and the Training Scheme of each Section; badge positions follow Youth Programme Circular No. 13/2023. Images are credited to their source; cap badges and similar use local official reference images, and other style illustrations are not a guide to colour or detail."
+    "本 APP 為非官方輔助工具。制服規格以香港童軍總會官網（中文版）、《儀容與制服手冊》及各支部《訓練綱要》為準；徽章位置根據青少年活動通告第 13/2023 號。圖片按來源標示；帽章等使用本地官方參考圖，其他款式示意圖不作顏色及細節依據。": "This app is an unofficial aid. Uniform specifications follow the Scout Association of Hong Kong website (Chinese version), the Uniform Handbook and the Training Scheme of each Section; badge positions follow Youth Programme Circular No. 13/2023. Images are credited to their source; cap badges and similar use local official reference images, and other style illustrations are not a guide to colour or detail.",
+    "本網站為非官方獨立工具，旨在方便成員瀏覽公開資訊，與香港童軍總會無任何官方從屬關係。所有通告版權歸香港童軍總會所有。": "This website is an unofficial independent tool that helps members browse public information and has no official affiliation with the Scout Association of Hong Kong. Copyright of all circulars belongs to the Scout Association of Hong Kong."
   }
 };
 

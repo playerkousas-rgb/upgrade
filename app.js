@@ -148,6 +148,7 @@ function renderBadgesOverview(){
   const t = UI();
   return `<div style="border:1px solid var(--line);border-left:4px solid ${b.color};border-radius:8px;padding:.8rem 1rem;background:#fafafa">
     <h3 style="margin:0 0 .3rem;font-size:1rem;color:${b.color}">${b.name} <span style="font-size:.75rem;color:#888;font-weight:400">(${b.age})</span></h3>
+    ${b.scheme ? `<p style="margin:.1rem 0 .3rem;font-size:.72rem;color:#999">📘 ${b.scheme}</p>` : ""}
     <p style="margin:.2rem 0;font-size:.8rem"><strong>${t.badgeSystem}</strong>${b.type}</p>
     <details style="margin:.3rem 0"><summary style="font-size:.85rem;color:${b.color}">${t.promise}</summary><p style="font-size:.85rem;margin:.3rem 0;font-style:italic">${b.promise}</p></details>
     <details style="margin:.3rem 0"><summary style="font-size:.85rem;color:${b.color}">${t.law}</summary><p style="font-size:.85rem;margin:.3rem 0;font-style:italic">${b.law}</p></details>
