@@ -135,7 +135,47 @@ function startServer() {
   const skirt = d.querySelector('#checklist [data-item-id="skirt-olive"]');
   check(!!skirt, '深資女清單含下半身項目');
   check(!!skirt && skirt.textContent.includes('長褲'), '深資女下半身標示可改選長褲');
+
+  console.log('── 2026 新綱要：女團員裙／褲二選一（真．可揀） ──');
+  window.setGender('female');
+  window.setBottom('skirt');
+  check(!!d.querySelector('#checklist [data-item-id="skirt-olive"]'), '深資女（陸）預設半截裙');
+  const bottomToggle = [...d.querySelectorAll('#controls .gender-toggle')].find(el => el.textContent.includes('下半身'));
+  check(!!bottomToggle, '控制列出現「下半身」切換掣');
+  window.setBottom('trousers');
+  const trousersEl = d.querySelector('#checklist [data-item-id="trousers-olive-f"]');
+  check(!!trousersEl, '切長褲：清單出現草青色女裝長褲');
+  check(!d.querySelector('#checklist [data-item-id="skirt-olive"]'), '切長褲：半截裙不再顯示');
+  check(!!trousersEl && trousersEl.textContent.includes('01158'), '女裝長褲顯示供應社編號 01158');
+  check(statusOf('trousers-olive-f') === 'need', '女裝長褲 = 需購買');
+  check(!!d.querySelector('#checklist [data-item-id="socks-short-black"]'), '長褲配黑色短襪');
+  check(!d.querySelector('#checklist [data-item-id="pantyhose"]'), '長褲時不列襪褲');
+  check(!d.querySelector('#checklist [data-item-id="shoes-heel"]'), '長褲時不列中跟鞋');
+  const budgetRow = [...d.querySelectorAll('#budget-dynamic tr')].find(tr => tr.textContent.includes('女裝長褲'));
+  check(!!budgetRow && budgetRow.textContent.includes('119'), '預算表以女裝長褲 HK$119 計');
+  window.setBottom('skirt');
+  check(!!d.querySelector('#checklist [data-item-id="skirt-olive"]'), '可切回半截裙');
+  window.setBranch('to', 'sea');
+  window.setBottom('trousers');
+  check(!!d.querySelector('#checklist [data-item-id="trousers-navy"]'), '海童軍女切長褲 → 深藍色長褲');
+  window.setBottom('skirt');
+  window.selectSection('leader');
+  window.setSource('rover');
+  window.setBranch('from', 'land');
+  window.setBranch('to', 'land');
+  window.setGender('female');
+  window.setBottom('trousers');
+  check(!!d.querySelector('#checklist [data-item-id="beret-green"]'), '女領袖（陸）長褲制服改用深綠色軟帽');
+  check(!d.querySelector('#checklist [data-item-id="hat-leader-f"]'), '女領袖（陸）長褲時不列金邊硬帽');
+  check(!!d.querySelector('#checklist [data-item-id="trousers-olive-f"]'), '女領袖（陸）長褲 = 女裝長褲');
+  window.setBottom('skirt');
+  check(!!d.querySelector('#checklist [data-item-id="hat-leader-f"]'), '切回半截裙 → 回復金邊硬帽');
+
+  // 回復後續測試預期狀態
+  window.selectSection('venture');
+  window.setSource('scout');
   window.setGender('male');
+  window.setBottom('skirt');
 
   console.log('── 預算 ──');
   check($('budget-dynamic').textContent.includes('合計'), '領袖預算表有合計');
@@ -216,6 +256,15 @@ function startServer() {
   const notTranslated = cjkLeft.filter(text => ALLOWED.indexOf(text) === -1);
   check(notTranslated.length === 0,
     `英文版靜態文字已全部翻譯（${cjkLeft.length} 個容許保留，其餘 ${notTranslated.length} 個：${notTranslated.slice(0, 5).join(' | ')}）`);
+
+  // 英文版都要有得揀裙／褲，而且字串有翻譯（無殘留中文）
+  window.selectSection('venture');
+  window.setGender('female');
+  window.setBottom('trousers');
+  const enTrousers = d.querySelector('#checklist [data-item-id="trousers-olive-f"]');
+  check(!!enTrousers && enTrousers.textContent.indexOf('Ladies’') !== -1, '英文版女裝長褲有英文名稱');
+  check(!!enTrousers && !/[\u3400-\u9FFF]/.test(enTrousers.textContent), '英文版女裝長褲無殘留中文');
+  window.setBottom('skirt');
 
   window.setLang('zh-HK');
   check(window.eval('LANG') === 'zh-HK', '可切回中文');

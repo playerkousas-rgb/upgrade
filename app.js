@@ -8,6 +8,7 @@ let currentGender = "male";
 let currentBranch = "land";       // 目標類型 land | sea | air
 let currentFrom = null;           // 升團來源支部（領袖可揀 venture / rover）
 let currentFromBranch = "land";   // 升團來源類型
+let currentBottom = "skirt";      // 2026 新綱要：女團員下半身 skirt（半截裙）| trousers（長褲）
 
 // 已買/已有狀態(localStorage 持久化)
 const STORAGE_KEY = "scout_owned_v2";
@@ -226,6 +227,13 @@ function renderControls(){
   html += `<div class="gender-toggle"><span>${t.genderLabel}</span>
     <button class="${currentGender === "male" ? "active" : ""}" onclick="setGender('male')">${t.male}</button>
     <button class="${currentGender === "female" ? "active" : ""}" onclick="setGender('female')">${t.female}</button></div>`;
+  // 2026 新綱要：深資／樂行／領袖女團員可揀半截裙或長褲（二選一）。
+  if(hasLowerBodyChoice(currentSection, currentBranch, currentGender)){
+    html += `<div class="gender-toggle"><span>${t.lowerBodyLabel}</span>
+      <button class="${currentBottom === "skirt" ? "active" : ""}" onclick="setBottom('skirt')">${t.lowerBodySkirt}</button>
+      <button class="${currentBottom === "trousers" ? "active" : ""}" onclick="setBottom('trousers')">${t.lowerBodyTrousers}</button></div>
+      <p class="cite" style="margin:-.3rem 0 .6rem">${t.lowerBodyHint}</p>`;
+  }
   el.innerHTML = html;
 }
 function branchButtons(which){
@@ -243,6 +251,7 @@ function setBranch(which, b){
   refresh();
 }
 function setGender(g){ currentGender = g; refresh(); }
+function setBottom(v){ if(v === currentBottom) return; currentBottom = v; refresh(); }
 
 /* ===========================================================
    支部選擇
@@ -353,7 +362,8 @@ function render(){
   const sec = loc.SECTIONS[currentSection];
   const list = buildChecklist({
     section: currentSection, branch: currentBranch, gender: currentGender,
-    mode: currentMode, fromSection: currentFrom, fromBranch: currentFromBranch
+    mode: currentMode, fromSection: currentFrom, fromBranch: currentFromBranch,
+    bottom: currentBottom
   });
 
   const genderLabel = currentGender === "male" ? (currentSection === "leader" ? t.genderLeaderMale : t.genderMemberMale)
@@ -461,7 +471,7 @@ function renderBudget(){
     el.innerHTML = `<p style="margin:0">${t.budgetGrasshopper}</p>`;
     return;
   }
-  const list = buildChecklist({ section: currentSection, branch: currentBranch, gender: currentGender, mode: currentMode, fromSection: currentFrom, fromBranch: currentFromBranch });
+  const list = buildChecklist({ section: currentSection, branch: currentBranch, gender: currentGender, mode: currentMode, fromSection: currentFrom, fromBranch: currentFromBranch, bottom: currentBottom });
   const need = list.filter(i => i.status !== "have");
   let lo = 0, hi = 0;
   const rows = need.map(i => {

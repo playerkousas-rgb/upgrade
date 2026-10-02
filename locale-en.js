@@ -114,6 +114,10 @@ const LOCALE_EN = {
       detail:`<h4>Olive green trousers</h4><p><strong>Official specification:</strong> olive green, two side pockets, two hip pockets, pleated. For male Venture Scouts, Rover Scouts and Leaders (Land); also used with the female Leader’s trouser uniform (No. 6).</p>` },
     "trousers-navy": { title:"Navy blue trousers", desc:"Sea / Air · Venture / Rover / Leader", icon:"👖", img:"assets/items/trousers-navy.svg", buy:"supply",
       detail:`<h4>Navy blue trousers</h4><p><strong>Official specification:</strong> navy blue, two side pockets, two hip pockets, pleated. For male Venture / Rover Sea and Air Scouts and male Sea / Air Scout Leaders.</p>` },
+    "trousers-olive-f": { title:"Olive green ladies’ trousers", desc:"Ladies’ cut (new scheme: alternative to the skirt)", icon:"👖", img:"assets/items/trousers-olive.svg", buy:"supply",
+      detail:`<h4>Olive green ladies’ trousers</h4><p><strong>Official specification:</strong> olive green ladies’ trousers (Shop 01158). Under the new scheme effective 15 August 2026, female Venture Scouts, Rover Scouts and Leaders (Land) may choose either the <strong>skirt</strong> or <strong>trousers</strong> — buy only one of the two.</p>
+        <ul><li>With trousers: black short socks + black lace-up shoes (no pantyhose / court shoes needed)</li><li>With the skirt: flesh-coloured pantyhose + black mid-heel court shoes</li></ul>
+        <div class="tip">Use the “Lower body” switch above to flip between skirt and trousers — the checklist and budget update instantly. Follow your Group’s arrangement.</div>` },
     "skirt-olive": { title:"Olive green skirt", desc:"Side pockets, no pleats, knee length (new scheme allows trousers)", icon:"👗", img:"assets/items/skirt-olive.svg", buy:"supply",
       detail:`<h4>Olive green skirt</h4><p><strong>Official specification:</strong> olive green, side pockets, no pleats, knee length. For female Venture Scouts, Rover Scouts and Leaders (Land).</p>
         <div class="tip">Under the new scheme effective 15 August 2026, girls may choose either the <strong>skirt</strong> or <strong>olive green trousers</strong>. With trousers wear <strong>black short socks + black lace-up shoes</strong> (no pantyhose / court shoes needed); with the skirt wear flesh-coloured pantyhose + mid-heel court shoes. Follow your Group’s arrangement.</div>
@@ -206,6 +210,7 @@ const LOCALE_EN = {
     "culottes-navy":   { id:339, n:2, code:"01074", name:"Navy blue culottes (inverted pleats)", price:129 },
     "trousers-olive":  { id:375, n:2, code:"01157", name:"Olive green trousers", price:119, alt:[{id:376,n:2,code:"01158",name:"Ladies’ olive green trousers",price:119}] },
     "trousers-navy":   { id:340, n:0, code:"01075", name:"Navy blue trousers", price:149 },
+    "trousers-olive-f":{ id:376, n:2, code:"01158", name:"Ladies’ olive green trousers", price:119 },
     "skirt-olive":     { id:328, n:2, code:"01051", name:"Olive green skirt", price:89 },
     "skirt-navy":      { id:345, n:2, code:"01080", name:"Navy blue skirt", price:96 },
     /* Belt / socks */
@@ -446,6 +451,11 @@ const LOCALE_EN = {
     male: "Male", female: "Female",
     genderShort: (g) => g === "female" ? "Female" : "Male",
     genderLabel: "Gender:",
+    lowerBodyLabel: "Lower body:",
+    lowerBodySkirt: "Skirt",
+    lowerBodyTrousers: "Trousers",
+    lowerBodyHint: "Under the new scheme effective 15 August 2026, female Venture / Rover / Leader members may choose either a skirt or trousers — buy only one of the two. Follow your Group’s arrangement.",
+    noteLeaderTrousersHat: `<div class="tip">With the female Leader’s trouser uniform (No. 6), wear the <strong>dark green beret</strong>; the gold-trimmed green hat is for the skirt uniform (No. 3).</div>`,
     genderMemberMale: "Male member", genderMemberFemale: "Female member",
     genderLeaderMale: "Male Leader", genderLeaderFemale: "Female Leader",
     sectionAge: "Section age: ",
