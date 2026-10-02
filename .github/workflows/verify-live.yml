@@ -2,6 +2,7 @@
 # 驗證生產站（Vercel）係唔係真係同倉庫一致 —— 用 SHA-256 逐個檔案比對，
 # 唔靠肉眼、唔靠「應該更新咗」。開 PR 時自動跑一次，亦可手動執行：
 #   Actions → 「驗證生產站」→ Run workflow
+# PR 上會留一份對比報告（同一 PR 只會更新同一個 comment）。
 # 注意：此檢查只作參考，唔會 Fail（生產部署可能比 main 落後幾分鐘）。
 # ============================================================
 name: 驗證生產站 (Verify live deployment)
@@ -12,6 +13,7 @@ on:
 
 permissions:
   contents: read
+  pull-requests: write
 
 jobs:
   verify-live:
@@ -22,29 +24,55 @@ jobs:
           # 生產站跟 main 部署；PR 時要比對 base（main），唔係 PR 本身。
           ref: ${{ github.event.pull_request.base.sha || github.sha }}
       - name: 對比生產站檔案（SHA-256）
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
         run: |
           BASE=https://upgrade-ashen.vercel.app
           FILES="index.html data.js locale-en.js app.js manifest.webmanifest favicon.ico assets/favicon-32x32.png assets/favicon-16x16.png assets/apple-touch-icon.png assets/icon-192.avif assets/icon-512.avif assets/logo-192.avif"
+          : > /tmp/report.md
           mismatch=0
           for f in $FILES; do
-            if ! curl -fsS --max-time 30 "$BASE/$f" -o /tmp/live; then
-              echo "::error::$f 抓唔到（生產站無此檔或連線失敗）"
-              mismatch=1
-              continue
-            fi
-            live=$(sha256sum /tmp/live | cut -d' ' -f1)
-            repo=$(sha256sum "$f" | cut -d' ' -f1)
-            if [ "$live" = "$repo" ]; then
-              echo "✅ $f 一致（$repo）"
+            if curl -fsS --max-time 30 "$BASE/$f" -o /tmp/live 2>/dev/null; then
+              live=$(sha256sum /tmp/live | cut -d' ' -f1)
+              repo=$(sha256sum "$f" | cut -d' ' -f1)
+              if [ "$live" = "$repo" ]; then
+                printf '| `%s` | ✅ 一致 | `%s` |\n' "$f" "${repo:0:12}" >> /tmp/report.md
+              else
+                printf '| `%s` | ❌ 唔一致 | live `%s` ／ repo `%s` |\n' "$f" "${live:0:12}" "${repo:0:12}" >> /tmp/report.md
+                mismatch=1
+              fi
             else
-              echo "❌ $f 唔一致：live=$live / repo=$repo"
+              printf '| `%s` | ⚠️ 抓唔到（404／連線失敗） | — |\n' "$f" >> /tmp/report.md
               mismatch=1
             fi
           done
-          echo "----------------------------------------"
-          if [ "$mismatch" = "0" ]; then
-            echo "✅ 生產站全部檔案同 main 嘅最新 commit 一致。"
-          else
-            echo "⚠️ 有檔案唔一致：可能未部署完、CDN 快取，或生產站落後 main。"
+          {
+            echo "## 🔎 生產站 vs 倉庫（SHA-256 逐檔比對）"
+            echo ""
+            echo "對比對象：\`${{ github.event.pull_request.base.sha || github.sha }}\`（PR 時 = base；手動 = 該次 run 嘅 commit）"
+            echo ""
+            echo "| 檔案 | 結果 | SHA-256（前 12 位） |"
+            echo "|---|---|---|"
+            cat /tmp/report.md
+            echo ""
+            if [ "$mismatch" = "0" ]; then
+              echo "✅ **生產站全部檔案同倉庫一致** —— 冇「部署落後」問題；如果肉眼見到舊嘢，係瀏覽器快取（用無痕／硬刷新再試）。"
+            else
+              echo "⚠️ **有落差**：可能未部署完、CDN 快取，或者生產站落後。合併後再手動跑一次即可確認新版本上線。"
+            fi
+            echo ""
+            echo "_由 \`.github/workflows/verify-live.yml\` 自動產生，只作參考、不阻塞合併。_"
+          } > /tmp/comment.md
+          cat /tmp/comment.md
+          if [ -n "$PR" ]; then
+            { echo '<!-- verify-live -->'; cat /tmp/comment.md; } > /tmp/body.md
+            prev=$(gh api "repos/$REPO/issues/$PR/comments" --jq '.[] | select(.body | startswith("<!-- verify-live -->")) | .id' 2>/dev/null | head -1)
+            if [ -n "$prev" ]; then
+              gh api -X PATCH "repos/$REPO/issues/comments/$prev" -F body=@/tmp/body.md > /dev/null
+            else
+              gh api -X POST "repos/$REPO/issues/$PR/comments" -F body=@/tmp/body.md > /dev/null
+            fi
           fi
           exit 0
