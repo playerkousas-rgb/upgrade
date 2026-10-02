@@ -9,11 +9,14 @@ name: 驗證生產站 (Verify live deployment)
 
 on:
   pull_request:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
   pull-requests: write
+  checks: write
 
 jobs:
   verify-live:
@@ -66,13 +69,21 @@ jobs:
             echo "_由 \`.github/workflows/verify-live.yml\` 自動產生，只作參考、不阻塞合併。_"
           } > /tmp/comment.md
           cat /tmp/comment.md
+          # 1) PR 時：留一份 comment（同一 PR 只更新同一個）
           if [ -n "$PR" ]; then
             { echo '<!-- verify-live -->'; cat /tmp/comment.md; } > /tmp/body.md
             prev=$(gh api "repos/$REPO/issues/$PR/comments" --jq '.[] | select(.body | startswith("<!-- verify-live -->")) | .id' 2>/dev/null | head -1)
             if [ -n "$prev" ]; then
-              gh api -X PATCH "repos/$REPO/issues/comments/$prev" -F body=@/tmp/body.md > /dev/null
+              gh api -X PATCH "repos/$REPO/issues/comments/$prev" -F body=@/tmp/body.md > /dev/null || true
             else
-              gh api -X POST "repos/$REPO/issues/$PR/comments" -F body=@/tmp/body.md > /dev/null
+              gh api -X POST "repos/$REPO/issues/$PR/comments" -F body=@/tmp/body.md > /dev/null || true
             fi
           fi
+          # 2) 一律：將結果寫入 check run（merge 入 main 後自動跑，可用 API 讀返）
+          sha=$(git rev-parse HEAD)
+          conclusion=success; [ "$mismatch" = "0" ] || conclusion=neutral
+          jq -n --arg sha "$sha" --arg conclusion "$conclusion" --rawfile summary /tmp/comment.md \
+            '{name:"驗證生產站（live vs repo）", head_sha:$sha, status:"completed", conclusion:$conclusion,
+              output:{title:"生產站 vs 倉庫（SHA-256 逐檔比對）", summary:$summary}}' > /tmp/check.json
+          gh api -X POST "repos/$REPO/check-runs" --input /tmp/check.json > /dev/null || true
           exit 0
