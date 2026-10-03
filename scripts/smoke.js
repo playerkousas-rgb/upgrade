@@ -177,6 +177,35 @@ function startServer() {
   window.setGender('male');
   window.setBottom('skirt');
 
+  console.log('── 支部最高獎章 → 標誌（升團後只可改戴標誌） ──');
+  const ventureQnA = $('transition-content').textContent;
+  check(ventureQnA.includes('總領袖獎章本身亦要拆走') || ventureQnA.includes('以及總領袖獎章'),
+    '升深資：總領袖獎章本身須拆走');
+  check(ventureQnA.includes('總領袖獎章標誌'), '升深資：改戴「總領袖獎章標誌」');
+  check(ventureQnA.includes('金紫荊獎章標誌') && ventureQnA.includes('同時佩戴'),
+    '升深資：金紫荊與總領袖標誌可一齊佩戴');
+  window.selectSection('scout');
+  window.setSource('cub');
+  check($('transition-content').textContent.includes('金紫荊獎章標誌'), '升童軍：改戴「金紫荊獎章標誌」');
+  window.selectSection('rover');
+  window.setSource('venture');
+  const roverQnA = $('transition-content').textContent;
+  check(roverQnA.includes('榮譽童軍獎章（獎章本身屬深資童軍支部'), '升樂行：榮譽童軍獎章本身須拆走');
+  check(roverQnA.includes('榮譽童軍獎章標誌'), '升樂行：改戴「榮譽童軍獎章標誌」');
+  window.selectSection('leader');
+  window.setSource('rover');
+  const leaderQnA = $('transition-content').textContent;
+  check(leaderQnA.includes('只保留 1 個'), '領袖：只保留 1 個支部最高獎章標誌');
+  check(leaderQnA.includes('榮譽童軍」標誌 ＞ 樂行「貝登堡」標誌 ＞ 童軍「總領袖」標誌 ＞ 幼童軍「金紫荊」標誌'),
+    '領袖：多於一個時只戴最高（V ＞ R ＞ S ＞ C）');
+  const insigniaRow = [...d.querySelectorAll('#part-badges table tr')]
+    .find(tr => tr.textContent.startsWith('支部最高獎章標誌'));
+  check(!!insigniaRow, '徽章完全手冊新增「支部最高獎章標誌」列');
+  window.selectSection('leader');
+  check(!!insigniaRow && insigniaRow.style.display !== 'none', '領袖見到支部最高獎章標誌列');
+  window.selectSection('cub');
+  check(!!insigniaRow && insigniaRow.style.display === 'none', '幼童軍不顯示支部最高獎章標誌列（獎章本身在所屬支部佩戴）');
+
   console.log('── 預算 ──');
   check($('budget-dynamic').textContent.includes('合計'), '領袖預算表有合計');
   window.selectSection('cub');
