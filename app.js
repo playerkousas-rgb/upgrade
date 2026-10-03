@@ -473,16 +473,21 @@ function renderBudget(){
   }
   const list = buildChecklist({ section: currentSection, branch: currentBranch, gender: currentGender, mode: currentMode, fromSection: currentFrom, fromBranch: currentFromBranch, bottom: currentBottom });
   const need = list.filter(i => i.status !== "have");
+  // 可選項目（例：典禮儀式的領呔）照列，但不計入合計。
+  const hasOptional = need.some(i => i.optional);
   let lo = 0, hi = 0;
   const rows = need.map(i => {
-    const p = itemPrice(i.id); lo += p.lo; hi += p.hi;
-    const txt = i.id === "capbadge-cub" ? t.priceIncluded : i.status === "check" ? t.priceDependsGroup
-      : (p.official ? t.priceOfficial(p.lo) : t.priceApprox(p.lo, p.hi));
+    const p = itemPrice(i.id);
+    if(!i.optional){ lo += p.lo; hi += p.hi; }
+    const known = p.official ? t.priceOfficial(p.lo) : t.priceApprox(p.lo, p.hi);
+    const txt = i.optional ? t.priceOptional(known)
+      : i.id === "capbadge-cub" ? t.priceIncluded : i.status === "check" ? t.priceDependsGroup : known;
     const src = p.official && i.shop ? ` <a class="cite" href="${i.shop.url}" target="_blank" rel="noopener">${t.shopCodeLink(i.shop.code)}</a>` : "";
     return `<tr><td>${i.title}</td><td>${txt}${src}</td></tr>`; }).join("");
   el.innerHTML = `<p style="margin:0 0 .6rem">${t.budgetHead(currentMode === "upgrade" ? t.budgetModeUpgrade : t.budgetModeNew)}</p>
     <table class="size-table"><thead><tr><th>${t.budgetColItem}</th><th>${t.budgetColPrice}</th></tr></thead><tbody>${rows}</tbody>
     <tfoot><tr><th>${t.budgetTotal}</th><th>${t.priceApprox(lo, hi)}</th></tr></tfoot></table>
+    ${hasOptional ? `<p class="cite">${t.budgetOptionalNote}</p>` : ""}
     <p class="cite">${t.budgetFootNote}</p>`;
 }
 

@@ -206,6 +206,29 @@ function startServer() {
   window.selectSection('cub');
   check(!!insigniaRow && insigniaRow.style.display === 'none', '幼童軍不顯示支部最高獎章標誌列（獎章本身在所屬支部佩戴）');
 
+  console.log('── 領呔（可選）：深資／樂行典禮儀式 ──');
+  window.selectSection('venture');
+  window.setSource(null);            // 全新加入：可選項目照樣列出
+  window.setBranch('to', 'land');
+  window.setGender('male');
+  const tieItem = () => d.querySelector('#checklist [data-item-id="tie-maroon"]');
+  check(!!tieItem(), '深資（陸）清單列出棗紅色領呔');
+  check(!!tieItem() && tieItem().classList.contains('check'), '領呔列作「向團長查詢」（可選，非必買）');
+  check(!!tieItem() && tieItem().textContent.includes('01073'), '領呔顯示供應社編號 01073');
+  check(!!tieItem() && tieItem().textContent.includes('可選'), '領呔標示「可選：視乎旅團規定」');
+  const tieBudget = $('budget-dynamic').textContent.replace(/\s+/g, '');
+  check(tieBudget.includes('不計入合計'), '預算表標明領呔不計入合計');
+  check(/領呔（棗紅色）[^|]*39/.test(tieBudget), '預算表列出領呔官方價 HK$39');
+  const seaTie = window.buildChecklist({ section:'rover', branch:'sea', gender:'male', mode:'upgrade', fromSection:'venture', fromBranch:'sea' }).find(i => i.id === 'tie-black');
+  check(seaTie && seaTie.status === 'have', '深資海→樂行海：黑色領呔同款可沿用');
+  check(seaTie && seaTie.optional === true, '領呔標記為可選（預算不計入合計）');
+  const landTie = window.buildChecklist({ section:'rover', branch:'land', gender:'male', mode:'upgrade', fromSection:'venture', fromBranch:'land' }).find(i => i.id === 'tie-green');
+  check(landTie && landTie.status === 'check', '深資陸→樂行陸：領呔顏色唔同（棗紅→深綠）另購');
+  window.selectSection('leader');
+  check(!d.querySelector('#checklist [data-item-id^="tie-"]'), '領袖常規制服清單沒有領呔（領帶只屬編號 4／禮服）');
+  window.selectSection('scout');
+  check(!d.querySelector('#checklist [data-item-id^="tie-"]'), '童軍清單沒有領呔（只屬深資／樂行典禮儀式）');
+
   console.log('── 預算 ──');
   check($('budget-dynamic').textContent.includes('合計'), '領袖預算表有合計');
   window.selectSection('cub');
@@ -294,6 +317,14 @@ function startServer() {
   check(!!enTrousers && enTrousers.textContent.indexOf('Ladies’') !== -1, '英文版女裝長褲有英文名稱');
   check(!!enTrousers && !/[\u3400-\u9FFF]/.test(enTrousers.textContent), '英文版女裝長褲無殘留中文');
   window.setBottom('skirt');
+
+  // 領呔（可選）英文版
+  window.selectSection('rover'); window.setSource('venture');
+  window.setBranch('from', 'land'); window.setBranch('to', 'land'); window.setGender('male');
+  const enTie = d.querySelector('#checklist [data-item-id="tie-green"]');
+  check(!!enTie && enTie.textContent.indexOf('Optional') !== -1, '英文版領呔標示 Optional');
+  check(!!enTie && !/[\u3400-\u9FFF]/.test(enTie.textContent), '英文版領呔無殘留中文');
+  check($('budget-dynamic').textContent.indexOf('not counted in the total') !== -1, '英文版預算註明領呔不計入合計');
 
   window.setLang('zh-HK');
   check(window.eval('LANG') === 'zh-HK', '可切回中文');
