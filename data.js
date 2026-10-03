@@ -146,12 +146,26 @@ const ITEMS = {
   "scarf": { title:"旅巾", desc:"由旅團頒發", icon:"🧣", img:"assets/items/scarf.svg", buy:"group",
     detail:`<h4>旅巾</h4><p>旅巾代表所屬旅團，一般於<strong>宣誓／會員章考核通過後由旅團頒發</strong>。同一旅升團可繼續用。</p>
       <ul><li>戴在恤衫領外</li><li>巾圈位於喉部，不可太低</li></ul>
-      <div class="tip">2026 年 8 月 15 日生效的新綱要：深資／樂行制服另設<strong>領呔</strong>選擇（陸＝棗紅／深綠、空＝深藍、海＝黑色），日常集會仍以旅巾為主；是否佩戴領呔以旅團安排為準。</div>` },
+      <div class="tip"><strong>2026 年 8 月 15 日生效的新綱要：深資童軍及樂行童軍於典禮儀式佩戴領呔</strong>（陸：深資＝棗紅色、樂行＝深綠色；海＝黑色；空＝深藍色）。日常集會仍以旅巾為主；是否佩戴、邊啲場合佩戴<strong>以旅團規定為準</strong>（制服清單已把領呔列作可選項目）。</div>` },
   "woggle-cub": { title:"顏色巾圈（幼童軍）", desc:"官方：旅巾（連顏色巾圈）", icon:"⭕", img:"assets/items/woggle-cub.svg", buy:"check",
     detail:`<h4>幼童軍顏色巾圈</h4><p>總會官網幼童軍制服為「旅巾（連<strong>顏色巾圈</strong>）」，顏色代表所屬小隊（六人小隊），由旅團安排。</p>` },
   "woggle-scout": { title:"童軍巾圈", desc:"童軍／深資／樂行／領袖同用", icon:"⭕", buy:"supply",
     detail:`<h4>童軍巾圈</h4><p>總會官網由童軍到領袖全部寫「旅巾（連<strong>童軍巾圈</strong>）」，即升團後可沿用。</p>
       <div class="tip">童軍支部另有「小隊活動巾圈」，需出示童軍標準獎章或以上證書才可購買。</div>` },
+
+  /* ── 領呔（2026 新綱要：深資／樂行典禮儀式・可選） ── */
+  "tie-maroon": { title:"領呔（棗紅色）", desc:"深資童軍（陸）・典禮儀式・可選", icon:"👔", buy:"optional", optional:true,
+    detail:`<h4>領呔（棗紅色）</h4><p><strong>2026 年 8 月 15 日生效的新綱要：深資童軍及樂行童軍於典禮儀式佩戴領呔</strong>——陸：深資＝<strong>棗紅色</strong>、樂行＝深綠色；海童軍＝黑色；空童軍＝深藍色。</p>
+      <p>日常集會仍以<strong>旅巾</strong>為主。是否佩戴、邊啲場合佩戴，<strong>以所屬旅團規定為準</strong>，所以列作可選項目：唔買唔影響日常集會，但旅團如要求典禮儀式統一戴呔就要買。</p>` },
+  "tie-green": { title:"領呔（深綠色）", desc:"樂行童軍（陸）・典禮儀式・可選", icon:"👔", buy:"optional", optional:true,
+    detail:`<h4>領呔（深綠色）</h4><p><strong>樂行童軍（陸）於典禮儀式佩戴深綠色領呔</strong>（深資陸＝棗紅色、海＝黑色、空＝深藍色）。</p>
+      <p>由深資升樂行的陸童軍：如已有棗紅色領呔，<strong>顏色唔同要另購深綠色</strong>；海／空童軍顏色相同，可沿用。是否佩戴以旅團規定為準，屬可選項目。</p>` },
+  "tie-black": { title:"領呔（黑色）", desc:"深資／樂行海童軍・典禮儀式・可選", icon:"👔", buy:"optional", optional:true,
+    detail:`<h4>領呔（黑色）</h4><p><strong>深資及樂行海童軍於典禮儀式佩戴黑色領呔</strong>（陸＝棗紅／深綠、空＝深藍）。深資海升樂行海顏色相同，<strong>可沿用</strong>。</p>
+      <p>日常集會仍以旅巾為主；是否佩戴以旅團規定為準，屬可選項目。</p>` },
+  "tie-navy": { title:"領呔（深藍色）", desc:"深資／樂行空童軍・典禮儀式・可選", icon:"👔", buy:"optional", optional:true,
+    detail:`<h4>領呔（深藍色）</h4><p><strong>深資及樂行空童軍於典禮儀式佩戴深藍色領呔</strong>（陸＝棗紅／深綠、海＝黑色）。深資空升樂行空顏色相同，<strong>可沿用</strong>。</p>
+      <p>日常集會仍以旅巾為主；是否佩戴以旅團規定為準，屬可選項目。</p>` },
 
   /* ── 徽章 ── */
   "badges-youth": { title:"基本徽章", desc:"世界童軍會員章、香港章、地域章、區章、旅章", icon:"🎖️", buy:"mixed",
@@ -169,7 +183,7 @@ const ITEMS = {
   "badges-leader": { title:"領袖基本徽章", desc:"會員章、香港章、香港肩章／旅章、總會總部章／地域章／區章", icon:"🎖️", buy:"mixed",
     detail:`<h4>基本徽章（領袖常規制服）</h4><p>總會官網領袖常規制服（編號 3）徽章：<strong>世界童軍會員章、香港章、香港肩章／旅章、總會總部章／地域章／區章、職級肩章</strong>。</p>
       <p>由青少年支部升任：世界童軍會員章、香港章可沿用；旅章／區章／地域章視乎服務單位，向旅團查詢。</p>
-      <div class="tip">榮譽童軍獎章／貝登堡獎章持有人成為領袖後，可終身佩戴相應的<strong>領袖標誌</strong>。</div>` },
+      <div class="tip">榮譽童軍獎章／貝登堡獎章持有人成為領袖後，可終身佩戴相應的<strong>領袖標誌</strong>。領袖<strong>只保留 1 個支部最高獎章標誌</strong>（同時有幾個就用最高級：榮譽童軍 ＞ 貝登堡 ＞ 總領袖 ＞ 金紫荊）。</div>` },
   "epaulette-rank": { title:"職級肩章", desc:"領袖・視乎委任職級", icon:"🎗️", buy:"check",
     detail:`<h4>職級肩章</h4><p>戴於兩肩肩帶，款式視乎獲委任的職級（見習領袖／助理領袖／領袖／總監等）。獲委任後向旅團查詢應購買哪款。</p>` }
 };
@@ -222,6 +236,11 @@ const SHOP = {
   "scarf":        { id:391,  n:0, code:"07010", name:"香港童軍綠色領巾", price:55, note:"旅巾通常由旅團頒發；供應社只售總會綠色領巾。" },
   "woggle-scout": { id:3489, n:0, code:"01031", name:"頭層皮巾圈 (可調校大小)", price:19 },
   "woggle-cub":   { id:333,  n:0, code:"01062", name:"幼童軍塑膠巾圈", price:4 },
+  /* 領呔（2026 新綱要：深資／樂行典禮儀式；領袖編號 4 領帶制服亦用） */
+  "tie-navy":   { id:336, n:2, code:"01071", name:"深藍色呔", price:39 },
+  "tie-black":  { id:337, n:1, code:"01072", name:"黑色呔", price:39 },
+  "tie-maroon": { id:338, n:1, code:"01073", name:"棗紅色呔", price:39 },
+  "tie-green":  { id:393, n:1, code:"07012", name:"深綠色呔", price:39 },
   /* 小童軍 */
   "gh-clothes":   { id:3084, n:0, name:"小童軍活動服", price:75, note:"旅團如安排自家統一服飾，以旅團安排為準。" },
   /* 徽章 */
@@ -262,25 +281,25 @@ const UNIFORM_SPEC = {
   },
   venture: {
     land: {
-      male:   ["beret-maroon","capbadge-scout","shirt-beige","trousers-olive","belt","socks-short-black","shoes-lace","scarf","woggle-scout","badges-youth"],
-      female: ["beret-maroon","capbadge-scout","shirt-beige","skirt-olive","belt","pantyhose","shoes-heel","scarf","woggle-scout","badges-youth"] },
+      male:   ["beret-maroon","capbadge-scout","shirt-beige","trousers-olive","belt","socks-short-black","shoes-lace","scarf","woggle-scout","badges-youth","tie-maroon"],
+      female: ["beret-maroon","capbadge-scout","shirt-beige","skirt-olive","belt","pantyhose","shoes-heel","scarf","woggle-scout","badges-youth","tie-maroon"] },
     sea: {
-      male:   ["cap-sea-leader-m","capbadge-venture-sea","shirt-white","trousers-navy","belt","socks-short-black","shoes-lace","scarf","woggle-scout","badges-youth"],
-      female: ["cap-sea-leader-f","capbadge-venture-sea","shirt-white","skirt-navy","belt","pantyhose","shoes-heel","scarf","woggle-scout","badges-youth"] },
+      male:   ["cap-sea-leader-m","capbadge-venture-sea","shirt-white","trousers-navy","belt","socks-short-black","shoes-lace","scarf","woggle-scout","badges-youth","tie-black"],
+      female: ["cap-sea-leader-f","capbadge-venture-sea","shirt-white","skirt-navy","belt","pantyhose","shoes-heel","scarf","woggle-scout","badges-youth","tie-black"] },
     air: {
-      male:   ["beret-greyblue","capbadge-scout","shirt-lightblue","trousers-navy","belt","socks-short-black","shoes-lace","scarf","woggle-scout","badges-youth"],
-      female: ["beret-greyblue","capbadge-scout","shirt-lightblue","skirt-navy","belt","pantyhose","shoes-heel","scarf","woggle-scout","badges-youth"] }
+      male:   ["beret-greyblue","capbadge-scout","shirt-lightblue","trousers-navy","belt","socks-short-black","shoes-lace","scarf","woggle-scout","badges-youth","tie-navy"],
+      female: ["beret-greyblue","capbadge-scout","shirt-lightblue","skirt-navy","belt","pantyhose","shoes-heel","scarf","woggle-scout","badges-youth","tie-navy"] }
   },
   rover: {
     land: {
-      male:   ["beret-green","capbadge-scout","shirt-beige","trousers-olive","belt","socks-short-black","shoes-lace","scarf","woggle-scout","badges-youth"],
-      female: ["beret-green","capbadge-scout","shirt-beige","skirt-olive","belt","pantyhose","shoes-heel","scarf","woggle-scout","badges-youth"] },
+      male:   ["beret-green","capbadge-scout","shirt-beige","trousers-olive","belt","socks-short-black","shoes-lace","scarf","woggle-scout","badges-youth","tie-green"],
+      female: ["beret-green","capbadge-scout","shirt-beige","skirt-olive","belt","pantyhose","shoes-heel","scarf","woggle-scout","badges-youth","tie-green"] },
     sea: {
-      male:   ["cap-sea-leader-m","capbadge-rover-sea","shirt-white","trousers-navy","belt","socks-short-black","shoes-lace","scarf","woggle-scout","badges-youth"],
-      female: ["cap-sea-leader-f","capbadge-rover-sea","shirt-white","skirt-navy","belt","pantyhose","shoes-heel","scarf","woggle-scout","badges-youth"] },
+      male:   ["cap-sea-leader-m","capbadge-rover-sea","shirt-white","trousers-navy","belt","socks-short-black","shoes-lace","scarf","woggle-scout","badges-youth","tie-black"],
+      female: ["cap-sea-leader-f","capbadge-rover-sea","shirt-white","skirt-navy","belt","pantyhose","shoes-heel","scarf","woggle-scout","badges-youth","tie-black"] },
     air: {
-      male:   ["beret-greyblue","capbadge-scout","shirt-lightblue","trousers-navy","belt","socks-short-black","shoes-lace","scarf","woggle-scout","badges-youth"],
-      female: ["beret-greyblue","capbadge-scout","shirt-lightblue","skirt-navy","belt","pantyhose","shoes-heel","scarf","woggle-scout","badges-youth"] }
+      male:   ["beret-greyblue","capbadge-scout","shirt-lightblue","trousers-navy","belt","socks-short-black","shoes-lace","scarf","woggle-scout","badges-youth","tie-navy"],
+      female: ["beret-greyblue","capbadge-scout","shirt-lightblue","skirt-navy","belt","pantyhose","shoes-heel","scarf","woggle-scout","badges-youth","tie-navy"] }
   },
   // 領袖：常規制服（編號 3）
   leader: {
@@ -394,6 +413,11 @@ function buildChecklist(opts){
     if(["capbadge-cub","woggle-cub","capbadge-rank","capbadge-sea-leader","epaulette-rank"].includes(id) && status !== "have") status = "check";
     if(id === "patrol-badge") { status = had ? "have" : "check"; }
     if(id === "badges-leader") status = "need";
+    // 可選項目（例：深資／樂行典禮儀式的領呔）：未持有時一律「向團長查詢」，不當作必買。
+    if(it.optional){
+      if(status !== "have") status = "check";
+      note += t.noteOptional;
+    }
 
     const buyLabel = t.buyLabels[it.buy] || "";
     const shop = shopInfo(id);
@@ -406,7 +430,7 @@ function buildChecklist(opts){
         + `<p class="cite">${t.shopPriceNote}</p></div>`;
     }
     return {
-      id, title: it.title, desc: it.desc, icon: it.icon, img: it.img, reference: itemReference(id, gender), status,
+      id, title: it.title, desc: it.desc, icon: it.icon, img: it.img, optional: !!it.optional, reference: itemReference(id, gender), status,
       shop, shopImg: shop ? shop.img : null, shopThumb: shop ? shop.thumb : null, shopUrl: shop ? shop.url : null,
       detail: (it.detail || "") + note + (buyLabel ? `<p class="cite">🛒 ${buyLabel}</p>` : "") + shopHtml
     };
@@ -537,7 +561,7 @@ const BADGES_OVERVIEW = {
       { name: "1️⃣ 幼童軍體驗章", desc: "新綱要新增；體驗與認識，建議約 12–15 個月" },
       { name: "2️⃣ 幼童軍歷奇章", desc: "實踐與行動，建議約 15–18 個月" },
       { name: "3️⃣ 幼童軍高級歷奇章", desc: "技能深化，建議約 15–18 個月" },
-      { name: "⭐ 金紫荊獎章", desc: "<strong>幼童軍支部最高獎章</strong>。所有項目須於 12 歲生日前完成；考獲後只佩戴金紫荊獎章於右胸袋" },
+      { name: "⭐ 金紫荊獎章", desc: "<strong>幼童軍支部最高獎章</strong>。所有項目須於 12 歲生日前完成；考獲後只佩戴金紫荊獎章於右胸袋；<strong>升童軍後獎章本身須拆走</strong>，改戴「金紫荊獎章標誌」於右胸袋上方" },
       { name: "🔗 童軍先修章", desc: "年滿 10 歲半可考取，認識童軍支部活動，為升童軍做準備" }
     ],
     note: "七個學習範疇＝4 核心（童軍技能、關己愛人、國家與社區、童軍家庭，完成獲核心範疇章）＋3 興趣（多元創藝、科學與大自然、運動與愛好）。兩年過渡期至 2028 年 8 月 14 日。"
@@ -553,7 +577,7 @@ const BADGES_OVERVIEW = {
       { name: "1️⃣ 童軍探索獎章", desc: "經歷體驗；建議約 4 個月" },
       { name: "2️⃣ 童軍標準獎章", desc: "知識認知；建議約 8 個月" },
       { name: "3️⃣ 童軍高級獎章", desc: "知識深化、培養責任感；建議約 12 個月" },
-      { name: "⭐ 總領袖獎章", desc: "<strong>童軍支部最高獎章</strong>；培訓策劃能力、訓練領導才能；建議約 12 個月。所有項目須於 16 歲生日前完成" },
+      { name: "⭐ 總領袖獎章", desc: "<strong>童軍支部最高獎章</strong>；培訓策劃能力、訓練領導才能；建議約 12 個月。所有項目須於 16 歲生日前完成；<strong>升深資後獎章本身須拆走</strong>，改戴「總領袖獎章標誌」（可與金紫荊獎章標誌同時佩戴）" },
       { name: "🔗 深資童軍先修章", desc: "年滿 14 歲半可考取；晉升深資前 3 個月可先考深資會員章" }
     ],
     note: "六大訓練範疇：戶外挑戰、身心創藝、探索新知、領袖修養、國際視野、社會責任。海童軍選修「海上活動」、空童軍選修「航空活動」。兩年過渡期至 2028 年 8 月 14 日。"
@@ -568,7 +592,7 @@ const BADGES_OVERVIEW = {
       { name: "🔰 會員章", desc: "新綱要新增；童軍可於晉升深資前 3 個月先考" },
       { name: "🔰 深資童軍肩章", desc: "先決條件，完成後方可考進度性獎章" },
       { name: "1️⃣ 深資童軍獎章", desc: "考獲「活動策劃」「社會服務」「多元技能」「戶外探險」四個段章（舊制為責任／自立／活動／探險），完成任一段章可考該段金帶" },
-      { name: "⭐ 榮譽童軍獎章", desc: "<strong>深資童軍支部最高獎章</strong>（英文 Dragon Scout Award）。考獲深資童軍獎章及四個金帶。持有人日後任領袖可終身佩戴榮譽童軍領袖標誌" }
+      { name: "⭐ 榮譽童軍獎章", desc: "<strong>深資童軍支部最高獎章</strong>（英文 Dragon Scout Award）。考獲深資童軍獎章及四個金帶。<strong>升樂行後獎章本身須拆走</strong>，改戴「榮譽童軍獎章標誌」；持有人日後任領袖可終身佩戴榮譽童軍領袖標誌" }
     ],
     note: "段章及金帶新舊制設三年過渡期（至 2029 年 8 月 14 日）。深資童軍團以執行委員會制度自治自務。"
   },
@@ -582,7 +606,7 @@ const BADGES_OVERVIEW = {
       { name: "🔰 會員章", desc: "平均約 3 個月內完成" },
       { name: "🔰 樂行童軍肩章", desc: "完成樂行童軍啟導班；先修章持有人晉團後視作已完成" },
       { name: "1️⃣ 樂行童軍獎章", desc: "完成 7 項考驗中其中 4 項" },
-      { name: "⭐ 貝登堡獎章", desc: "<strong>樂行童軍支部最高獎章</strong>。完成全部 7 項考驗。持有人日後任領袖可佩戴貝登堡領袖標誌" }
+      { name: "⭐ 貝登堡獎章", desc: "<strong>樂行童軍支部最高獎章</strong>。完成全部 7 項考驗。<strong>任領袖後獎章本身不再佩戴</strong>，改戴貝登堡領袖標誌" }
     ],
     note: "7 項考驗：準領袖培訓、童軍技能、服務、國際視野、興趣及技能、身心健康、挑戰。完成木章訓練第 2 階段可佩戴基維爾巾圈。三年過渡期至 2029 年 8 月 14 日。"
   },
@@ -595,9 +619,10 @@ const BADGES_OVERVIEW = {
       { name: "🎓 木章", desc: "完成領袖訓練後獲頒（木章、木章巾、木章巾圈）" },
       { name: "🏅 長期服務獎勵", desc: "服務章（最少 3 年）、長期服務獎章（15 年）" },
       { name: "🏅 功績獎勵", desc: "優良服務獎章 → 優異服務獎章 → 功績榮譽獎章 → 功績榮譽十字章；銅／銀／金獅勳章" },
-      { name: "⭐ 香港總監嘉許／高級嘉許", desc: "由香港總監批准頒發" }
+      { name: "⭐ 香港總監嘉許／高級嘉許", desc: "由香港總監批准頒發" },
+      { name: "⭐ 支部最高獎章標誌（只戴 1 個）", desc: "領袖只保留最高的一個青少年時期支部最高獎章標誌：<strong>榮譽童軍（深資）＞ 貝登堡（樂行）＞ 總領袖（童軍）＞ 金紫荊（幼童軍）</strong>" }
     ],
-    note: "領袖有 3 個來源：<strong>由深資童軍升任、由樂行童軍升任、全新加入</strong>。榮譽童軍／貝登堡獎章持有人可終身佩戴相應領袖標誌。"
+    note: "領袖有 3 個來源：<strong>由深資童軍升任、由樂行童軍升任、全新加入</strong>。青少年時期的支部專屬徽章須全部拆走；支部最高獎章只可改戴標誌，並只戴最高一個。榮譽童軍／貝登堡獎章持有人可終身佩戴相應領袖標誌。"
   }
 };
 
@@ -621,7 +646,7 @@ const TRANSITIONS = {
       { q: "先揀陸／海／空", a: "童軍支部分<strong>童軍、海童軍及空童軍</strong>，制服顏色不同：陸＝杏色恤衫＋草青色短褲／裙褲＋深綠色軟帽；海＝白色恤衫＋深藍色短褲／裙褲＋白頂帽；空＝淺藍色恤衫＋深藍色短褲／裙褲＋灰藍色軟帽。升團前先問清楚所屬旅團是哪一種。" },
       { q: "升陸童軍要買什麼？", a: "必買：<strong>深綠色軟帽、童軍帽章、童軍巾圈</strong>。恤衫、短褲／裙褲、皮帶、長襪、皮鞋與幼童軍<strong>同款</strong>，合身可沿用。" },
       { q: "升海／空童軍要買什麼？", a: "幾乎全套新買：白色（海）／淺藍色（空）恤衫、深藍色短褲／裙褲、深藍色長襪、白頂帽（海）／灰藍色軟帽（空）、童軍巾圈。只有皮帶、皮鞋、旅巾可沿用。" },
-      { q: "徽章點處理？", a: "拆走幼童軍進度性獎章、活動徽章、隊長章。<strong>金紫荊獎章屬幼童軍獎章，升童軍後不再佩戴獎章本身</strong>，但可購買「金紫荊獎章標誌」（需出示證書副本）佩戴於右胸袋上方。服務年星保留。世界童軍會員章、香港章、地域章、區章、旅章可沿用。" },
+      { q: "徽章點處理？", a: "拆走幼童軍進度性獎章、活動徽章、隊長章。<strong>金紫荊獎章屬幼童軍支部獎章，升童軍後獎章本身須拆走</strong>，但可購買「<strong>金紫荊獎章標誌</strong>」（出示金紫荊獎章證書副本，每次最多 3 枚）佩戴於右胸袋上方；此後升深資、樂行以至任領袖仍可佩戴。服務年星保留。世界童軍會員章、香港章、地域章、區章、旅章可沿用。" },
       { q: "小隊章？", a: "童軍開始有小隊制，<strong>小隊章由旅團頒發或在供應社購買</strong>（毋須出示文件），佩戴於右袖。" }
     ]
   },
@@ -630,9 +655,9 @@ const TRANSITIONS = {
     items: [
       { q: "升團條件？", a: "符合深資童軍年齡（15–20 歲）即可，毋須先考總領袖獎章。童軍身分於年滿 16 歲當日自動結束。年滿 14 歲半的童軍可先考<strong>深資童軍先修章</strong>；2026 年 8 月 15 日起，童軍可在<strong>晉升深資前 3 個月</strong>先考深資會員章。" },
       { q: "先揀陸／海／空", a: "深資童軍同樣分<strong>深資童軍、深資海童軍、深資空童軍</strong>。海／空的深資改用<strong>海童軍領袖白頂帽</strong>（與童軍支部的白頂帽不同款）／灰藍色軟帽。" },
-      { q: "升陸深資要買什麼？", a: "必買：<strong>棗紅色軟帽、草青色長褲（男）、黑色短襪（男）</strong>；女團員下半身任選<strong>草青色半截裙（配肉色襪褲＋黑色中跟皮鞋）</strong>或<strong>草青色長褲（配黑色短襪＋黑色綁帶皮鞋）</strong>。恤衫、皮帶、旅巾、童軍巾圈、童軍帽章可沿用。新綱要另設領呔（陸＝棗紅色），日常仍以旅巾為主。" },
+      { q: "升陸深資要買什麼？", a: "必買：<strong>棗紅色軟帽、草青色長褲（男）、黑色短襪（男）</strong>；女團員下半身任選<strong>草青色半截裙（配肉色襪褲＋黑色中跟皮鞋）</strong>或<strong>草青色長褲（配黑色短襪＋黑色綁帶皮鞋）</strong>。恤衫、皮帶、旅巾、童軍巾圈、童軍帽章可沿用。<br><strong>典禮儀式用領呔</strong>（陸＝棗紅色、海＝黑色、空＝深藍色）為<strong>可選項目</strong>，視乎旅團規定；日常集會仍以旅巾為主。" },
       { q: "新綱要段章？", a: "2026 年 8 月 15 日生效的新綱要新增<strong>深資會員章</strong>，並把段章改為「活動策劃」「社會服務」「多元技能」「戶外探險」；舊制段章設三年過渡期至 2029 年 8 月 14 日。" },
-      { q: "徽章點處理？", a: "拆走童軍進度性獎章、專科徽章、小隊章、隊長章。深資童軍<strong>不會有金紫荊獎章</strong>；如童軍時期考獲總領袖獎章，可按總會安排佩戴支部最高獎章標誌（向旅團查詢）。服務年星保留。" }
+      { q: "徽章點處理？", a: "拆走童軍進度性獎章、專科徽章、小隊章、隊長章，<strong>以及總領袖獎章（獎章本身屬童軍支部，升團後不可再佩戴）</strong>。<br>如童軍時期考獲總領袖獎章，可改戴「<strong>總領袖獎章標誌</strong>」（即支部最高獎章標誌）於右胸袋上方；幼童軍時期考獲的「金紫荊獎章標誌」亦可<strong>同時佩戴</strong>，兩個標誌可以一齊有。服務年星保留。" }
     ]
   },
   rover: {
@@ -640,9 +665,9 @@ const TRANSITIONS = {
     items: [
       { q: "升團條件？", a: "符合樂行童軍年齡（18–25 歲）即可，毋須先考榮譽童軍獎章。深資童軍身分於年滿 21 歲當日自動結束。" },
       { q: "先揀陸／海／空", a: "樂行童軍同樣分<strong>樂行童軍、樂行海童軍、樂行空童軍</strong>。" },
-      { q: "升陸樂行要買什麼？", a: "只需<strong>把棗紅色軟帽換成深綠色軟帽</strong>，童軍帽章可移過去。其餘（恤衫、長褲／半截裙、皮帶、襪、皮鞋、旅巾、巾圈）全部同款可沿用。" },
+      { q: "升陸樂行要買什麼？", a: "只需<strong>把棗紅色軟帽換成深綠色軟帽</strong>，童軍帽章可移過去。其餘（恤衫、長褲／半截裙、皮帶、襪、皮鞋、旅巾、巾圈）全部同款可沿用。<br><strong>典禮儀式用領呔</strong>：陸樂行＝<strong>深綠色</strong>（深資陸為棗紅色，顏色唔同要另購）；海／空顏色相同可沿用。屬<strong>可選項目</strong>，視乎旅團規定。" },
       { q: "升海／空樂行要買什麼？", a: "海：白頂帽可沿用；官方手冊將<strong>深資／樂行海童軍帽章</strong>列為同一款，升團前向旅團確認。空：全部同款，毋須購買。" },
-      { q: "徽章點處理？", a: "拆走深資童軍肩章、段章及金帶、深資童軍獎章。如考獲<strong>榮譽童軍獎章</strong>，按總會安排佩戴（向旅團查詢）。服務年星保留。" },
+      { q: "徽章點處理？", a: "拆走深資童軍肩章、段章及金帶、深資童軍獎章，<strong>以及榮譽童軍獎章（獎章本身屬深資童軍支部，升團後不可再佩戴）</strong>。<br>如考獲榮譽童軍獎章，可改戴「<strong>榮譽童軍獎章標誌</strong>」於右胸袋上方；同時持有的金紫荊、總領袖獎章標誌亦可一齊佩戴。服務年星保留。" },
       { q: "新綱要獎章？", a: "2026 年 8 月 15 日生效的新綱要設 7 項考驗（準領袖培訓、童軍技能、服務、國際視野、興趣及技能、身心健康、挑戰）：完成其中 4 項獲<strong>樂行童軍獎章</strong>，完成全部 7 項獲<strong>貝登堡獎章</strong>；舊制設三年過渡期至 2029 年 8 月 14 日。完成木章訓練第 2 階段可佩戴基維爾巾圈。" }
     ]
   },
@@ -653,8 +678,9 @@ const TRANSITIONS = {
       { q: "先揀陸／海／空", a: "領袖制服同樣分<strong>陸、海、空</strong>：陸＝杏色恤衫＋草青色長褲／半截裙＋深綠色軟帽（女：深綠色金邊硬帽）；海＝白色恤衫＋深藍色長褲／半截裙＋海童軍領袖白頂帽；空＝淺藍色恤衫＋深藍色長褲／半截裙＋灰藍色軟帽。" },
       { q: "要買齊 6 款制服嗎？", a: "不需要。新任領袖先買<strong>常規制服（編號 3）</strong>已足夠日常集會。禮服（編號 1）、晚禮服（編號 2）、領帶制服（編號 4）、短褲制服（編號 5）、長褲制服（編號 6）只在特定場合穿著。" },
       { q: "由深資／樂行（陸）升任要買什麼？", a: "男：恤衫、長褲、皮帶、短襪、皮鞋、旅巾、巾圈全部同款可沿用，只需買<strong>職級帽章</strong>（深綠色軟帽：樂行可沿用；深資的棗紅帽要換）。女：要買<strong>深綠色金邊硬帽</strong>＋職級帽章。另加職級肩章、香港肩章／旅章。" },
-      { q: "領袖領帶是什麼顏色？", a: "只有<strong>領帶制服（編號 4）及禮服</strong>才戴領帶：陸＝深綠色；海＝黑色；空＝深藍色。常規制服戴旅巾。" },
-      { q: "榮譽童軍／貝登堡獎章持有人", a: "成為領袖後可終身佩戴<strong>榮譽童軍領袖標誌</strong>或<strong>貝登堡領袖標誌</strong>（兩者皆有則只戴榮譽童軍標誌）。青少年時期的寰宇童軍章可繼續戴於右袖。" }
+      { q: "領袖領帶是什麼顏色？", a: "<strong>領袖</strong>只有<strong>領帶制服（編號 4）及禮服</strong>才戴領帶：陸＝深綠色；海＝黑色；空＝深藍色；常規制服（編號 3）戴旅巾。（<strong>深資／樂行童軍於典禮儀式亦戴領呔</strong>，顏色見升團章節。）" },
+      { q: "青少年時期的徽章點處理？", a: "拆走青少年支部的專屬徽章：進度性獎章、專科／活動徽章、小隊章、隊長章、深資／樂行童軍肩章、段章及金帶，<strong>支部最高獎章本身亦不可再佩戴</strong>。世界童軍會員章、香港章、旅章／香港肩章可沿用；服務年星繼續保留。" },
+      { q: "支部最高獎章標誌（領袖只戴 1 個）", a: "領袖可以佩戴在青少年時期考獲的支部最高獎章標誌，但<strong>只保留 1 個</strong>：同時持有幾個，只佩戴最高級的一個，由高至低為 <strong>深資「榮譽童軍」標誌 ＞ 樂行「貝登堡」標誌 ＞ 童軍「總領袖」標誌 ＞ 幼童軍「金紫荊」標誌</strong>（V ＞ R ＞ S ＞ C）。榮譽童軍／貝登堡獎章持有人可終身佩戴相應的領袖標誌，購買時須出示有效領袖委任書副本及獎章證書副本。青少年時期的寰宇童軍章可繼續戴於右袖。" }
     ]
   }
 };
@@ -673,26 +699,26 @@ const BADGE_TIMELINES = {
     { stage: "1", name: "幼童軍體驗章", age: "約 12–15 個月", color: "var(--cub)", desc: "新綱要新增；體驗與認識" },
     { stage: "2", name: "幼童軍歷奇章", age: "約 15–18 個月", color: "var(--cub)", desc: "實踐與行動" },
     { stage: "3", name: "幼童軍高級歷奇章", age: "約 15–18 個月", color: "var(--cub)", desc: "技能深化" },
-    { stage: "⭐", name: "金紫荊獎章", age: "12 歲生日前完成", color: "#FFD700", desc: "幼童軍支部最高獎章" }
+    { stage: "⭐", name: "金紫荊獎章", age: "12 歲生日前完成", color: "#FFD700", desc: "幼童軍支部最高獎章；升童軍後改戴標誌" }
   ],
   scout: [
     { stage: "🔰", name: "會員章", age: "約 1.5 個月", color: "var(--scout)", desc: "含「保護童軍成員免受傷害」" },
     { stage: "1", name: "童軍探索獎章", age: "約 4 個月", color: "var(--scout)", desc: "經歷體驗、獲取成功感" },
     { stage: "2", name: "童軍標準獎章", age: "約 8 個月", color: "var(--scout)", desc: "知識認知" },
     { stage: "3", name: "童軍高級獎章", age: "約 12 個月", color: "var(--scout)", desc: "知識深化、培養責任感" },
-    { stage: "⭐", name: "總領袖獎章", age: "約 12 個月", color: "#FFD700", desc: "童軍支部最高獎章；16 歲生日前完成" }
+    { stage: "⭐", name: "總領袖獎章", age: "約 12 個月", color: "#FFD700", desc: "童軍支部最高獎章；16 歲生日前完成，升深資後改戴標誌" }
   ],
   venture: [
     { stage: "🔰", name: "會員章", age: "入團後", color: "var(--venture)", desc: "新綱要新增" },
     { stage: "🔰", name: "深資童軍肩章", age: "先決條件", color: "var(--venture)", desc: "完成後方可考進度性獎章" },
     { stage: "1", name: "深資童軍獎章", age: "四段章完成後", color: "var(--venture)", desc: "活動策劃、社會服務、多元技能、戶外探險段章" },
-    { stage: "⭐", name: "榮譽童軍獎章", age: "深資獎章＋四金帶", color: "#FFD700", desc: "深資童軍支部最高獎章" }
+    { stage: "⭐", name: "榮譽童軍獎章", age: "深資獎章＋四金帶", color: "#FFD700", desc: "深資童軍支部最高獎章；升樂行後改戴標誌" }
   ],
   rover: [
     { stage: "🔰", name: "會員章", age: "約 3 個月", color: "var(--rover)", desc: "認識童軍運動及樂行支部" },
     { stage: "🔰", name: "樂行童軍肩章", age: "約 3–6 個月", color: "var(--rover)", desc: "完成啟導班" },
     { stage: "1", name: "樂行童軍獎章", age: "7 項中完成 4 項", color: "var(--rover)", desc: "約 12–18 個月" },
-    { stage: "⭐", name: "貝登堡獎章", age: "完成全部 7 項", color: "#FFD700", desc: "樂行童軍支部最高獎章" }
+    { stage: "⭐", name: "貝登堡獎章", age: "完成全部 7 項", color: "#FFD700", desc: "樂行童軍支部最高獎章；任領袖後改戴領袖標誌" }
   ],
   leader: [
     { stage: "🎓", name: "木章", age: "完成領袖訓練", color: "var(--leader)", desc: "木章、木章巾、木章巾圈" },
@@ -790,7 +816,7 @@ const LOCALES = {
 
     /* ── 沿用／新買提示 ── */
     noteReuse: (from) => `<div class="tip">✅ 與${from}<strong>同一款</strong>，如狀況良好可沿用。</div>`,
-    noteBadgesReuse: `<div class="tip">✅ 世界童軍會員章、香港章、地域章、區章、旅章可沿用（同一旅）。<br><strong>要拆走</strong>舊支部的進度性獎章、活動／專科徽章、隊長章。服務年星保留。</div>`,
+    noteBadgesReuse: `<div class="tip">✅ 世界童軍會員章、香港章、地域章、區章、旅章可沿用（同一旅）。<br><strong>要拆走</strong>舊支部的進度性獎章、活動／專科徽章、隊長章；舊支部最高獎章亦只可改戴「支部最高獎章標誌」於右胸袋上方。服務年星保留。</div>`,
     noteScarfReuse: `<div class="tip">✅ 同一旅升團可繼續用原有旅巾。</div>`,
     noteNeed: (from) => `<div class="warn">🆕 ${from}沒有此款，需要購買／更換。</div>`,
     buyLabels: {
@@ -800,8 +826,10 @@ const LOCALES = {
       group: "由旅團頒發",
       check: "向旅團／區查詢",
       mixed: "供應社購買；旅章／區章／地域章向旅團查詢",
-      "group-or-supply": "由旅團頒發／供應社購買"
+      "group-or-supply": "由旅團頒發／供應社購買",
+      optional: "可選：視乎旅團規定"
     },
+    noteOptional: `<div class="tip">💡 <strong>可選項目</strong>：官方於典禮儀式佩戴（例如領呔），是否佩戴／購買<strong>以所屬旅團規定為準</strong>；唔買唔影響日常集會。</div>`,
 
     /* ── 供應社產品框 ── */
     shopBoxTitle: "🛒 供應社官方產品",
@@ -817,12 +845,14 @@ const LOCALES = {
     priceDependsGroup: "視乎旅團安排",
     priceOfficial: (p) => `HK$${p}`,
     priceApprox: (lo, hi) => lo === hi ? `約 HK$${lo}` : `約 HK$${lo}–${hi}`,
+    priceOptional: (price) => `可選 ${price}（不計入合計）`,
     shopCodeLink: (code) => ` 供應社 ${code} ↗`,
     budgetModeUpgrade: "升團補購", budgetModeNew: "全新全購",
     budgetHead: (mode) => `你而家揀嘅係<strong>${mode}</strong>，需要準備嘅物品如下：`,
     budgetColItem: "物品", budgetColPrice: "約略價錢",
     budgetTotal: "合計（不含旅團頒發項目）",
     budgetFootNote: "標有「供應社編號」的價錢為 hkscoutshop.org.hk 網站 2026 年 9 月標示零售價，其餘為約略參考；實際以香港童軍物品供應社為準。皮鞋、短襪、襪褲可於一般商店購買。",
+    budgetOptionalNote: "「可選」項目（深資／樂行典禮儀式的領呔）不計入合計——是否購買以所屬旅團規定為準。",
 
     /* ── 官方制服參考圖 ── */
     officialRefTitle: (name) => `${name} 官方制服參考圖`,

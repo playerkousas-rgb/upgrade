@@ -152,12 +152,26 @@ const LOCALE_EN = {
     "scarf": { title:"Group scarf", desc:"Issued by the Group", icon:"🧣", img:"assets/items/scarf.svg", buy:"group",
       detail:`<h4>Group scarf</h4><p>The Group scarf represents your Group and is normally <strong>presented by the Group after your investiture / membership badge assessment</strong>. It can be carried over if you move up within the same Group.</p>
         <ul><li>Worn outside the shirt collar</li><li>The woggle sits at the throat — never lower</li></ul>
-        <div class="tip">Under the new scheme effective 15 August 2026, Venture / Rover uniforms add a <strong>necktie</strong> option (Land = maroon / green, Air = navy, Sea = black). The Group scarf remains the everyday norm — whether a tie is worn follows your Group’s arrangement.</div>` },
+        <div class="tip"><strong>Under the scheme effective 15 August 2026, Venture Scouts and Rover Scouts wear a necktie for ceremonial occasions</strong> (Land: Venture = maroon, Rover = dark green; Sea = black; Air = navy blue). The Group scarf remains the everyday norm — whether a tie is worn, and on which occasions, <strong>follows your Group’s arrangement</strong> (the uniform checklist lists the tie as an optional item).</div>` },
     "woggle-cub": { title:"Colour woggle (Cub Scout)", desc:"Official: Group scarf (with a colour woggle)", icon:"⭕", img:"assets/items/woggle-cub.svg", buy:"check",
       detail:`<h4>Cub Scout colour woggle</h4><p>The Association website lists the Cub Scout uniform as “Group scarf (with a <strong>colour woggle</strong>)”; the colour stands for your Six and is arranged by the Group.</p>` },
     "woggle-scout": { title:"Scout woggle", desc:"Shared by Scout / Venture / Rover / Leader", icon:"⭕", buy:"supply",
       detail:`<h4>Scout woggle</h4><p>The Association website lists “Group scarf (with the <strong>Scout woggle</strong>)” for every Section from Scout to Leader, so it can be carried over when you move up.</p>
         <div class="tip">The Scout Section also has a “patrol activity woggle”, which may only be bought on production of the Scout Standard Award certificate or above.</div>` },
+
+    /* ── Neckties (2026 scheme: Venture / Rover ceremonial dress · optional) ── */
+    "tie-maroon": { title:"Necktie (maroon)", desc:"Venture Scout (Land) · ceremonial dress · optional", icon:"👔", buy:"optional", optional:true,
+      detail:`<h4>Necktie (maroon)</h4><p><strong>Under the scheme effective 15 August 2026, Venture Scouts and Rover Scouts wear a necktie for ceremonial occasions</strong> — Land: Venture = <strong>maroon</strong>, Rover = dark green; Sea = black; Air = navy blue.</p>
+        <p>The Group scarf remains the everyday norm. Whether a tie is worn, and on which occasions, <strong>follows your Group’s arrangement</strong>, so it is listed as an optional item: not buying one will not affect ordinary meetings, but buy one if your Group requires a tie for ceremonies.</p>` },
+    "tie-green": { title:"Necktie (dark green)", desc:"Rover Scout (Land) · ceremonial dress · optional", icon:"👔", buy:"optional", optional:true,
+      detail:`<h4>Necktie (dark green)</h4><p><strong>Rover Scouts (Land) wear a dark green necktie for ceremonial occasions</strong> (Venture Land = maroon; Sea = black; Air = navy blue).</p>
+        <p>Moving up from Venture (Land) with a maroon tie: <strong>the colour differs, so a dark green one must be bought</strong>; Sea / Air keep the same colour and can carry theirs over. Whether a tie is worn follows your Group’s arrangement, so it is an optional item.</p>` },
+    "tie-black": { title:"Necktie (black)", desc:"Venture / Rover Sea Scouts · ceremonial dress · optional", icon:"👔", buy:"optional", optional:true,
+      detail:`<h4>Necktie (black)</h4><p><strong>Venture and Rover Sea Scouts wear a black necktie for ceremonial occasions</strong> (Land = maroon / dark green; Air = navy blue). Venture Sea to Rover Sea keeps the same colour, so it <strong>can be carried over</strong>.</p>
+        <p>The Group scarf remains the everyday norm; whether a tie is worn follows your Group’s arrangement, so it is an optional item.</p>` },
+    "tie-navy": { title:"Necktie (navy blue)", desc:"Venture / Rover Air Scouts · ceremonial dress · optional", icon:"👔", buy:"optional", optional:true,
+      detail:`<h4>Necktie (navy blue)</h4><p><strong>Venture and Rover Air Scouts wear a navy blue necktie for ceremonial occasions</strong> (Land = maroon / dark green; Sea = black). Venture Air to Rover Air keeps the same colour, so it <strong>can be carried over</strong>.</p>
+        <p>The Group scarf remains the everyday norm; whether a tie is worn follows your Group’s arrangement, so it is an optional item.</p>` },
 
     /* ── Badges ── */
     "badges-youth": { title:"Basic badges", desc:"World Scout Membership Badge, Hong Kong Badge, Region, District and Group badges", icon:"🎖️", buy:"mixed",
@@ -175,7 +189,7 @@ const LOCALE_EN = {
     "badges-leader": { title:"Basic badges (Leaders)", desc:"Membership Badge, Hong Kong Badge, Hong Kong shoulder badge / Group badge, HQ / Region / District badge", icon:"🎖️", buy:"mixed",
       detail:`<h4>Basic badges (Leader’s ordinary uniform)</h4><p>The Association website lists the badges for the Leader’s ordinary uniform (No. 3) as: <strong>World Scout Membership Badge, Hong Kong Badge, Hong Kong shoulder badge / Group badge, HQ / Region / District badge and rank epaulettes</strong>.</p>
         <p>Moving up from a youth Section: the World Scout Membership Badge and Hong Kong Badge can be carried over; the Group / District / Region badge depends on your service unit — check with your Group.</p>
-        <div class="tip">Holders of the Dragon Scout Award / Baden-Powell Award may wear the corresponding <strong>Leader’s insignia</strong> for life after becoming a Leader.</div>` },
+        <div class="tip">Holders of the Dragon Scout Award / Baden-Powell Award may wear the corresponding <strong>Leader’s insignia</strong> for life after becoming a Leader. A Leader <strong>keeps only 1 Section top award insignia</strong> (if you hold several, wear the highest: Dragon Scout ＞ Baden-Powell ＞ Chief Scout’s ＞ Golden Bauhinia).</div>` },
     "epaulette-rank": { title:"Rank epaulettes", desc:"Leaders · depends on the rank appointed", icon:"🎗️", buy:"check",
       detail:`<h4>Rank epaulettes</h4><p>Worn on both shoulder straps; the design depends on the rank to which you are appointed (Probationary Leader / Assistant Leader / Leader / Commissioner and so on). Ask your Group which ones to buy after appointment.</p>` }
   },
@@ -222,6 +236,11 @@ const LOCALE_EN = {
     "scarf":        { id:391,  n:0, code:"07010", name:"Hong Kong Scout green neckerchief", price:55, note:"Group scarves are normally presented by the Group; the Scout Shop only sells the Association green neckerchief." },
     "woggle-scout": { id:3489, n:0, code:"01031", name:"Full-grain leather woggle (adjustable)", price:19 },
     "woggle-cub":   { id:333,  n:0, code:"01062", name:"Cub Scout plastic woggle", price:4 },
+    /* Neckties (2026 scheme: Venture / Rover ceremonial dress; also Leader No. 4 tie uniform) */
+    "tie-navy":   { id:336, n:2, code:"01071", name:"Navy blue tie", price:39 },
+    "tie-black":  { id:337, n:1, code:"01072", name:"Black tie", price:39 },
+    "tie-maroon": { id:338, n:1, code:"01073", name:"Maroon tie", price:39 },
+    "tie-green":  { id:393, n:1, code:"07012", name:"Dark green tie", price:39 },
     /* Grasshopper Scout */
     "gh-clothes":   { id:3084, n:0, name:"Grasshopper Scout activity shirt", price:75, note:"If the Group arranges its own uniform dress, the Group’s arrangement prevails." },
     /* Badges */
@@ -293,7 +312,7 @@ const LOCALE_EN = {
         { name: "1️⃣ Cub Scout Experience Award", desc: "New; experiencing and knowing, about 12–15 months" },
         { name: "2️⃣ Cub Scout Adventure Award", desc: "Practising and acting, about 15–18 months" },
         { name: "3️⃣ Cub Scout Advanced Adventure Award", desc: "Deepening skills, about 15–18 months" },
-        { name: "⭐ Golden Bauhinia Award", desc: "<strong>The Cub Scout Section’s top award</strong>. All items must be completed before the 12th birthday. Once earned, only the Golden Bauhinia Award is worn, on the right breast pocket" },
+        { name: "⭐ Golden Bauhinia Award", desc: "<strong>The Cub Scout Section’s top award</strong>. All items must be completed before the 12th birthday. Once earned, only the Golden Bauhinia Award is worn, on the right breast pocket; <strong>the award itself is removed when moving up to Scout</strong>, and the Golden Bauhinia Award insignia is worn above the right breast pocket instead" },
         { name: "🔗 Scout Link Award", desc: "Can be earned from age 10½; introduces Scout Section activities and prepares you for moving up" }
       ],
       note: "Seven learning areas = 4 core (Scoutcraft, caring for self & others, country & community, Scout family — each earns a core-area badge) + 3 interest (arts, science & nature, sport & hobbies). Two-year transition until 14 August 2028."
@@ -308,7 +327,7 @@ const LOCALE_EN = {
         { name: "1️⃣ Scout Pathfinder Award", desc: "Experiencing; about 4 months" },
         { name: "2️⃣ Scout Standard Award", desc: "Knowledge; about 8 months" },
         { name: "3️⃣ Scout Advanced Award", desc: "Deeper knowledge and responsibility; about 12 months" },
-        { name: "⭐ Chief Scout’s Award", desc: "<strong>The Scout Section’s top award</strong>; planning and leadership; about 12 months. All items must be completed before the 16th birthday" },
+        { name: "⭐ Chief Scout’s Award", desc: "<strong>The Scout Section’s top award</strong>; planning and leadership; about 12 months. All items must be completed before the 16th birthday; <strong>the award itself is removed when moving up to Venture</strong>, and the Chief Scout’s Award insignia is worn instead (it may be worn together with the Golden Bauhinia Award insignia)" },
         { name: "🔗 Venture Scout Link Award", desc: "Can be earned from age 14½; a Scout may start the Venture Membership badge up to 3 months before moving up" }
       ],
       note: "Six training areas: outdoor challenge, mind-body-arts, exploring new knowledge, leadership, international outlook and social responsibility. Sea Scouts take “Water Activities”, Air Scouts take “Air Activities”. Two-year transition until 14 August 2028."
@@ -322,7 +341,7 @@ const LOCALE_EN = {
         { name: "🔰 Membership badge", desc: "New; a Scout may earn it up to 3 months before moving up" },
         { name: "🔰 Venture Scout shoulder badge", desc: "A prerequisite — must be completed before any progressive badge" },
         { name: "1️⃣ Venture Scout Award", desc: "Earn the four stage badges: Activity Planning, Community Service, Versatile Skills and Outdoor Adventure (formerly Responsibility / Self-reliance / Activity / Exploration); each stage badge leads to its gold cord" },
-        { name: "⭐ Dragon Scout Award", desc: "<strong>The Venture Scout Section’s top award</strong>. Requires the Venture Scout Award and four gold cords. Holders may wear the Dragon Scout Leader’s insignia for life if they later become Leaders" }
+        { name: "⭐ Dragon Scout Award", desc: "<strong>The Venture Scout Section’s top award</strong>. Requires the Venture Scout Award and four gold cords. <strong>The award itself is removed when moving up to Rover</strong>, replaced by the Dragon Scout Award insignia; holders may wear the Dragon Scout Leader’s insignia for life if they later become Leaders" }
       ],
       note: "Stage badges and gold cords have a three-year transition until 14 August 2029. Venture Scout Units are self-governing through an executive committee."
     },
@@ -335,7 +354,7 @@ const LOCALE_EN = {
         { name: "🔰 Membership badge", desc: "About 3 months" },
         { name: "🔰 Rover Scout shoulder badge", desc: "Complete the Rover induction course; Link-badge holders are treated as done on joining" },
         { name: "1️⃣ Rover Scout Award", desc: "Complete any 4 of the 7 challenge areas" },
-        { name: "⭐ Baden-Powell Award", desc: "<strong>The Rover Scout Section’s top award</strong>. Complete all 7 challenge areas. Holders may wear the Baden-Powell Leader’s insignia if they later become Leaders" }
+        { name: "⭐ Baden-Powell Award", desc: "<strong>The Rover Scout Section’s top award</strong>. Complete all 7 challenge areas. <strong>The award itself is no longer worn once you become a Leader</strong> — the Baden-Powell Leader’s insignia is worn instead" }
       ],
       note: "7 challenge areas: prospective-leader training, Scout skills, service, international outlook, interests & skills, well-being and challenge. Completing Wood Badge stage 2 allows the Gilwell woggle. Three-year transition until 14 August 2029."
     },
@@ -347,9 +366,10 @@ const LOCALE_EN = {
         { name: "🎓 Wood Badge", desc: "Awarded on completion of Leader training (wood badge, wood badge neckerchief, wood badge woggle)" },
         { name: "🏅 Long service awards", desc: "Service badge (minimum 3 years), Long Service Medal (15 years)" },
         { name: "🏅 Meritorious awards", desc: "Good Service Medal → Distinguished Service Medal → Meritorious Service Medal → Meritorious Service Cross; Bronze / Silver / Gold Lion Awards" },
-        { name: "⭐ Chief Commissioner’s Commendation / Senior Commendation", desc: "Awarded with the approval of the Chief Commissioner" }
+        { name: "⭐ Chief Commissioner’s Commendation / Senior Commendation", desc: "Awarded with the approval of the Chief Commissioner" },
+        { name: "⭐ Section top award insignia (only 1)", desc: "A Leader keeps only the highest Section top award insignia earned as a youth member: <strong>Dragon Scout (Venture) ＞ Baden-Powell (Rover) ＞ Chief Scout’s (Scout) ＞ Golden Bauhinia (Cub)</strong>" }
       ],
-      note: "Leaders come from 3 routes: <strong>promoted from Venture Scout, promoted from Rover Scout, or joining fresh</strong>. Holders of the Dragon Scout Award / Baden-Powell Award may wear the corresponding Leader’s insignia for life."
+      note: "Leaders come from 3 routes: <strong>promoted from Venture Scout, promoted from Rover Scout, or joining fresh</strong>. All Section-specific youth badges are removed; a Section top award may only be worn as its insignia, and only the highest one. Holders of the Dragon Scout Award / Baden-Powell Award may wear the corresponding Leader’s insignia for life."
     }
   },
 
@@ -370,7 +390,7 @@ const LOCALE_EN = {
         { q: "Pick Land / Sea / Air first", a: "The Scout Section is divided into <strong>Scout, Sea Scout and Air Scout</strong>, each with different uniform colours: Land = beige shirt + olive green shorts / culottes + dark green beret; Sea = white shirt + navy blue shorts / culottes + white-top cap; Air = light blue shirt + navy blue shorts / culottes + grey-blue beret. Ask your Group which one it is before you move up." },
         { q: "What do I need to buy for Land Scout?", a: "Must buy: <strong>dark green beret, Scout cap badge and Scout woggle</strong>. The shirt, shorts / culottes, belt, long socks and shoes are the <strong>same model</strong> as for Cub Scouts and can be carried over if they still fit." },
         { q: "What do I need to buy for Sea / Air Scout?", a: "Almost everything is new: white (Sea) / light blue (Air) shirt, navy blue shorts / culottes, navy blue long socks, white-top cap (Sea) / grey-blue beret (Air), and a Scout woggle. Only the belt, shoes and Group scarf can be carried over." },
-        { q: "What happens to my badges?", a: "Remove the Cub Scout progressive badges, activity badges and Sixer / Seconder badges. <strong>The Golden Bauhinia Award is a Cub Scout award and the award itself is no longer worn after moving up</strong>, but you may buy the “Golden Bauhinia Award insignia” (on production of a copy of the certificate) and wear it above the right breast pocket. Service stars are kept. The World Scout Membership Badge, Hong Kong Badge, Region, District and Group badges can be carried over." },
+        { q: "What happens to my badges?", a: "Remove the Cub Scout progressive badges, activity badges and Sixer / Seconder badges. <strong>The Golden Bauhinia Award belongs to the Cub Scout Section, so the award itself must be removed when moving up</strong>; you may then buy the “Golden Bauhinia Award insignia” (on production of a copy of the Golden Bauhinia certificate, up to 3 at a time) and wear it above the right breast pocket. It may still be worn in Venture, Rover and as a Leader. Service stars are kept. The World Scout Membership Badge, Hong Kong Badge, Region, District and Group badges can be carried over." },
         { q: "What about patrol badges?", a: "The patrol system starts in the Scout Section; <strong>patrol badges are issued by the Group or bought at the Scout Shop</strong> (no documents required) and worn on the right sleeve." }
       ]
     },
@@ -379,9 +399,9 @@ const LOCALE_EN = {
       items: [
         { q: "What are the conditions for moving up?", a: "You simply need to be within the Venture Scout age range (15–20); you do not need to earn the Chief Scout’s Award first. Scout membership ends automatically on your 16th birthday. Scouts aged 14½ or over can earn the <strong>Venture Scout Link Award</strong> first; from 15 August 2026 a Scout may also start the <strong>Venture Membership badge up to 3 months before moving up</strong>." },
         { q: "Pick Land / Sea / Air first", a: "The Venture Scout Section is likewise divided into <strong>Venture Scout, Venture Sea Scout and Venture Air Scout</strong>. Sea and Air Venture Scouts change to the <strong>Sea Scout Leader white-top cap</strong> (a different model from the Scout Section white-top cap) / the grey-blue beret." },
-        { q: "What do I need to buy for Land Venture?", a: "Must buy: <strong>maroon beret, olive green trousers (male), black short socks (male)</strong>; girls may choose either the <strong>olive green skirt (with flesh-coloured pantyhose + black mid-heel shoes)</strong> or <strong>olive green trousers (with black short socks + black lace-up shoes)</strong>. The shirt, belt, Group scarf, Scout woggle and Scout cap badge can be carried over. The new scheme adds a necktie option (Land = maroon), but the Group scarf remains the everyday norm." },
+        { q: "What do I need to buy for Land Venture?", a: "Must buy: <strong>maroon beret, olive green trousers (male), black short socks (male)</strong>; girls may choose either the <strong>olive green skirt (with flesh-coloured pantyhose + black mid-heel shoes)</strong> or <strong>olive green trousers (with black short socks + black lace-up shoes)</strong>. The shirt, belt, Group scarf, Scout woggle and Scout cap badge can be carried over.<br>The <strong>ceremonial necktie</strong> (Land = maroon, Sea = black, Air = navy blue) is an <strong>optional item</strong> that follows your Group’s arrangement; the Group scarf remains the everyday norm." },
         { q: "What about the new scheme’s stage badges?", a: "The scheme effective 15 August 2026 adds a <strong>Venture Membership badge</strong> and renames the stage badges to Activity Planning, Community Service, Versatile Skills and Outdoor Adventure; the old stage badges have a three-year transition until 14 August 2029." },
-        { q: "What happens to my badges?", a: "Remove the Scout progressive badges, proficiency badges, patrol badge and Patrol Leader badge. Venture Scouts <strong>never wear the Golden Bauhinia Award</strong>; if you earned the Chief Scout’s Award as a Scout, the Section top award insignia may be worn as arranged by the Association (check with your Group). Service stars are kept." }
+        { q: "What happens to my badges?", a: "Remove the Scout progressive badges, proficiency badges, patrol badge and Patrol Leader badge, <strong>together with the Chief Scout’s Award itself (it belongs to the Scout Section and may not be worn after moving up)</strong>.<br>If you earned the Chief Scout’s Award as a Scout, wear the <strong>Chief Scout’s Award insignia</strong> (a Section top award insignia) above the right breast pocket instead. The Golden Bauhinia Award insignia earned as a Cub Scout <strong>may be worn at the same time</strong> — you can have both. Service stars are kept." }
       ]
     },
     rover: {
@@ -389,9 +409,9 @@ const LOCALE_EN = {
       items: [
         { q: "What are the conditions for moving up?", a: "You simply need to be within the Rover Scout age range (18–25); you do not need to earn the Dragon Scout Award first. Venture Scout membership ends automatically on your 21st birthday." },
         { q: "Pick Land / Sea / Air first", a: "The Rover Scout Section is likewise divided into <strong>Rover Scout, Rover Sea Scout and Rover Air Scout</strong>." },
-        { q: "What do I need to buy for Land Rover?", a: "You only need to <strong>swap the maroon beret for the dark green beret</strong>; the Scout cap badge can be transferred. Everything else (shirt, trousers / skirt, belt, socks, shoes, Group scarf, woggle) is the same model and can be carried over." },
+        { q: "What do I need to buy for Land Rover?", a: "You only need to <strong>swap the maroon beret for the dark green beret</strong>; the Scout cap badge can be transferred. Everything else (shirt, trousers / skirt, belt, socks, shoes, Group scarf, woggle) is the same model and can be carried over.<br>The <strong>ceremonial necktie</strong>: Land Rover = <strong>dark green</strong> (Land Venture is maroon, so a different colour must be bought); Sea / Air keep the same colour and can carry theirs over. It is an <strong>optional item</strong> that follows your Group’s arrangement." },
         { q: "What do I need to buy for Sea / Air Rover?", a: "Sea: the white-top cap can be carried over; the official handbook lists the <strong>Venture and Rover Sea Scout cap badges as the same design</strong>, so check current practice with your Group before moving up. Air: everything is the same model, nothing to buy." },
-        { q: "What happens to my badges?", a: "Remove the Venture Scout shoulder badge, stage badges and gold cords, and the Venture Scout Award. If you earned the <strong>Dragon Scout Award</strong>, wear it as arranged by the Association (check with your Group). Service stars are kept." },
+        { q: "What happens to my badges?", a: "Remove the Venture Scout shoulder badge, stage badges and gold cords, and the Venture Scout Award, <strong>together with the Dragon Scout Award itself (it belongs to the Venture Scout Section and may not be worn after moving up)</strong>.<br>If you earned the Dragon Scout Award, wear the <strong>Dragon Scout Award insignia</strong> above the right breast pocket instead; any Golden Bauhinia / Chief Scout’s Award insignia you hold may be worn at the same time. Service stars are kept." },
         { q: "What about the new scheme’s awards?", a: "The scheme effective 15 August 2026 has 7 challenge areas (prospective-leader training, Scout skills, service, international outlook, interests & skills, well-being and challenge): complete any 4 for the <strong>Rover Scout Award</strong>, all 7 for the <strong>Baden-Powell Award</strong>; the old scheme has a three-year transition until 14 August 2029. Completing Wood Badge stage 2 allows the Gilwell woggle." }
       ]
     },
@@ -402,8 +422,9 @@ const LOCALE_EN = {
         { q: "Pick Land / Sea / Air first", a: "Leader uniforms are likewise divided into <strong>Land, Sea and Air</strong>: Land = beige shirt + olive green trousers / skirt + dark green beret (female: dark green peaked hat with gold braid); Sea = white shirt + navy blue trousers / skirt + Sea Scout Leader white-top cap; Air = light blue shirt + navy blue trousers / skirt + grey-blue beret." },
         { q: "Do I need to buy all 6 uniform orders of dress?", a: "No. A new Leader only needs the <strong>ordinary uniform (No. 3)</strong> for everyday meetings. Ceremonial dress (No. 1), evening dress (No. 2), tie uniform (No. 4), shorts uniform (No. 5) and trouser uniform (No. 6) are only worn on specific occasions." },
         { q: "What do I need to buy coming from Venture / Rover (Land)?", a: "Male: the shirt, trousers, belt, short socks, shoes, Group scarf and woggle are all the same model and can be carried over; you only need to buy the <strong>rank cap badge</strong> (dark green beret: Rover can keep it; the Venture maroon beret must be swapped). Female: you need the <strong>dark green peaked hat with gold braid</strong> plus the rank cap badge. Add rank epaulettes and the Hong Kong shoulder badge / Group badge." },
-        { q: "What colour is the Leader’s tie?", a: "A tie is only worn with the <strong>tie uniform (No. 4) and ceremonial dress</strong>: Land = dark green; Sea = black; Air = navy blue. The Group scarf is worn with the ordinary uniform." },
-        { q: "Holders of the Dragon Scout / Baden-Powell Award", a: "After becoming a Leader you may wear the <strong>Dragon Scout Leader’s insignia</strong> or the <strong>Baden-Powell Leader’s insignia</strong> for life (if you hold both, only the Dragon Scout insignia is worn). The Explorer Scout badge earned as a youth member may continue to be worn on the right sleeve." }
+        { q: "What colour is the Leader’s tie?", a: "A <strong>Leader</strong> wears a tie only with the <strong>tie uniform (No. 4) and ceremonial dress</strong>: Land = dark green; Sea = black; Air = navy blue; the ordinary uniform (No. 3) is worn with the Group scarf. (<strong>Venture and Rover Scouts also wear a necktie for ceremonial occasions</strong> — see the moving-up section for the colours.)" },
+        { q: "What happens to my youth badges?", a: "Remove all Section-specific youth badges: progressive badges, proficiency / activity badges, patrol badge, Patrol Leader badge, Venture / Rover shoulder badges, stage badges and gold cords; <strong>the Section top award itself may no longer be worn</strong>. The World Scout Membership Badge, Hong Kong Badge and Group badge / Hong Kong shoulder badge can be carried over; service stars continue to be worn." },
+        { q: "Section top award insignia (Leaders keep only 1)", a: "A Leader may wear the Section top award insignia(s) earned as a youth member, but <strong>only one is kept</strong>: if you hold several, wear only the highest, in this order — <strong>Dragon Scout (Venture) insignia ＞ Baden-Powell (Rover) insignia ＞ Chief Scout’s (Scout) insignia ＞ Golden Bauhinia (Cub) insignia</strong> (V ＞ R ＞ S ＞ C). Holders of the Dragon Scout / Baden-Powell Award may wear the corresponding Leader’s insignia for life; buy it on production of a copy of your Leader’s warrant and of the award certificate. The Explorer Scout badge earned as a youth member may continue to be worn on the right sleeve." }
       ]
     }
   },
@@ -418,26 +439,26 @@ const LOCALE_EN = {
       { stage: "1", name: "Cub Scout Experience Award", age: "About 12–15 months", color: "var(--cub)", desc: "New; experiencing and knowing" },
       { stage: "2", name: "Cub Scout Adventure Award", age: "About 15–18 months", color: "var(--cub)", desc: "Practising and acting" },
       { stage: "3", name: "Cub Scout Advanced Adventure Award", age: "About 15–18 months", color: "var(--cub)", desc: "Deepening skills" },
-      { stage: "⭐", name: "Golden Bauhinia Award", age: "Before the 12th birthday", color: "#FFD700", desc: "The Cub Scout Section’s top award" }
+      { stage: "⭐", name: "Golden Bauhinia Award", age: "Before the 12th birthday", color: "#FFD700", desc: "The Cub Scout Section’s top award; worn as an insignia after moving up to Scout" }
     ],
     scout: [
       { stage: "🔰", name: "Membership badge", age: "About 1.5 months", color: "var(--scout)", desc: "Includes “Safe from Harm”" },
       { stage: "1", name: "Scout Pathfinder Award", age: "About 4 months", color: "var(--scout)", desc: "Experiencing and gaining a sense of achievement" },
       { stage: "2", name: "Scout Standard Award", age: "About 8 months", color: "var(--scout)", desc: "Knowledge" },
       { stage: "3", name: "Scout Advanced Award", age: "About 12 months", color: "var(--scout)", desc: "Deeper knowledge and responsibility" },
-      { stage: "⭐", name: "Chief Scout’s Award", age: "About 12 months", color: "#FFD700", desc: "The Scout Section’s top award; before the 16th birthday" }
+      { stage: "⭐", name: "Chief Scout’s Award", age: "About 12 months", color: "#FFD700", desc: "The Scout Section’s top award; before the 16th birthday, worn as an insignia after moving up to Venture" }
     ],
     venture: [
       { stage: "🔰", name: "Membership badge", age: "After joining", color: "var(--venture)", desc: "New" },
       { stage: "🔰", name: "Venture Scout shoulder badge", age: "A prerequisite", color: "var(--venture)", desc: "Before any progressive badge" },
       { stage: "1", name: "Venture Scout Award", age: "After the four stage badges", color: "var(--venture)", desc: "Activity Planning, Community Service, Versatile Skills, Outdoor Adventure" },
-      { stage: "⭐", name: "Dragon Scout Award", age: "Venture Award + four gold cords", color: "#FFD700", desc: "The Venture Scout Section’s top award" }
+      { stage: "⭐", name: "Dragon Scout Award", age: "Venture Award + four gold cords", color: "#FFD700", desc: "The Venture Scout Section’s top award; worn as an insignia after moving up to Rover" }
     ],
     rover: [
       { stage: "🔰", name: "Membership badge", age: "About 3 months", color: "var(--rover)", desc: "Knowing Scouting and the Rover Section" },
       { stage: "🔰", name: "Rover Scout shoulder badge", age: "About 3–6 months", color: "var(--rover)", desc: "Complete the induction course" },
       { stage: "1", name: "Rover Scout Award", age: "4 of 7 areas", color: "var(--rover)", desc: "About 12–18 months" },
-      { stage: "⭐", name: "Baden-Powell Award", age: "All 7 areas", color: "#FFD700", desc: "The Rover Scout Section’s top award" }
+      { stage: "⭐", name: "Baden-Powell Award", age: "All 7 areas", color: "#FFD700", desc: "The Rover Scout Section’s top award; worn as the Leader’s insignia after becoming a Leader" }
     ],
     leader: [
       { stage: "🎓", name: "Wood Badge", age: "After completing Leader training", color: "var(--leader)", desc: "Wood badge, wood badge neckerchief, wood badge woggle" },
@@ -498,7 +519,7 @@ const LOCALE_EN = {
     checklistNote: "<strong>Note:</strong> uniform specifications follow the “Uniform” page of the Scout Association of Hong Kong website. For the Region, District, Group and patrol badges and for the Group scarf, ask your <strong>Group Leader</strong>.",
 
     noteReuse: (from) => `<div class="tip">✅ <strong>Same model</strong> as ${from} — can be carried over if it is in good condition.</div>`,
-    noteBadgesReuse: `<div class="tip">✅ The World Scout Membership Badge, Hong Kong Badge, Region, District and Group badges can be carried over (same Group). <br><strong>Remove</strong> the old Section’s progressive badges, activity / proficiency badges and Patrol Leader badge. Service stars are kept.</div>`,
+    noteBadgesReuse: `<div class="tip">✅ The World Scout Membership Badge, Hong Kong Badge, Region, District and Group badges can be carried over (same Group). <br><strong>Remove</strong> the old Section’s progressive badges, activity / proficiency badges and Patrol Leader badge; the old Section’s top award may only be worn as a “Section top award insignia” above the right breast pocket. Service stars are kept.</div>`,
     noteScarfReuse: `<div class="tip">✅ Moving up within the same Group — keep your existing Group scarf.</div>`,
     noteNeed: (from) => `<div class="warn">🆕 ${from} does not use this model — buy it or change it.</div>`,
     buyLabels: {
@@ -508,8 +529,10 @@ const LOCALE_EN = {
       group: "Presented by the Group",
       check: "Ask your Group / District",
       mixed: "Buy at the Scout Shop; ask your Group about the Group / District / Region badges",
-      "group-or-supply": "Presented by the Group / sold at the Scout Shop"
+      "group-or-supply": "Presented by the Group / sold at the Scout Shop",
+      optional: "Optional: depends on your Group"
     },
+    noteOptional: `<div class="tip">💡 <strong>Optional item</strong>: worn for ceremonial occasions (for example the necktie). Whether you wear / buy it <strong>follows your Group’s arrangement</strong> — not buying it will not affect ordinary meetings.</div>`,
 
     shopBoxTitle: "🛒 Official Scout Shop products",
     shopCode: (code) => code ? ` (code ${code})` : "",
@@ -523,11 +546,13 @@ const LOCALE_EN = {
     priceDependsGroup: "Depends on the Group’s arrangement",
     priceOfficial: (p) => `HK$${p}`,
     priceApprox: (lo, hi) => lo === hi ? `approx. HK$${lo}` : `approx. HK$${lo}–${hi}`,
+    priceOptional: (price) => `Optional ${price} (not counted in the total)`,
     shopCodeLink: (code) => ` Scout Shop ${code} ↗`,
     budgetModeUpgrade: "top-up for moving up", budgetModeNew: "full new purchase",
     budgetHead: (mode) => `You have selected <strong>${mode}</strong>; here is what you need to prepare:`,
     budgetColItem: "Item", budgetColPrice: "Approximate price",
     budgetTotal: "Total (excluding items presented by the Group)",
+    budgetOptionalNote: "“Optional” items (the Venture / Rover ceremonial necktie) are not counted in the total — whether you buy them follows your Group’s arrangement.",
     budgetFootNote: "Prices marked with a Scout Shop code are the retail prices shown on hkscoutshop.org.hk in September 2026; the rest are approximate. The Hong Kong Scout Shop has the final say. Leather shoes, short socks and pantyhose can be bought at general shops.",
 
     officialRefTitle: (name) => `${name} official uniform reference chart`,
@@ -765,9 +790,9 @@ const LOCALE_EN = {
     "用線縫牢": "sewn on with thread",
     ",不可用膠水或扣針": ", never with glue or safety pins",
     "升團後戴舊支部徽章": "Wearing the old Section’s badges after moving up",
-    "舊支部的進度性獎章、活動／專科徽章需": "The old Section’s progressive badges and activity / proficiency badges must be",
+    "舊支部的進度性獎章、活動／專科徽章、舊支部最高獎章需": "The old Section’s progressive badges, activity / proficiency badges and Section top award must be",
     "拆走": "removed",
-    "；服務年星保留": "; service stars are kept",
+    "；最高獎章可改戴「支部最高獎章標誌」，服務年星保留": "; the top award may then be worn as the “Section top award insignia”. Service stars are kept",
     "世界童軍會員章未宣誓就戴": "Wearing the World Scout Membership Badge before investiture",
     "世界童軍會員章": "World Scout Membership Badge",
     "只可於宣誓後佩戴": "may only be worn after investiture",
@@ -811,20 +836,20 @@ const LOCALE_EN = {
     "進度性獎章及支部最高獎章": "Progressive badges and the Section top award",
     "右胸袋中央": "Centre of the right breast pocket",
     "供應社購買（須出示證書）": "Bought at the Scout Shop (certificate required)",
-    "幼童軍：金紫荊獎章／童軍：總領袖獎章／深資：榮譽童軍獎章／樂行：貝登堡獎章": "Cub: Golden Bauhinia Award / Scout: Chief Scout’s Award / Venture: Dragon Scout Award / Rover: Baden-Powell Award",
+    "幼童軍：金紫荊獎章／童軍：總領袖獎章／深資：榮譽童軍獎章／樂行：貝登堡獎章；獎章本身只可在所屬支部佩戴": "Cub: Golden Bauhinia Award / Scout: Chief Scout’s Award / Venture: Dragon Scout Award / Rover: Baden-Powell Award; the award itself may only be worn in its own Section",
     "金紫荊獎章": "Golden Bauhinia Award",
     "總會審批簽發": "Approved and issued by the Association",
     "幼童軍支部最高獎章": "The Cub Scout Section’s top award",
-    "。升童軍後可購買「金紫荊獎章標誌」（出示證書副本）戴於右胸袋上方": ". After moving up to Scout you may buy the “Golden Bauhinia Award insignia” (on production of a copy of the certificate) and wear it above the right breast pocket",
+    "。升童軍後獎章本身須拆走，可改戴「金紫荊獎章標誌」（出示證書副本）於右胸袋上方": ". When moving up to Scout the award itself must be removed; the “Golden Bauhinia Award insignia” (on production of a copy of the certificate) may then be worn above the right breast pocket",
     "總領袖獎章": "Chief Scout’s Award",
     "青少年活動署送贈，供應社代派": "Presented by the Youth Programme Department, distributed by the Scout Shop",
     "童軍支部最高獎章": "The Scout Section’s top award",
     "榮譽童軍獎章": "Dragon Scout Award",
     "深資童軍支部最高獎章": "The Venture Scout Section’s top award",
-    "。持有人任領袖可終身戴榮譽童軍領袖標誌": ". Holders may wear the Dragon Scout Leader’s insignia for life if they become Leaders",
+    "。升樂行後獎章本身須拆走，可改戴「榮譽童軍獎章標誌」；持有人任領袖可終身佩戴榮譽童軍領袖標誌": ". When moving up to Rover the award itself must be removed; the “Dragon Scout Award insignia” may then be worn. Holders may wear the Dragon Scout Leader’s insignia for life if they become Leaders",
     "貝登堡獎章": "Baden-Powell Award",
     "樂行童軍支部最高獎章": "The Rover Scout Section’s top award",
-    "。持有人任領袖可戴貝登堡領袖標誌": ". Holders may wear the Baden-Powell Leader’s insignia if they become Leaders",
+    "。任領袖後改戴貝登堡領袖標誌（如另有榮譽童軍標誌則只戴榮譽童軍）": ". On becoming a Leader the Baden-Powell Leader’s insignia is worn instead (if the holder also has the Dragon Scout insignia, only the Dragon Scout one is worn)",
     "童軍先修章": "Scout Link Award",
     "右胸袋上方": "Above the right breast pocket",
     "年滿 10 歲半的幼童軍可考，為升童軍做準備": "Cub Scouts aged 10½ or over may take it, to prepare for moving up to Scout",
@@ -924,27 +949,28 @@ const LOCALE_EN = {
     "升童軍時哪些物品一定要換新?": "What must be replaced when moving up to Scout?",
     "一定要換：": "Must be replaced: ",
     "帽及帽章、巾圈": "the cap and cap badge, and the woggle",
-    "（陸：深綠色軟帽＋童軍帽章；海：海童軍白頂帽；空：灰藍色軟帽）。恤衫、短褲／裙褲、皮帶、長襪、皮鞋與幼童軍同款可沿用（升海／空則恤衫、下身、長襪要換色）。舊支部的進度性獎章、活動徽章要拆走，": " (Land: dark green beret + Scout cap badge; Sea: Sea Scout white-top cap; Air: grey-blue beret). The shirt, shorts / culottes, belt, long socks and shoes are the same model as for Cub Scouts and can be carried over (moving to Sea / Air means the shirt, lower garment and long socks change colour). The old Section’s progressive badges and activity badges must be removed, but the",
+    "（陸：深綠色軟帽＋童軍帽章；海：海童軍白頂帽；空：灰藍色軟帽）。恤衫、短褲／裙褲、皮帶、長襪、皮鞋與幼童軍同款可沿用（升海／空則恤衫、下身、長襪要換色）。舊支部的進度性獎章、活動徽章要拆走；": " (Land: dark green beret + Scout cap badge; Sea: Sea Scout white-top cap; Air: grey-blue beret). The shirt, shorts / culottes, belt, long socks and shoes are the same model as for Cub Scouts and can be carried over (moving to Sea / Air means the shirt, lower garment and long socks change colour). The old Section’s progressive badges and activity badges must be removed; ",
     "服務年星、世界童軍會員章、香港章、地域章、區章、旅章": "service stars, World Scout Membership Badge, Hong Kong Badge, Region, District and Group badges",
     "保留。": " are kept.",
+    "保留。另設典禮儀式用領呔（陸＝棗紅色、海＝黑色、空＝深藍色），屬可選項目，視乎旅團規定。": " are kept. A ceremonial necktie (Land = maroon, Sea = black, Air = navy blue) is an optional item that follows your Group’s arrangement.",
     "升深資童軍時哪些物品一定要換新?": "What must be replaced when moving up to Venture Scout?",
     "（陸：棗紅色軟帽；海：海童軍領袖白頂帽＋深資海童軍帽章；空：灰藍色軟帽同款可沿用）及": " (Land: maroon beret; Sea: Sea Scout Leader white-top cap + Venture Sea Scout cap badge; Air: the grey-blue beret is the same model and can be carried over) and",
     "下身改穿長褲／半截裙": "change to trousers / skirt",
     "、": ", ",
-    "（男：黑色短襪；女：肉色襪褲＋黑色中跟皮鞋）。杏色恤衫、皮帶、旅巾、童軍巾圈、童軍帽章可沿用。拆走童軍的進度性獎章、專科徽章、小隊章，": " (male: black short socks; female: flesh-coloured pantyhose + black mid-heel shoes). The beige shirt, belt, Group scarf, Scout woggle and Scout cap badge can be carried over. Remove the Scout progressive badges, proficiency badges and patrol badge, but the",
+    "（男：黑色短襪；女：肉色襪褲＋黑色中跟皮鞋）。杏色恤衫、皮帶、旅巾、童軍巾圈、童軍帽章可沿用。拆走童軍的進度性獎章、專科徽章、小隊章；": " (male: black short socks; female: flesh-coloured pantyhose + black mid-heel shoes). The beige shirt, belt, Group scarf, Scout woggle and Scout cap badge can be carried over. Remove the Scout progressive badges, proficiency badges and patrol badge; ",
     "升樂行童軍時哪些物品一定要換新?": "What must be replaced when moving up to Rover Scout?",
     "陸：只把": "Land: only",
     "棗紅色軟帽換成深綠色軟帽": "swap the maroon beret for the dark green beret",
     "（童軍帽章可移過去）；海：白頂帽可沿用，官方手冊將": " (the Scout cap badge can be transferred); Sea: the white-top cap can be carried over, and the official handbook lists the",
     "深資／樂行海童軍帽章": "Venture and Rover Sea Scout cap badges",
-    "列為同一款，升團前向旅團確認；空：全部同款可沿用。其餘恤衫、長褲／半截裙、皮帶、襪、皮鞋、旅巾、巾圈全部可沿用。拆走深資童軍肩章、段章及金帶、深資童軍獎章。": " as the same design — check with your Group before moving up; Air: everything is the same model and can be carried over. The rest of the items (shirt, trousers / skirt, belt, socks, shoes, Group scarf and woggle) can all be carried over. Remove the Venture Scout shoulder badge, stage badges and gold cords, and the Venture Scout Award.",
+    "列為同一款，升團前向旅團確認；空：全部同款可沿用。其餘恤衫、長褲／半截裙、皮帶、襪、皮鞋、旅巾、巾圈全部可沿用。拆走深資童軍肩章、段章及金帶、深資童軍獎章；": " as the same design — check with your Group before moving up; Air: everything is the same model and can be carried over. The rest of the items (shirt, trousers / skirt, belt, socks, shoes, Group scarf and woggle) can all be carried over. Remove the Venture Scout shoulder badge, stage badges and gold cords, and the Venture Scout Award; ",
     "升任領袖時哪些物品一定要換新?": "What must be replaced when becoming a Leader?",
     "基本沿用原有制服，另加購": "Your existing uniform is basically carried over; you also need to buy the",
     "職級帽章": "rank cap badge",
     "及": " and the",
     "（視乎獲委任職級，向旅團查詢）；女領袖（陸）改用": " (depending on the rank appointed — ask your Group); female Leaders (Land) change to the",
     "深綠色金邊硬帽": "dark green peaked hat with gold braid",
-    "，男領袖（陸）如由深資升任，棗紅色軟帽要換深綠色軟帽。深資／樂行（陸／空）的恤衫、長褲／半截裙、皮帶、襪、皮鞋、旅巾可沿用。": "; male Leaders (Land) promoted from Venture must swap the maroon beret for the dark green beret. The shirt, trousers / skirt, belt, socks, shoes and Group scarf from Venture / Rover (Land / Air) can be carried over.",
+    "，男領袖（陸）如由深資升任，棗紅色軟帽要換深綠色軟帽。深資／樂行（陸／空）的恤衫、長褲／半截裙、皮帶、襪、皮鞋、旅巾可沿用。青少年時期的支部專屬徽章要拆走；支部最高獎章只保留": "; male Leaders (Land) promoted from Venture must swap the maroon beret for the dark green beret. The shirt, trousers / skirt, belt, socks, shoes and Group scarf from Venture / Rover (Land / Air) can be carried over. The Section-specific badges from your youth days must be removed; a Section top award keeps only ",
     "小童軍的服裝規定是什麼?": "What are the dress rules for Grasshopper Scouts?",
     "總會官網列明：小童軍服裝": "The Association website states that Grasshopper Scout dress",
     "只設領巾及簡單整齊的集會服裝": "consists only of a neckerchief and simple, tidy meeting dress",
@@ -990,6 +1016,28 @@ const LOCALE_EN = {
     "(由民政及青年事務局資助),為有經濟需要的": " (funded by the Home and Youth Affairs Bureau) providing uniform and accessory assistance to",
     "幼童軍、童軍、深資童軍、樂行童軍": "Cub Scouts, Scouts, Venture Scouts and Rover Scouts",
     "隊員提供制服及配件資助(領袖及小童軍不適用)。詳情可向所屬旅團領袖查詢，或於總會官網「表格」頁下載申請表。": " in financial need (not available to Leaders or Grasshopper Scouts). Ask your Group Leader for details, or download the application form from the “Forms” page of the Association website.",
+
+
+    /* 支部最高獎章標誌（2026-10 更正：升團後只可改戴標誌） */
+    "。升深資後獎章本身須拆走，可改戴「總領袖獎章標誌」": ". When moving up to Venture the award itself must be removed; the “Chief Scout’s Award insignia” may then be worn",
+    "支部最高獎章標誌": "Section top award insignia",
+    "供應社購買（須出示獎章證書；領袖另須領袖委任書副本）": "Bought at the Scout Shop (award certificate required; Leaders also need a copy of their Leader’s warrant)",
+    "升團後舊支部最高獎章只可改戴標誌：金紫荊（升童軍後）／總領袖（升深資後）／榮譽童軍（升樂行後）／貝登堡（任領袖後）。青少年成員可同時佩戴多個；": "After moving up, the old Section’s top award may only be worn as an insignia: Golden Bauhinia (after Scout) / Chief Scout’s (after Venture) / Dragon Scout (after Rover) / Baden-Powell (after becoming a Leader). Youth members may wear several at the same time; ",
+    "領袖只戴最高一個": "Leaders wear only the highest one",
+    "：榮譽童軍 ＞ 貝登堡 ＞ 總領袖 ＞ 金紫荊": ": Dragon Scout ＞ Baden-Powell ＞ Chief Scout’s ＞ Golden Bauhinia",
+    "支部最高獎章標誌：": "Section top award insignia: ",
+    "支部最高獎章（金紫荊／總領袖／榮譽童軍／貝登堡）升團後只可改戴「支部最高獎章標誌」，不佩戴獎章本身；青少年成員可同時佩戴多個（例如金紫荊＋總領袖），": "When moving up, a Section top award (Golden Bauhinia / Chief Scout’s / Dragon Scout / Baden-Powell) may only be worn as its “Section top award insignia”, never as the award itself; youth members may wear several at once (for example Golden Bauhinia + Chief Scout’s), but ",
+    "金紫荊獎章本身亦要拆走": "the Golden Bauhinia Award itself must also be removed",
+    "，可改戴「金紫荊獎章標誌」於右胸袋上方。": ", and the “Golden Bauhinia Award insignia” may be worn above the right breast pocket instead.",
+    "總領袖獎章本身亦要拆走": "the Chief Scout’s Award itself must also be removed",
+    "，可改戴「總領袖獎章標誌」（金紫荊獎章標誌亦可同時佩戴）。": " — the “Chief Scout’s Award insignia” may be worn instead (the Golden Bauhinia Award insignia may be worn at the same time).",
+    "榮譽童軍獎章本身亦要拆走": "the Dragon Scout Award itself must also be removed",
+    "，可改戴「榮譽童軍獎章標誌」。典禮儀式用領呔：陸樂行＝深綠色（深資陸為棗紅色，顏色唔同要另購），海／空可沿用，屬可選項目。": ", and the “Dragon Scout Award insignia” may be worn instead. Ceremonial necktie: Land Rover = dark green (Land Venture is maroon, so a different colour must be bought); Sea / Air keep the same colour and can carry theirs over. It is an optional item.",
+    "青少年時期的支部專屬徽章要拆走；支部最高獎章只保留": "The Section-specific badges from your youth days must be removed; a Section top award keeps only",
+    "1 個": " one ",
+    "標誌，並只戴最高級的一個（榮譽童軍 ＞ 貝登堡 ＞ 總領袖 ＞ 金紫荊）。": " insignia, and only the highest one is worn (Dragon Scout ＞ Baden-Powell ＞ Chief Scout’s ＞ Golden Bauhinia).",
+
+    /* 領呔（2026 新綱要：深資／樂行典禮儀式・可選） */
 
     /* Footer */
     "© 2026 Scout System · 童軍準備指南": "© 2026 Scout System · Scout Uniform Guide",
