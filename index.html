@@ -75,6 +75,10 @@ header::after{
 .brand img{width:56px;height:56px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.25)}
 header h1{margin:0;font-size:1.4rem;letter-spacing:1px;font-weight:700}
 header p{margin:.3rem 0 0;opacity:.95;font-size:.95rem}
+.report-link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;margin-top:.7rem;padding:.35rem 1rem;
+  border:1px solid rgba(255,255,255,.75);border-radius:24px;color:white;background:rgba(255,255,255,.13);
+  font-weight:600;text-decoration:none;font-size:.85rem}
+.report-link:hover,.report-link:focus-visible{background:white;color:var(--scout-green);outline-offset:2px}
 
 /* ── Container ── */
 .container{max-width:1000px;margin:0 auto;padding:1.2rem 1rem 3rem}
@@ -194,6 +198,23 @@ header p{margin:.3rem 0 0;opacity:.95;font-size:.95rem}
   display:flex;align-items:center;justify-content:center;
   font-size:5rem;border:2px dashed #ccc;
 }
+
+/* ── Badge journey: verified official illustrations, never fabricated insignia ── */
+.journey-title{color:var(--scout-green);margin:1.5rem 0 .3rem}
+.badge-journey{display:flex;gap:.8rem;overflow-x:auto;list-style:none;padding:.3rem .1rem .8rem;margin:.4rem 0 .8rem;scroll-snap-type:x proximity}
+.journey-step{position:relative;flex:1 0 150px;min-width:150px;max-width:220px;scroll-snap-align:start;text-align:center;
+  border:1px solid var(--line);border-top:3px solid var(--step-color);border-radius:12px;background:#fafbf9;padding:1rem .5rem .7rem}
+.journey-step:not(:last-child)::after{content:"›";position:absolute;right:-.65rem;top:40px;z-index:1;color:var(--muted);font-size:1.3rem}
+.journey-image{width:88px;height:88px;margin:0 auto .65rem;display:grid;place-items:center}
+.journey-image img{width:88px;height:88px;object-fit:contain}
+.journey-image [hidden]{display:none!important}
+.journey-placeholder{display:grid;place-items:center;width:88px;height:88px;padding:.5rem;
+  border:1px dashed #aab6ad;border-radius:8px;background:#f0f3ef;color:#4b5c51;font-size:.75rem;line-height:1.4}
+.journey-name,.journey-age,.journey-source{display:block;line-height:1.4}
+.journey-name{font-size:.9rem;color:var(--scout-green-dark)}
+.journey-age{font-size:.78rem;color:#555;margin:.3rem 0}
+.journey-source{font-size:.75rem;color:var(--scout-green)}
+.journey-source:focus-visible{outline:3px solid var(--accent)}
 
 /* ── Checklist ── */
 .checklist-title{
@@ -500,6 +521,7 @@ footer{
       <p>由小童軍到領袖・家長一目了然</p>
     </div>
   </div>
+  <a id="report-link" class="report-link" href="https://scout-admin-blue.vercel.app/report.html?app=%E7%AB%A5%E8%BB%8D%E6%BA%96%E5%82%99%E6%8C%87%E5%8D%97" target="_blank" rel="noopener noreferrer">🐛 向 SCOUT ADMIN 回報問題／意見 ↗</a>
 </header>
 
 <div class="container">

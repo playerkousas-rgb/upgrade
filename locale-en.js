@@ -584,8 +584,14 @@ const LOCALE_EN = {
     law: "Law",
     badgesCount: (n) => `Badges (${n})`,
     badgeJourney: (name) => `📊 ${name} badge journey`,
+    badgeImageNote: "Where separate artwork exists we show official Scout Information Hub illustrations (not product photos). Otherwise open the Association's 2026 training scheme to see the original design; we never substitute another badge. Check the latest official design.",
+    badgeImageUnavailable: "See official scheme",
+    badgeImageLoadFailed: "Image unavailable",
+    badgeImageSource: "Official image ↗",
+    badgeSchemeSource: "2026 scheme ↗",
     viewDetails: "View details",
 
+    reportLink: "🐛 Report an issue / feedback to SCOUT ADMIN ↗",
     langToggleAria: "Switch language / 切換語言"
   },
 

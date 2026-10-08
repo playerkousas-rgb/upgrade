@@ -886,9 +886,15 @@ const LOCALES = {
     law: "規律",
     badgesCount: (n) => `獎章（${n} 項）`,
     badgeJourney: (name) => `📊 ${name}獎章歷程`,
+    badgeImageNote: "有獨立圖檔的獎章顯示童軍資訊站官方圖解（非現售實物照片）；其餘可開啟總會 2026 年訓練綱要查看原圖，不借用其他徽號。圖樣以最新公布為準。",
+    badgeImageUnavailable: "詳見官方綱要",
+    badgeImageLoadFailed: "圖片暫未載入",
+    badgeImageSource: "官方圖源 ↗",
+    badgeSchemeSource: "查看官方綱要 ↗",
     viewDetails: "查看詳細內容",
 
-    /* ── 語言掣 ── */
+    /* ── 語言掣 / 回報入口 ── */
+    reportLink: "🐛 向 SCOUT ADMIN 回報問題／意見 ↗",
     langToggleAria: "切換語言 / Switch language"
   }
 }

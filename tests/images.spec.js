@@ -31,6 +31,29 @@ test.beforeEach(async ({ page }) => {
     ? route.continue() : route.abort());
 });
 
+test('journey uses verified badge images and honest fallbacks; report opens Scout Admin', async ({ page }) => {
+  await page.goto(baseURL);
+  const link = page.locator('#report-link');
+  await expect(link).toHaveAttribute('href', /scout-admin-blue\.vercel\.app\/report\.html\?app=/);
+  expect(new URL(await link.getAttribute('href')).searchParams.get('app')).toBe('童軍準備指南');
+  await expect(link).toHaveAttribute('rel', /noopener/);
+  await page.locator('#transition-guide > summary').click();
+  const journey = page.locator('#badge-timeline');
+  await expect(journey.locator('.journey-step')).toHaveCount(5);
+  await expect(journey.locator('.journey-image img')).toHaveCount(1);
+  await expect(journey.locator('.journey-placeholder:visible')).toHaveCount(5); // Official host blocked.
+  await page.locator('.path-step[data-section="scout"]').click();
+  await expect(journey.locator('.journey-image img')).toHaveCount(5);
+  await expect(journey.locator('.journey-placeholder:visible')).toHaveCount(5);
+  await expect(journey.locator('.journey-source')).toHaveCount(5);
+  await page.locator('#fab-lang').click();
+  await expect(link).toContainText('Report an issue');
+  await expect(journey.locator('.journey-placeholder').first()).toHaveText('Image unavailable');
+  await page.locator('.path-step[data-section="cub"]').click();
+  await expect(journey.locator('.journey-placeholder').nth(1)).toHaveText('See official scheme');
+  await expect(journey.locator('.journey-source').nth(1)).toHaveAttribute('href', /drive\.google\.com\/file\/d\//);
+});
+
 const badgeCases = [
   ['cub', 'land', 'male', 'capbadge-cub', 'capbadge-cub.avif'],
   ['cub', 'land', 'female', 'capbadge-cub', 'cap-cub-female.avif'],
