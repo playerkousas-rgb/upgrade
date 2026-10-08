@@ -76,7 +76,13 @@ function startServer() {
   check([...journey().querySelectorAll('.journey-step:not(:first-child) .journey-source')].every(a => a.href.startsWith('https://drive.google.com/file/d/')), '幼童軍原圖連至官方 2026 綱要');
   window.selectSection('scout');
   check(journey().querySelectorAll('.journey-step img').length === 5, '童軍五個階段使用核實官方圖解');
-  check([...journey().querySelectorAll('.journey-step img')].every(img => img.src.startsWith('https://scoutsinfohub.org.hk/ScoutTrainingScheme/img/Progressive/')), '童軍圖片連到官方圖源');
+  check(journey().querySelector('.journey-step img').src.startsWith('https://scoutsinfohub.org.hk/ScoutTrainingScheme/img/Progressive/') &&
+    [...journey().querySelectorAll('.journey-step img')].slice(1).every(img => img.getAttribute('src').startsWith('assets/badges/scout-')), '童軍四級獎章本地小圖＋官方會員章');
+  window.selectSection('venture');
+  check(journey().querySelectorAll('.journey-step img[src^="assets/badges/venture-"]').length === 3, '深資三款上傳圖已優化本地使用');
+  window.selectSection('rover');
+  check(journey().querySelectorAll('.journey-step img[src^="assets/badges/rover-"]').length === 3, '樂行三款上傳圖已優化本地使用');
+  window.selectSection('scout');
   const img = journey().querySelector('img');
   img.dispatchEvent(new window.Event('error'));
   check(img.hidden && !img.nextElementSibling.hidden, '圖片載入失敗顯示文字後備');

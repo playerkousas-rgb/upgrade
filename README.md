@@ -42,7 +42,7 @@
 ### 2. 🎯 升團過渡指南(總綱)
 - **進度性獎章總覽**:6 個支部一覽(誓詞/規律/獎章/特殊備註)
 - **升團過渡詳情**:揀邊個支部就自動顯示對應 Q&A
-- **獎章歷程圖**：童軍支部 5 個階段及其他青少年支部的會員章使用[童軍資訊站官方獎章圖解](https://scoutsinfohub.org.hk/scout-training-scheme)（直接取用原站圖片，非現售實物照片；需連線）；其餘青少年支部未有獨立圖檔的階段保留名稱和[總會 2026 支部訓練綱要](https://sites.google.com/scouting.org.hk/sections/%E6%94%AF%E9%83%A8%E8%A8%93%E7%B7%B4%E6%AA%A2%E8%A8%8E)原圖連結，絕不借用其他獎章或自製徽號。圖片載入失敗時亦保留文字。
+- **獎章歷程圖**：童軍 4 枚進度獎章採用本地壓縮的[童軍資訊站圖解](https://scoutsinfohub.org.hk/scout-training-scheme)，會員章取用官方遠端圖；深資及樂行 6 款用戶提供的去背參考圖已縮至 WebP，旁附[總會 2026 支部訓練綱要](https://sites.google.com/scouting.org.hk/sections/%E6%94%AF%E9%83%A8%E8%A8%93%E7%B7%B4%E6%AA%A2%E8%A8%8E)供核對（細節／邊緣不保證準確）。幼童軍上傳的是 AI 重繪稿而非原章，故未使用；未有可靠圖檔時保留名稱及官方綱要連結，絕不冒充。來源及限制見 `assets/badges/README.md`。
 
 ### 3. 配套文字資訊
 - 選碼小貼士
