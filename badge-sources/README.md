@@ -1,6 +1,6 @@
 # 獎章原圖暫存區
 
-已收到你上傳的素材。童軍 4 張 `*Award.webp` 可直接使用；深資／樂行 `image-removebg-preview*.png` 是低清／局部去背圖，已製作約 70 KB 的網站縮圖，並清楚標示限制作參考。幼童軍 `Gemini_Generated_Image*.jpg` 是 AI 重繪、不是獎章原圖，暫不採用（避免冒充真章）。實際上線檔案及逐項對照見 [`assets/badges/README.md`](../assets/badges/README.md)。此資料夾只作來源記錄，不部署。
+已收到你上傳的素材。童軍 4 張 `*Award.webp` 可直接使用；深資／樂行 `image-removebg-preview*.png` 是低清／局部去背圖；幼童軍 `Gemini_Generated_Image*.jpg` 是 AI 重繪示意。經你確認「能辨認即可，小瑕疵可接受」後，**全部 14 張**已製作約 85 KB 的網站縮圖；幼童軍卡片明確標示「重繪示意・非官方圖」，不冒稱真章。實際上線檔案及逐項對照見 [`assets/badges/README.md`](../assets/badges/README.md)。此資料夾只作來源記錄，不部署。
 
 如將來找到官方原圖，請直接上傳到**此資料夾**（GitHub 網頁按「Add file」→「Upload files」）。建議檔名：
 

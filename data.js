@@ -887,6 +887,8 @@ const LOCALES = {
     badgesCount: (n) => `獎章（${n} 項）`,
     badgeJourney: (name) => `📊 ${name}獎章歷程`,
     badgeImageNote: "獎章圖解只供辨認，非現售實物照片；沒有可用圖檔時可開啟總會 2026 年訓練綱要，不借用其他徽號。圖樣以最新公布為準。",
+    badgeCubReference: "幼童軍四張是參照章樣的 AI 重繪示意，並非官方獎章圖；請按「查看官方綱要」核對。",
+    badgeIllustration: "重繪示意・非官方圖",
     badgeUserReference: "深資／樂行部分圖像取自用戶提供的去背參考圖，邊緣與細節未必準確；請按「查看官方綱要」核對。",
     badgeImageUnavailable: "詳見官方綱要",
     badgeImageLoadFailed: "圖片暫未載入",

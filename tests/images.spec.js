@@ -40,8 +40,11 @@ test('journey uses verified badge images and honest fallbacks; report opens Scou
   await page.locator('#transition-guide > summary').click();
   const journey = page.locator('#badge-timeline');
   await expect(journey.locator('.journey-step')).toHaveCount(5);
-  await expect(journey.locator('.journey-image img')).toHaveCount(1);
-  await expect(journey.locator('.journey-placeholder:visible')).toHaveCount(5); // Official host blocked.
+  await expect(journey.locator('.journey-image img')).toHaveCount(5);
+  await expect(journey.locator('.journey-placeholder:visible')).toHaveCount(1); // Only the membership image is remote.
+  await expect(journey.locator('.journey-kind')).toHaveCount(4);
+  await expect(journey.locator('.journey-kind').first()).toHaveText('重繪示意・非官方圖');
+  for (const image of await journey.locator('img[src^="assets/badges/cub-"]').all()) await loaded(image);
   await page.locator('.path-step[data-section="scout"]').click();
   await expect(journey.locator('.journey-image img')).toHaveCount(5);
   await expect(journey.locator('.journey-placeholder:visible')).toHaveCount(1); // Only the remote membership image is blocked.
@@ -57,14 +60,14 @@ test('journey uses verified badge images and honest fallbacks; report opens Scou
   await expect(link).toContainText('Report an issue');
   await expect(journey.locator('.journey-placeholder').first()).toHaveText('Image unavailable');
   await page.locator('.path-step[data-section="cub"]').click();
-  await expect(journey.locator('.journey-placeholder').nth(1)).toHaveText('See official scheme');
+  await expect(journey.locator('.journey-kind').first()).toHaveText('Redrawn · unofficial');
   await expect(journey.locator('.journey-source').nth(1)).toHaveAttribute('href', /drive\.google\.com\/file\/d\//);
 });
 
 test('local journey artwork decodes and stays under the lean size cap', async ({ page, request }) => {
   await page.goto(baseURL);
   const files = await page.evaluate(() => Object.values(BADGE_LOCAL_IMAGES).flatMap(section => Object.values(section)));
-  expect(files).toHaveLength(10);
+  expect(files).toHaveLength(14);
   for (const src of files) {
     const response = await request.get(`${baseURL}/${src}`);
     expect(response.status()).toBe(200);
