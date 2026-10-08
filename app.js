@@ -84,6 +84,8 @@ function renderStaticText(){
     langBtn.textContent = L().switchToLabel;
     langBtn.setAttribute("aria-label", t.langToggleAria);
   }
+  const reportLink = $("report-link");
+  if(reportLink) reportLink.textContent = t.reportLink;
   applyStaticI18n();
 }
 function setLang(lang){
@@ -169,20 +171,60 @@ function renderTransition(section){
 function updateTransition(){ $("transition-content").innerHTML = renderTransition(currentSection); }
 function updateBadgesOverview(){ $("badges-overview").innerHTML = renderBadgesOverview(); }
 
+// The membership illustration is hosted by the Scout Information Hub. Verified Scout award
+// illustrations and user-supplied Venture/Rover references are shipped locally in tiny WebP files.
+// Uploaded Cub AI recreations are explicitly labelled as illustrations, never official badge photos.
+const BADGE_IMAGE_BASE = "https://scoutsinfohub.org.hk/ScoutTrainingScheme/img/Progressive/";
+const BADGE_IMAGE_SOURCE = "https://scoutsinfohub.org.hk/scout-training-scheme#ts_tab_progressive";
+// 2026 sectional schemes linked from the Association's official review page.
+// PDF diagrams cannot be used as <img> without a separate image file; link to the original instead.
+const BADGE_SCHEME_URLS = {
+  grasshopper: "https://drive.google.com/file/d/14bhW8UQyBrm9mncJ-jXYZhM9GGA30c0D/view",
+  cub: "https://drive.google.com/file/d/19StE5sobEUb8DOSkW0e57T0j784S6-R5/view",
+  scout: "https://drive.google.com/file/d/1XiY7LiGD0eXOGMtjPhPV4qYKmTvWIcDx/view",
+  venture: "https://drive.google.com/file/d/1F8aZSr_WzRbJCLy7l41iDO2tEUxpKCvE/view",
+  rover: "https://drive.google.com/file/d/1MYSUEqMgIoDtaU_3od92A-2T2wTQXYZu/view"
+};
+const BADGE_REMOTE_IMAGES = {
+  cub: { 0: "WorldScoutBadge.webp" },
+  scout: { 0: "WorldScoutBadge.webp" },
+  venture: { 0: "WorldScoutBadge.webp" },
+  rover: { 0: "WorldScoutBadge.webp" }
+};
+// Indexes match BADGE_TIMELINES in both language packs; do not reuse a badge from another stage.
+const BADGE_LOCAL_IMAGES = {
+  cub: { 1: "assets/badges/cub-experience.webp", 2: "assets/badges/cub-adventure.webp", 3: "assets/badges/cub-advanced.webp", 4: "assets/badges/cub-golden.webp" },
+  scout: { 1: "assets/badges/scout-pathfinder.webp", 2: "assets/badges/scout-standard.webp", 3: "assets/badges/scout-advanced.webp", 4: "assets/badges/scout-chief.webp" },
+  venture: { 1: "assets/badges/venture-shoulder.webp", 2: "assets/badges/venture-award.webp", 3: "assets/badges/venture-dragon.webp" },
+  rover: { 1: "assets/badges/rover-shoulder.webp", 2: "assets/badges/rover-award.webp", 3: "assets/badges/rover-baden.webp" }
+};
 function renderBadgeTimeline(){
   const items = L().BADGE_TIMELINES[currentSection];
   if(!items) return '';
   const t = UI();
   const sec = L().SECTIONS[currentSection];
-  let html = `<h3 style="color:var(--scout-green);margin-top:1.5rem">${t.badgeJourney(sec.name)}</h3><div style="display:flex;flex-wrap:wrap;gap:.6rem;margin:.8rem 0;align-items:center">`;
+  const localImages = BADGE_LOCAL_IMAGES[currentSection] || {};
+  const remoteImages = BADGE_REMOTE_IMAGES[currentSection] || {};
+  let html = `<h3 class="journey-title">${t.badgeJourney(sec.name)}</h3>
+    <p class="cite">${t.badgeImageNote}${currentSection === "cub" ? ` ${t.badgeCubReference}` : ""}${currentSection === "venture" || currentSection === "rover" ? ` ${t.badgeUserReference}` : ""}</p>
+    <ol class="badge-journey" aria-label="${t.badgeJourney(sec.name)}">`;
   items.forEach((item, idx) => {
-    html += `<div style="flex:1;min-width:120px;border:2px solid ${item.color};border-radius:10px;padding:.6rem;text-align:center;background:white">
-      <div style="font-size:1.5rem;margin-bottom:.2rem">${item.stage}</div>
-      <div style="font-weight:700;font-size:.85rem;color:${item.color}">${item.name}</div>
-      <div style="font-size:.75rem;color:#888;margin:.2rem 0">${item.age}</div></div>`;
-    if(idx < items.length - 1) html += `<div style="font-size:1.2rem;color:#ccc;flex-shrink:0">→</div>`;
+    const localImage = localImages[idx];
+    const remoteImage = remoteImages[idx];
+    const image = localImage || (remoteImage ? BADGE_IMAGE_BASE + remoteImage : "");
+    const needsSchemeCheck = !!localImage && currentSection !== "scout";
+    const source = needsSchemeCheck || !image ? BADGE_SCHEME_URLS[currentSection] : BADGE_IMAGE_SOURCE;
+    html += `<li class="journey-step" style="--step-color:${item.color}">
+      <div class="journey-image">${image
+        ? `<img src="${image}" alt="${item.name}${currentSection === "cub" && localImage ? `（${t.badgeIllustration}）` : ""}" width="88" height="88" loading="lazy" decoding="async" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="journey-placeholder" hidden>${t.badgeImageLoadFailed}</span>`
+        : `<span class="journey-placeholder">${t.badgeImageUnavailable}</span>`}</div>
+      <strong class="journey-name">${item.name}</strong>
+      ${currentSection === "cub" && localImage ? `<span class="journey-kind">${t.badgeIllustration}</span>` : ""}
+      <span class="journey-age">${item.age}</span>
+      ${source ? `<a class="journey-source" href="${source}" target="_blank" rel="noopener noreferrer">${needsSchemeCheck || !image ? t.badgeSchemeSource : t.badgeImageSource}</a>` : ""}
+    </li>`;
   });
-  html += `</div><details style="margin:.5rem 0"><summary style="font-size:.85rem;color:var(--scout-green)">${t.viewDetails}</summary><ul style="font-size:.85rem;line-height:1.7;margin:.3rem 0 0 1rem;padding:0">`;
+  html += `</ol><details style="margin:.5rem 0"><summary style="font-size:.85rem;color:var(--scout-green)">${t.viewDetails}</summary><ul style="font-size:.85rem;line-height:1.7;margin:.3rem 0 0 1rem;padding:0">`;
   items.forEach(item => { html += `<li><strong>${item.name}</strong> — ${item.desc}</li>`; });
   html += `</ul></details>`;
   return html;

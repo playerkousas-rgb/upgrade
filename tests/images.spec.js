@@ -31,6 +31,59 @@ test.beforeEach(async ({ page }) => {
     ? route.continue() : route.abort());
 });
 
+test('journey uses verified badge images and honest fallbacks; report opens Scout Admin', async ({ page }) => {
+  await page.goto(baseURL);
+  const link = page.locator('#report-link');
+  await expect(link).toHaveAttribute('href', /scout-admin-blue\.vercel\.app\/report\.html\?app=/);
+  expect(new URL(await link.getAttribute('href')).searchParams.get('app')).toBe('童軍準備指南');
+  await expect(link).toHaveAttribute('rel', /noopener/);
+  await page.locator('#transition-guide > summary').click();
+  const journey = page.locator('#badge-timeline');
+  await expect(journey.locator('.journey-step')).toHaveCount(5);
+  await expect(journey.locator('.journey-image img')).toHaveCount(5);
+  await expect(journey.locator('.journey-placeholder:visible')).toHaveCount(1); // Only the membership image is remote.
+  await expect(journey.locator('.journey-kind')).toHaveCount(4);
+  await expect(journey.locator('.journey-kind').first()).toHaveText('重繪示意・非官方圖');
+  for (const image of await journey.locator('img[src^="assets/badges/cub-"]').all()) await loaded(image);
+  await page.locator('.path-step[data-section="scout"]').click();
+  await expect(journey.locator('.journey-image img')).toHaveCount(5);
+  await expect(journey.locator('.journey-placeholder:visible')).toHaveCount(1); // Only the remote membership image is blocked.
+  await expect(journey.locator('.journey-source')).toHaveCount(5);
+  for (const image of await journey.locator('img[src^="assets/badges/scout-"]').all()) await loaded(image);
+  await page.locator('.path-step[data-section="venture"]').click();
+  await expect(journey.locator('img[src^="assets/badges/venture-"]')).toHaveCount(3);
+  await expect(journey.locator('.journey-source').nth(2)).toHaveAttribute('href', /drive\.google\.com\/file\/d\//);
+  await page.locator('.path-step[data-section="rover"]').click();
+  await expect(journey.locator('img[src^="assets/badges/rover-"]')).toHaveCount(3);
+  await page.locator('.path-step[data-section="scout"]').click();
+  await page.locator('#fab-lang').click();
+  await expect(link).toContainText('Report an issue');
+  await expect(journey.locator('.journey-placeholder').first()).toHaveText('Image unavailable');
+  await page.locator('.path-step[data-section="cub"]').click();
+  await expect(journey.locator('.journey-kind').first()).toHaveText('Redrawn · unofficial');
+  await expect(journey.locator('.journey-source').nth(1)).toHaveAttribute('href', /drive\.google\.com\/file\/d\//);
+});
+
+test('local journey artwork decodes and stays under the lean size cap', async ({ page, request }) => {
+  await page.goto(baseURL);
+  const files = await page.evaluate(() => Object.values(BADGE_LOCAL_IMAGES).flatMap(section => Object.values(section)));
+  expect(files).toHaveLength(14);
+  for (const src of files) {
+    const response = await request.get(`${baseURL}/${src}`);
+    expect(response.status()).toBe(200);
+    const body = Buffer.from(await response.body());
+    expect(body.length).toBeLessThan(20 * 1024);
+    expect(body.subarray(0, 4).toString()).toBe('RIFF');
+    expect(body.subarray(8, 12).toString()).toBe('WEBP');
+    expect(await page.evaluate(async src => {
+      const img = new Image();
+      img.src = src;
+      await img.decode();
+      return img.naturalWidth > 0;
+    }, src)).toBe(true);
+  }
+});
+
 const badgeCases = [
   ['cub', 'land', 'male', 'capbadge-cub', 'capbadge-cub.avif'],
   ['cub', 'land', 'female', 'capbadge-cub', 'cap-cub-female.avif'],

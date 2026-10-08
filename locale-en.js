@@ -584,8 +584,17 @@ const LOCALE_EN = {
     law: "Law",
     badgesCount: (n) => `Badges (${n})`,
     badgeJourney: (name) => `📊 ${name} badge journey`,
+    badgeImageNote: "Badge illustrations are for identification, not current product photos. Where no separate image is available, open the Association's 2026 scheme; we never substitute another badge. Check the latest official design.",
+    badgeCubReference: "The four Cub images are AI redraws for recognition only, not official badge artwork. Check the official scheme for accuracy.",
+    badgeIllustration: "Redrawn · unofficial",
+    badgeUserReference: "Some Venture/Rover images are user-supplied cut-outs with imperfect edges/details. Check the official scheme for accuracy.",
+    badgeImageUnavailable: "See official scheme",
+    badgeImageLoadFailed: "Image unavailable",
+    badgeImageSource: "Official image ↗",
+    badgeSchemeSource: "2026 scheme ↗",
     viewDetails: "View details",
 
+    reportLink: "🐛 Report an issue / feedback to SCOUT ADMIN ↗",
     langToggleAria: "Switch language / 切換語言"
   },
 

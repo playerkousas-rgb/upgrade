@@ -38,8 +38,8 @@ function startServer() {
   const vc = new VirtualConsole();
   vc.on('jsdomError', e => {
     const m = String(e.message || e);
-    if (/Could not load script|Uncaught/i.test(m)) scriptErrors.push(m);
-    // 外站圖片載入失敗屬預期(onerror 回退路徑),不計為失敗
+    if (/Could not load script|Uncaught/i.test(m) && !m.includes('cdn.vercel-insights.com')) scriptErrors.push(m);
+    // 分析腳本／外站圖片載入失敗屬預期，不影響本地功能。
   });
 
   const dom = await JSDOM.fromURL(`${baseURL}/index.html`, {
@@ -64,6 +64,31 @@ function startServer() {
   check([...parts].filter(p => p.open).map(p => p.id).join(',') === 'part-situation,part-options',
     '初始只展開 ①②');
   check($('part-toolbar') && $('part-toolbar').hidden === false, '開合工具列已顯示');
+
+  console.log('── 獎章歷程／SCOUT ADMIN ──');
+  const reportLink = $('report-link');
+  check(reportLink && reportLink.href.startsWith('https://scout-admin-blue.vercel.app/report.html?app='), '回報連到真正 SCOUT ADMIN 表單');
+  check(reportLink && new URL(reportLink.href).searchParams.get('app') === '童軍準備指南', '回報來源系統已指定');
+  check(reportLink && reportLink.target === '_blank' && reportLink.rel.includes('noopener'), '外站回報安全地另開視窗');
+  const journey = () => d.querySelector('#badge-timeline');
+  check(journey().querySelectorAll('.journey-step').length === 5, '幼童軍歷程維持五個階段');
+  check(journey().querySelectorAll('.journey-step img').length === 5 &&
+    journey().querySelectorAll('img[src^="assets/badges/cub-"]').length === 4, '幼童軍四款重繪示意已輕量上線');
+  check(journey().querySelectorAll('.journey-kind').length === 4 && journey().textContent.includes('非官方圖'), '幼童軍每張重繪圖有清楚標示');
+  check([...journey().querySelectorAll('.journey-step:not(:first-child) .journey-source')].every(a => a.href.startsWith('https://drive.google.com/file/d/')), '幼童軍原圖連至官方 2026 綱要');
+  window.selectSection('scout');
+  check(journey().querySelectorAll('.journey-step img').length === 5, '童軍五個階段使用核實官方圖解');
+  check(journey().querySelector('.journey-step img').src.startsWith('https://scoutsinfohub.org.hk/ScoutTrainingScheme/img/Progressive/') &&
+    [...journey().querySelectorAll('.journey-step img')].slice(1).every(img => img.getAttribute('src').startsWith('assets/badges/scout-')), '童軍四級獎章本地小圖＋官方會員章');
+  window.selectSection('venture');
+  check(journey().querySelectorAll('.journey-step img[src^="assets/badges/venture-"]').length === 3, '深資三款上傳圖已優化本地使用');
+  window.selectSection('rover');
+  check(journey().querySelectorAll('.journey-step img[src^="assets/badges/rover-"]').length === 3, '樂行三款上傳圖已優化本地使用');
+  window.selectSection('scout');
+  const img = journey().querySelector('img');
+  img.dispatchEvent(new window.Event('error'));
+  check(img.hidden && !img.nextElementSibling.hidden, '圖片載入失敗顯示文字後備');
+  window.selectSection('cub');
 
   console.log('── 清單核心邏輯 (data.js buildChecklist) ──');
   const countItems = () => d.querySelectorAll('#checklist .item').length;
@@ -286,6 +311,9 @@ function startServer() {
   check(d.querySelector('#badges-overview').textContent.indexOf('Membership badge') !== -1, '進度性獎章總覽已翻譯');
   check(d.querySelector('#transition-content').textContent.indexOf('Grasshopper Scout') !== -1, '升團過渡 Q&A 已翻譯');
   check(d.querySelector('#badge-timeline').textContent.indexOf('badge journey') !== -1, '獎章歷程圖已翻譯');
+  check(reportLink.textContent.includes('Report an issue') && new URL(reportLink.href).searchParams.get('app') === '童軍準備指南', 'SCOUT ADMIN 回報入口已翻譯且來源不變');
+  window.selectSection('cub');
+  check(journey().querySelectorAll('.journey-kind').length === 4 && journey().textContent.includes('Redrawn · unofficial'), '英文版幼童軍重繪標籤已翻譯');
   check($('budget-dynamic').textContent.indexOf('Total') !== -1, '預算表已翻譯');
   check(langBtn && langBtn.textContent === '中文', '英文介面時語言掣顯示「中文」');
   check(window.localStorage.getItem('scout-guide-lang-v1') === 'en', '語言設定已寫入 localStorage');
