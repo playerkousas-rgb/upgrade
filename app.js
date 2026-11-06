@@ -305,7 +305,11 @@ function selectSection(s){
   sectionReady = true;
   currentSection = s;
   const sec = L().SECTIONS[s];
-  document.querySelectorAll('.path-step').forEach(el=> el.classList.toggle('active', el.dataset.section === s));
+  document.querySelectorAll('.path-step').forEach(el => {
+    const active = el.dataset.section === s;
+    el.classList.toggle('active', active);
+    el.setAttribute('aria-pressed', String(active));
+  });
   // 預設來源：第一個
   if(changed){
     if(s === "grasshopper"){ currentMode = "new"; currentFrom = null; }
@@ -419,7 +423,7 @@ function render(){
   const photo = officialPhoto(currentSection, currentBranch, currentGender);
   let imgHtml;
   if(currentSection === "grasshopper"){
-    imgHtml = `<div class="placeholder" style="background:linear-gradient(135deg,#fff4e6,#ffe2c2);border-color:#ff7a1a">🧒</div>`;
+    imgHtml = `<div class="placeholder" style="background:#fff3e3;border-color:#ff7a1a">🧒</div>`;
   } else {
     imgHtml = renderReferenceImage(photo?.images || [], "uniform-preview");
   }
@@ -547,6 +551,14 @@ function renderOfficialPhoto(){
 }
 
 // 初始化
+document.querySelectorAll(".path-step").forEach(el => {
+  el.addEventListener("keydown", (ev) => {
+    if(ev.key === "Enter" || ev.key === " "){
+      ev.preventDefault();
+      selectSection(el.dataset.section);
+    }
+  });
+});
 LANG = detectDefaultLang();
 renderStaticText();
 selectSection("cub");

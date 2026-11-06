@@ -1,37 +1,34 @@
-# ============================================================
-# Vercel 部署排除清單 — 純靜態站,只上傳運行時需要的檔案
-# 匹配到的檔案／資料夾不會上傳,避免膨脹 Vercel 部署配額。
-# 新增檔案前請先對照「防增肥守則」(README.md §部署與防增肥)。
-# ============================================================
-
-# 文件與獎章原圖暫存區(不在運行時使用)
-*.md
-badge-sources/
-
-# 瀏覽器回歸測試(開發專用)
-tests/
-
-# 開發工具鏈 — 本專案零運行期依賴,不應有任何 node_modules
+# S2（docs/01-slim.md）：上傳去 Vercel 建置機前先濾走死重與非部署目錄。
+# 注意：buildCommand（npm run build）用到嘅 package.json、build-site.mjs、scripts/、DESIGN.md、CHANGELOG.md
+# 唔可以擋走（擋走會令 Vercel build ENOENT）；最終對外只提供 dist/ 白名單產物。
 node_modules/
-package.json
-package-lock.json
-scripts/
-.vercelignore
-.gitignore
 .git/
-
-# 防止未來誤提交的死重(備份／日誌／暫存／上傳)
-uploads/
-*.log
+.github/
+.cache/
+.vercel/
+dist/
+coverage/
+test-results/
+playwright-report/
+docs/
+skills/
+operations/
+in-progress/
+misc/
+deprecated/
 *.bak
 *.tmp
 *.old
-*.swp
+*.log
 .DS_Store
-Thumbs.db
-
-# 重復的建置快取/產物(若日後引入 build 工具)
-dist/
-build/
-.cache/
-.vercel/
+.env*
+README.md
+AUDIT.md
+AGENTS.md
+SCOPE.md
+GLOSSARY.md
+CONTRIBUTING.md
+CREDITS.md
+PREFLIGHT.md
+INTAKE.md
+playwright.config.js

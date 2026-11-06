@@ -868,7 +868,7 @@ const LOCALE_EN = {
     "左袖": "Left sleeve",
     "幼童軍活動徽章／童軍專科徽章": "Cub Scout activity badges / Scout proficiency badges",
     "深資童軍段章及金帶": "Venture Scout stage badges and gold cords",
-    "責任、自立、活動、探險": "Responsibility, Self-reliance, Activity, Exploration",
+    "活動策劃、社會服務、多元技能、戶外探險（舊制：責任、自立、活動、探險）": "Activity Planning, Community Service, Versatile Skills, Outdoor Adventure (formerly Responsibility, Self-reliance, Activity, Exploration)",
     "隊長章／副隊長章": "Patrol Leader / Assistant Patrol Leader badge",
     "左胸袋，會員章下方": "Left breast pocket, below the Membership badge",
     "2023 年 4 月起統一位置": "Same position from April 2023",
@@ -1049,12 +1049,12 @@ const LOCALE_EN = {
     /* 領呔（2026 新綱要：深資／樂行典禮儀式・可選） */
 
     /* Footer */
-    "© 2026 Scout System · 童軍準備指南": "© 2026 Scout System · Scout Uniform Guide",
+    "© 2026 SCOUT SYSTEM · v2.0.0": "© 2026 SCOUT SYSTEM · v2.0.0",
     "制服資料來源:香港童軍總會": "Uniform data source: Scout Association of Hong Kong ",
     "制服購買:香港童軍物品供應社(SCOUT SHOP)": "Uniform purchases: Hong Kong Scout Shop (SCOUT SHOP) ",
     "《儀容與制服手冊》:": "Uniform Handbook:",
     "本 APP 為非官方輔助工具。制服規格以香港童軍總會官網（中文版）、《儀容與制服手冊》及各支部《訓練綱要》為準；徽章位置根據青少年活動通告第 13/2023 號。圖片按來源標示；帽章等使用本地官方參考圖，其他款式示意圖不作顏色及細節依據。": "This app is an unofficial aid. Uniform specifications follow the Scout Association of Hong Kong website (Chinese version), the Uniform Handbook and the Training Scheme of each Section; badge positions follow Youth Programme Circular No. 13/2023. Images are credited to their source; cap badges and similar use local official reference images, and other style illustrations are not a guide to colour or detail.",
-    "本網站為非官方獨立工具，旨在方便成員瀏覽公開資訊，與香港童軍總會無任何官方從屬關係。所有通告版權歸香港童軍總會所有。": "This website is an unofficial independent tool that helps members browse public information and has no official affiliation with the Scout Association of Hong Kong. Copyright of all circulars belongs to the Scout Association of Hong Kong."
+    "本網站為非官方獨立工具，旨在方便成員瀏覽公開資訊，與香港童軍總會無任何官方從屬關係。相關制服規格、訓練綱要及徽號版權歸香港童軍總會所有。": "This website is an unofficial independent tool that helps members browse public information and has no official affiliation with the Scout Association of Hong Kong. Copyright in the relevant uniform specifications, training schemes and insignia belongs to the Scout Association of Hong Kong."
   }
 };
 
