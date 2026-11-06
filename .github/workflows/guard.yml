@@ -1,0 +1,39 @@
+name: guard
+
+on:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 3 * * 1'   # 每週一 HKT 11:17 定時掃描，防止靜靜變肥（對齊 PREFLIGHT.md 建議）
+
+permissions:
+  contents: read
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # A16：第三方 GitHub Actions 一律釘死完整 commit SHA
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: '20'
+
+      - name: Truth Guard (docs / secrets / size / G10 links)
+        run: node scripts/guard.mjs --ci
+
+      - name: Asset & House-Rule Lint (S / W / V / G11 / DESIGN.md)
+        run: |
+          node scripts/check.js
+          node scripts/lint.js
+
+      - name: Zero-Dependency Brain & Spec Tests (F14)
+        run: node --test
+
+      - name: Build dist & S7 Size Gate (< 5MB)
+        run: |
+          node build-site.mjs
+          BYTES=$(du -sb dist | cut -f1)
+          echo "dist = $BYTES bytes"
+          [ "$BYTES" -lt 5242880 ] || { echo "::error::dist >= 5MB (S7)"; exit 1; }

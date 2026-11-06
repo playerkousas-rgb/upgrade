@@ -1,299 +1,85 @@
-# 童軍準備指南 🏕️
+# 童軍準備指南（Scout Uniform & Badge Guide）
 
-> **由小童軍到領袖 — 家長一目了然的進團/升團準備 APP**
-
-## 📌 定位
-
-**非官方輔助工具**,旨在協助香港童軍家長了解子女升團時需要購買/沿用什麼制服配件,
-以及升團的時程、誓詞、規律、進度性獎章等資訊。
-
-### 目標用戶
-- 👨‍👩‍👧‍👦 **家長**:子女剛加入 / 升團,需要知道買咩、邊度買、幾時預備
-- 🏕️ **旅團領袖**:向新家長講解時的統一教材
-- 🆕 **新成員**:想了解自己支部要戴咩、考咩
-
-### 設計理念(你朋友原本的思路,我們把它通用化 + 深化)
-1. **一看就明**:揀進團情境 → 自動顯示要買咩
-2. **升團 vs 全新加入**:清楚分辨「可沿用」vs「需購買」
-3. **性別獨立**:男 / 女團員制服有差異(裙褲、半截裙、襪褲、皮鞋)
-4. **從家長角度出發**:所有文字以家長需要知道的為本,不用 POR 條文
-
-### 資料來源(全部為香港童軍總會**中文版**官方資料,不參考其他國家/地區)
-- ✅ 制服組成:香港童軍總會官網「制服」頁(幼童軍、童軍、深資、樂行、領袖,各含陸/海/空)
-- ✅ 徽章位置:青少年活動通告第 13/2023 號《支部成員徽章佩戴指引》
-- ✅ 徽章領取/購買、先修章:《童軍訓練綱要》附錄(童軍資訊站中文版)
-- ✅ 支部年齡:官網「支部簡介」
-- ❌ 不含 POR 全文
+> 香港童軍各支部（小童軍至領袖）進團與升團制服準備、2026 新訓練綱要徽章歷程及過渡須知（中英雙語純靜態 PWA）。
+> 線上網址：<https://upgrade-ashen.vercel.app> · 當前版本：**v2.0.0**
 
 ---
 
-## 🚀 功能
+## 5 分鐘快速入口
 
-### 1. 升團互動清單(核心)
-- 6 個支部 × 來源(升團/全新加入)× **原本陸/海/空 × 升去陸/海/空** × 男/女
-- 領袖有 **3 個來源**:由深資升任 / 由樂行升任 / 全新加入
-- 以「官方制服組成表」自動比較原本與目標,同款 = 可沿用,不同 = 需購買
-- 單品附來源可追溯的**參考圖／產品圖片**，展開可看規格、購買途徑及升團注意；未能取得可靠圖片時保留來源連結，不以自製徽號代替
-- **2026 新綱要:女團員「半截裙／長褲」二選一**（深資／樂行／領袖・陸海空）— 控制列出「下半身」切換掣,揀長褲會即時換成女裝長褲（陸：供應社 01158）＋黑色短襪＋綁帶皮鞋,並更新清單同預算;女領袖（陸）長褲制服（編號 6）同時改用深綠色軟帽
-- **深資／樂行典禮儀式領呔列作「可選」項目**（陸：深資 01073 棗紅／樂行 07012 深綠；海 01072 黑；空 01071 深藍，各 HK$39）— 標示「可選：視乎旅團規定」,唔買唔影響日常集會;預算表照列出價錢但**不計入合計**;同款顏色（例：深資海→樂行海）可沿用
-- 自動統計:需購買 / 可沿用 / 向團長查詢;預算按實際要買的物品計算
-- **家長可 mark 邊啲已有**(支援兄弟姊妹共用),localStorage 持久化
-
-### 2. 🎯 升團過渡指南(總綱)
-- **進度性獎章總覽**:6 個支部一覽(誓詞/規律/獎章/特殊備註)
-- **升團過渡詳情**:揀邊個支部就自動顯示對應 Q&A
-- **獎章歷程圖**：童軍 4 枚進度獎章採用本地壓縮的[童軍資訊站圖解](https://scoutsinfohub.org.hk/scout-training-scheme)，會員章取用官方遠端圖；深資及樂行 6 款用戶提供的去背圖已縮至 WebP。幼童軍 4 張 AI 重繪稿按用戶「能辨認即可」的要求展示，**每張明示「重繪示意・非官方圖」**；細節／邊緣以[總會 2026 支部訓練綱要](https://sites.google.com/scouting.org.hk/sections/%E6%94%AF%E9%83%A8%E8%A8%93%E7%B7%B4%E6%AA%A2%E8%A8%8E)為準，來源及限制見 `assets/badges/README.md`。
-
-### 3. 配套文字資訊
-- 選碼小貼士
-- 洗滌保養指南(8 件物品)
-- 預算參考(2025 年 9 月,以 SCOUT SHOP 為準)
-- 常見穿著錯誤(10 大禁忌)
-- 重要時程表(7 個關鍵時間點)
-- 徽章完全手冊(21 項徽章,每項註明佩戴位置、頒發／購買及升團後安排；支部最高獎章升團後只可改戴「支部最高獎章標誌」)
-- 領袖常規制服(海/陸/空 3 版本)
-- 海童軍 / 空童軍簡介
-- 常見問題 FAQ(7 條)
-
-### 4. 視覺
-- 每個 PART 均可按標題獨立展開／收起（支援觸控、Enter／Space）
-- 初次開啟只展開步驟 ①、②，其餘收起；可一鍵展開／收起目前顯示的所有部分
-- 自動記住各部分的開合狀態；切換支部、性別或重新整理不會重設開合選擇
-- 帽章等 14 個配件項目直接使用本地官方手冊／制服圖局部，毋須等外站失敗才 fallback
-- 4 個準確制服組合已有本地官方圖解；其餘只嘗試對應官方圖片，不再以 AI 陸童軍圖代替海／空制服
-- 圖片註明來源及性質，官方圖解不再稱作「實相」
-- 6 支部用 6 種顏色區分
-- 自家設計 LOGO(綠色 U + 軟帽 + 貝登堡徽)
-- 響應式(手機/平板/桌面)
-
-### 5. SCOUT ADMIN 回報
-- 頁首「向 SCOUT ADMIN 回報問題／意見」直達[共用回報頁](https://scout-admin-blue.vercel.app/report.html?app=%E7%AB%A5%E8%BB%8D%E6%BA%96%E5%82%99%E6%8C%87%E5%8D%97)，`app=童軍準備指南` 讓後台按來源辨認；問題及意見表單由 SCOUT ADMIN 管理，姓名／聯絡選填。
-- 為維持純靜態和輕量，**只在點擊時**前往回報頁，不嵌入第三方 widget／API key／後台程式；回報需網絡連線。本站不讀取或存放提交資料；無法保證對方伺服器處理成功，使用者應以回報頁的提示為準。
-
-### 6. PWA
-- 可加主畫面（PWA manifest，手機按「加到主畫面」）
-- 自家 LOGO icon(192/512/180/32)
-- 暫不啟用離線快取（無 service worker），避免部署更新後瀏覽器被舊快取鎖住；啟用方法見下方「部署與防增肥守則」
-
-### 7. 🌐 雙語（繁體中文 ／ English）
-- 右上角常駐圓形語言掣：中文介面顯示 **EN**，英文介面顯示 **中文**，一按即切換整站
-- 全站雙語：制服清單、單品規格、升團過渡 Q&A、進度性獎章、預算表、常見問題、保養指南等
-- 語言選擇以 `localStorage`（`scout-guide-lang-v1`）記住，下次開啟自動沿用；`<html lang>` 同步更新
-- 中英文資料各自獨立（`LOCALES["zh-HK"]` / `LOCALES.en`），改一邊不會影響另一邊
+- **開工邊界（Agent 必讀）**：[AGENTS.md](AGENTS.md) · 開局前閘門：[PREFLIGHT.md](PREFLIGHT.md)
+- **範圍與術語**：[SCOPE.md](SCOPE.md) · [GLOSSARY.md](GLOSSARY.md) · [一頁紙速查](docs/quickcard.md)
+- **設計與審計**：[DESIGN.md](DESIGN.md) · [全面檢查及升級報告 AUDIT.md](AUDIT.md)
+- **授權與素材來源**：[LICENSE](LICENSE)（MIT · 自研程式碼）· [CREDITS.md](CREDITS.md)（香港童軍總會及供應社素材聲明）
+- **變更紀錄與貢獻**：[CHANGELOG.md](CHANGELOG.md) · [CONTRIBUTING.md](CONTRIBUTING.md)
+- **已採用 Agent Skills（Promoted）**：[`repo-setup`](skills/promoted/repo-setup/SKILL.md) · [`design-review`](skills/promoted/design-review/SKILL.md)（唯一目錄見 [`skills/CATALOG.md`](skills/CATALOG.md)）
 
 ---
 
+## 核心功能
+
+1. **六支部 × 陸／海／空 × 男女 制服比對清單**
+   - 涵蓋小童軍（4–7 歲）、幼童軍（6–11 歲）、童軍（11–15 歲）、深資童軍（15–20 歲）、樂行童軍（18–25 歲）及成年領袖（常規制服編號 3／女領袖長褲制服編號 6）。
+   - 自動比較「原支部制服」與「目標支部制服」，清楚標示 **需購買**、**可沿用** 與 **向團長查詢**。
+   - 支援 **2026 年 8 月 15 日生效新綱要**：深資／樂行／領袖女團員「半截裙／長褲」二選一即時切換（自動聯動鞋襪與女領袖軟帽），以及深資／樂行典禮儀式可選領呔（不計入必買合計）。
+2. **供應社產品編號與預算估算**
+   - 整合香港童軍物品供應社（`hkscoutshop.org.hk`，2026 年 9 月擷取）五位產品編號、產品頁連結及參考零售價，並支援本機 `localStorage` 剔選「已有／已買」項目（隱私模式封鎖儲存時自動安全降級）。
+3. **2026 新訓練綱要進度性獎章歷程與升團徽章拆留指引**
+   - 完整列出各支部最新進度性獎章、誓詞規律、過渡期安排，以及支部最高獎章（金紫荊／總領袖／榮譽童軍／貝登堡）升團拆原章、改戴標誌與領袖只保留最高 1 個之規則。
+4. **繁體中文／英文即時切換 & 問題回報**
+   - 右上角單鍵切換 `zh-HK`／`en`；頁頂直接連往共用 `SCOUT ADMIN` 問題／意見回報頁。
+
 ---
 
-## 📂 檔案結構
+## 專案結構
 
-```
+```text
 upgrade/
-├── index.html            (主頁面 + 全部 CSS + 靜態內容骨架, 51K, 1002 行)
-├── data.js               (語言包骨架 LOCALES + 單品目錄 ITEMS + 制服組成 UNIFORM_SPEC + 參考圖 + 比較邏輯)
-├── locale-en.js          (英文語言包:EN 版 ITEMS / SHOP / 支部資料 / UI 字串 / 靜態 HTML 對照表)
-├── app.js                (主程式:語言切換、來源/海陸空/性別控制、清單、獎章總覽、過渡 Q&A、預算)
-├── manifest.webmanifest  (PWA 設定)
-├── vercel.json           (Vercel 部署:快取/安全 response headers)
-├── .vercelignore         (Vercel 部署排除清單,防止肥重檔案上線)
-├── package.json          (零運行期依賴;只有 devDependencies 測試工具)
+├── index.html                  # 主頁入口（含 G11 圖標 link/OG meta、W1 版權及 V2 版號）
+├── app.js                      # 互動控制、漸進展開、雙語切換、圖片安全降級
+├── data.js                     # 制服規格、供應社編號價錢、2026 訓練綱要與過渡資料（zh-HK）
+├── locale-en.js                # 英文語言包（LOCALES.en 完整對照）
+├── manifest.webmanifest        # PWA 設定（含 any + maskable 192/512 PNG 圖標）
+├── icons/                      # G11 標準全套 9 個 PNG/ICO 站台圖標（≤260 KB）
+├── assets/
+│   ├── badges/                 # 進度性獎章歷程 WebP 縮圖（來源見 assets/badges/README.md）
+│   ├── items/                  # 衣物款式 SVG 及供應社產品 AVIF 縮圖
+│   └── reference/              # 官方手冊與制服圖解本地 AVIF 裁切參考圖（見 assets/reference/README.md）
+├── build-site.mjs              # 零依賴組裝器：輸出純淨運行期白名單至 dist/（< 5 MB）
 ├── scripts/
-│   ├── check.js          (npm run check:語法＋資產引用完整性＋防增肥守門)
-│   └── smoke.js          (npm run smoke:jsdom 快速功能煙霧測試)
-├── tests/                (Playwright 瀏覽器回歸測試,僅開發用,不上 Vercel)
-├── README.md             (本檔)
-├── .gitignore
-└── assets/
-    ├── logo-192.png
-    ├── logo-512.png
-    ├── apple-touch-icon.png
-    ├── favicon-32.png
-    ├── reference/ (15 張已核對的本地官方參考圖 AVIF + 來源及裁切記錄 README.md)
-    └── items/     (單品制服圖 AVIF＋一般衣物款式示意 SVG；不準確的徽號 SVG 已移除)
+│   ├── make-icons.sh           # 重現生成 icons/ 9 個檔案（ImageMagick 內建 MVG）
+│   ├── check.js                # JS 語法、資產引用完整性與死重檔案檢查
+│   ├── lint.js                 # S/F/A/W/V、G11 圖標、DESIGN.md 反 slop 及 .vercelignore 防呆檢查
+│   ├── smoke.js                # JSDOM 互動與雙語零殘留冒煙測試
+│   └── *_v1.0.mjs / guard.mjs  # 同步自 playerkousas-rgb/readme 之真理檢查腳本
+├── tests/
+│   ├── guard.test.mjs          # 零依賴 node:test 單元與規格守護測試
+│   └── *.spec.js               # Playwright 瀏覽器端對端測試規格
+├── docs/                       # 速查卡、設計檢查、ADR 與 out-of-scope 紀錄
+└── skills/                     # Agent 技能包與唯一目錄 CATALOG.md
 ```
 
 ---
 
-## 🌐 雙語架構（Bilingual architecture）
-
-與 AYP 指南一致的「右上角 EN／中文」做法：**資料與介面文字全部收進語言包**，介面本身不內嵌任何語言字串。
-
-### 語言包
-
-| 語言 | 位置 | 說明 |
-|---|---|---|
-| `zh-HK` | `data.js` 的 `LOCALES["zh-HK"]` | 原始中文版，直接沿用檔內既有的 `SECTIONS`／`ITEMS`／`SHOP` 等常數 |
-| `en` | `locale-en.js` 的 `LOCALE_EN` | 英文版，檔尾以 `LOCALES.en = LOCALE_EN` 掛上 |
-
-每個語言包包含：`APP`（標題／描述）、`SECTIONS`、`BRANCHES`、`ITEMS`、`SHOP`、`GRASSHOPPER_ITEM`、
-`ITEM_REFERENCES`、`BADGES_OVERVIEW`、`TRANSITIONS`、`BADGE_TIMELINES`、`UI`（介面字串）及 `HTML`（靜態文字對照表）。
-
-### 三個層次的翻譯
-
-1. **資料／JS 產生的內容** — `app.js` 與 `data.js` 一律經 `L()`（語言包）與 `UI()`（介面字串）取值，
-   切換語言時 `renderAll()` 重新渲染，狀態（支部／海陸空／性別／來源／已買紀錄／PART 開合）完全保留。
-2. **`index.html` 的靜態文字** — 以「文字節點原文（去空白）」做 key，查 `LOCALES[lang].HTML` 對應翻譯。
-   第一次套用時會把所有文字節點的中文原文記下來，所以切回中文是**還原原文**而非再翻一次；
-   沒對應的翻譯會保留中文（不會出現空白）。
-3. **CSS 產生的文字**（PART 的「展開／收起」）— 以 `html[lang="en"]` 選擇器提供英文版，
-   保留 `getComputedStyle(...).content` 可讀到的字串常值。
-
-### 加新文案時要做的三件事
-
-1. 中文：直接寫在 `data.js`（資料）或 `index.html`（靜態文字）／`app.js`（介面邏輯）— 照舊。
-2. 英文（資料）：在 `locale-en.js` 的對應區塊補上同一個 key。
-3. 英文（靜態文字）：在 `locale-en.js` 的 `HTML` 對照表補一筆；`npm run smoke` 會自動檢查「切到英文後仍殘留中文」，
-   有漏網會直接報錯並列出未翻譯的字串。
-
-> `IMG_TEXT`（參考圖的共用字串）在 `locale-en.js` 最頂就先設好，因為 `ITEM_REFERENCES` 建立時就會用到。
-
----
-
-## 🧪 瀏覽器回歸測試
-
-網站仍是純靜態 HTML／JavaScript，毋須建置。
-
-- `tests/parts.spec.js`：19 項，涵蓋各部分開合、全部開合、支部篩選、內層 FAQ、已有物品紀錄、狀態儲存、鍵盤操作及手機排版。
-- `tests/images.spec.js`：18 項，涵蓋全部帽章、15 個本地圖檔解碼、來源標示、制服組合匹配、本地及外站圖片失效、後備圖失效不循環、320／390px 排版。
-- 測試預設阻擋所有外站請求，不依賴供應社允許圖片外連。若另安裝 `@fontsource/noto-sans-hk`，圖片手機測試會使用真實繁中字符字寬。
+## 本機開發與驗證命令
 
 ```bash
-# 快速檢查(零依賴,任何機器即試即用)
-npm run check   # JS 語法＋資產引用完整性＋反死重＋防增肥守門
-npm run smoke   # jsdom 功能煙霧測試:清單比較/海陸空/領袖來源/支部最高獎章標誌/領呔（可選）/預算/持久化/開合
+# 本機預覽（打開 http://localhost:8000）
+npm run dev
 
-# 完整瀏覽器回歸(需 Chromium;只裝 devDependencies,不影響網站運行)
-npm install
-npx playwright install --with-deps chromium
-npm run test
-
-# 終端一：啟動靜態網站
-python3 -m http.server 8000 --bind 0.0.0.0
+# 零依賴完整閘門（開工前／提交前必跑）
+node scripts/preflight_v1.0.mjs . --json
+npm run build        # 依序執行 check.js -> lint.js -> build-site.mjs（產出 dist/）
+npm test             # 執行 node --test（tests/guard.test.mjs）
+node scripts/final_check_v1.0.mjs --json
 ```
 
-如網站使用其他網址，可用 `TEST_BASE_URL` 指定測試目標。
-
 ---
 
-## 📦 部署與防增肥守則（Vercel）— 改版前必讀
+## 資料來源與免責聲明
 
->
-> 目標：Vercel 部署配恆常保持極小（目前上線內容約 **690 KB**，其中圖片約 436 KB、文字／程式約 250 KB；圖示已全面 AVIF 化），
-> 且**任何改版不得引致死重檔案回巢**。
+- **香港童軍總會官網**：<https://www.scout.org.hk/>
+- **香港童軍物品供應社（SCOUT SHOP）**：<https://www.hkscoutshop.org.hk/>
+- **《儀容與制服手冊》**：<https://uniform.scouting.org.hk/>
 
-### 部署模型
-- **純靜態站：零運行期依賴、零 build 步驟**。Vercel 直接部署根目錄，不應執行任何 `npm install`。
-- **嚴禁**在 `dependencies` 加入任何套件。需要新工具時一律放 `devDependencies`（如 Playwright、jsdom），且工具必須與 `node_modules/` 一起被排除在上線範圍外。
-- **嚴禁**引入 `uploads/`、資料庫、後端 API 等會持續累積儲存空間的機制；若將來需要，必須獨立成另一個專案。
-
-### 上線範圍（.vercelignore）
-只上線運行時需要的檔案。已被排除：`*.md`（文件）、`tests/`、`scripts/`、`package*.json`、`node_modules/`、`.git/`、以及防復活的死重模式：`uploads/`、`*.log`、`*.bak`、`*.tmp`、`*.old`、`*.swp`、`.DS_Store`、`Thumbs.db`、`dist/`、`build/`、`.cache/`。
-`.gitignore` 同步排除這些模式，防止先進倉庫再進部署。
-
-### 資產守則（最易出肥重的地方）
-1. **每個 `assets/` 檔案必須被 `index.html`／`app.js`／`data.js`／`locale-en.js`／`manifest.webmanifest` 引用**（`data.js` 以 base 名動態拼出的 `assets/reference/*.avif` 亦算）。`npm run check` 會反查死重，**不允許任何未引用檔案存在**。
-2. 新增圖片前：先問「有無已有本地官方參考圖可用？」。有 → 沿用；沒有 → 才新增，並同時更新 `ITEM_REFERENCES`／`LOCAL_UNIFORMS`、`tests/images.spec.js` 及（如涉及官方裁切）`assets/reference/README.md` 的來源記錄。
-3. 圖片格式：照片類一律用 **AVIF**（quality 70；2026 年所有 evergreen 瀏覽器均支援：Chrome 85+／Safari 16+／Firefox 93+）。新增照片後執行：`npm i --no-save --package-lock=false sharp && node scripts/to-avif.js <檔案>`（會自動解碼驗證、較大的檔案保留原檔）。一律不得用未壓縮的原圖入倉。品牌／PWA 大圖示（`logo-192`、`icon-192`、`icon-512`）同樣用 **AVIF**；只有 `apple-touch-icon`（iOS 只認 PNG）及 16/32px favicon、`favicon.ico` 因平台限制維持 PNG/ICO。`npm run check` 會攔截任何 >64KB 的 PNG/JPG/WebP，防止肥重圖示再入倉。
-4. **不得**復活 `assets/images/`（已停用的舊 AI 插畫，2026-09 已移除）；`npm run check` 會攔截。
-5. 不提交任何備份／暫存檔（`*.bak`／`*.tmp`／`*.old`）；用 Git 做版本控制，不留檔案副本。
-
-### 快取策略（vercel.json）
-- HTML／JS／manifest：`Cache-Control: no-cache`（每次部署立即生效）。
-- 圖片（png/jpg/webp/svg/ico）：`public, max-age=604800`（CDN 快取一週）。
-- **圖示（favicon / apple-touch-icon / PWA icon）：`no-cache`**，且 `<link>`／manifest 一律帶 `?v=` 版本號。換圖示時遞增 `?v=`，瀏覽器即會重新載入，不會沿用舊 LOGO／favicon（舊版曾因根目錄路徑 404＋一週快取導致 favicon 不更新）。
-- 全站附 `X-Content-Type-Options: nosniff`、`Referrer-Policy`。
-
-### PWA 離線功能（刻意未啟用）
-目前只有 manifest（可加主畫面），**沒有 service worker**，離線打開會載入失敗。這是刻意選擇：SW 快取一旦寫入，部署更新後舊版 UI 可能鎖住使用者，與「零倒退」目標衝突。日後若要啟用，必須：版本化 cache name、HTML 一律 network-first、圖片 cache-first、附 `versionchange` 自動升級，並為之新增 Playwright 測試。
-
-### 改版前的驗證清單（零倒退守門）
-```bash
-npm run check   # 必須全綠
-npm run smoke   # 必須全綠
-npm run test    # 有 Chromium 時必須全綠（38 項）
-```
-三關全過才可推送／部署。
-
-### 2026-09 瘦身記錄（本次）
-移除 17 個死重檔案（**396 KB**）＋ 21 張照片轉 AVIF（**261 KB**），上線總量 **1,416 KB → 約 760 KB（-46%）**：
-
-| 檔案 | 原因 |
-|---|---|
-| `assets/images/` 全 10 張（208 KB） | 舊 AI 整套制服插畫，早已停用，代碼零引用（測試反而斷言不得引用此目錄） |
-| `assets/items/beret-green.jpg`（59 KB） | 已被本地官方裁切圖 `reference/beret-green.avif` 取代 |
-| `assets/items/cap-cub-m.jpg`（56 KB） | 已被 `reference/capbadge-cub.avif` 取代 |
-| `assets/items/cap-cub-f.jpg`（48 KB） | 已被 `reference/cap-cub-female.avif` 取代 |
-| `assets/items/beret-greyblue.jpg`（42 KB） | 已被 `reference/beret-greyblue.avif` 取代 |
-| `assets/items/tie-black/green/navy.svg`（1.4 KB） | 代碼中根本沒有領帶單品，零引用 |
-
-**AVIF 轉換（21 張照片，-261 KB）**：`assets/reference/` 15 張 webp → avif（四張全身制服圖 86–88 KB → 45–59 KB）、`assets/items/` 6 張 jpg → avif（供應社產品圖 28–54 KB → 10–24 KB）。全部經「解碼驗證＋逐張平均 RGB 統計比對（Δ≤0.002）」確認與原檔同尺寸、色彩忠實；其中 4 張小帽章 AVIF 比 WebP 略大（+2.2 KB），為保持代碼模板統一仍採用 AVIF。新增 `scripts/to-avif.js` 作為日後照片入倉的標準轉碼工具。
-
-新增守衛：`.vercelignore`、`vercel.json`（快取／安全 headers）、`scripts/check.js`（反死重守門）、`scripts/smoke.js`（jsdom 功能測試）、`scripts/to-avif.js`（AVIF 轉碼）、`package.json`（僅 devDependencies）。
-
-修復：`.item.expanded .item-detail` 的 `max-height` 由 1200px 提高到 3000px（320px 窄視點下最長單品＝220px 圖＋說明＋供應社框，1200px 上限配 `overflow:hidden` 有裁切風險）；README 的 PWA「離線可用」更正為實際狀態。
-
-**核心功能確認（瘦身後 smoke 36 項＋check 全數通過）**：升團清單比較（6 支部×海陸空×來源×性別）、同款沿用判定、領袖 3 來源、深資／樂行海帽章同款規則、帽章等 15 張本地參考圖優先＋官方原圖回退、失效圖片誠實提示不循環、預算表、mark 已有持久化、PART 開合及批量開合、小童軍特殊路徑。
-
----
-
-## 🎨 LOGO 設計
-
-- **綠色童軍短袖恤衫**（兩胸袋、衫鈕）＋ 中間**上升箭頭**（升團／upgrade 之意）
-- 杏色（`#e8dcc4`，即 `--scout-beige`）圓角底，與香港童軍制服主色呼應
-
-### 圖示產生（改 LOGO 前必讀）
-一次性由 1024px 母版產生，**唔可以只用一張圖縮小**（縮到 16px 會變一團）：
-
-```bash
-# 1. 母版（1024×1024，2026-10-02 已存在 git 歷史，唔使再畫）
-git show 62eb1adc:assets/icon-512.png > /tmp/master.png   # 恤衫 LOGO 原圖
-# 2. 去掉白/灰底 → 透明（只由四角 floodfill，唔會食到恤衫白色）
-convert /tmp/master.png -alpha set -bordercolor white -border 2 -fuzz 15% -fill none \
-  -draw "matte 0,0 floodfill" -draw "matte 1027,0 floodfill" -draw "matte 0,1027 floodfill" -draw "matte 1027,1027 floodfill" \
-  -shave 2x2 /tmp/master-alpha.png
-# 3. 16/32/48/180 用 PNG8（平面色、size 細）；192/512 用 AVIF
-#    r = 22% 邊長，杏色圓角底：-fill "#e8dcc4" -draw "roundrectangle 0,0,$((s-1)),$((s-1)),$r,$r"
-# 4. favicon.ico = 16/32/48 三個 PNG8 frame 打包（約 3.3KB）
-# 5. 遞增 index.html / manifest.webmanifest 嘅 ?v=（今次 ?v=4），否則瀏覽器會沿用舊圖
-```
-
-**歷史教訓**：`assets/logo-192.avif`、`icon-*.avif` 曾被舊版「U 字母＋軟帽」LOGO 覆蓋（PR #7 標題寫「修正 favicon」，實際上把圖示換錯），而 16/32/180 一直冇由 1024px 母版正確產生。改圖示時請對照 `favicon.ico` 解碼出嚟嘅實際圖像，唔好只睇 file size／「有冇更新」。
-
----
-
-## 📊 開發歷程
-
-| 階段 | 功能 |
-|---|---|
-| 1. 原版 | 港島第82旅內部工具,只涵蓋幼升童 |
-| 2. 通用化 | 改為全港旅團通用,6 個支部 + 海/空童軍 |
-| 3. 互動化 | 加 path 選擇 + 模式切換 + 性別切換 + 10 張 AI 插畫 |
-| 4. 文字深化 | 加尺碼、預算、洗滌、時程、徽章手冊、FAQ |
-| 5. 總綱化 | 升團過渡指南改用訓練綱要為基礎,加進度性獎章總覽 |
-| 6. 互動 mark | 家長可 mark 邊啲已有(支援兄弟姊妹共用) |
-| 7. 海陸空 + 領袖 3 來源 | 改用官方制服組成表自動比較;每件單品加圖片;修正金紫荊/先修章/小隊章/年星資料 |
-| 8. 2026 新綱要 | 深資／樂行／領袖女團員加「半截裙／長褲」二選一（真．切換掣，非文字註明） |
-| 9. 圖示回歸修正 | PR #7 誤把 LOGO 換成舊版「U 字母＋軟帽」；今次還原為恤衫 LOGO，並由 1024px 母版重新產生 16/32/48/180/192/512（`?v=4`） |
-| 10. 獎章標誌更正 | 六個支部逐個核對：升團後**支部最高獎章本身要拆走**，只可改戴「支部最高獎章標誌」；深資不再寫「不會有金紫荊」（金紫荊標誌與總領袖標誌**可以一齊戴**）；新增「支部最高獎章標誌」列（右胸袋上方，購買須出示獎章證書）；**領袖只保留 1 個標誌**，同時有幾個就用最高級（V ＞ R ＞ S ＞ C：榮譽童軍 ＞ 貝登堡 ＞ 總領袖 ＞ 金紫荊） |
-| 11. 領呔更正 | 更正「深資唔戴領帶」嘅印象：**深資及樂行童軍於典禮儀式佩戴領呔**（陸：深資＝棗紅、樂行＝深綠；海＝黑；空＝深藍），供應社 4 款呔（01071／01072／01073／07012）入 `SHOP`，清單列作**可選（視乎旅團規定）**，預算不計入合計 |
-
----
-
-## ⚠️ 免責聲明
-
-本 APP 為<strong>非官方輔助工具</strong>:
-- 制服規格以香港童軍總會最新《儀容與制服手冊》為準
-- 訓練綱要根據《童軍訓練綱要》及政策、組織及規條整理
-- 制服價格隨時調整,實際以[香港童軍物品供應社(SCOUT SHOP)](http://www.hkscoutshop.org.hk) 為準
-- 圖片以準確及可核對為先：帽章等使用本地官方參考圖，來源及裁切記錄見 [`assets/reference/README.md`](assets/reference/README.md)，不冒稱現售產品照片
-- 其他項目嘗試供應社產品圖片；一般衣物才保留清楚標示「非實物照片」的款式示意後備。小隊章及職級肩章無可靠本地圖時只保留官方產品入口，不用自製徽號
-- 外站或本地圖載入失敗時保留來源／產品連結；不使用空 `src`、無限重試或跨支部／性別的錯圖
-- 預算表以 `SHOP` 表的官方零售價計算;皮鞋、襪褲等非供應社貨品才用約略區間
-- 如有疑問,請向<strong>所屬旅團領袖</strong>查詢
-
-## 📜 版權
-
-© 2026 Scout System · 童軍準備指南
-
-制服規格及官方參考圖版權 © 香港童軍總會 Scout Association of Hong Kong
-訓練綱要整理自公開文件,僅作教育用途。
+本網站為非官方獨立輔助工具，與香港童軍總會無任何官方從屬關係。所有制服規格、徽章佩戴與訓練綱要以香港童軍總會最新正式公布為準；第三方素材來源詳見 [CREDITS.md](CREDITS.md)。

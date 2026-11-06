@@ -380,11 +380,12 @@ function buildChecklist(opts){
     return [gh];
   }
   const spec = getSpec(section, branch, gender) || [];
-  // 2026 新綱要：女團員揀長褲（預設半截裙）。
+  // 2026 新綱要：女團員揀長褲（預設半截裙）；升團來源（深資→樂行／樂行→領袖）同步套用下半身選擇以便正確識別可沿用物品。
   const trousersChosen = opts.bottom === "trousers" && hasLowerBodyChoice(section, branch, gender, spec);
   const target = applyLowerBodyChoice(spec, section, branch, gender, opts.bottom);
-  const source = (mode === "upgrade" && fromSection && fromSection !== "grasshopper")
+  const rawSource = (mode === "upgrade" && fromSection && fromSection !== "grasshopper")
     ? (getSpec(fromSection, fromBranch, gender) || []) : [];
+  const source = applyLowerBodyChoice(rawSource, fromSection, fromBranch, gender, opts.bottom);
   const fromSec = fromSection ? loc.SECTIONS[fromSection] : null;
   const fromShort = fromSec && fromSec.hasBranch ? (loc.BRANCHES[fromBranch]?.short || t.branchFallbackShort) : "";
   const fromName = fromSec ? t.fromLabel(fromSec.name, fromShort) : "";
@@ -417,6 +418,9 @@ function buildChecklist(opts){
     if(it.optional){
       if(status !== "have") status = "check";
       note += t.noteOptional;
+    }
+    if(trousersChosen && section === "leader" && branch === "land" && id === "beret-green"){
+      note += t.noteLeaderTrousersHat;
     }
 
     const buyLabel = t.buyLabels[it.buy] || "";

@@ -1,21 +1,39 @@
 <!DOCTYPE html>
+<!-- GENERATED from upgrade_v2.0.0.html (v2.0.0) -->
 <html lang="zh-HK">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1B4332">
+<meta name="copyright" content="© SCOUT SYSTEM">
+<meta name="app-version" content="2.0.0">
 <title>童軍準備指南</title>
-<!-- 圖示版本號 ?v= 用於快取清除：每次更換圖示時遞增，避免瀏覽器沿用舊圖 -->
-<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png?v=4">
-<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png?v=4">
-<!-- favicon.ico 放於網站根目錄（瀏覽器會自動請求 /favicon.ico） -->
-<link rel="icon" type="image/x-icon" href="favicon.ico?v=4">
-<link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=4">
-<link rel="manifest" href="manifest.webmanifest">
+<!-- 圖標標準（readme docs/33 · G11）：5 條 link + 4 條 OG meta，?v= 與 window.ICON_VER 同步 -->
+<link rel="icon" href="icons/favicon.ico?v=20261106" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png?v=20261106">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png?v=20261106">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png?v=20261106">
+<link rel="manifest" href="manifest.webmanifest?v=20261106">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="童軍準備指南">
 <meta name="description" content="童軍準備指南 — 涵蓋小童軍到領袖的進團、升團制服準備、徽章佩戴及過渡須知。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="童軍準備指南 — 由小童軍到領袖制服及徽章準備">
+<meta property="og:description" content="涵蓋小童軍到領袖的進團、升團制服準備、徽章佩戴及 2026 新訓練綱要過渡須知。">
+<meta property="og:url" content="https://upgrade-ashen.vercel.app/">
+<meta property="og:image" content="https://upgrade-ashen.vercel.app/icons/og-image.png?v=20261106">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="童軍準備指南 — 香港童軍各支部制服與徽章準備">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://upgrade-ashen.vercel.app/icons/og-image.png?v=20261106">
+<script>
+  const APP_VERSION = "2.0.0";
+  const ICON_VER = "20261106";
+  window.APP_VERSION = APP_VERSION;
+  window.ICON_VER = ICON_VER;
+</script>
 <!-- Vercel Web Analytics -->
 <script>
   window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
@@ -23,9 +41,11 @@
 <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
 <style>
 :root{
+  --scout-brand:#1B4332;
   --scout-green:#0a5c36;
   --scout-green-dark:#064020;
   --scout-beige:#e8dcc4;
+  --surface-warm:#f6f1e5;
   --scout-olive:#556b2f;
   --scout-maroon:#7a1f2b;
   --accent:#f9b233;
@@ -52,24 +72,14 @@ body{
   padding-bottom:env(safe-area-inset-bottom);
 }
 
-/* ── Hero / Header ── */
+/* ── Hero / Header（實色底＋金色底邊，零漸層，對齊 DESIGN.md） ── */
 header{
-  background:linear-gradient(135deg,var(--scout-green) 0%,var(--scout-green-dark) 100%);
+  background:var(--scout-brand);
+  border-bottom:4px solid var(--accent);
   color:white;
-  padding:1.5rem 1rem 2rem;
+  padding:1.5rem 1rem 1.8rem;
   text-align:center;
   position:relative;
-}
-header::after{
-  content:"";
-  position:absolute;left:0;right:0;bottom:0;height:6px;
-  background:linear-gradient(90deg,
-    var(--grasshopper) 0% 16%,
-    var(--cub) 16% 33%,
-    var(--scout) 33% 50%,
-    var(--venture) 50% 66%,
-    var(--rover) 66% 83%,
-    var(--leader) 83% 100%);
 }
 .brand{display:flex;align-items:center;justify-content:center;gap:.8rem;margin-bottom:.5rem}
 .brand img{width:56px;height:56px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.25)}
@@ -143,6 +153,7 @@ header p{margin:.3rem 0 0;opacity:.95;font-size:.95rem}
 .path-step[data-section="venture"].active{border-color:var(--venture)}
 .path-step[data-section="rover"].active{border-color:var(--rover)}
 .path-step[data-section="leader"].active{border-color:var(--leader)}
+.path-step:focus-visible{outline:3px solid var(--scout-green);outline-offset:2px}
 
 /* ── Mode toggle (全新加入 vs 升團) ── */
 .mode-toggle{
@@ -180,10 +191,11 @@ header p{margin:.3rem 0 0;opacity:.95;font-size:.95rem}
 }
 .gender-toggle button.active{background:var(--scout-olive);color:white;border-color:var(--scout-olive)}
 
-/* ── Section preview (官方參考圖 + 描述) ── */
+/* ── Section preview (官方參考圖 + 描述，實色暖紙底，零漸層) ── */
 .preview{
   display:grid;grid-template-columns:200px 1fr;gap:1.2rem;align-items:center;
-  background:linear-gradient(135deg,#faf8f3 0%,#f0e8d4 100%);
+  background:var(--surface-warm);
+  border:1px solid #e2d8c3;
   border-radius:12px;
   padding:1rem;
   margin:1rem 0;
@@ -517,7 +529,7 @@ footer{
 <header>
   <button type="button" class="fab" id="fab-lang" aria-label="切換語言 / Switch language">EN</button>
   <div class="brand">
-    <img src="assets/logo-192.avif?v=4" alt="制服準備指南 LOGO" width="56" height="56">
+    <img src="icons/icon-192.png?v=20261106" alt="制服準備指南 LOGO" width="56" height="56">
     <div style="text-align:left">
       <h1>童軍準備指南</h1>
       <p>由小童軍到領袖・家長一目了然</p>
@@ -545,22 +557,22 @@ footer{
     <div class="part-content">
       <p>你現在要準備哪一支部?</p>
       <div class="path">
-        <div class="path-step" data-section="grasshopper" onclick="selectSection('grasshopper')">
+        <div class="path-step" role="button" tabindex="0" data-section="grasshopper" onclick="selectSection('grasshopper')">
           <div class="dot"></div>小童軍<small>4–7 歲</small>
         </div>
-        <div class="path-step active" data-section="cub" onclick="selectSection('cub')">
+        <div class="path-step active" role="button" tabindex="0" data-section="cub" onclick="selectSection('cub')">
           <div class="dot"></div>幼童軍<small>6–11 歲</small>
         </div>
-        <div class="path-step" data-section="scout" onclick="selectSection('scout')">
+        <div class="path-step" role="button" tabindex="0" data-section="scout" onclick="selectSection('scout')">
           <div class="dot"></div>童軍<small>11–15 歲</small>
         </div>
-        <div class="path-step" data-section="venture" onclick="selectSection('venture')">
+        <div class="path-step" role="button" tabindex="0" data-section="venture" onclick="selectSection('venture')">
           <div class="dot"></div>深資童軍<small>15–20 歲</small>
         </div>
-        <div class="path-step" data-section="rover" onclick="selectSection('rover')">
+        <div class="path-step" role="button" tabindex="0" data-section="rover" onclick="selectSection('rover')">
           <div class="dot"></div>樂行童軍<small>18–25 歲</small>
         </div>
-        <div class="path-step" data-section="leader" onclick="selectSection('leader')">
+        <div class="path-step" role="button" tabindex="0" data-section="leader" onclick="selectSection('leader')">
           <div class="dot"></div>領袖<small>成年</small>
         </div>
       </div>
@@ -882,7 +894,7 @@ footer{
           <tr data-show-for="cub"><td>童軍先修章</td><td>右胸袋上方</td><td>供應社購買（須出示證書）</td><td>年滿 10 歲半的幼童軍可考，為升童軍做準備</td></tr>
           <tr data-show-for="scout"><td>深資童軍先修章</td><td>右胸袋上方</td><td>供應社購買（須出示證書）</td><td>年滿 14 歲半的童軍可考，為升深資做準備</td></tr>
           <tr data-show-for="cub,scout"><td>活動徽章／專科徽章</td><td>左袖</td><td>供應社購買（須出示證書）</td><td>幼童軍活動徽章／童軍專科徽章</td></tr>
-          <tr data-show-for="venture"><td>深資童軍段章及金帶</td><td>左袖</td><td>供應社購買（須出示證書）</td><td>責任、自立、活動、探險</td></tr>
+          <tr data-show-for="venture"><td>深資童軍段章及金帶</td><td>左袖</td><td>供應社購買（須出示證書）</td><td>活動策劃、社會服務、多元技能、戶外探險（舊制：責任、自立、活動、探險）</td></tr>
           <tr data-show-for="cub,scout"><td>隊長章／副隊長章</td><td>左胸袋，會員章下方</td><td>供應社購買</td><td>2023 年 4 月起統一位置</td></tr>
           <tr data-show-for="leader"><td>職級肩章</td><td>兩肩肩帶</td><td>供應社購買（獲委任後）</td><td>視乎委任職級</td></tr>
           <tr data-show-for="leader"><td>香港肩章／旅章</td><td>肩帶／右袖</td><td>供應社購買／旅團頒發</td><td>總會、地域、區級領袖戴香港肩章；旅團領袖戴旅章</td></tr>
@@ -1022,8 +1034,8 @@ footer{
 </div>
 
 <footer>
-<p>© 2026 SCOUT SYSTEM</p>
-<p>本網站為非官方獨立工具，旨在方便成員瀏覽公開資訊，與香港童軍總會無任何官方從屬關係。所有通告版權歸香港童軍總會所有。</p>
+<p>© 2026 SCOUT SYSTEM · v2.0.0</p>
+<p>本網站為非官方獨立工具，旨在方便成員瀏覽公開資訊，與香港童軍總會無任何官方從屬關係。相關制服規格、訓練綱要及徽號版權歸香港童軍總會所有。</p>
   <p>制服資料來源:香港童軍總會 <a href="https://www.scout.org.hk" target="_blank" rel="noopener" style="color:var(--scout-green)">scout.org.hk</a></p>
   <p>制服購買:香港童軍物品供應社(SCOUT SHOP) <a href="https://www.hkscoutshop.org.hk/" target="_blank" rel="noopener" style="color:var(--scout-green)">www.hkscoutshop.org.hk</a></p>
   <p>《儀容與制服手冊》: <a href="https://uniform.scouting.org.hk/" target="_blank" rel="noopener" style="color:var(--scout-green)">uniform.scouting.org.hk</a></p>

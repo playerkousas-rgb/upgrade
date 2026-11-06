@@ -1,30 +1,16 @@
-# Generated 高清原圖,只保留 web 用的版本
-assets/logo-1024.png
-
-# 死重 / 備份 / 日誌(防增肥,勿提交)
+node_modules/
+dist/
+coverage/
+.cache/
+.vercel/
+test-results/
+playwright-report/
+playwright/.cache/
+.DS_Store
 *.bak
 *.tmp
 *.old
 *.log
-*.swp
-uploads/
-
-# 建置產物(本專案純靜態,不應有;如日後引入 build 工具)
-dist/
-build/
-.cache/
-
-# Mac / Windows
-.DS_Store
-Thumbs.db
-
-# IDE
-.vscode/
-.idea/
-node_modules/
-# devDependencies 鎖檔,與 .vercelignore 一致:不進倉庫、不進部署
-package-lock.json
-
-# Browser test artifacts
-/test-results/
-/playwright-report/
+.env
+.env.*
+!.env.example
