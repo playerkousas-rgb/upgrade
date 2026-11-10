@@ -1,7 +1,7 @@
 # 童軍準備指南（Scout Uniform & Badge Guide）
 
 > 香港童軍各支部（小童軍至領袖）進團與升團制服準備、2026 新訓練綱要徽章歷程及過渡須知（中英雙語純靜態 PWA）。
-> 線上網址：<https://upgrade-ashen.vercel.app> · 當前版本：**v2.0.0**
+> 線上網址：<https://upgrade-ashen.vercel.app> · 當前版本：**v2.2.1**
 
 ---
 

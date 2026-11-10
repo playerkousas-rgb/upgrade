@@ -172,18 +172,19 @@ const ITEMS = {
     detail:`<h4>基本徽章（青少年支部）</h4><p>總會官網列明幼童軍至樂行童軍的基本徽章為：<strong>世界童軍會員章、香港章、地域章、區章、旅章</strong>。</p>
       <ul>
         <li>世界童軍會員章：左胸袋中央（<strong>宣誓後</strong>才可佩戴）</li>
-        <li>香港章：左胸袋上方</li>
-        <li>旅章、區章、地域章：右袖（由上至下）</li>
+        <li>香港章：左胸袋袋蓋上方 3 厘米中央位置（如有服務年星，釘於香港章與袋蓋之間）</li>
+        <li>旅章：右袖肩膊縫線下方 2 厘米中央位置</li>
+        <li>地域章＋區章：右袖旅章下方 2 厘米左右並排、相距 1 厘米（<strong>地域章在前／向胸口，區章在後／向背後</strong>；具體視衣服大小，細碼衫間距可能會變小，不會變大）</li>
       </ul>
       <p>會員章、香港章在供應社購買；地域章、區章、旅章多數由旅團代購或頒發。升團時徽章如狀況良好可沿用（同一旅同一區）。</p>
-      <div class="tip">必須用線縫牢，不可用膠水或扣針。</div>` },
+      <div class="tip">必須用線縫牢，不可用膠水或扣針。<a href="#badge-placement-guide" onclick="openBadgeGuide(event)" style="display:inline-block;margin-left:.4rem;color:var(--scout-green);font-weight:700;text-decoration:underline">查看《儀容與制服手冊》釘章位置圖解 →</a></div>` },
   "patrol-badge": { title:"小隊章", desc:"童軍支部・由旅團頒發／供應社購買", icon:"🐾", buy:"group-or-supply",
     detail:`<h4>小隊章</h4><p>只有<strong>童軍支部</strong>有小隊章（總會官網童軍制服徽章列表包括小隊章；深資／樂行沒有）。</p>
-      <p>根據《童軍訓練綱要》附錄，小隊章在供應社發售，購買時毋須出示文件；亦有旅團會直接頒發。佩戴在<strong>右袖</strong>。</p>` },
+      <p>根據《童軍訓練綱要》附錄，小隊章在供應社發售，購買時毋須出示文件；亦有旅團會直接頒發。佩戴在<strong>右袖</strong>（地域章及區章下方）。</p>` },
   "badges-leader": { title:"領袖基本徽章", desc:"會員章、香港章、香港肩章／旅章、總會總部章／地域章／區章", icon:"🎖️", buy:"mixed",
-    detail:`<h4>基本徽章（領袖常規制服）</h4><p>總會官網領袖常規制服（編號 3）徽章：<strong>世界童軍會員章、香港章、香港肩章／旅章、總會總部章／地域章／區章、職級肩章</strong>。</p>
+    detail:`<h4>基本徽章（領袖常規制服）</h4><p>總會官網領袖常規制服（編號 3）徽章：<strong>世界童軍會員章、香港章、香港肩章／旅章、總會總部章／地域章／區章、職級肩章</strong>（成年成員香港章佩戴於右胸袋中央）。</p>
       <p>由青少年支部升任：世界童軍會員章、香港章可沿用；旅章／區章／地域章視乎服務單位，向旅團查詢。</p>
-      <div class="tip">榮譽童軍獎章／貝登堡獎章持有人成為領袖後，可終身佩戴相應的<strong>領袖標誌</strong>。領袖<strong>只保留 1 個支部最高獎章標誌</strong>（同時有幾個就用最高級：榮譽童軍 ＞ 貝登堡 ＞ 總領袖 ＞ 金紫荊）。</div>` },
+      <div class="tip">榮譽童軍獎章／貝登堡獎章持有人成為領袖後，可終身佩戴相應的<strong>領袖標誌</strong>。領袖<strong>只保留 1 個支部最高獎章標誌</strong>（同時有幾個就用最高級：榮譽童軍 ＞ 貝登堡 ＞ 總領袖 ＞ 金紫荊）。<a href="#badge-placement-guide" onclick="openBadgeGuide(event)" style="display:inline-block;margin-left:.4rem;color:var(--scout-green);font-weight:700;text-decoration:underline">查看《儀容與制服手冊》釘章位置圖解 →</a></div>` },
   "epaulette-rank": { title:"職級肩章", desc:"領袖・視乎委任職級", icon:"🎗️", buy:"check",
     detail:`<h4>職級肩章</h4><p>戴於兩肩肩帶，款式視乎獲委任的職級（見習領袖／助理領袖／領袖／總監等）。獲委任後向旅團查詢應購買哪款。</p>` }
 };
@@ -752,7 +753,7 @@ const LOCALES = {
     name: "童軍準備指南",
     shortName: "童軍準備",
     tagline: "由小童軍到領袖・家長一目了然",
-    description: "童軍準備指南 — 涵蓋小童軍到領袖的進團、升團制服準備、徽章佩戴及過渡須知。",
+    description: "香港童軍各支部（小童軍至領袖）入團及升團制服清單、2026 新訓練綱要、供應社參考預算及《儀容與制服手冊》徽章縫製厘米圖解。",
     appleTitle: "童軍準備指南",
     logoAlt: "制服準備指南 LOGO"
   },
@@ -771,7 +772,7 @@ const LOCALES = {
     lowerBodyLabel: "下半身：",
     lowerBodySkirt: "半截裙",
     lowerBodyTrousers: "長褲",
-    lowerBodyHint: "2026 年 8 月 15 日生效的新綱要：深資／樂行／領袖女團員可任選半截裙或長褲，二選一、毋須兩件都買；以旅團安排為準。",
+    lowerBodyHint: "2026 新綱要：半截裙或長褲二選一（以旅團安排為準）。",
     noteLeaderTrousersHat: `<div class="tip">女領袖長褲制服（編號 6）改用<strong>深綠色軟帽</strong>；穿半截裙（編號 3）時才用深綠色金邊硬帽。</div>`,
     genderMemberMale: "男團員", genderMemberFemale: "女團員",
     genderLeaderMale: "男領袖", genderLeaderFemale: "女領袖",
@@ -782,22 +783,22 @@ const LOCALES = {
     branchLabel: (name) => `・${name}`,
     partExpand: "展開", partCollapse: "收起",
     toolbarAria: "目前顯示部分的開合控制",
-    toolbarHint: "按各部分標題展開／收起，只睇你需要嘅內容。",
+    toolbarHint: "按標題展開／收起",
     expandAll: "全部展開", collapseAll: "全部收起",
 
     /* ── 步驟 ② 控制列 ── */
     controlsTitle: "你屬於哪一種？",
-    grasshopperNoUniform: "小童軍沒有指定制服，亦無升團來源，直接看下方說明。",
+    grasshopperNoUniform: "小童軍無指定制服及升團來源，直接看下方說明。",
     sourceFrom: (name, isLeader) => `由${name}升${isLeader ? "任" : "團"}`,
     sourceFromGrasshopper: "由小童軍升團",
-    sourceSmallGrasshopper: "小童軍無制服，等同全新加入",
-    sourceSmallReuse: "可沿用同款物品",
+    sourceSmallGrasshopper: "等同全新加入",
+    sourceSmallReuse: "沿用同款",
     newJoin: "全新加入",
-    newJoinSmall: "從未穿過童軍制服",
+    newJoinSmall: "首次買制服",
     fromBranchLabel: "原本是：",
     toBranchLabelUpgrade: "升去：",
     toBranchLabelNew: "加入：",
-    branchHint: "同一旅團通常整旅同一類型；如不確定，先問所屬旅團領袖。",
+    branchHint: "不確定陸／海／空請先問旅團。",
 
     /* ── 模式 / 預覽 ── */
     modeUpgrade: (from, isLeader) => `由 ${from} 升${isLeader ? "任" : "團"}`,
@@ -806,23 +807,23 @@ const LOCALES = {
 
     /* ── 統計 ── */
     statusNeed: "需購買", statusHave: "可沿用", statusCheck: "向團長查詢",
-    ownedSummary: (n, total) => `✅ 已 mark 已有／已買：<strong>${n}</strong> / ${total} 項`,
-    resetMarks: "🗑 一鍵清紀錄",
-    resetConfirm: "確定要清晒所有 mark 紀錄嗎？\n\n此操作無法復原！",
+    ownedSummary: (n, total) => `已標記已有：<strong>${n}</strong> / ${total} 項`,
+    resetMarks: "清除紀錄",
+    resetConfirm: "確定要清除所有「已有」標記嗎？\n\n此操作無法復原。",
 
     /* ── 清單項目 ── */
-    markOwned: "✅ 已有／已買",
-    markOwnedNone: "⬜ mark 已有",
-    ownedHint: "呢件嘢你已有",
-    ownedHintNone: "如已有（兄弟姊妹共用），剔呢度",
+    markOwned: "✓ 已有／已買",
+    markOwnedNone: "標記已有",
+    ownedHint: "已有免買",
+    ownedHintNone: "兄弟姊妹共用可剔",
     checklistTitle: (mode, branch, gender, n) => `${mode}${branch} · ${gender} · 共 ${n} 項`,
-    checklistNote: "<strong>備註：</strong>制服規格根據香港童軍總會官網「制服」頁。地域章、區章、旅章、小隊章及旅巾安排，請向<strong>所屬旅團領袖</strong>查詢。",
+    checklistNote: "地域章、區章、旅章、小隊章及旅巾安排請問<strong>所屬旅團</strong>。",
 
     /* ── 沿用／新買提示 ── */
-    noteReuse: (from) => `<div class="tip">✅ 與${from}<strong>同一款</strong>，如狀況良好可沿用。</div>`,
-    noteBadgesReuse: `<div class="tip">✅ 世界童軍會員章、香港章、地域章、區章、旅章可沿用（同一旅）。<br><strong>要拆走</strong>舊支部的進度性獎章、活動／專科徽章、隊長章；舊支部最高獎章亦只可改戴「支部最高獎章標誌」於右胸袋上方。服務年星保留。</div>`,
-    noteScarfReuse: `<div class="tip">✅ 同一旅升團可繼續用原有旅巾。</div>`,
-    noteNeed: (from) => `<div class="warn">🆕 ${from}沒有此款，需要購買／更換。</div>`,
+    noteReuse: (from) => `<div class="tip">與${from}<strong>同一款</strong>，狀況良好可沿用。</div>`,
+    noteBadgesReuse: `<div class="tip">世界童軍會員章、香港章、地域章、區章、旅章及服務年星可沿用（同一旅）。<br><strong>拆走</strong>舊支部獎章、活動／專科章及隊長章；舊最高獎章改戴「支部最高獎章標誌」於右胸袋上方。</div>`,
+    noteScarfReuse: `<div class="tip">同一旅升團可沿用原有旅巾。</div>`,
+    noteNeed: (from) => `<div class="warn">${from}無此款，須購買／更換。</div>`,
     buyLabels: {
       supply: "香港童軍物品供應社購買",
       included: "隨幼童軍帽附上，毋須另購",
@@ -833,18 +834,18 @@ const LOCALES = {
       "group-or-supply": "由旅團頒發／供應社購買",
       optional: "可選：視乎旅團規定"
     },
-    noteOptional: `<div class="tip">💡 <strong>可選項目</strong>：官方於典禮儀式佩戴（例如領呔），是否佩戴／購買<strong>以所屬旅團規定為準</strong>；唔買唔影響日常集會。</div>`,
+    noteOptional: `<div class="tip"><strong>可選項目</strong>：典禮儀式佩戴（如領呔），以<strong>旅團規定為準</strong>，不影響日常集會。</div>`,
 
     /* ── 供應社產品框 ── */
-    shopBoxTitle: "🛒 供應社官方產品",
+    shopBoxTitle: "供應社官方產品",
     shopCode: (code) => code ? `（編號 ${code}）` : "",
     shopPrice: (p) => p != null ? ` HK$${p}` : "",
     shopAlts: "其他款式：",
     shopAltSep: "、",
-    shopPriceNote: "價錢為供應社網站標示零售價（2026-09 擷取），以店內為準。",
+    shopPriceNote: "2026-09 標示價，以店內為準。",
 
     /* ── 預算 ── */
-    budgetGrasshopper: `小童軍以<strong>旅團安排</strong>為準：小童軍活動服可於<a href="https://www.hkscoutshop.org.hk/" target="_blank" rel="noopener">供應社</a>購買（HK$75），單色衣物、運動鞋可自行選購，旅巾由旅團安排。`,
+    budgetGrasshopper: `小童軍以<strong>旅團安排</strong>為準：活動服可於<a href="https://www.hkscoutshop.org.hk/" target="_blank" rel="noopener">供應社</a>購買（HK$75），單色衣物及運動鞋自行選購。`,
     priceIncluded: "已連帽，毋須另購",
     priceDependsGroup: "視乎旅團安排",
     priceOfficial: (p) => `HK$${p}`,
@@ -852,35 +853,35 @@ const LOCALES = {
     priceOptional: (price) => `可選 ${price}（不計入合計）`,
     shopCodeLink: (code) => ` 供應社 ${code} ↗`,
     budgetModeUpgrade: "升團補購", budgetModeNew: "全新全購",
-    budgetHead: (mode) => `你而家揀嘅係<strong>${mode}</strong>，需要準備嘅物品如下：`,
+    budgetHead: (mode) => `<strong>${mode}</strong>明細：`,
     budgetColItem: "物品", budgetColPrice: "約略價錢",
     budgetTotal: "合計（不含旅團頒發項目）",
-    budgetFootNote: "標有「供應社編號」的價錢為 hkscoutshop.org.hk 網站 2026 年 9 月標示零售價，其餘為約略參考；實際以香港童軍物品供應社為準。皮鞋、短襪、襪褲可於一般商店購買。",
-    budgetOptionalNote: "「可選」項目（深資／樂行典禮儀式的領呔）不計入合計——是否購買以所屬旅團規定為準。",
+    budgetFootNote: "標編號者為 2026-09 標價，其餘為估算；皮鞋、短襪、襪褲可自行選購。",
+    budgetOptionalNote: "「可選」項目（深資／樂行典禮領呔）不計入合計，以旅團規定為準。",
 
     /* ── 官方制服參考圖 ── */
     officialRefTitle: (name) => `${name} 官方制服參考圖`,
-    officialRefDesc: "整套對照：帽、恤衫、褲／裙、皮帶、襪、皮鞋、領巾。",
+    officialRefDesc: "",
 
     /* ── 圖片 ── */
     imgNoRef: "暫未提供參考圖",
     imgUnavailableThumb: "圖片",
-    imgUnavailable: "參考圖暫時未能載入",
-    imgUnavailableHint: "請查看來源或下方產品頁",
-    imgUnavailableNote: "未能載入圖片；仍可透過來源頁核對款式及規格。",
+    imgUnavailable: "參考圖暫未能載入",
+    imgUnavailableHint: "請開啟下方來源頁查看",
+    imgUnavailableNote: "可按來源頁核對款式及規格。",
     shopImageAlt: (name) => `${name}（供應社產品圖片）`,
     shopImageLabel: "供應社產品圖片",
     shopImageSource: "查看供應社產品 ↗",
-    shopImageNote: (name) => `產品例子：${name}；未必代表此項全部款式。`,
+    shopImageNote: (name) => `例子：${name}`,
     itemImageAlt: (title) => `${title}（款式示意，非實物照片）`,
-    itemImageLabel: "款式示意（非實物照片）",
+    itemImageLabel: "款式示意",
     itemImageSource: "對照供應社產品 ↗",
-    itemImageNoteFallback: "供應社圖片暫時未能載入；此示意圖不作顏色或細節依據。",
-    itemImageNoteOnly: "僅供辨認款式；顏色及細節以實物和官方規格為準。",
+    itemImageNoteFallback: "示意圖，顏色以實物為準。",
+    itemImageNoteOnly: "示意圖，顏色及細節以官方規格為準。",
     uniformAlt: (sec, br, g) => `${sec}・${br}・${g}裝制服參考圖`,
     uniformSourceLabel: "總會制服頁 ↗",
-    uniformNote: "官方制服圖解，非實物照片；規格以總會最新資料為準。",
-    uniformLocalLabel: "官方制服參考圖（本地）",
+    uniformNote: "官方圖解，以總會最新規格為準。",
+    uniformLocalLabel: "官方制服參考圖",
     uniformRemoteLabel: "官方制服參考圖",
     femaleCubBadgeAlt: "女幼童軍帽冠上已縫好的布質帽章（官方制服圖解）",
 
@@ -889,20 +890,20 @@ const LOCALES = {
     promise: "誓詞",
     law: "規律",
     badgesCount: (n) => `獎章（${n} 項）`,
-    badgeJourney: (name) => `📊 ${name}獎章歷程`,
-    badgeImageNote: "獎章圖解只供辨認，非現售實物照片；沒有可用圖檔時可開啟總會 2026 年訓練綱要，不借用其他徽號。圖樣以最新公布為準。",
-    badgeCubReference: "幼童軍四張是參照章樣的 AI 重繪示意，並非官方獎章圖；請按「查看官方綱要」核對。",
+    badgeJourney: (name) => `${name}獎章歷程`,
+    badgeImageNote: "圖樣僅供辨認，以總會 2026《訓練綱要》為準。",
+    badgeCubReference: "標「重繪示意」者非官方圖。",
     badgeIllustration: "重繪示意・非官方圖",
-    badgeUserReference: "深資／樂行部分圖像取自用戶提供的去背參考圖，邊緣與細節未必準確；請按「查看官方綱要」核對。",
+    badgeUserReference: "去背參考圖請對照官方綱要。",
     badgeImageUnavailable: "詳見官方綱要",
     badgeImageLoadFailed: "圖片暫未載入",
     badgeImageSource: "官方圖源 ↗",
     badgeSchemeSource: "查看官方綱要 ↗",
-    viewDetails: "查看詳細內容",
+    viewDetails: "查看各章說明",
 
     /* ── 語言掣 / 回報入口 ── */
-    reportLink: "🐛 向 SCOUT ADMIN 回報問題／意見 ↗",
-    langToggleAria: "切換語言 / Switch language"
+    reportLink: "向 SCOUT ADMIN 回報問題／意見 ↗",
+    langToggleAria: "Switch to English"
   }
 }
 

@@ -36,6 +36,15 @@
   2. `icon-512.png` 肩帶位置太近領口，金色肩鈕被翻領遮蓋；`favicon-32.png` 保留胸袋細線略顯擠迫。
 - **ROUND 2**：修正肩帶座標至真實肩線、為 `32×32`／`48×48` 採用去胸袋簡潔母圖、統一 `og-image.png` 左框底色並收細右側副標字級至 `20pt`，重新生成並逐張目視確認零裁字、零雜訊、對比清晰（合計 45 KB ≤ 260 KB）。
 
+## 5. Details.so ＋ 真理倉（`readme`）設計原則對齊審查（v2.2.0–v2.2.1）
+
+- **參考基準**：[`playerkousas-rgb/readme`](https://github.com/playerkousas-rgb/readme)（`docs/23`、`docs/39 §3.1`、`docs/44`、`docs/45`、`design-styles_v1.0.md`、`design-review.md`）＋ [`Details.so`](https://www.details.so/inspo)（Button、Card、List、Accordion、Steps 細節）＋ 本倉 [`DESIGN.md`](../DESIGN.md)。
+- **ROUND 1（v2.2.0）**：修正「① 揀進團情境」`5 + 1` 孤兒列為桌面 6 欄／760px 以下 `3×2` 對稱網格；移除支部卡彩色發光陰影；升級清單語義狀態膠囊、分段膠囊控制列、手風琴膠囊展開鍵及 `tabular-nums` 等寬數字。
+- **ROUND 2（v2.2.1 — 對照 `readme` 最新規範及精簡冗長文案）**：
+  1. **嚴守 `design-review` 反 Slop 與 `design-styles_v1.0` 零多餘動效**：移除 `.card` 與 `#fab-lang` 靜態陰影、移除釘章圖板頂部 `.badge-card-tag` Eyebrow 小標籤及非順序 `①–⑤` 編號、清除各分節 `<h2>`/`<h3>` 裝飾性 Emoji，並移除靜態卡片懸停彈跳及清單入場動畫（工具介面只保留即時色態與箭頭旋轉）。
+  2. **大幅精簡全站冗長導言（Substance over Fluff）**：刪除「② 你屬於哪一種？」重複子標題及小童軍重複說明、移除官方整套參考圖重複列舉文字、將每行清單重複提示縮減為 4–6 字、精簡獎章歷程／購買流程／選碼／預算／釘章圖板及頁尾文案。
+  3. **對齊 `docs/44`（雙語 L2–L4）與 `docs/39`（SEO/GEO）**：為 `#fab-lang` 補上 `data-lang-toggle` 及單向動作 `aria-label`／`title`（`Switch to English`／`切換至中文介面`），修正中英夾雜字串（「已 mark」→「已標記」），並加入 `WebApplication` JSON-LD 通過 `seo_check_v1.0.mjs`（0 FAIL、0 WARN）。
+
 ## 未核實
 
 - 沙盒未安裝 Chromium／Playwright 瀏覽器，未能於本機自動擷取 390 / 768 / 1440 渲染截圖；已透過 `scripts/lint.js`、`tests/guard.test.mjs` 及本機 HTTP 伺服器回應驗證結構與樣式規則。
