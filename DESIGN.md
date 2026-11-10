@@ -1,7 +1,7 @@
 # DESIGN — 童軍準備指南（upgrade）設計語言唯一真理
 
-> 對齊 [`playerkousas-rgb/readme`](https://github.com/playerkousas-rgb/readme) 之 `docs/23`、`docs/33-icon-standard.md`（G11）及 [`skills/promoted/design-review/SKILL.md`](skills/promoted/design-review/SKILL.md)。
-> 本檔為 UI 色彩、字級、表面層次與反 slop 規則嘅唯一真理；`scripts/lint.js` 會喺每次 `npm run build` 自動驗證可機械檢查嘅項目。
+> 對齊 [`playerkousas-rgb/readme`](https://github.com/playerkousas-rgb/readme) 之 `docs/23`（單一設計真理 F1、雙圓角尺度、語意 Token）、`docs/33-icon-standard.md`（G11）、`docs/39 §3.1`（SEO/GEO JSON-LD）、`docs/44`（雙語 L2–L4 乾淨分離與單向 `aria-label`）、`docs/45 §1`（工具介面零多餘動畫）、`templates/repo-starter/docs/design-styles_v1.0.md`（Scout Field／Scout Clean）及 [`skills/promoted/design-review/SKILL.md`](skills/promoted/design-review/SKILL.md)，並吸收 [`Details.so`](https://www.details.so/inspo) 之列表／手風琴／狀態膠囊細節。
+> 本檔為 UI 色彩、字級、表面層次、文案密度與反 slop 規則嘅唯一真理；`scripts/lint.js` 會喺每次 `npm run build` 自動驗證可機械檢查嘅項目。
 
 ## 1. 定位與頁面屬性
 
@@ -52,8 +52,9 @@
 ## 5. 反 Slop 禁用清單（由 `scripts/lint.js` 強制執行）
 
 - ❌ **禁止任何 CSS 漸層**：UI 樣式與行內 style 嚴禁 `linear-gradient()`、`radial-gradient()`、`conic-gradient()`（包括舊版 Header 漸層、Header 彩虹底條、`.preview` 漸層及小童軍 placeholder 漸層，已全部改為實色 token）。
-- ❌ **禁止英文裝飾性 Eyebrow／全大寫小標籤**：唔用 `text-transform: uppercase` 英文小標充當裝飾，直接用清楚中文標題。
-- ❌ **禁止裝飾性模糊光暈**：唔用 `filter: blur(...)` 或 `filter: drop-shadow(...)` 霓虹光暈。
+- ❌ **禁止 Eyebrow 小標籤、多餘序號與標題裝飾 Emoji**：唔用 `text-transform: uppercase` 或卡片頂部膠囊小標（`.badge-card-tag`）、唔為非順序卡片編 `①–⑤`、唔喺分節標題堆砌裝飾 Emoji，直接以清晰字級層次呈現。
+- ❌ **禁止靜態陰影、裝飾性模糊光暈與多餘彈跳動效**：唔用模糊卡片陰影、`filter: blur(...)` / `drop-shadow(...)` 或靜態卡片 hover 彈跳（`design-styles_v1.0.md`：工具畫面動畫從簡，只保留開合箭頭與按鈕色態回饋）。
+- ❌ **禁止冗長說明式導言**：圖表、清單與控制列直入重點，不重複標題、不堆砌長段免責套話。
 - ❌ **禁止圓角透明裁邊圖標或 AVIF 圖標**：`icons/*` 一律全出血 `#1B4332` 實底 PNG／ICO（G11）。
 
 ## 6. 站台圖標規格（G11 對應）

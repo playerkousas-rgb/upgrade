@@ -39,6 +39,16 @@ PDF 於資產整理時轉為 **AVIF**（quality 70；2026-09-21 由 WebP 重編�
 | `scout-land-female.avif` | 童軍・陸・女 | [Scout_G.1.jpg](https://www.scout.org.hk/uploads/member/Scout_G.1.jpg) | [童軍制服](https://www.scout.org.hk/tc/youth-members/scouts/index.html?sid=2) |
 | `venture-air-male.avif` | 深資童軍・空・男 | [venture_scouts_air_B.jpg](https://www.scout.org.hk/uploads/member/venture_scouts_air_B.jpg) | [深資童軍制服](https://www.scout.org.hk/tc/youth-members/venture-scouts/index.html?sid=2) |
 
+## 基本徽章量位圖：官方手冊
+
+原文件：[《儀容與制服手冊》第 92–95 頁](https://uniform.scouting.org.hk/wp-content/uploads/2017/03/uniformhandbook_p92-95.pdf)（3.2 基本徽章）。僅用於 `#part-badges` 釘章位置視覺圖解，不改動 `data.js` 之 `ITEM_REFERENCES` 清單縮圖映射。
+
+| 檔案 | 印刷頁碼 | 內容及限制 |
+| --- | --- | --- |
+| `handbook-pocket-3cm.avif` | p.93 | 左胸袋圖解：香港章在袋蓋上方 3 厘米中央，世界童軍會員章在胸袋中央（青少年各支部自 2023 年 4 月起統一香港章位置；成年領袖佩戴於右胸袋中央）。 |
+| `handbook-sleeve-2cm.avif` | p.95 | 右袖上下間距圖解：香港肩章／旅章下方 2 厘米中央佩戴下一排徽章（旅章本身亦位於肩膊縫線下 2 厘米）。 |
+| `handbook-sleeve-1cm.avif` | p.95 | 右袖並排間距圖解：旅章下方同時佩戴區章（左・藍，靠後／向背後）與地域章（右・啡，靠前／向胸口），兩章左右並排相距 1 厘米。 |
+
 只使用「支部 × 陸／海／空 × 性別」完全吻合的本地圖。尚無本地圖的組合仍嘗試其對應官方原圖；載入失敗時顯示提示及來源連結，不以陸童軍圖或 AI 整套制服圖代替。
 
 ## 配件：上述官方制服圖的局部

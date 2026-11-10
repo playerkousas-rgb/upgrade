@@ -130,4 +130,26 @@ test('Bilingual completeness: LOCALES.en mirrors all ITEMS, SECTIONS, and update
     en.HTML['本網站為非官方獨立工具，旨在方便成員瀏覽公開資訊，與香港童軍總會無任何官方從屬關係。相關制服規格、訓練綱要及徽號版權歸香港童軍總會所有。'],
     'Updated footer disclaimer must have English translation'
   );
+  assert.ok(
+    en.HTML['具體要視衣服大小，細碼恤衫間距可能會變小（不會變大）'],
+    'Garment-size spacing note must have English translation'
+  );
+});
+
+test('Uniform Handbook badge-placement board: authentic p.93/p.95 crops, side-by-side sleeve rule, and garment-size note', () => {
+  const html = read('index.html');
+  const data = read('data.js');
+
+  for (const img of [
+    'assets/reference/handbook-pocket-3cm.avif',
+    'assets/reference/handbook-sleeve-2cm.avif',
+    'assets/reference/handbook-sleeve-1cm.avif',
+  ]) {
+    assert.ok(existsSync(join(ROOT, img)), `Missing handbook crop: ${img}`);
+    assert.ok(html.includes(img), `index.html must reference ${img}`);
+  }
+  assert.ok(!html.includes('sleeve-placement-example.avif'), 'Must not reuse cub-male crop in badge manual');
+  assert.ok(!html.includes('右袖，地域章上方'), 'District badge is side by side with Region badge, not above it');
+  assert.ok(!data.includes('旅章、區章、地域章：右袖（由上至下）'), 'data.js must not state District/Region are vertical');
+  assert.match(html, /具體要視衣服大小，細碼恤衫間距可能會變小（不會變大）/);
 });

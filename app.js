@@ -58,6 +58,7 @@ function applyStaticI18n(){
 function renderStaticText(){
   const t = UI(), app = L().APP;
   document.documentElement.lang = L().htmlLang;
+  document.documentElement.setAttribute("data-lang", LANG === "en" ? "en" : "zh");
   document.title = app.name;
   const metaDesc = document.querySelector('meta[name="description"]');
   if(metaDesc) metaDesc.setAttribute("content", app.description);
@@ -83,6 +84,7 @@ function renderStaticText(){
   if(langBtn){
     langBtn.textContent = L().switchToLabel;
     langBtn.setAttribute("aria-label", t.langToggleAria);
+    langBtn.setAttribute("title", t.langToggleAria);
   }
   const reportLink = $("report-link");
   if(reportLink) reportLink.textContent = t.reportLink;
@@ -144,6 +146,17 @@ function initParts(){
   $("part-toolbar").hidden = false;
   updatePartControls();
 }
+function openBadgeGuide(ev){
+  if(ev) ev.preventDefault();
+  const part = $("part-badges");
+  if(part){
+    part.open = true;
+    savePartStates();
+    updatePartControls();
+    const target = $("badge-placement-guide") || part;
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
 
 function renderBadgesOverview(){
   const b = L().BADGES_OVERVIEW[currentSection];
@@ -151,7 +164,7 @@ function renderBadgesOverview(){
   const t = UI();
   return `<div style="border:1px solid var(--line);border-left:4px solid ${b.color};border-radius:8px;padding:.8rem 1rem;background:#fafafa">
     <h3 style="margin:0 0 .3rem;font-size:1rem;color:${b.color}">${b.name} <span style="font-size:.75rem;color:#888;font-weight:400">(${b.age})</span></h3>
-    ${b.scheme ? `<p style="margin:.1rem 0 .3rem;font-size:.72rem;color:#999">📘 ${b.scheme}</p>` : ""}
+    ${b.scheme ? `<p style="margin:.1rem 0 .3rem;font-size:.74rem;color:var(--muted)">${b.scheme}</p>` : ""}
     <p style="margin:.2rem 0;font-size:.8rem"><strong>${t.badgeSystem}</strong>${b.type}</p>
     <details style="margin:.3rem 0"><summary style="font-size:.85rem;color:${b.color}">${t.promise}</summary><p style="font-size:.85rem;margin:.3rem 0;font-style:italic">${b.promise}</p></details>
     <details style="margin:.3rem 0"><summary style="font-size:.85rem;color:${b.color}">${t.law}</summary><p style="font-size:.85rem;margin:.3rem 0;font-style:italic">${b.law}</p></details>
@@ -245,7 +258,7 @@ function renderControls(){
   } else {
     // 模式 / 來源
     const sources = sec.upgradeFrom || [];
-    html += `<h3 style="margin:.4rem 0 .3rem">${t.controlsTitle}</h3><div class="mode-toggle" style="grid-template-columns:repeat(${sources.length + 1},1fr)">`;
+    html += `<div class="mode-toggle" style="grid-template-columns:repeat(${sources.length + 1},1fr)">`;
     sources.forEach(src => {
       const active = currentMode === "upgrade" && currentFrom === src;
       const label = src === "grasshopper" ? t.sourceFromGrasshopper
@@ -329,14 +342,17 @@ function selectSection(s){
   if(timelineEl) timelineEl.innerHTML = renderBadgeTimeline();
 }
 
-// 按「目標支部」及「性別」顯示／隱藏內容（data-show-for / data-show-gender）
+// 按「目標支部」及「性別」顯示／隱藏內容（data-show-for / data-hide-for / data-show-gender）
 function applyVisibility(){
-  document.querySelectorAll("[data-show-for],[data-show-gender]").forEach(el => {
+  document.querySelectorAll("[data-show-for],[data-hide-for],[data-show-gender]").forEach(el => {
+    if(el.classList.contains("card") && el.hasAttribute("data-hide-for")) return;
     const f = el.getAttribute("data-show-for");
+    const h = el.getAttribute("data-hide-for");
     const g = el.getAttribute("data-show-gender");
     const okF = !f || f.split(",").includes(currentSection);
+    const okH = !h || !h.split(",").includes(currentSection);
     const okG = !g || g.split(",").includes(currentGender);
-    el.style.display = (okF && okG) ? "" : "none";
+    el.style.display = (okF && okH && okG) ? "" : "none";
   });
   updatePartControls();
 }
@@ -446,9 +462,9 @@ function render(){
       <div class="have">${t.statusHave}<br><strong style="font-size:1.4rem">${haveCount}</strong>${t.countUnit}</div>
       <div class="check">${t.statusCheck}<br><strong style="font-size:1.4rem">${checkCount}</strong>${t.countUnit}</div>
     </div>
-    ${ownedCount > 0 ? `<div style="display:flex;align-items:center;justify-content:space-between;gap:.8rem;margin-top:.6rem;padding:.6rem .8rem;background:#f0f7ed;border-radius:8px;font-size:.85rem;flex-wrap:wrap">
+    ${ownedCount > 0 ? `<div class="owned-bar">
       <span>${t.ownedSummary(ownedCount, list.length)}</span>
-      <button onclick="resetAllMarks()" style="padding:.4rem .8rem;border:1.5px solid #e74c3c;background:white;color:#e74c3c;border-radius:16px;font-size:.8rem;cursor:pointer;font-weight:600">${t.resetMarks}</button></div>` : ''}`;
+      <button type="button" class="reset-marks-btn" onclick="resetAllMarks()">${t.resetMarks}</button></div>` : ''}`;
 
   const statusLabel = { need: t.statusNeed, have: t.statusHave, check: t.statusCheck };
   const listHTML = list.map(it => {
@@ -458,17 +474,16 @@ function render(){
     const bigImg = renderReferenceImage(itemImageSources(it), "item-fig");
     return `
       <div class="item ${it.status}${owned ? ' owned' : ''}" data-item-id="${it.id}">
-        <div class="item-row" onclick="toggleItem(this.parentElement)">
+        <div class="item-row item-main" onclick="toggleItem(this.parentElement)">
           <div class="item-left">
             <div class="item-icon">${iconHtml}</div>
             <div style="min-width:0;flex:1"><div class="item-title">${it.title}</div><div class="item-desc">${it.desc}</div></div>
           </div>
-          <div style="text-align:right;flex-shrink:0"><div class="status">${statusLabel[it.status]}</div><div class="arrow">›</div></div>
+          <div class="item-right"><div class="status">${statusLabel[it.status]}</div><div class="arrow" aria-hidden="true">›</div></div>
         </div>
-        <div class="item-row" style="padding:0 1rem .5rem 64px;border-top:1px dashed #eee;display:flex;align-items:center;justify-content:space-between;gap:.5rem">
-          <button onclick="event.stopPropagation();toggleOwned('${ownedKey}');render()"
-            style="padding:.4rem .8rem;border-radius:16px;font-size:.8rem;cursor:pointer;border:1.5px solid ${owned ? '#5a8f3a' : '#ccc'};background:${owned ? '#5a8f3a' : 'white'};color:${owned ? 'white' : '#666'}">${owned ? t.markOwned : t.markOwnedNone}</button>
-          <span style="font-size:.75rem;color:#888">${owned ? t.ownedHint : t.ownedHintNone}</span>
+        <div class="item-row item-actions">
+          <button type="button" class="owned-btn${owned ? ' is-owned' : ''}" onclick="event.stopPropagation();toggleOwned('${ownedKey}');render()">${owned ? t.markOwned : t.markOwnedNone}</button>
+          <span class="owned-hint">${owned ? t.ownedHint : t.ownedHintNone}</span>
         </div>
         <div class="item-detail"><div class="item-detail-inner">
           ${bigImg}
@@ -545,8 +560,7 @@ function renderOfficialPhoto(){
   const t = UI(), loc = L();
   const photo = officialPhoto(currentSection, currentBranch, currentGender);
   const secName = loc.SECTIONS[currentSection].name + (loc.SECTIONS[currentSection].hasBranch ? t.nameSep + loc.BRANCHES[currentBranch].name : "");
-  el.innerHTML = `<div class="note"><strong>${t.officialRefTitle(secName)}</strong>
-    <p style="margin:.4rem 0">${t.officialRefDesc}</p>
+  el.innerHTML = `<div class="note"><strong style="display:block;margin-bottom:.4rem">${t.officialRefTitle(secName)}</strong>
     ${renderReferenceImage(photo?.images || [], "uniform-full")}</div>`;
 }
 
