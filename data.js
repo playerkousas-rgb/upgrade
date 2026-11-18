@@ -901,8 +901,10 @@ const LOCALES = {
     badgeSchemeSource: "查看官方綱要 ↗",
     viewDetails: "查看各章說明",
 
-    /* ── 語言掣 / 回報入口 ── */
+    /* ── 語言掣 / 回報入口 / APP STORE 支持連結 ── */
     reportLink: "向 SCOUT ADMIN 回報問題／意見 ↗",
+    supportLink: "❤️ 讚好／收藏",
+    supportLinkAria: "前往主站讚好或收藏此程式（開新分頁）",
     langToggleAria: "Switch to English"
   }
 }

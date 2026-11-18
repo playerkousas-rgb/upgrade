@@ -33,7 +33,7 @@ if (!exists(".vercelignore")) {
     if (viRaw.includes(mustBlock)) ok(`.vercelignore 擋住「${mustBlock}」`);
     else bad(`.vercelignore 漏擋「${mustBlock}」`);
   }
-  for (const mustKeep of ["package.json", "build-site.mjs", "scripts/", "DESIGN.md", "CHANGELOG.md", "icons/", "assets/", "index.html", "app.js", "data.js", "locale-en.js", "manifest.webmanifest"]) {
+  for (const mustKeep of ["package.json", "build-site.mjs", "scripts/", "DESIGN.md", "CHANGELOG.md", "icons/", "assets/", "index.html", "app.js", "data.js", "locale-en.js", "manifest.webmanifest", "store_gate_v1.0.js"]) {
     const blocked = lines.some((pat) => {
       if (pat === "*.md" && mustKeep.endsWith(".md")) return true;
       const cleanPat = pat.replace(/\/$/, "");

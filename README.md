@@ -1,7 +1,7 @@
 # 童軍準備指南（Scout Uniform & Badge Guide）
 
 > 香港童軍各支部（小童軍至領袖）進團與升團制服準備、2026 新訓練綱要徽章歷程及過渡須知（中英雙語純靜態 PWA）。
-> 線上網址：<https://upgrade-ashen.vercel.app> · 當前版本：**v2.2.1**
+> 線上網址：<https://upgrade-ashen.vercel.app> · 當前版本：**v2.2.2**
 
 ---
 
@@ -28,6 +28,9 @@
    - 完整列出各支部最新進度性獎章、誓詞規律、過渡期安排，以及支部最高獎章（金紫荊／總領袖／榮譽童軍／貝登堡）升團拆原章、改戴標誌與領袖只保留最高 1 個之規則。
 4. **繁體中文／英文即時切換 & 問題回報**
    - 右上角單鍵切換 `zh-HK`／`en`；頁頂直接連往共用 `SCOUT ADMIN` 問題／意見回報頁。
+5. **APP STORE 準入閘門 & 讚好／收藏回跳**
+   - 由 APP STORE 進入，或由圖書館靜默進入；直接開網址會見到只有 APP STORE 按鈕的提示卡。已安裝主畫面 PWA 經 `allowStandalone` 放行。
+   - 頁首提供中英雙語「讚好／收藏」連結，透過真理倉 `ScoutStoreGate.getAppStoreUrl('upgrade')` 返回該程式詳情頁；不直連主站資料庫、不啟用 `supportNudge`。
 
 ---
 
@@ -37,6 +40,7 @@
 upgrade/
 ├── index.html                  # 主頁入口（含 G11 圖標 link/OG meta、W1 版權及 V2 版號）
 ├── app.js                      # 互動控制、漸進展開、雙語切換、圖片安全降級
+├── store_gate_v1.0.js          # 真理倉原版準入閘門（SG1–SG19），由 build-site 打包入 dist/
 ├── data.js                     # 制服規格、供應社編號價錢、2026 訓練綱要與過渡資料（zh-HK）
 ├── locale-en.js                # 英文語言包（LOCALES.en 完整對照）
 ├── manifest.webmanifest        # PWA 設定（含 any + maskable 192/512 PNG 圖標）
@@ -45,7 +49,7 @@ upgrade/
 │   ├── badges/                 # 進度性獎章歷程 WebP 縮圖（來源見 assets/badges/README.md）
 │   ├── items/                  # 衣物款式 SVG 及供應社產品 AVIF 縮圖
 │   └── reference/              # 官方手冊與制服圖解本地 AVIF 裁切參考圖（見 assets/reference/README.md）
-├── build-site.mjs              # 零依賴組裝器：輸出純淨運行期白名單至 dist/（< 5 MB）
+├── build-site.mjs              # 零依賴組裝器：輸出純淨運行期白名單至 dist/（含 store_gate，< 5 MB）
 ├── scripts/
 │   ├── make-icons.sh           # 重現生成 icons/ 9 個檔案（ImageMagick 內建 MVG）
 │   ├── check.js                # JS 語法、資產引用完整性與死重檔案檢查

@@ -88,6 +88,12 @@ function renderStaticText(){
   }
   const reportLink = $("report-link");
   if(reportLink) reportLink.textContent = t.reportLink;
+  const supportLink = $("storeSupportTop");
+  if(supportLink){
+    supportLink.textContent = t.supportLink;
+    supportLink.setAttribute("aria-label", t.supportLinkAria);
+    supportLink.setAttribute("title", t.supportLinkAria);
+  }
   applyStaticI18n();
 }
 function setLang(lang){
