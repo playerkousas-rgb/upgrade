@@ -45,6 +45,15 @@
   2. **大幅精簡全站冗長導言（Substance over Fluff）**：刪除「② 你屬於哪一種？」重複子標題及小童軍重複說明、移除官方整套參考圖重複列舉文字、將每行清單重複提示縮減為 4–6 字、精簡獎章歷程／購買流程／選碼／預算／釘章圖板及頁尾文案。
   3. **對齊 `docs/44`（雙語 L2–L4）與 `docs/39`（SEO/GEO）**：為 `#fab-lang` 補上 `data-lang-toggle` 及單向動作 `aria-label`／`title`（`Switch to English`／`切換至中文介面`），修正中英夾雜字串（「已 mark」→「已標記」），並加入 `WebApplication` JSON-LD 通過 `seo_check_v1.0.mjs`（0 FAIL、0 WARN）。
 
+## 6. SG18 與 entry-gate 實作檢視（2026-11-18）
+
+- **Idea**：讓由 APP STORE／圖書館進入的指南使用者可自願返回主站對此 App Like／Save；不另建推廣頁、不彈窗。
+- **Live thing（預期狀態，尚未實機）**：直接開 URL 會留在 APP STORE 提示卡；放行後頁首顯示「讚好／收藏」及 SCOUT ADMIN 回報兩個動作連結。此為程式設定描述，不代表已部署或真機確認。
+- **Layout words**：動作連結置於品牌標題下方；窄屏 430px 以下直排滿寬，語言掣仍在右上角。中英標籤經現有語言狀態切換。
+- **Code-level review only**：兩個連結至少 44px 高；支援 `:focus-visible`；長文字可折行；支持連結初始 `hidden`，helper 不存在則 fail closed；列印時隱藏支持連結；沒有漸層、遮罩倒數、彈窗或第二次 nudge。
+- **視覺評分**：design / usability / creativity 不評分。沒有實際瀏覽器畫面，不能以 CSS 靜態檢視代替 screenshot critique。
+- **待望圖 top 3**：① 390px 頁首高度與兩個動作的視覺層級；② 英文回報與 Like／Save 標籤折行是否自然；③ 768px 轉折及 1440px 對齊。
+
 ## 未核實
 
-- 沙盒未安裝 Chromium／Playwright 瀏覽器，未能於本機自動擷取 390 / 768 / 1440 渲染截圖；已透過 `scripts/lint.js`、`tests/guard.test.mjs` 及本機 HTTP 伺服器回應驗證結構與樣式規則。
+- 本輪環境沒有可用的 Chromium／Playwright 瀏覽器，未擷取 design-review 要求的 390／768／1440 實際渲染截圖；因此上述 SG18 僅完成程式碼層級檢視及測試，不報視覺設計、易用性或創意分數。須另於有瀏覽器的環境完成目視／真機確認。

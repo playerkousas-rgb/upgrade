@@ -15,6 +15,15 @@
 | 供應社產品編號、參考零售價預算表及本機 `localStorage`「已有／已買」剔選紀錄 | 會員登入、雲端同步個人清單、網上代購／付款或旅團庫存管理系統（見 [`02-user-accounts.md`](docs/out-of-scope/02-user-accounts.md)） |
 | 2026 年 8 月 15 日生效各支部新訓練綱要進度性獎章歷程、升團徽章拆留規則（含支部最高獎章標誌）及中英雙語（`zh-HK` / `en`）完整切換 | 逐項考核細則簽署紀錄或通告全文檢索（通告檢索屬另一獨立專案） |
 | 接駁共用 `SCOUT ADMIN` 問題／意見回報頁（`?app=童軍準備指南`） | 在本倉自建獨立後台收件箱或資料庫 |
+| 由指定入口頂層進入的 `entry-gate`、APP STORE 單一提示掣，以及 SG18 同源深層連結回主站讚好／收藏 | 子 App 直連主站 Supabase、複製主站密鑰或自建入口統計 |
+
+## A 組準入白名單與支持連結（SG1–SG19）
+
+- 用戶確認本 App 類型為「**專業工具／參考指南**」，今日入口為 **APP STORE + 圖書館**。依 SG19，圖書館靜默放行、不在攔截卡顯示；`portalIds` 仍只列 `appstore`。
+- 設定：`mode: 'entry-gate'`、`portalIds: ['appstore']`、`silentPortalIds: ['library']`、`allowStandalone: true`、`autoRedirectSeconds: 0`。不加入 `member`、`district` 或 `gemini`；`supportNudge` 關閉。
+- SG18 使用已核實 slug `upgrade`，由 `ScoutStoreGate.getAppStoreUrl('upgrade')` 產生詳情深層連結；不直連主站 Supabase、不自建 hearts/stars 請求。另以 GitHub API 檢視 `scout-circulars` 的 `main`（commit `ac6fef85cd4ea6c8ab8c9b0f36b35701870fa86c`）原始碼，其小工具入口輸出 `rel="noopener"`、保留跨站 Origin referrer；這只是 source code 核對，不代表 live deployment／真機驗收。本輪只改本 App repo，未改入口 repo。
+- 閘門是 UX 層入口提示，不是登入或安全邊界。本 App 沒有 `/api` 或配額型第三方 API；PWA manifest 使用 `display: standalone`，未發現 Web Push／Service Worker。`vercel.json` 的 `outputDirectory` 為 `dist`；Vercel Dashboard 實際 Root Directory／部署狀態未核實。
+- 本機資料 keys：`scout_owned_v2`（「已有／已買」制服項目）、`scout_parts_v1`（章節開合）、`scout-guide-lang-v1`（語言偏好）。前者目前無匯出／備份；用戶確認它是低風險購物勾選清單並授權繼續，這次沒有更改／新增 localStorage key。提醒：iOS Safari 與主畫面 WebClip 可能使用分開的儲存容器；因本清單已由用戶判作低風險，本次不加匯出，列作後續建議。閘門按真理倉原碼使用 sessionStorage key `upgrade.store_pass`，不等同持久化清單。
 
 ## 已拒絕（一個概念一個檔）
 

@@ -1,12 +1,23 @@
 <!DOCTYPE html>
-<!-- GENERATED from upgrade_v2.2.1.html (v2.2.1) -->
+<!-- GENERATED from upgrade_v2.2.2.html (v2.2.2) -->
 <html lang="zh-HK" data-lang="zh">
 <head>
 <meta charset="UTF-8">
+<script src="/store_gate_v1.0.js"></script>
+<script>
+  initStoreGate({
+    appKey: 'upgrade',
+    mode: 'entry-gate',
+    portalIds: ['appstore'],
+    silentPortalIds: ['library'],
+    allowStandalone: true,
+    autoRedirectSeconds: 0
+  });
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1B4332">
 <meta name="copyright" content="© SCOUT SYSTEM">
-<meta name="app-version" content="2.2.1">
+<meta name="app-version" content="2.2.2">
 <title>童軍準備指南</title>
 <link rel="canonical" href="https://upgrade-ashen.vercel.app/">
 <!-- 圖標標準（readme docs/33 · G11）：5 條 link + 4 條 OG meta，?v= 與 window.ICON_VER 同步 -->
@@ -33,7 +44,7 @@
 {"@context":"https://schema.org","@type":"WebApplication","name":"童軍準備指南","url":"https://upgrade-ashen.vercel.app/","applicationCategory":"ReferenceApplication","operatingSystem":"All","inLanguage":["zh-HK","en"],"description":"香港童軍各支部（小童軍至領袖）入團及升團制服清單、2026 新訓練綱要、供應社參考預算及《儀容與制服手冊》徽章縫製厘米圖解。"}
 </script>
 <script>
-  const APP_VERSION = "2.2.1";
+  const APP_VERSION = "2.2.2";
   const ICON_VER = "20261106";
   window.APP_VERSION = APP_VERSION;
   window.ICON_VER = ICON_VER;
@@ -99,19 +110,26 @@ header{
 }
 header h1{margin:0;font-size:1.38rem;letter-spacing:.02em;font-weight:700;line-height:1.25}
 header p{margin:.22rem 0 0;color:rgba(255,255,255,.88);font-size:.92rem;line-height:1.4}
-.report-link{
+.header-actions{
+  display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.45rem;
+  width:100%;max-width:100%;margin-top:.65rem;
+}
+.report-link,.support-btn{
   display:inline-flex;align-items:center;justify-content:center;gap:.35rem;
-  min-height:42px;margin-top:.65rem;padding:.35rem 1rem;
+  min-height:44px;max-width:100%;margin:0;padding:.35rem .9rem;
   border:1px solid rgba(255,255,255,.32);border-radius:999px;
   color:white;background:rgba(255,255,255,.1);
-  font-weight:600;text-decoration:none;font-size:.84rem;
+  font-weight:600;text-decoration:none;text-align:center;font-size:.84rem;line-height:1.35;
+  overflow-wrap:anywhere;
   transition:background-color .16s var(--ease-out),color .16s var(--ease-out),border-color .16s var(--ease-out),transform .12s var(--ease-out);
 }
-.report-link:hover,.report-link:focus-visible{
+.support-btn{border-color:rgba(249,178,51,.62);background:rgba(249,178,51,.1)}
+.support-btn[hidden]{display:none!important}
+.report-link:hover,.report-link:focus-visible,.support-btn:hover,.support-btn:focus-visible{
   background:white;color:var(--scout-brand);border-color:white;
   outline:3px solid var(--accent);outline-offset:2px;
 }
-.report-link:active{transform:scale(.985)}
+.report-link:active,.support-btn:active{transform:scale(.985)}
 
 /* ── Container ── */
 .container{max-width:1000px;margin:0 auto;padding:1.15rem 1rem 3rem}
@@ -691,7 +709,7 @@ footer a{color:var(--scout-brand);font-weight:600;text-decoration:underline;text
 }
 #fab-lang:hover{background:#eef5ef;border-color:var(--scout-green)}
 #fab-lang:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-@media print{.fab,#fab-lang{display:none}}
+@media print{.fab,#fab-lang,.support-btn{display:none!important}}
 
 /* ── Reduced Motion ── */
 @media(prefers-reduced-motion:reduce){
@@ -721,6 +739,10 @@ footer a{color:var(--scout-brand);font-weight:600;text-decoration:underline;text
   header h1{font-size:1.22rem}
   .brand img{width:48px;height:48px}
 }
+@media(max-width:430px){
+  .header-actions{flex-direction:column;align-items:stretch}
+  .header-actions .report-link,.header-actions .support-btn{width:100%;padding-inline:.7rem}
+}
 </style>
 </head>
 <body>
@@ -734,7 +756,11 @@ footer a{color:var(--scout-brand);font-weight:600;text-decoration:underline;text
       <p>由小童軍到領袖・家長一目了然</p>
     </div>
   </div>
-  <a id="report-link" class="report-link" href="https://scout-admin-blue.vercel.app/report.html?app=%E7%AB%A5%E8%BB%8D%E6%BA%96%E5%82%99%E6%8C%87%E5%8D%97" target="_blank" rel="noopener noreferrer">向 SCOUT ADMIN 回報問題／意見 ↗</a>
+  <div class="header-actions">
+    <a id="report-link" class="report-link" href="https://scout-admin-blue.vercel.app/report.html?app=%E7%AB%A5%E8%BB%8D%E6%BA%96%E5%82%99%E6%8C%87%E5%8D%97" target="_blank" rel="noopener noreferrer">向 SCOUT ADMIN 回報問題／意見 ↗</a>
+    <a id="storeSupportTop" class="support-btn" target="_blank" rel="noopener" hidden
+       aria-label="前往主站讚好或收藏此程式（開新分頁）" title="前往主站讚好或收藏此程式（開新分頁）">❤️ 讚好／收藏</a>
+  </div>
 </header>
 
 <div class="container">
@@ -1289,7 +1315,7 @@ footer a{color:var(--scout-brand);font-weight:600;text-decoration:underline;text
 </div>
 
 <footer>
-<p>© 2026 SCOUT SYSTEM · v2.2.1</p>
+<p>© 2026 SCOUT SYSTEM · v2.2.2</p>
 <p>官方來源：<a href="https://www.scout.org.hk" target="_blank" rel="noopener">香港童軍總會</a> · <a href="https://www.hkscoutshop.org.hk/" target="_blank" rel="noopener">香港童軍物品供應社</a> · <a href="https://uniform.scouting.org.hk/" target="_blank" rel="noopener">《儀容與制服手冊》</a></p>
 <p class="cite">非官方輔助工具，與香港童軍總會無從屬關係；規格及徽號版權以總會最新公布為準。</p>
 </footer>
@@ -1297,5 +1323,13 @@ footer a{color:var(--scout-brand);font-weight:600;text-decoration:underline;text
 <script src="data.js"></script>
 <script src="locale-en.js"></script>
 <script src="app.js"></script>
+<script id="scout-store-support-init">
+(function () {
+  var a = document.getElementById('storeSupportTop');
+  if (!a || typeof ScoutStoreGate === 'undefined') return;
+  a.href = ScoutStoreGate.getAppStoreUrl('upgrade');
+  a.hidden = false;
+})();
+</script>
 </body>
 </html>

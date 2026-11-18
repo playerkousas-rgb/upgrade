@@ -3,7 +3,7 @@
  * build-site.mjs — 零第三方依賴靜態部署組裝器（S4：只部署最終運行期產物入 dist/）
  *
  * 1. 只複製前端真正用到嘅檔案入 dist/：
- *    - index.html, app.js, data.js, locale-en.js, manifest.webmanifest
+ *    - index.html, app.js, data.js, locale-en.js, manifest.webmanifest, store_gate_v1.0.js
  *    - icons/*（G11 標準 9 個 PNG/ICO 檔）
  *    - assets/{badges,items,reference}/*（只複製圖片／SVG，唔複製任何 README.md）
  * 2. 自動計算 dist/ 總體積並驗證 < 5 MB（S7 硬閘門）。
@@ -23,6 +23,7 @@ const ROOT_FILES = [
   'data.js',
   'locale-en.js',
   'manifest.webmanifest',
+  'store_gate_v1.0.js',
 ];
 
 const RUNTIME_EXT = new Set(['.png', '.ico', '.svg', '.avif', '.webp']);

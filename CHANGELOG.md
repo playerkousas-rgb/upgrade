@@ -2,6 +2,20 @@
 
 > 格式跟 [Keep a Changelog](https://keepachangelog.com/)；每次交付檔改版號必須同步更新 `package.json`、`index.html`（`GENERATED`、`app-version`、`APP_VERSION`、頁尾）與本檔（V 規則）。
 
+## [2.2.2] - 2026-11-18
+
+### Added
+- 啟用 SG1–SG19 頂層 `entry-gate`：APP STORE 為攔截卡唯一按鈕；`library` 以 `silentPortalIds` 放行但不畫按鈕；已安裝主畫面 PWA 由 `allowStandalone` 放行。
+- 新增 SG18 中英雙語「讚好／收藏」連結，透過真理倉 `ScoutStoreGate.getAppStoreUrl('upgrade')` 返回主站詳情卡；不啟用 `supportNudge`，不直連主站資料庫。
+- 將未修改的真理倉 `store_gate_v1.0.js` 加入部署白名單、語法／發佈檢查和 live deployment hash 清單；增加無依賴閘門模擬測試。
+
+### Changed
+- 為兩個頁首動作連結加入至少 44px 觸控高度、鍵盤焦點樣式、窄屏堆疊、中英標籤與列印隱藏。
+- 更新 README、SCOPE 和 design-review 紀錄；本機「已有／已買」資料仍使用原有 keys，沒有新增 localStorage key。
+- 本機資料審核後，用戶確認 `scout_owned_v2` 是低風險購物勾選清單，可在目前無匯出／備份下繼續此有限改動。
+
+---
+
 ## [2.2.1] - 2026-11-09
 
 ### Changed

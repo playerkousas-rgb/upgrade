@@ -596,6 +596,8 @@ const LOCALE_EN = {
     viewDetails: "View badge notes",
 
     reportLink: "Report an issue / feedback to SCOUT ADMIN ↗",
+    supportLink: "❤️ Like / Save",
+    supportLinkAria: "Open this app’s SCOUT APP STORE page in a new tab to like or save it",
     langToggleAria: "切換至中文介面"
   },
 
@@ -1123,7 +1125,7 @@ const LOCALE_EN = {
     /* 領呔（2026 新綱要：深資／樂行典禮儀式・可選） */
 
     /* Footer */
-    "© 2026 SCOUT SYSTEM · v2.2.1": "© 2026 SCOUT SYSTEM · v2.2.1",
+    "© 2026 SCOUT SYSTEM · v2.2.2": "© 2026 SCOUT SYSTEM · v2.2.2",
     "為準；活動服可於供應社購買，單色衣物及運動鞋自行選購。": "; the activity shirt is sold at the Scout Shop, while plain clothing and sports shoes can be bought anywhere.",
     "戴）": " worn)",
     "具體要視衣服大小，細碼恤衫間距可能會變小（不會變大），以置中、不超袋闊及袖幅為準；必須用線縫牢（勿用膠水或扣針）。": "Depending on shirt size, spacing on smaller shirts may become smaller (never larger) — keep badges centred within pocket and sleeve width, and sew firmly with thread (never glue or pins).",

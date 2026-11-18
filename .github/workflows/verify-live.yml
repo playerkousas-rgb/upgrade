@@ -33,6 +33,7 @@ jobs:
             "data.js"
             "locale-en.js"
             "manifest.webmanifest"
+            "store_gate_v1.0.js"
             "icons/favicon.ico"
             "icons/favicon-16.png"
             "icons/favicon-32.png"
