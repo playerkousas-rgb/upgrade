@@ -32,6 +32,7 @@ jobs:
             "app.js"
             "data.js"
             "locale-en.js"
+            "scout3d.js"
             "manifest.webmanifest"
             "store_gate_v1.0.js"
             "icons/favicon.ico"

@@ -131,6 +131,7 @@ function setAllParts(open){
   getVisibleParts().forEach(part => { part.open = open; });
   savePartStates();
   updatePartControls();
+  if(open && scout3dPanelViewer) scout3dPanelViewer.redraw();
 }
 function initParts(){
   let saved = {};
@@ -145,6 +146,7 @@ function initParts(){
       if(event.target !== part) return; // 不處理內層 FAQ 等細項的事件。
       savePartStates();
       updatePartControls();
+      if(part.id === "part-badges" && part.open && scout3dPanelViewer) scout3dPanelViewer.redraw();
     });
   });
   $("expand-all-parts").addEventListener("click", () => setAllParts(true));
@@ -159,8 +161,9 @@ function openBadgeGuide(ev){
     part.open = true;
     savePartStates();
     updatePartControls();
+    if(scout3dPanelViewer) scout3dPanelViewer.redraw();
     const target = $("badge-placement-guide") || part;
-    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    if(target && typeof target.scrollIntoView === "function") target.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 }
 
@@ -362,7 +365,12 @@ function applyVisibility(){
   });
   updatePartControls();
 }
-function scout3dContext(){
+let scout3dPanelViewer = null;
+let scout3dPreviewViewer = null;
+let scout3dPreviewOpen = false;
+let lastChecklist = [];
+
+function scout3dContext(list){
   const t = UI(), loc = L();
   const sec = loc.SECTIONS[currentSection];
   const hasBranch = !!sec.hasBranch;
@@ -373,24 +381,120 @@ function scout3dContext(){
   const genderLabel = currentGender === "male"
     ? (isLeader ? t.genderLeaderMale : t.genderMemberMale)
     : (isLeader ? t.genderLeaderFemale : t.genderMemberFemale);
-  const scout3dGender = isLeader
-    ? (currentGender === "male" ? t.male : t.female)
-    : (LANG === "en" ? (currentGender === "female" ? "Girl" : "Boy") : (currentGender === "female" ? "女孩" : "男孩"));
   const bottomText = hasBottom ? (isTrousers ? t.lowerBodyTrousers : t.lowerBodySkirt) : "";
   const presetParts = [sec.name];
   if (hasBranch) presetParts.push(branchName);
   presetParts.push(genderLabel);
   if (hasBottom) presetParts.push(bottomText);
   const presetLabel = presetParts.join(t.nameSep);
-  const url = scout3dUrl({
+  const items = list || (lastChecklist.length ? lastChecklist : buildChecklist({
+    section: currentSection, branch: currentBranch, gender: currentGender,
+    mode: currentMode, fromSection: currentFrom, fromBranch: currentFromBranch,
+    bottom: currentBottom
+  }));
+  const checklistMap = {};
+  items.forEach(it => { checklistMap[it.id] = { title: it.title, status: it.status }; });
+  const badges = (loc.SCOUT3D_BADGES && loc.SCOUT3D_BADGES[currentSection]) || [];
+  const strings = {
+    viewFront: t.scout3dViewFront,
+    viewLeft: t.scout3dViewLeft,
+    viewRight: t.scout3dViewRight,
+    viewShoulders: t.scout3dViewShoulders,
+    viewBack: t.scout3dViewBack,
+    viewsAria: t.scout3dViewsAria,
+    toggleBadges: t.scout3dToggleBadges,
+    toggleTie: t.scout3dToggleTie,
+    canvasAria: t.scout3dCanvasAria,
+    zoomIn: t.scout3dZoomIn,
+    zoomOut: t.scout3dZoomOut,
+    zoomReset: t.scout3dZoomReset,
+    zoomResetShort: t.scout3dZoomResetShort,
+    dragHint: t.scout3dDragHint,
+    badgesHeading: t.scout3dBadgesHeading,
+    whereLabel: t.scout3dWhereLabel,
+    sizeLabel: t.scout3dSizeLabel,
+    emptyInspector: t.scout3dEmptyInspector,
+    statusNeed: t.statusNeed,
+    statusHave: t.statusHave,
+    statusCheck: t.statusCheck,
+    statusSep: LANG === "en" ? ": " : "：",
+    dirFront: t.scout3dDirFront,
+    dirBack: t.scout3dDirBack,
+    dirWearerLeft: t.scout3dDirWearerLeft,
+    dirWearerRight: t.scout3dDirWearerRight,
+    disclaimer: t.scout3dDisclaimer
+  };
+  return { presetLabel, badges, strings, checklistMap };
+}
+
+function scout3dViewerOpts(ctx){
+  return {
     section: currentSection,
     branch: currentBranch,
     gender: currentGender,
     bottom: currentBottom,
-    lang: LANG
-  });
-  const cue = t.scout3dStepCue(sec.name, branchName, scout3dGender, bottomText, hasBranch, isLeader, isTrousers);
-  return { url, presetLabel, cue };
+    mode: currentMode,
+    lang: LANG,
+    badges: ctx.badges,
+    strings: ctx.strings,
+    checklistMap: ctx.checklistMap
+  };
+}
+
+function mountScout3dPreview(){
+  const drawer = $("scout3d-preview-drawer");
+  if(!drawer || typeof Scout3D === "undefined") return null;
+  const stage = drawer.querySelector(".scout3d-stage");
+  if(!stage) return null;
+  const opts = scout3dViewerOpts(scout3dContext());
+  if(scout3dPreviewViewer){
+    scout3dPreviewViewer.update(opts);
+    scout3dPreviewViewer.redraw();
+  } else {
+    scout3dPreviewViewer = Scout3D.createViewer(stage, opts);
+  }
+  return scout3dPreviewViewer;
+}
+
+function toggleScout3dPreview(){
+  scout3dPreviewOpen = !scout3dPreviewOpen;
+  const t = UI();
+  const btn = document.querySelector("#preview .scout3d-preview-btn");
+  const drawer = $("scout3d-preview-drawer");
+  if(btn){
+    btn.setAttribute("aria-expanded", String(scout3dPreviewOpen));
+    btn.textContent = scout3dPreviewOpen ? t.scout3dToggleClose : t.scout3dToggleOpen;
+  }
+  if(drawer){
+    drawer.hidden = !scout3dPreviewOpen;
+    if(scout3dPreviewOpen) mountScout3dPreview();
+  }
+}
+
+function focusScout3dBadge(badgeId){
+  if(currentSection === "grasshopper"){
+    if(!scout3dPreviewOpen) toggleScout3dPreview();
+    else mountScout3dPreview();
+    if(scout3dPreviewViewer && badgeId) scout3dPreviewViewer.focusBadge(badgeId);
+    const drawer = $("scout3d-preview-drawer");
+    if(drawer && typeof drawer.scrollIntoView === "function") drawer.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    return;
+  }
+  const part = $("part-badges");
+  if(part){
+    part.open = true;
+    savePartStates();
+    updatePartControls();
+  }
+  if(scout3dPanelViewer){
+    scout3dPanelViewer.redraw();
+    if(badgeId) scout3dPanelViewer.focusBadge(badgeId);
+  }
+  if(scout3dPreviewOpen && scout3dPreviewViewer && badgeId){
+    scout3dPreviewViewer.focusBadge(badgeId);
+  }
+  const target = $("scout3d-badge-panel") || part;
+  if(target && typeof target.scrollIntoView === "function") target.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function renderScout3dPanel(){
@@ -399,19 +503,34 @@ function renderScout3dPanel(){
   const t = UI(), loc = L();
   const ctx = scout3dContext();
   const angles = (loc.SCOUT3D_MAP && loc.SCOUT3D_MAP[currentSection]) || [];
-  el.innerHTML = `
-    <div class="scout3d-panel-head">
-      <h3>${t.scout3dBoardTitle}</h3>
-      <span class="scout3d-preset">${escapeHtml(ctx.presetLabel)}</span>
-    </div>
-    <p class="scout3d-panel-lead">${t.scout3dBoardLead}</p>
-    <div class="scout3d-angles">
-      ${angles.map(a => `<div class="scout3d-angle-card"><strong>${escapeHtml(a.view)}</strong><span>${escapeHtml(a.text)}</span></div>`).join("")}
-    </div>
-    <div class="scout3d-panel-foot">
-      <a class="scout3d-btn" href="${escapeHtml(ctx.url)}" target="_blank" rel="noopener">${escapeHtml(t.scout3dBoardCta(ctx.presetLabel))}</a>
-      <span class="cite">${t.scout3dBoardMatched(escapeHtml(ctx.presetLabel), ctx.cue)}</span>
-    </div>`;
+  if(!el.querySelector(".scout3d-stage")){
+    el.innerHTML = `
+      <div class="scout3d-panel-head">
+        <h3></h3>
+        <span class="scout3d-preset"></span>
+      </div>
+      <p class="scout3d-panel-lead"></p>
+      <div class="scout3d-stage"></div>
+      <div class="scout3d-angles"></div>`;
+    el.querySelector(".scout3d-angles").addEventListener("click", (ev) => {
+      const card = ev.target.closest("[data-focus-view]");
+      if(!card || !scout3dPanelViewer) return;
+      scout3dPanelViewer.setCamera(card.getAttribute("data-focus-view"));
+      el.querySelectorAll(".scout3d-angle-card").forEach(c => c.classList.toggle("active", c === card));
+    });
+  }
+  el.querySelector(".scout3d-panel-head h3").textContent = t.scout3dBoardTitle;
+  el.querySelector(".scout3d-preset").textContent = ctx.presetLabel;
+  el.querySelector(".scout3d-panel-lead").textContent = t.scout3dBoardLead;
+  el.querySelector(".scout3d-angles").innerHTML = angles.map(a =>
+    `<button type="button" class="scout3d-angle-card" data-focus-view="${escapeHtml(a.focusView || "front")}"><strong>${escapeHtml(a.view)}</strong><span>${escapeHtml(a.text)}</span></button>`
+  ).join("");
+  if(typeof Scout3D !== "undefined"){
+    const opts = scout3dViewerOpts(ctx);
+    const stage = el.querySelector(".scout3d-stage");
+    if(scout3dPanelViewer) scout3dPanelViewer.update(opts);
+    else scout3dPanelViewer = Scout3D.createViewer(stage, opts);
+  }
 }
 
 function refresh(){ renderControls(); applyVisibility(); render(); renderBudget(); renderOfficialPhoto(); renderScout3dPanel(); }
@@ -485,6 +604,7 @@ function render(){
     mode: currentMode, fromSection: currentFrom, fromBranch: currentFromBranch,
     bottom: currentBottom
   });
+  lastChecklist = list;
 
   const genderLabel = currentGender === "male" ? (currentSection === "leader" ? t.genderLeaderMale : t.genderMemberMale)
     : (currentSection === "leader" ? t.genderLeaderFemale : t.genderMemberFemale);
@@ -495,12 +615,15 @@ function render(){
 
   // 預覽
   const photo = officialPhoto(currentSection, currentBranch, currentGender);
-  const s3d = scout3dContext();
   let imgHtml;
   if(currentSection === "grasshopper"){
     imgHtml = `<div class="placeholder" style="background:#fff3e3;border-color:#ff7a1a">🧒</div>`;
   } else {
     imgHtml = renderReferenceImage(photo?.images || [], "uniform-preview");
+  }
+  if(scout3dPreviewViewer){
+    scout3dPreviewViewer.destroy();
+    scout3dPreviewViewer = null;
   }
   $("preview").innerHTML = `<div class="preview">${imgHtml}
     <div class="info">
@@ -509,10 +632,13 @@ function render(){
       <p>${t.sectionAge}${sec.age}</p>
       ${sec.note ? `<p style="font-size:.88rem;color:var(--scout-olive)">${sec.note}</p>` : ""}
       <div class="scout3d-preview-box">
-        <a class="scout3d-preview-btn" href="${escapeHtml(s3d.url)}" target="_blank" rel="noopener">${escapeHtml(t.scout3dPreviewCta)}</a>
-        <p class="cite" style="margin:.35rem 0 0">${t.scout3dPreviewNote(s3d.cue)}</p>
+        <button type="button" class="scout3d-preview-btn" aria-expanded="${scout3dPreviewOpen}" aria-controls="scout3d-preview-drawer" onclick="toggleScout3dPreview()">${escapeHtml(scout3dPreviewOpen ? t.scout3dToggleClose : t.scout3dToggleOpen)}</button>
+        <p class="cite" style="margin:.35rem 0 0">${escapeHtml(t.scout3dPreviewNote)}</p>
       </div>
-    </div></div>`;
+    </div>
+    <div id="scout3d-preview-drawer" class="scout3d-preview-drawer"${scout3dPreviewOpen ? "" : " hidden"}><div class="scout3d-stage"></div></div>
+  </div>`;
+  if(scout3dPreviewOpen) mountScout3dPreview();
 
   // 統計
   const needCount = list.filter(i=>i.status==="need").length;
@@ -559,7 +685,6 @@ function render(){
     <div class="checklist-title"><span class="badge" data-section="${currentSection}">${sec.name}</span><span>${t.checklistTitle(modeLabel, branchLabel, genderLabel, list.length)}</span></div>
     ${listHTML}
     <div class="note">${t.checklistNote}</div>`;
-  $("checklist").querySelectorAll("[data-scout3d-link]").forEach(a => { a.href = s3d.url; });
 }
 
 function toggleItem(el){
