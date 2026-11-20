@@ -1,5 +1,5 @@
 /* ===========================================================
-   scout3d.js — 零依賴原生 3D 童軍制服與基本章擺位引擎（v2.3.0）
+   scout3d.js — 零依賴原生 3D 童軍制服與基本章擺位引擎（v2.3.1）
    參考 SCOUT3D 人形與《儀容與制服手冊》厘米比例於本機 Canvas 直接繪製：
    +Y 向上（地面 y = 0）、+Z 正面、+X 穿著者左邊（-X 穿著者右邊）。
    僅繪製幾何擺位示意（不自造或冒充官方繡章圖樣），零外部庫與 CSS 漸層。
@@ -396,7 +396,7 @@
   /* ── 依目前制服狀態建立 3D 童軍模型 + 基本章貼片 ── */
   function buildScene(state, badges, options = {}) {
     const polys = [];
-    const { section, branch, gender, mode } = state;
+    const { section, branch, gender } = state;
     const B = getBody(section, gender);
     const P = getPalette(state);
     const showBadges = options.showBadges !== false;
@@ -828,14 +828,10 @@
           let by = pkCentreY;
           if (b.anchor === "aboveFlap" && pk) {
             by = pkTop + (b.gapCm ?? 3.0) + (b.hCm || 4) / 2;
-          } else if (b.anchor === "aboveFlapTight" && pk) {
-            by = pkTop + 0.7 + (b.hCm || 2.0) / 2;
           } else if (b.anchor === "chest") {
             by = topY - 10.5;
           }
-          const highlightUpgrade = b.id === "highestEmblem" && mode === "upgrade";
-          const badgeObj = highlightUpgrade ? { ...b, highlightHint: true } : b;
-          pushBadge(polys, badgeObj, {
+          pushBadge(polys, b, {
             cx: bx, cy: by, cz: pkFrontZ,
             w: b.wCm || 4.0, h: b.hCm || 4.0,
             rot: [0, 0, 0],
@@ -1200,7 +1196,7 @@
             }
 
             c.lineWidth = isSel || isHov ? 0.14 : 0.07;
-            c.strokeStyle = isSel || isHov ? "#f9b233" : (b.highlightHint ? "#f2791c" : "#ffffff");
+            c.strokeStyle = isSel || isHov ? "#f9b233" : "#ffffff";
             c.stroke();
           });
 

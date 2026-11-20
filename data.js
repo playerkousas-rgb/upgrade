@@ -332,7 +332,7 @@ const GRASSHOPPER_ITEM = {
       <li><strong>襪</strong>：單色、短襪或長襪</li>
       <li><strong>帽（非必須）</strong>：單色、闊邊漁夫帽或鴨咀帽</li>
       <li><strong>領巾</strong>：已宣誓小童軍佩戴旅巾（連顏色巾圈）</li>
-      <li><strong>徽章</strong>：小童軍團員章戴上衣左胸前（宣誓後）；進步獎章戴左袖 <button type="button" class="scout3d-inline-link" data-scout3d-focus="membership" onclick="focusScout3dBadge('membership')">展開頁內 3D 位置圖 ↓</button></li>
+      <li><strong>徽章</strong>：小童軍團員章戴上衣左胸前（宣誓後佩戴；剛入團還未有進步獎章，左袖先留空） <button type="button" class="scout3d-inline-link" data-scout3d-focus="membership" onclick="focusScout3dBadge('membership')">展開頁內 3D 位置圖 ↓</button></li>
     </ul>
     <div class="tip">旅巾、小童軍團員章須待<strong>宣誓後</strong>才可佩戴。</div>
     <div class="warn">除顏色巾圈外，小童軍不可使用其他支部制服配件（例如皮帶、制服帽）。</div>`
@@ -922,7 +922,7 @@ const LOCALES = {
     scout3dToggleClose: "收起頁內 3D 制服預覽 ▲",
     scout3dPreviewNote: "本機即時繪製立體模型：拖曳旋轉 360°，直接點選基本章查看手冊位置，不用跳出外站。",
     scout3dBoardTitle: "3D 互動制服及基本章擺位圖（本頁即時繪製）",
-    scout3dBoardLead: "參考立體身形與《儀容與制服手冊》厘米比例於本頁直接繪製，只聚焦基本入團／升團徽章（不用逐區地域挑選）。拖曳旋轉 360°、切換視角或點選徽章即可看擺位與購買狀態。",
+    scout3dBoardLead: "按「全新加入／剛升團」實際所需於本頁直接繪製，只顯示基本入團／升團徽章（剛入團／剛升團尚未有進度性獎章，亦尚未有深資／樂行肩章，僅領袖依委任戴職級肩章）。拖曳旋轉 360°、切換視角或點選徽章即可看擺位與購買狀態。",
     scout3dViewFront: "正面",
     scout3dViewLeft: "左胸・左袖",
     scout3dViewRight: "右胸・右袖",
@@ -952,33 +952,33 @@ const LOCALES = {
 };
 
 /* ===========================================================
-   本機 3D 基本徽章擺位規格（依 SCOUT3D 厘米位置與手冊 p.93–95）
-   不連外站、免選地域／區／小隊細節，聚焦家長入團及升團必備基本章。
+   本機 3D 基本徽章擺位規格（依《儀容與制服手冊》p.93–95）
+   僅顯示「全新加入／剛升團」實際配戴之基本徽章：
+   - 不預先繪製未考獲的進度性獎章
+   - 不預先繪製未考獲的深資／樂行肩章（雙肩肩帶保持空白）
+   - 僅領袖按委任職級配戴職級肩章
    =========================================================== */
 const SCOUT3D_BADGES_ZH = {
   grasshopper: [
-    { id: "membership", code: "團員", name: "小童軍團員章", mount: "torso", side: "left", anchor: "chest", shape: "circle", wCm: 5.0, hCm: 5.0, color: "#ff7a1a", view: "front", sizeLabel: "直徑 5 cm",
+    { id: "membership", code: "團員", name: "小童軍團員章（宣誓後）", mount: "torso", side: "left", anchor: "chest", shape: "circle", wCm: 5.0, hCm: 5.0, color: "#ff7a1a", view: "front", sizeLabel: "直徑 5 cm",
       where: "上衣左胸前（《小童軍活動指引》P.10）",
-      rule: "必須待宣誓後佩戴；穿旅團統一活動服時同樣置於左胸。", itemIds: ["gh-clothes"] },
-    { id: "progress", code: "1–4", name: "進步獎章（4 步）", mount: "sleeveL", anchor: "cuff", shape: "grid", wCm: 4.0, hCm: 4.0, color: "#2e7d4f", view: "left", sizeLabel: "每格 2 × 2 cm（2×2 排列）",
-      where: "穿著者左袖，袖口上方約 0.3 cm 起（紅／啡／藍／綠）",
-      rule: "依學習進度獲旅團頒發；學校便服未便縫章時則按旅團指引佩戴於旅巾。", itemIds: ["gh-clothes"] },
-    { id: "troop", code: "旅章", name: "旅章（視乎旅團）", mount: "sleeveR", anchor: "troop", shape: "rect", wCm: 9.0, hCm: 2.2, color: "#1B4332", view: "right", sizeLabel: "9 × 2.2 cm",
+      rule: "剛入團未宣誓前先留空；待宣誓後才佩戴小童軍團員章及旅巾（左袖無進步獎章，保持留空）。", itemIds: ["gh-clothes"] },
+    { id: "troop", code: "旅章", name: "旅章（視乎旅團制服）", mount: "sleeveR", anchor: "troop", shape: "rect", wCm: 9.0, hCm: 2.2, color: "#1B4332", view: "right", sizeLabel: "9 × 2.2 cm",
       where: "穿著者右袖，肩縫下方 2 cm 置中",
-      rule: "視乎所屬旅團是否有制服／活動服縫章安排。", itemIds: ["gh-clothes"] },
-    { id: "district", code: "區章", name: "區章（視乎旅團）", mount: "sleeveR", anchor: "districtSolo", shape: "rect", wCm: 3.8, hCm: 5.0, color: "#1e4293", view: "right", sizeLabel: "3.8 × 5 cm",
+      rule: "便服集會不用縫章；僅穿旅團指定活動服時視乎旅團安排。", itemIds: ["gh-clothes"] },
+    { id: "district", code: "區章", name: "區章（視乎旅團制服）", mount: "sleeveR", anchor: "districtSolo", shape: "rect", wCm: 3.8, hCm: 5.0, color: "#1e4293", view: "right", sizeLabel: "3.8 × 5 cm",
       where: "穿著者右袖，旅章下方 2 cm 置中",
-      rule: "小童軍制服裝備以旅團安排為準，除顏色巾圈外不用其他支部配件。", itemIds: ["gh-clothes"] }
+      rule: "小童軍服裝以旅團安排為準，除顏色巾圈外不用其他支部配件。", itemIds: ["gh-clothes"] }
   ],
   cub: [
     { id: "capbadge", code: "帽章", name: "幼童軍布質帽章", mount: "head", shape: "rect", wCm: 3.2, hCm: 2.5, color: "#f0cc1e", view: "front", sizeLabel: "已縫於帽冠正面",
       where: "男童軍鴨舌帽／女童軍圓帽帽冠正面中央",
       rule: "供應社幼童軍布帽已縫妥帽章，一般毋須另購；如有旅團特定安排向團長查詢。", itemIds: ["capbadge-cub"] },
-    { id: "membership", code: "會員", name: "世界童軍會員章", mount: "torso", side: "left", anchor: "centre", shape: "circle", wCm: 4.0, hCm: 4.0, color: "#5b3fa0", view: "front", sizeLabel: "直徑 4 cm",
+    { id: "membership", code: "會員", name: "世界童軍會員章（宣誓後）", mount: "torso", side: "left", anchor: "centre", shape: "circle", wCm: 4.0, hCm: 4.0, color: "#5b3fa0", view: "front", sizeLabel: "直徑 4 cm",
       where: "左胸袋中央（袋蓋下方）",
-      rule: "只可於宣誓後佩戴；全球通用紫色章，升團至童軍、深資、樂行及領袖均在相同位置沿用。", itemIds: ["badges-youth"] },
+      rule: "剛入團或由小童軍升團均尚未持有紫色世界會員章，須待宣誓後才縫上；右胸袋及左袖沒有任何進度／活動章，保持空白。", itemIds: ["badges-youth"] },
     { id: "hongKong", code: "香港", name: "香港章", mount: "torso", side: "left", anchor: "aboveFlap", gapCm: 3.0, shape: "rect", wCm: 4.0, hCm: 5.6, color: "#c43b3b", view: "front", sizeLabel: "4 × 5.6 cm",
-      where: "左胸袋袋蓋上方 3 cm 中央（如有服務年星，釘於其下方與袋蓋之間）",
+      where: "左胸袋袋蓋上方 3 cm 中央",
       rule: "青少年支部（幼童軍至樂行）統一戴於左胸袋上方 3 cm（細碼衫按比例縮減間距）。", itemIds: ["badges-youth"] },
     { id: "troop", code: "旅章", name: "旅章", mount: "sleeveR", anchor: "troop", shape: "rect", wCm: 9.0, hCm: 2.2, color: "#1B4332", view: "right", sizeLabel: "9 × 2.2 cm",
       where: "穿著者右袖最上端，肩縫下方 2 cm 置中",
@@ -988,21 +988,18 @@ const SCOUT3D_BADGES_ZH = {
       rule: "與區章左右並排相距 1 cm（勿上下直排）；代表港島／九龍／東九龍／新界／新界東地域。", itemIds: ["badges-youth"] },
     { id: "district", code: "區章", name: "區章", mount: "sleeveR", anchor: "district", shape: "rect", wCm: 3.8, hCm: 5.0, color: "#1e4293", view: "right", sizeLabel: "3.8 × 5 cm",
       where: "穿著者右袖，旅章下方 2 cm、靠後（向背後）位置",
-      rule: "與地域章左右並排相距 1 cm；代表所屬區會（同旅升團可沿用）。", itemIds: ["badges-youth"] },
-    { id: "progress", code: "進度", name: "幼童軍進度／核心範疇區", mount: "torso", side: "right", anchor: "centre", shape: "circle", wCm: 4.0, hCm: 4.0, color: "#5a8f3a", view: "front", sizeLabel: "右袋中央 / 左袖上方",
-      where: "右胸袋中央（進度性獎章及金紫荊）；左袖預留予核心範疇與活動章",
-      rule: "入團時此區先留空，待考核進度性及核心範疇徽章後逐步縫上。", itemIds: [] }
+      rule: "與地域章左右並排相距 1 cm；代表所屬區會（同旅升團可沿用）。", itemIds: ["badges-youth"] }
   ],
   scout: [
     { id: "capbadge", code: "帽章", name: "童軍帽章", mount: "head", shape: "circle", wCm: 2.8, hCm: 2.8, color: "#cfd3d8", view: "front", sizeLabel: "金屬帽章（海童軍為白頂帽徽）",
       where: "陸／空軟帽左側（左眼上方）膠邊對上；海童軍為白頂帽正前方",
       rule: "由幼童軍升童軍須換新帽及帽章（陸＝銀色童軍帽章、海＝海童軍帽帶／徽）。", itemIds: ["capbadge-scout", "cap-sea-scout"] },
     { id: "membership", code: "會員", name: "世界童軍會員章", mount: "torso", side: "left", anchor: "centre", shape: "circle", wCm: 4.0, hCm: 4.0, color: "#5b3fa0", view: "front", sizeLabel: "直徑 4 cm",
-      where: "左胸袋中央（宣誓後；升團沿用）",
-      rule: "若由幼童軍升上同旅童軍，已有的世界會員章可直接沿用。", itemIds: ["badges-youth"] },
+      where: "左胸袋中央（新加入須宣誓後佩戴；由幼童軍升團可沿用）",
+      rule: "剛升團或新加入時右胸袋與左袖留空（未有進度／專科章；僅曾考獲金紫荊者升團後於右蓋上加戴標誌）。", itemIds: ["badges-youth"] },
     { id: "hongKong", code: "香港", name: "香港章", mount: "torso", side: "left", anchor: "aboveFlap", gapCm: 3.0, shape: "rect", wCm: 4.0, hCm: 5.6, color: "#c43b3b", view: "front", sizeLabel: "4 × 5.6 cm",
-      where: "左胸袋袋蓋上方 3 cm 中央（服務年星在其下）",
-      rule: "與幼童軍同款（陸／海／空恤衫若換新色可拆過新衫或重購）。", itemIds: ["badges-youth"] },
+      where: "左胸袋袋蓋上方 3 cm 中央（如有服務年星，釘於其下方）",
+      rule: "與幼童軍同款（同旅升團可沿用；轉海／空新買恤衫可拆過新衫或重購）。", itemIds: ["badges-youth"] },
     { id: "troop", code: "旅章", name: "旅章", mount: "sleeveR", anchor: "troop", shape: "rect", wCm: 9.0, hCm: 2.2, color: "#1B4332", view: "right", sizeLabel: "9 × 2.2 cm",
       where: "穿著者右袖，肩縫下方 2 cm 置中",
       rule: "同旅升團可沿用；若同時轉往海／空童軍旅團則按新旅團更換。", itemIds: ["badges-youth"] },
@@ -1012,26 +1009,20 @@ const SCOUT3D_BADGES_ZH = {
     { id: "district", code: "區章", name: "區章", mount: "sleeveR", anchor: "district", shape: "rect", wCm: 3.8, hCm: 5.0, color: "#1e4293", view: "right", sizeLabel: "3.8 × 5 cm",
       where: "穿著者右袖，旅章下方 2 cm、靠後（向背後）",
       rule: "與地域章左右並排相距 1 cm。", itemIds: ["badges-youth"] },
-    { id: "patrol", code: "小隊", name: "小隊章", mount: "sleeveR", anchor: "patrol", shape: "rect", wCm: 4.0, hCm: 1.6, color: "#0a5c36", view: "right", sizeLabel: "4 × 1.6 cm",
+    { id: "patrol", code: "小隊", name: "小隊章（入小隊後）", mount: "sleeveR", anchor: "patrol", shape: "rect", wCm: 4.0, hCm: 1.6, color: "#0a5c36", view: "right", sizeLabel: "4 × 1.6 cm",
       where: "穿著者右袖，袖口縫線上方 3 cm（位於地域／區章之下）",
-      rule: "只有童軍支部設小隊章；宣誓編入小隊後由旅團頒發或於供應社購買。", itemIds: ["patrol-badge"] },
-    { id: "highestEmblem", code: "標誌", name: "舊最高獎章標誌（升團用）", mount: "torso", side: "right", anchor: "aboveFlapTight", shape: "rect", wCm: 3.0, hCm: 2.0, color: "#d8b23a", view: "front", sizeLabel: "布質小標誌",
-      where: "右胸袋袋蓋上方（原金紫荊獎章本身必須拆走）",
-      rule: "曾在幼童軍考獲金紫荊獎章者，升童軍後須拆下原章，改戴「金紫荊獎章標誌」於右胸袋蓋上。", itemIds: [] }
+      rule: "只有童軍支部設小隊章；編入小隊後由旅團頒發或於供應社購買（未編隊前先留空）。", itemIds: ["patrol-badge"] }
   ],
   venture: [
     { id: "capbadge", code: "帽章", name: "深資／童軍帽章", mount: "head", shape: "circle", wCm: 2.8, hCm: 2.8, color: "#cfd3d8", view: "front", sizeLabel: "陸空沿用童軍帽章；海童軍換領袖款白頂帽及深資海帽章",
       where: "棗紅／灰藍軟帽左眼上方；海童軍白頂帽正面",
-      rule: "陸及空童軍升深資可沿用原銀色童軍帽章；海童軍須改戴深資海童軍帽章。", itemIds: ["capbadge-scout", "capbadge-venture-sea"] },
-    { id: "epaulette", code: "肩章", name: "深資童軍肩章", mount: "shoulder", shape: "rect", wCm: 9.0, hCm: 3.8, color: "#7a1f2b", view: "shoulders", sizeLabel: "9 × 3.8 cm",
-      where: "雙肩肩帶（考獲肩章後套上，方頭近膊頭端、圓頭向衣領）",
-      rule: "考獲深資童軍肩章前可先留空；亦為其後所有深資進度獎章之前提。", itemIds: [] },
+      rule: "陸及空童軍升深資可沿用原銀色童軍帽章；海童軍須改戴深資海童軍帽章。剛升團或新加入時雙肩肩帶及右胸袋均先留空（未考深資肩章／段章）。", itemIds: ["capbadge-scout", "capbadge-venture-sea"] },
     { id: "membership", code: "會員", name: "世界童軍會員章", mount: "torso", side: "left", anchor: "centre", shape: "circle", wCm: 4.0, hCm: 4.0, color: "#5b3fa0", view: "front", sizeLabel: "直徑 4 cm",
-      where: "左胸袋中央（宣誓後；升團沿用）",
-      rule: "升深資可沿用（2026 新綱要設深資會員章，完成後佩戴）。", itemIds: ["badges-youth"] },
+      where: "左胸袋中央（新加入須宣誓後佩戴；升團沿用）",
+      rule: "升深資可沿用；剛升團時雙肩肩帶還沒有深資童軍肩章（須日後考獲深資肩章後方可套上）。", itemIds: ["badges-youth"] },
     { id: "hongKong", code: "香港", name: "香港章", mount: "torso", side: "left", anchor: "aboveFlap", gapCm: 3.0, shape: "rect", wCm: 4.0, hCm: 5.6, color: "#c43b3b", view: "front", sizeLabel: "4 × 5.6 cm",
       where: "左胸袋袋蓋上方 3 cm 中央",
-      rule: "與童軍同款，升團保留。", itemIds: ["badges-youth"] },
+      rule: "與童軍同款，升團保留（曾考獲舊最高獎章者升團須拆原章，只於右蓋上加戴標誌；未考獲則右胸保持空白）。", itemIds: ["badges-youth"] },
     { id: "troop", code: "旅章", name: "旅章", mount: "sleeveR", anchor: "troop", shape: "rect", wCm: 9.0, hCm: 2.2, color: "#1B4332", view: "right", sizeLabel: "9 × 2.2 cm",
       where: "穿著者右袖，肩縫下方 2 cm 置中",
       rule: "注意：深資支部已沒有童軍小隊章，升團時須拆走小隊章與左袖專科章。", itemIds: ["badges-youth"] },
@@ -1040,24 +1031,18 @@ const SCOUT3D_BADGES_ZH = {
       rule: "與區章左右並排相距 1 cm。", itemIds: ["badges-youth"] },
     { id: "district", code: "區章", name: "區章", mount: "sleeveR", anchor: "district", shape: "rect", wCm: 3.8, hCm: 5.0, color: "#1e4293", view: "right", sizeLabel: "3.8 × 5 cm",
       where: "穿著者右袖，旅章下方 2 cm、靠後（向背後）",
-      rule: "與地域章左右並排相距 1 cm。", itemIds: ["badges-youth"] },
-    { id: "highestEmblem", code: "標誌", name: "舊最高獎章標誌（金紫荊／總領袖）", mount: "torso", side: "right", anchor: "aboveFlapTight", shape: "rect", wCm: 3.6, hCm: 2.0, color: "#d8b23a", view: "front", sizeLabel: "並排或單枚標誌",
-      where: "右胸袋袋蓋上方（原總領袖獎章本身必須拆走）",
-      rule: "如同時考獲金紫荊及總領袖獎章，青少年成員可在右胸袋蓋上方同時佩戴兩個標誌。", itemIds: [] }
+      rule: "與地域章左右並排相距 1 cm。", itemIds: ["badges-youth"] }
   ],
   rover: [
     { id: "capbadge", code: "帽章", name: "樂行／海空帽章", mount: "head", shape: "circle", wCm: 2.8, hCm: 2.8, color: "#cfd3d8", view: "front", sizeLabel: "陸空沿用童軍帽章；海童軍同深資海款",
       where: "深綠／灰藍軟帽左眼上方；海童軍白頂帽正面",
-      rule: "陸樂行把棗紅軟帽換深綠軟帽並移用童軍帽章；海／空可沿用。", itemIds: ["capbadge-scout", "capbadge-rover-sea"] },
-    { id: "epaulette", code: "肩章", name: "樂行童軍肩章", mount: "shoulder", shape: "rect", wCm: 9.0, hCm: 3.8, color: "#0a3a5c", view: "shoulders", sizeLabel: "9 × 3.8 cm",
-      where: "雙肩肩帶（完成入門訓練或持樂行先修章後套上）",
-      rule: "深資升樂行須拆走原有深資童軍肩章與段章。", itemIds: [] },
+      rule: "陸樂行把棗紅軟帽換深綠軟帽並移用童軍帽章；海／空可沿用。剛升團或新加入時雙肩肩帶及右胸袋均先留空。", itemIds: ["capbadge-scout", "capbadge-rover-sea"] },
     { id: "membership", code: "會員", name: "世界童軍會員章", mount: "torso", side: "left", anchor: "centre", shape: "circle", wCm: 4.0, hCm: 4.0, color: "#5b3fa0", view: "front", sizeLabel: "直徑 4 cm",
-      where: "左胸袋中央（宣誓後；升團沿用）",
-      rule: "全球通用，位置與深資相同。", itemIds: ["badges-youth"] },
+      where: "左胸袋中央（新加入須宣誓後佩戴；升團沿用）",
+      rule: "剛升團時必須拆走深資童軍肩章、段章及金帶；新「樂行童軍肩章」須待完成樂行入門訓練後才套上，雙肩暫時留空。", itemIds: ["badges-youth"] },
     { id: "hongKong", code: "香港", name: "香港章", mount: "torso", side: "left", anchor: "aboveFlap", gapCm: 3.0, shape: "rect", wCm: 4.0, hCm: 5.6, color: "#c43b3b", view: "front", sizeLabel: "4 × 5.6 cm",
       where: "左胸袋袋蓋上方 3 cm 中央",
-      rule: "升團保留於左胸袋蓋上方。", itemIds: ["badges-youth"] },
+      rule: "升團保留於左胸袋蓋上方（曾獲榮譽童軍等舊最高獎章者除外，未考獲則右胸留空）。", itemIds: ["badges-youth"] },
     { id: "troop", code: "旅章", name: "旅章", mount: "sleeveR", anchor: "troop", shape: "rect", wCm: 9.0, hCm: 2.2, color: "#1B4332", view: "right", sizeLabel: "9 × 2.2 cm",
       where: "穿著者右袖，肩縫下方 2 cm 置中",
       rule: "同旅升團可沿用。", itemIds: ["badges-youth"] },
@@ -1066,10 +1051,7 @@ const SCOUT3D_BADGES_ZH = {
       rule: "與區章左右並排相距 1 cm。", itemIds: ["badges-youth"] },
     { id: "district", code: "區章", name: "區章", mount: "sleeveR", anchor: "district", shape: "rect", wCm: 3.8, hCm: 5.0, color: "#1e4293", view: "right", sizeLabel: "3.8 × 5 cm",
       where: "穿著者右袖，旅章下方 2 cm、靠後（向背後）",
-      rule: "與地域章左右並排相距 1 cm。", itemIds: ["badges-youth"] },
-    { id: "highestEmblem", code: "標誌", name: "舊最高獎章標誌（升團用）", mount: "torso", side: "right", anchor: "aboveFlapTight", shape: "rect", wCm: 3.6, hCm: 2.0, color: "#d8b23a", view: "front", sizeLabel: "可並排佩戴",
-      where: "右胸袋袋蓋上方（原榮譽童軍獎章本身必須拆走）",
-      rule: "曾獲榮譽童軍／總領袖／金紫荊者改戴對應標誌於右胸袋蓋上方。", itemIds: [] }
+      rule: "與地域章左右並排相距 1 cm。", itemIds: ["badges-youth"] }
   ],
   leader: [
     { id: "capbadge", code: "職級帽", name: "領袖職級帽章", mount: "head", shape: "circle", wCm: 2.8, hCm: 3.6, color: "#d8b23a", view: "front", sizeLabel: "顏色依委任職級（綠／紅／淺藍／灰）",
@@ -1077,13 +1059,13 @@ const SCOUT3D_BADGES_ZH = {
       rule: "必須按獲委任的領袖職級選配正確顏色帽章，不可沿用青少年銀色童軍帽章。", itemIds: ["capbadge-rank", "capbadge-sea-leader"] },
     { id: "epaulette", code: "職級肩", name: "職級肩章", mount: "shoulder", shape: "rect", wCm: 4.6, hCm: 3.65, color: "#3a3a3a", view: "shoulders", sizeLabel: "4.6 × 3.65 cm",
       where: "雙肩肩帶靠膊頭端（徽號朝向衣領）",
-      rule: "依實際委任職級（見習領袖／助理領袖／領袖／旅長／總監等）佩戴；總部／地域／區級領袖另配香港肩章。", itemIds: ["epaulette-rank"] },
+      rule: "成年領袖獲委任後即配戴對應職級肩章（見習／助理／領袖／旅長／總監等）；總部／地域／區級領袖另配香港肩章。", itemIds: ["epaulette-rank"] },
     { id: "membership", code: "會員", name: "世界童軍會員章", mount: "torso", side: "left", anchor: "centre", shape: "circle", wCm: 4.0, hCm: 4.0, color: "#5b3fa0", view: "front", sizeLabel: "直徑 4 cm",
-      where: "左胸袋中央（與青少年成員相同，升任可沿用）",
-      rule: "領袖左胸袋上方預留予名牌或嘉許章，香港章移往右胸袋！", itemIds: ["badges-leader"] },
+      where: "左胸袋中央（新加入待宣誓後佩戴；升任可沿用）",
+      rule: "領袖左胸袋上方不放香港章——香港章移往右胸袋中央！", itemIds: ["badges-leader"] },
     { id: "hongKong", code: "香港", name: "香港章（領袖戴於右胸袋！）", mount: "torso", side: "right", anchor: "centre", shape: "rect", wCm: 4.0, hCm: 5.6, color: "#c43b3b", view: "front", sizeLabel: "4 × 5.6 cm",
       where: "右胸袋中央（注意：與青少年成員在左胸袋上方不同！）",
-      rule: "成年成員重要區別：香港章改縫於右胸袋中央，而不是左胸袋上方。", itemIds: ["badges-leader"] },
+      rule: "成年成員重要區別：香港章改縫於右胸袋中央；右胸袋蓋上方一般留空（僅曾獲青少年最高獎章者最多留 1 個標誌）。", itemIds: ["badges-leader"] },
     { id: "troop", code: "旅章", name: "旅章（旅團領袖）／總部章", mount: "sleeveR", anchor: "troop", shape: "rect", wCm: 9.0, hCm: 2.2, color: "#1B4332", view: "right", sizeLabel: "9 × 2.2 cm",
       where: "穿著者右袖最上，肩縫下方 2 cm 置中",
       rule: "旅團領袖戴旅章；總會／地域／區級領袖則於肩帶配香港肩章，右袖按服務單位配總部／地域／區章。", itemIds: ["badges-leader"] },
@@ -1092,48 +1074,45 @@ const SCOUT3D_BADGES_ZH = {
       rule: "與區章左右並排相距 1 cm（視乎服務單位）。", itemIds: ["badges-leader"] },
     { id: "district", code: "區章", name: "區章", mount: "sleeveR", anchor: "district", shape: "rect", wCm: 3.8, hCm: 5.0, color: "#1e4293", view: "right", sizeLabel: "3.8 × 5 cm",
       where: "穿著者右袖，旅章下方 2 cm、靠後（向背後）",
-      rule: "與地域章左右並排相距 1 cm。", itemIds: ["badges-leader"] },
-    { id: "highestEmblem", code: "限 1 標誌", name: "舊最高獎章標誌（領袖只戴最高 1 個）", mount: "torso", side: "right", anchor: "aboveFlapTight", shape: "rect", wCm: 3.2, hCm: 2.0, color: "#d8b23a", view: "front", sizeLabel: "僅戴最高 1 個標誌",
-      where: "右胸袋袋蓋上方（領袖只可保留最高級 1 個）",
-      rule: "先後順序：榮譽童軍 ＞ 貝登堡 ＞ 總領袖 ＞ 金紫荊（持有榮譽童軍／貝登堡獎章任領袖後改戴對應領袖標誌）。", itemIds: [] }
+      rule: "與地域章左右並排相距 1 cm。", itemIds: ["badges-leader"] }
   ]
 };
 
 const SCOUT3D_MAP_ZH = {
   grasshopper: [
     { view: "正面・左胸", text: "小童軍團員章（宣誓後佩戴）；旅巾配顏色巾圈", focusView: "front" },
-    { view: "左側袖（穿著者）", text: "進步獎章 1–4 步（紅／啡／藍／綠 2×2 格）及小草蜢獎章", focusView: "left" },
-    { view: "右側袖（穿著者）", text: "旅章及區章（視乎旅團安排）", focusView: "right" },
+    { view: "左側袖（先留空）", text: "剛入團未考進步獎章，左袖保持留空（日後考獲才逐一縫上）", focusView: "left" },
+    { view: "右側袖（視乎旅團）", text: "一般便服無章；穿旅團統一活動服時依安排配旅／區章", focusView: "right" },
     { view: "背面・領巾", text: "旅巾三角披於背後；除顏色巾圈外不用其他支部配件", focusView: "back" }
   ],
   cub: [
-    { view: "正面・左胸袋", text: "世界童軍會員章（袋中央，宣誓後）；香港章（袋蓋上 3 cm）＋服務年星", focusView: "front" },
-    { view: "正面・右胸袋", text: "幼童軍進度性／金紫荊獎章（袋中央）；童軍先修章（袋蓋上）", focusView: "front" },
-    { view: "左側袖（穿著者）", text: "4 核心範疇章（上方）＋ 活動徽章（下方），入團可先留空", focusView: "left" },
+    { view: "正面・左胸袋", text: "世界童軍會員章（袋中央，宣誓後）；香港章（袋蓋上 3 cm）", focusView: "front" },
+    { view: "正面・右胸袋（先留空）", text: "剛入團／升團尚未考獲幼童軍進度性獎章，右胸袋保持空白", focusView: "front" },
+    { view: "左側袖（先留空）", text: "尚未考獲核心範疇章及活動徽章，左袖保持留空", focusView: "left" },
     { view: "右側袖（穿著者）", text: "旅章（肩縫下 2 cm）；地域章（向胸）＋區章（向背）並排相距 1 cm", focusView: "right" }
   ],
   scout: [
-    { view: "正面・左胸袋", text: "世界童軍會員章（袋中央）；香港章＋服務年星（袋蓋上 3 cm）", focusView: "front" },
-    { view: "正面・右胸袋", text: "探索至總領袖獎章（袋中央）；升團拆金紫荊原章改戴標誌（袋蓋上）", focusView: "front" },
-    { view: "左側袖（穿著者）", text: "專科徽章（由袖口菱形向上排起；多於 12 個可改配專章帶）", focusView: "left" },
-    { view: "右側袖（穿著者）", text: "旅章、地域章（向胸）＋區章（向背）並排、小隊章（袖口上 3 cm）", focusView: "right" }
+    { view: "正面・左胸袋", text: "世界童軍會員章（袋中央，升團沿用）；香港章（袋蓋上 3 cm）", focusView: "front" },
+    { view: "正面・右胸袋（一般留空）", text: "未考進度章前留空（僅曾獲金紫荊獎章升團者，始於袋蓋上戴該標誌）", focusView: "front" },
+    { view: "左側袖（先留空）", text: "未考專科徽章前保持留空（升團亦須拆走幼童軍舊章）", focusView: "left" },
+    { view: "右側袖（穿著者）", text: "旅章、地域章（向胸）＋區章（向背）並排；編入小隊後於袖口上配小隊章", focusView: "right" }
   ],
   venture: [
-    { view: "雙肩肩帶", text: "深資童軍肩章（考獲後套於雙肩肩帶，方頭近膊頭）", focusView: "shoulders" },
-    { view: "正面・胸袋", text: "左胸：會員章＋香港章；右胸：深資／榮譽童軍獎章（中央）＋舊最高獎章標誌（蓋上）", focusView: "front" },
-    { view: "左側袖（穿著者）", text: "四個新段章及金帶、深資急救章及香港青年獎勵計劃徽章", focusView: "left" },
-    { view: "右側袖（穿著者）", text: "旅章、地域章（向胸）＋區章（向背）並排（已無小隊章）", focusView: "right" }
+    { view: "雙肩肩帶（先留空）", text: "剛升團／新加入尚未考獲深資童軍肩章，雙肩肩帶暫時留空（考獲後才套上）", focusView: "shoulders" },
+    { view: "正面・胸袋", text: "左胸：會員章＋香港章；右胸先留空（曾獲舊最高獎章升團者例外），拆走童軍獎章", focusView: "front" },
+    { view: "左側袖（拆舊留空）", text: "升團須拆走童軍專科徽章，未考段章及金帶前保持留空", focusView: "left" },
+    { view: "右側袖（穿著者）", text: "旅章、地域章（向胸）＋區章（向背）並排（升團須拆走童軍小隊章）", focusView: "right" }
   ],
   rover: [
-    { view: "雙肩肩帶", text: "樂行童軍肩章（套於雙肩肩帶，方頭近膊頭）", focusView: "shoulders" },
-    { view: "正面・胸袋", text: "左胸：會員章＋香港章；右胸：樂行／貝登堡獎章（中央）＋舊最高獎章標誌（蓋上）", focusView: "front" },
-    { view: "左側袖（穿著者）", text: "香港青年獎勵計劃金／銀章、急救章及社區參與章", focusView: "left" },
+    { view: "雙肩肩帶（先留空）", text: "剛升團／新加入未完成樂行肩章訓練前雙肩留空（升團須拆走舊深資肩章）", focusView: "shoulders" },
+    { view: "正面・胸袋", text: "左胸：會員章＋香港章；右胸先留空（曾獲舊最高獎章升團者例外），拆走深資獎章", focusView: "front" },
+    { view: "左側袖（拆舊留空）", text: "升團須拆走深資段章及金帶，未考新獎章前保持留空", focusView: "left" },
     { view: "右側袖（穿著者）", text: "旅章、地域章（向胸）＋區章（向背）並排", focusView: "right" }
   ],
   leader: [
-    { view: "雙肩肩帶", text: "職級肩章（兩肩靠膊端）；旅級以外加香港肩章", focusView: "shoulders" },
-    { view: "正面・胸袋", text: "左胸：會員章；右胸：香港章（袋中央！）＋最多 1 個舊最高獎章標誌", focusView: "front" },
-    { view: "右側袖（穿著者）", text: "旅章（或香港肩章）；總會總部章／地域章（向胸）＋區章（向背）", focusView: "right" },
+    { view: "雙肩肩帶（職級肩章）", text: "領袖依獲委任職級配職級肩章（兩肩靠膊端）；升任者須拆走深資／樂行肩章", focusView: "shoulders" },
+    { view: "正面・胸袋", text: "左胸：會員章；右胸：香港章（袋中央！）；蓋上僅曾獲青年最高獎章者戴 1 個標誌", focusView: "front" },
+    { view: "右側袖（穿著者）", text: "旅章（或旅外於肩帶配香港肩章）；總部章／地域章（向胸）＋區章（向背）", focusView: "right" },
     { view: "背面・領巾／硬帽", text: "旅巾／會巾背三角（女領袖常規為金邊硬帽，選編號 6 長褲制服改用深綠軟帽）", focusView: "back" }
   ]
 };

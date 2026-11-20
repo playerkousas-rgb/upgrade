@@ -402,6 +402,14 @@ function startServer() {
     '小童軍點擊基本章對準會在 #preview 抽屜展開 3D 並鎖定小童軍團員章'
   );
   window.selectSection('cub');
+  check(!d.querySelector('#scout3d-badge-panel [data-badge-id="progress"]'), '幼童軍 3D 面板不含未考獲進度章');
+  window.selectSection('venture');
+  check(!d.querySelector('#scout3d-badge-panel [data-badge-id="epaulette"]'), '深資童軍剛升團／新加入 3D 面板不含未考獲深資肩章');
+  window.selectSection('rover');
+  check(!d.querySelector('#scout3d-badge-panel [data-badge-id="epaulette"]'), '樂行童軍剛升團／新加入 3D 面板不含未考獲樂行肩章');
+  window.selectSection('leader');
+  check(!!d.querySelector('#scout3d-badge-panel [data-badge-id="epaulette"]'), '成年領袖 3D 面板顯示委任職級肩章');
+  window.selectSection('cub');
 
   console.log('');
   if (windowErrors.length) fail(`執行期間錯誤:${windowErrors.slice(0, 3).join(' | ')}`);
