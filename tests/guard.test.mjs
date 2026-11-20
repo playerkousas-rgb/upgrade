@@ -248,6 +248,25 @@ test('Native 3D uniform & basic badge viewer: zero external SCOUT3D links, valid
   const leaderHk = leaderScene.polys.find(p => p.kind === 'badge' && p.badge.id === 'hongKong');
   assert.ok(leaderHk && leaderHk.pts[0][0] < 0, 'Leader Hong Kong Badge must sit on wearer right chest (-X)');
 
+  // Verify joining/moving-up accuracy: NO progressive badges, NO default prior-top-award emblems,
+  // and NO Venture/Rover shoulder epaulettes (only appointed Leaders wear rank epaulettes)
+  for (const sec of Object.keys(api.SECTIONS)) {
+    const zhIds = (api.LOCALES['zh-HK'].SCOUT3D_BADGES[sec] || []).map(b => b.id);
+    assert.ok(!zhIds.includes('progress'), `${sec} must not render unearned progress badges on joining/moving up`);
+    assert.ok(!zhIds.includes('highestEmblem'), `${sec} must not show prior top-award emblems by default`);
+    if (sec === 'leader') {
+      assert.ok(zhIds.includes('epaulette'), 'Leader uniform must include appointed rank epaulettes');
+    } else {
+      assert.ok(!zhIds.includes('epaulette'), `${sec} joining/moving-up uniform must keep shoulder straps blank (no epaulettes)`);
+    }
+  }
+  for (const sec of ['venture', 'rover']) {
+    const sc = api.Scout3D.buildScene({ section: sec, branch: 'land', gender: 'male' }, api.LOCALES['zh-HK'].SCOUT3D_BADGES[sec]);
+    assert.equal(sc.polys.filter(p => p.kind === 'badge' && p.badge.id === 'epaulette').length, 0, `${sec} 3D shoulders must have zero epaulettes`);
+  }
+  const leaderEp = leaderScene.polys.filter(p => p.kind === 'badge' && p.badge.id === 'epaulette');
+  assert.equal(leaderEp.length, 2, 'Leader 3D shoulders must render 2 rank epaulettes');
+
   // Female Land Leader: skirt = No. 3 peaked hat ('hardHat'), trousers = No. 6 dark green beret
   assert.equal(api.Scout3D.getPalette({ section: 'leader', branch: 'land', gender: 'female', bottom: 'skirt' }).hat, 'hardHat');
   assert.equal(api.Scout3D.getPalette({ section: 'leader', branch: 'land', gender: 'female', bottom: 'trousers' }).hat, 'beret');
