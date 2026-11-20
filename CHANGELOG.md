@@ -2,6 +2,24 @@
 
 > 格式跟 [Keep a Changelog](https://keepachangelog.com/)；每次交付檔改版號必須同步更新 `package.json`、`index.html`（`GENERATED`、`app-version`、`APP_VERSION`、頁尾）與本檔（V 規則）。
 
+## [2.2.4] - 2026-11-20
+
+### Added
+- 接入同站作者獨立 3D 工具 **`SCOUT3D`**（`https://scout3d-gamma.vercel.app/`）以協助家長直接立體查看徽章擺位：
+  - 新增 `SCOUT3D_BASE_URL`、`scout3dUrl()` 及中英雙語 `SCOUT3D_MAP`（覆蓋小童軍至領袖全數 6 支部之四面擺位重點：正面胸袋、左／右袖、雙肩肩帶及領巾／頸部）。
+  - 於步驟 ③ `#preview` 制服預覽框（含小童軍）、`#part-badges`「徽章位置與手冊」厘米圖板下方 `#scout3d-badge-panel`，以及清單內 `badges-youth`、`badges-leader`、`patrol-badge`、`epaulette-rank`、`gh-clothes` 項目加入情境連動之 SCOUT3D 連結（自動帶入 `section`、`variant`、`gender`、`bottom` 及 `lang` 參數，並附上對應操作步驟提示）。
+  - 維持純靜態零依賴架構與 `< 5 MB` 產物上限（因 `SCOUT3D` 現時 `vercel.json` 設 `X-Frame-Options: SAMEORIGIN` 且含 React/Three.js 依賴與約 4 MB 徽章貼圖，採用開新分頁連動啟動而非強制內嵌或複製打包）。
+
+## [2.2.3] - 2026-11-20
+
+### Changed
+- 全面遷移香港童軍物品供應社官方產品資料至新版網店 `store.scout.org.hk`（2026 年 11 月核對）：
+  - 更新 `SHOP_BASE`、`shopUrl()` 及 `shopImg()` 為 `https://store.scout.org.hk/products/<id>` 與 `https://ssmsuat.scout.org.hk/images/<code>/01.png`；為僅設 placeholder 圖像之 `01020` 童軍帽章設定 `noImg: true`（維持使用已核對之本地手冊裁切圖）。
+  - 逐一核對並更新全數 41 項 `SHOP` 及 `extra`/`alt` 產品 ID、五位產品編號（包含將舊 `1025`–`1027`、`1035` 補齊為 `01025`–`01027`、`01035` 及小童軍活動服 `91147`）、官方品名（「男／女幼童軍布帽」「橄欖綠色…」）與零售價。
+  - 補充棕色制服皮帶 `01006`（HK$65）作 `belt` 預算替代選項；將 `patrol-badge` 連結至 `04504`（HK$3.5）並加註全部 16 款隊色章（`04504–04519`）搜尋連結。
+  - 為各帽類、恤衫、褲／裙、皮帶、長短襪、綠領巾及小童軍活動服加入經 `store.scout.org.hk` 核實之可選尺碼範圍（顯示於每件物品展開卡片及「選碼要點」尺碼一覽表，並於綁帶皮鞋註明 `01021`／`01015` 尺碼）。
+  - 同步更新 `index.html`、`locale-en.js`、`README.md`、`CREDITS.md`、`GLOSSARY.md` 之供應社網址（含 `/shopping-guide/stores`）、2026-11 參考日期及冒煙／單元測試。
+
 ## [2.2.2] - 2026-11-18
 
 ### Added

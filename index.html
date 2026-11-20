@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- GENERATED from upgrade_v2.2.2.html (v2.2.2) -->
+<!-- GENERATED from upgrade_v2.2.4.html (v2.2.4) -->
 <html lang="zh-HK" data-lang="zh">
 <head>
 <meta charset="UTF-8">
@@ -17,7 +17,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1B4332">
 <meta name="copyright" content="© SCOUT SYSTEM">
-<meta name="app-version" content="2.2.2">
+<meta name="app-version" content="2.2.4">
 <title>童軍準備指南</title>
 <link rel="canonical" href="https://upgrade-ashen.vercel.app/">
 <!-- 圖標標準（readme docs/33 · G11）：5 條 link + 4 條 OG meta，?v= 與 window.ICON_VER 同步 -->
@@ -44,7 +44,7 @@
 {"@context":"https://schema.org","@type":"WebApplication","name":"童軍準備指南","url":"https://upgrade-ashen.vercel.app/","applicationCategory":"ReferenceApplication","operatingSystem":"All","inLanguage":["zh-HK","en"],"description":"香港童軍各支部（小童軍至領袖）入團及升團制服清單、2026 新訓練綱要、供應社參考預算及《儀容與制服手冊》徽章縫製厘米圖解。"}
 </script>
 <script>
-  const APP_VERSION = "2.2.2";
+  const APP_VERSION = "2.2.4";
   const ICON_VER = "20261106";
   window.APP_VERSION = APP_VERSION;
   window.ICON_VER = ICON_VER;
@@ -450,6 +450,50 @@ header p{margin:.22rem 0 0;color:rgba(255,255,255,.88);font-size:.92rem;line-hei
 .badge-rule-box p{margin:.32rem 0}
 .badge-rule-box p:first-child{margin-top:0}
 .badge-rule-box p:last-child{margin-bottom:0}
+.scout3d-preview-box{
+  margin-top:.72rem;padding-top:.68rem;border-top:1px dashed #dcd2bc;
+}
+.scout3d-preview-btn,.scout3d-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.35rem;
+  min-height:44px;padding:.48rem 1rem;border-radius:999px;
+  background:var(--scout-brand);color:#fff;border:1px solid var(--scout-brand);
+  font-weight:700;font-size:.88rem;line-height:1.35;text-decoration:none;
+  transition:background-color .16s var(--ease-out),border-color .16s var(--ease-out),transform .12s var(--ease-out);
+}
+.scout3d-preview-btn:hover,.scout3d-btn:hover{background:var(--scout-green);border-color:var(--scout-green)}
+.scout3d-preview-btn:focus-visible,.scout3d-btn:focus-visible,.scout3d-inline-link:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.scout3d-preview-btn:active,.scout3d-btn:active{transform:scale(.985)}
+.scout3d-inline-link{
+  display:inline-block;margin-left:.45rem;color:var(--scout-green);font-weight:700;text-decoration:underline;text-underline-offset:3px;
+}
+.scout3d-panel{
+  margin-top:.9rem;padding:1rem;background:#fff;
+  border:1px solid #d4dfd7;border-left:4px solid var(--scout-brand);border-radius:10px;
+}
+.scout3d-panel-head{
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;
+  margin-bottom:.45rem;
+}
+.scout3d-panel-head h3{margin:0;color:var(--scout-brand);font-size:1rem;font-weight:700}
+.scout3d-preset{
+  display:inline-block;padding:.18rem .65rem;border-radius:999px;
+  background:var(--surface-warm);border:1px solid #dfd6c1;color:var(--scout-brand);
+  font-size:.8rem;font-weight:700;
+}
+.scout3d-panel-lead{margin:.25rem 0 .7rem;font-size:.87rem;color:#3d4741;line-height:1.6}
+.scout3d-angles{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:.55rem;margin:.65rem 0 .85rem;
+}
+.scout3d-angle-card{
+  background:var(--surface-subtle);border:1px solid var(--line);border-radius:var(--radius-sm);
+  padding:.6rem .75rem;text-align:left;
+}
+.scout3d-angle-card strong{display:block;font-size:.84rem;color:var(--scout-green);margin-bottom:.18rem}
+.scout3d-angle-card span{display:block;font-size:.83rem;color:var(--text);line-height:1.55;font-variant-numeric:tabular-nums}
+.scout3d-panel-foot{
+  display:flex;align-items:center;flex-wrap:wrap;gap:.65rem;
+}
+@media(max-width:680px){.scout3d-angles{grid-template-columns:1fr}.scout3d-btn,.scout3d-preview-btn{width:100%}}
 @media(max-width:460px){.badge-grid{grid-template-columns:1fr}}
 
 .uniform-preview{width:100%;max-width:200px}
@@ -844,8 +888,8 @@ footer a{color:var(--scout-brand);font-weight:600;text-decoration:underline;text
       <div class="shop-grid">
         <div class="shop-card">
           <h3>香港童軍物品供應社 — 總店(尖沙咀)</h3>
-          <p style="font-size:1.05rem"><strong>網址：</strong><a href="https://www.hkscoutshop.org.hk/" target="_blank" rel="noopener">www.hkscoutshop.org.hk ↗</a></p>
-          <p><a href="https://www.hkscoutshop.org.hk/?p=52&lang=big5&info_type=map" target="_blank" rel="noopener">前往官方網站(地圖) ↗</a></p>
+          <p style="font-size:1.05rem"><strong>網址：</strong><a href="https://store.scout.org.hk/" target="_blank" rel="noopener">store.scout.org.hk ↗</a></p>
+          <p><a href="https://store.scout.org.hk/shopping-guide/stores" target="_blank" rel="noopener">前往官方網站(地圖) ↗</a></p>
           <p><strong>地址：</strong>九龍柯士甸道童軍徑香港童軍中心11樓</p>
           <p><strong>港鐵：</strong>佐敦站 C2 出口</p>
           <p><strong>電話：</strong><a href="tel:+85229576444">2957 6444</a></p>
@@ -856,7 +900,7 @@ footer a{color:var(--scout-brand);font-weight:600;text-decoration:underline;text
             <tr><td>星期日</td><td style="padding-left:1rem">10:00 – 18:00</td></tr>
             <tr><td>公眾假期</td><td style="padding-left:1rem">休息</td></tr>
           </table>
-          <p class="cite">特別營業安排以供應社官網「最新消息」為準。</p>
+          <p class="cite">特別營業安排以供應社官網公布為準。</p>
         </div>
         <div class="shop-card">
           <h3>購買流程</h3>
@@ -912,6 +956,20 @@ footer a{color:var(--scout-brand);font-weight:600;text-decoration:underline;text
       <div class="note">
         <strong>試身貼士：</strong>帶備<strong>集會皮鞋及長襪</strong>同場試穿，一次過確認褲長、裙長及鞋位。
       </div>
+      <h3 style="margin-top:1rem">供應社常規尺碼範圍（2026-11）</h3>
+      <table class="size-table">
+        <thead><tr><th>類別</th><th>網店可選尺碼</th></tr></thead>
+        <tbody>
+          <tr data-show-for="cub"><td>幼童軍布帽</td><td>S–XL</td></tr>
+          <tr data-show-for="scout,venture,rover,leader"><td>軟帽／女領袖禮帽</td><td>深綠 XS–XXL；棗紅 S–XXL；灰藍／禮帽 S–XL</td></tr>
+          <tr data-show-for="scout,venture,rover,leader"><td>海童軍白頂帽</td><td>52–56、58、60 cm（領袖另設 59 cm）</td></tr>
+          <tr><td>短袖恤衫（領圍）</td><td>杏色男 11"–18"、女 11.5"–16.5"；白／淺藍 13"–17.5"（每 0.5"）</td></tr>
+          <tr data-show-for="cub,scout"><td>短褲／裙褲（腰圍）</td><td>橄欖綠短褲 20"–42"、裙褲 18"–42"；深藍短褲 25"–40"、裙褲 24"–36"</td></tr>
+          <tr data-show-for="venture,rover,leader"><td>長褲／半截裙（腰圍）</td><td>橄欖綠男褲 24"–42"、女褲 24"–40"；深藍褲 26"–40"；半截裙 25"–38"</td></tr>
+          <tr><td>皮帶／襪／綠領巾</td><td>皮帶 24"–48"（基礎款 22"–46"，每 2"）；長襪 S–XXL（深藍 M–XXL）；黑短襪 L；綠領巾 S / M / L</td></tr>
+          <tr><td>黑色制服皮鞋（供應社款）</td><td>童裝 1–6.5、9、10、12、13 碼（HK$245）；成人 4–10 碼設半碼（HK$385）</td></tr>
+        </tbody>
+      </table>
     </div>
   </details>
 
@@ -1000,7 +1058,7 @@ footer a{color:var(--scout-brand);font-weight:600;text-decoration:underline;text
       <span class="part-toggle" aria-hidden="true"></span>
     </summary>
     <div class="part-content">
-      <p class="cite">2026 年 9 月參考價，實際以 <a href="https://www.hkscoutshop.org.hk/" target="_blank" rel="noopener">供應社</a> 為準。</p>
+      <p class="cite">2026 年 11 月參考價，實際以 <a href="https://store.scout.org.hk/" target="_blank" rel="noopener">供應社</a> 為準。</p>
       <div id="budget-dynamic" class="budget-table-wrap"></div>
       <div class="note">
         <ul style="margin:0 0 0 1.1rem;padding:0">
@@ -1168,6 +1226,7 @@ footer a{color:var(--scout-brand);font-weight:600;text-decoration:underline;text
         <div class="badge-rule-box">
           <p><strong>尺寸微調：</strong>具體要視衣服大小，細碼恤衫間距可能會變小（不會變大），以置中、不超袋闊及袖幅為準；必須用線縫牢（勿用膠水或扣針）。</p>
         </div>
+        <div id="scout3d-badge-panel" class="scout3d-panel"></div>
       </section>
       <table class="size-table">
         <thead>
@@ -1315,8 +1374,8 @@ footer a{color:var(--scout-brand);font-weight:600;text-decoration:underline;text
 </div>
 
 <footer>
-<p>© 2026 SCOUT SYSTEM · v2.2.2</p>
-<p>官方來源：<a href="https://www.scout.org.hk" target="_blank" rel="noopener">香港童軍總會</a> · <a href="https://www.hkscoutshop.org.hk/" target="_blank" rel="noopener">香港童軍物品供應社</a> · <a href="https://uniform.scouting.org.hk/" target="_blank" rel="noopener">《儀容與制服手冊》</a></p>
+<p>© 2026 SCOUT SYSTEM · v2.2.4</p>
+<p>官方來源：<a href="https://www.scout.org.hk" target="_blank" rel="noopener">香港童軍總會</a> · <a href="https://store.scout.org.hk/" target="_blank" rel="noopener">香港童軍物品供應社</a> · <a href="https://uniform.scouting.org.hk/" target="_blank" rel="noopener">《儀容與制服手冊》</a></p>
 <p class="cite">非官方輔助工具，與香港童軍總會無從屬關係；規格及徽號版權以總會最新公布為準。</p>
 </footer>
 

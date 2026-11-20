@@ -10,7 +10,7 @@
 | 帽章與制服穿戴細節 | [香港童軍總會《儀容與制服手冊》](https://uniform.scouting.org.hk/)（第 92–106 頁） | `data.js`（`CAP_HANDBOOK`、`ITEM_REFERENCES`）及 `index.html` 釘章厘米圖解 |
 | 青少年支部徽章佩戴位置 | 香港童軍總會《青少年活動通告第 13/2023 號：支部成員徽章佩戴指引》 | `index.html` 徽章位置參考表及過渡問答 |
 | 2026 年 8 月 15 日生效各支部新訓練綱要 | [香港童軍總會「青少年支部訓練綱要檢討」專頁](https://www.scout.org.hk/tc/programme/youth-programme-review/) 及 [Scout Information Hub](https://scoutsinfohub.org.hk/) | `data.js`（`BADGES_OVERVIEW`、`TRANSITIONS`、`BADGE_TIMELINES`）及 `app.js` 綱要連結 |
-| 制服及配件編號、零售價與產品相 | [香港童軍物品供應社（SCOUT SHOP）](https://www.hkscoutshop.org.hk/)（2026 年 9 月擷取） | `data.js`（`SHOP`）預算參考與產品連結 |
+| 制服及配件編號、零售價與產品相 | [香港童軍物品供應社（SCOUT SHOP）](https://store.scout.org.hk/)（2026 年 11 月擷取） | `data.js`（`SHOP`）預算參考與產品連結 |
 
 ## 2. 本地靜態圖檔分類與授權邊界
 
