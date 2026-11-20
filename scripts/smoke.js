@@ -317,17 +317,30 @@ function startServer() {
   check($('budget-dynamic').textContent.indexOf('Total') !== -1, '預算表已翻譯');
   check(langBtn && langBtn.textContent === '中文', '英文介面時語言掣顯示「中文」');
   check(window.localStorage.getItem('scout-guide-lang-v1') === 'en', '語言設定已寫入 localStorage');
+  check(
+    d.querySelector('#preview .scout3d-preview-btn')?.getAttribute('href') === 'https://scout3d-gamma.vercel.app/?section=cub&gender=boy&lang=en',
+    '英文版步驟 ③ SCOUT3D 預覽連結帶入 section=cub&gender=boy&lang=en'
+  );
+  check(
+    d.querySelector('#scout3d-badge-panel .scout3d-btn')?.getAttribute('href') === 'https://scout3d-gamma.vercel.app/?section=cub&gender=boy&lang=en' &&
+    d.querySelectorAll('#scout3d-badge-panel .scout3d-angle-card').length === 4,
+    '英文版徽章擺位面板顯示 4 面擺位卡與情境連動連結'
+  );
+  check(
+    d.querySelector('#checklist [data-scout3d-link]')?.getAttribute('href') === 'https://scout3d-gamma.vercel.app/?section=cub&gender=boy&lang=en',
+    '清單內 data-scout3d-link 已同步覆寫為當前情境連結'
+  );
 
   // 靜態 HTML 覆蓋率：切到英文後仍然有中文的純文字（只容許已知的網址／時間／符號）
-  const ALLOWED = ['www.hkscoutshop.org.hk ↗', '11:30 – 19:30', '11:00 – 19:00', '10:00 – 18:00',
-    '❌', '2957 6444', 'SCOUT SHOP', 'scout.org.hk', 'uniform.scouting.org.hk', 'www.hkscoutshop.org.hk', ')',
+  const ALLOWED = ['store.scout.org.hk ↗', '11:30 – 19:30', '11:00 – 19:00', '10:00 – 18:00',
+    '❌', '2957 6444', 'SCOUT SHOP', 'scout.org.hk', 'uniform.scouting.org.hk', 'store.scout.org.hk', ')',
     '中文']; // 語言掣在英文介面顯示「中文」，屬預期
   const cjkLeft = window.eval(`(() => {
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
     const out = [];
     while (walker.nextNode()) {
       const node = walker.currentNode;
-      if (node.parentElement && /^(SCRIPT|STYLE)$/.test(node.parentElement.tagName)) continue;
+      if (node.parentElement && (/^(SCRIPT|STYLE)$/.test(node.parentElement.tagName) || node.parentElement.closest('#scoutStoreGate'))) continue;
       const text = node.data.trim();
       if (text && /[\u3400-\u9FFF]/.test(text)) out.push(text);
     }
@@ -341,6 +354,10 @@ function startServer() {
   window.selectSection('venture');
   window.setGender('female');
   window.setBottom('trousers');
+  check(
+    d.querySelector('#preview .scout3d-preview-btn')?.getAttribute('href') === 'https://scout3d-gamma.vercel.app/?section=venture&variant=land&gender=girl&bottom=trousers&lang=en',
+    '英文版深資女裝長褲 SCOUT3D 連結帶入 variant=land&gender=girl&bottom=trousers'
+  );
   const enTrousers = d.querySelector('#checklist [data-item-id="trousers-olive-f"]');
   check(!!enTrousers && enTrousers.textContent.indexOf('Ladies’') !== -1, '英文版女裝長褲有英文名稱');
   check(!!enTrousers && !/[\u3400-\u9FFF]/.test(enTrousers.textContent), '英文版女裝長褲無殘留中文');
@@ -360,6 +377,10 @@ function startServer() {
   check(d.querySelector('header .brand h1').textContent === '童軍準備指南', '中文標題列還原');
   check($('expand-all-parts').textContent === '全部展開', '開合工具列還原');
   check(d.querySelector('#badge-timeline').textContent.indexOf('獎章歷程') !== -1, '獎章歷程圖還原');
+  check(
+    d.querySelector('#preview .scout3d-preview-btn')?.getAttribute('href')?.includes('lang=zh'),
+    '切回中文後 SCOUT3D 連結切回 lang=zh'
+  );
 
   console.log('');
   if (windowErrors.length) fail(`執行期間錯誤:${windowErrors.slice(0, 3).join(' | ')}`);

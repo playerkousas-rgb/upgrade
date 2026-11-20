@@ -112,7 +112,7 @@ for (const [section, branch, gender, id, file] of badgeCases) {
     await expect(item.locator('.item-fig figcaption')).toContainText('官方');
     await expect(item.locator('.item-fig figcaption')).toContainText('本地');
     await expect(item.locator('.image-source')).toHaveAttribute('href', /^https:\/\/(www\.scout|uniform\.scouting)\.org\.hk\//);
-    expect(requests.filter(url => /\/files\/(mid|thum)\/(314|1844|1845|3507)_/.test(url))).toEqual([]);
+    expect(requests.filter(url => /ssmsuat\.scout\.org\.hk\/images\/(01020|01034|01035|07332)\/|www\.hkscoutshop\.org\.hk/.test(url))).toEqual([]);
     expect(requests.filter(url => /assets\/items\/capbadge-/.test(url))).toEqual([]);
     expect(errors).toEqual([]);
   });
@@ -235,7 +235,7 @@ test('a missing local badge shows an honest notice and keeps its handbook link',
   await expect(item.locator('.image-source')).toHaveAttribute('href', /uniformhandbook_p96-106\.pdf#page=7$/);
   expect(attempts).toBeGreaterThan(0);
   expect(attempts).toBeLessThanOrEqual(2); // thumbnail + detail, never an error loop
-  expect(requests.filter(url => /capbadge-.*\.svg|\/files\/(mid|thum)\/314_/.test(url))).toEqual([]);
+  expect(requests.filter(url => /capbadge-.*\.svg|ssmsuat\.scout\.org\.hk\/images\/01020\//.test(url))).toEqual([]);
   await expect(page.locator('img[src=""]')).toHaveCount(0);
 });
 
@@ -249,7 +249,7 @@ test('ordinary clothing fallback is labelled as an illustration without losing i
   await expect(frame.locator('img')).toHaveAttribute('alt', /非實物照片/);
   await expect(frame.locator('.image-caption-label')).toHaveText('款式示意（非實物照片）');
   await expect(frame.locator('.image-note')).toContainText('供應社圖片暫時未能載入');
-  await expect(frame.locator('.image-source')).toHaveAttribute('href', /id=369$/);
+  await expect(frame.locator('.image-source')).toHaveAttribute('href', /store\.scout\.org\.hk\/products\/152$/);
 });
 
 test('when both product and illustration fail, there is no broken image, empty src, or retry loop', async ({ page }) => {
@@ -262,7 +262,7 @@ test('when both product and illustration fail, there is no broken image, empty s
   const item = await expandItem(page, 'shirt-beige');
   await expect(item.locator('img')).toHaveCount(0);
   await expect(item.locator('.item-fig .image-unavailable')).toBeVisible();
-  await expect(item.locator('.image-source')).toHaveAttribute('href', /id=369$/);
+  await expect(item.locator('.image-source')).toHaveAttribute('href', /store\.scout\.org\.hk\/products\/152$/);
   expect(attempts).toBeGreaterThan(0);
   expect(attempts).toBeLessThanOrEqual(2);
   expect(errors).toEqual([]);
@@ -276,7 +276,7 @@ test('unverified insignia never fall back to invented artwork', async ({ page })
     const item = await expandItem(page, id);
     await expect(item.locator('img')).toHaveCount(0);
     await expect(item.locator('.item-fig .image-unavailable')).toBeVisible();
-    await expect(item.locator('.image-source')).toHaveAttribute('href', /www\.hkscoutshop\.org\.hk/);
+    await expect(item.locator('.image-source')).toHaveAttribute('href', /store\.scout\.org\.hk\/products\//);
   }
 });
 

@@ -78,7 +78,7 @@ const LOCALE_EN = {
     /* ── Cap badges ── */
     "capbadge-cub": { title:"Cub Scout cap badge", desc:"Cloth badge already sewn onto the cap — no separate purchase", icon:"🎖️", buy:"included",
       detail:`<h4>Cub Scout cap badge</h4><p>Page 98 of the <em>Uniform Handbook</em> states that the Cub Scout cap badge is a <strong>cloth badge already sewn onto the crown</strong>, worn facing forward — it is not a separate metal badge.</p>
-        <div class="tip">The Scout Shop’s “Cub Scout cap, boys / girls” (codes 01171 / 01172, HK$50) is sold <strong>with the badge already attached</strong>, so there is no need to buy one separately. If the cloth badge is damaged, ask your Group or the Scout Shop.</div>` },
+        <div class="tip">The Scout Shop’s “Cub Scout cloth cap, boys / girls” (codes 01171 / 01172, HK$50) is sold <strong>with the badge already attached</strong>, so there is no need to buy one separately. If the cloth badge is damaged, ask your Group or the Scout Shop.</div>` },
     "capbadge-scout": { title:"Scout cap badge", desc:"Shared by Scout / Venture / Rover", icon:"🎖️", buy:"supply",
       detail:`<h4>Scout cap badge</h4><p>According to the Association website, the berets of Scouts, Venture Scouts (Land / Air) and Rover Scouts (Land / Air) all come <strong>with the Scout cap badge</strong>.</p>
         <div class="tip">In other words: moving from Scout to Venture, or Venture to Rover, <strong>the cap badge can be carried over</strong> — only the beret changes.</div>` },
@@ -143,7 +143,8 @@ const LOCALE_EN = {
 
     /* ── Shoes ── */
     "shoes-lace": { title:"Black plain lace-up leather shoes", desc:"Males in all Sections; Cub & Scout girls", icon:"👞", img:"assets/items/shoes-lace.svg", buy:"any",
-      detail:`<h4>Black lace-up leather shoes</h4><p><strong>Official specification:</strong> black, plain, lace-up. School shoes that meet the specification may be used. Polish them before every meeting.</p>` },
+      detail:`<h4>Black lace-up leather shoes</h4><p><strong>Official specification:</strong> black, plain, lace-up. School shoes that meet the specification may be used. Polish them before every meeting.</p>
+        <p class="cite">Also sold at the Scout Shop: children’s 01021 (HK$245, sizes 1–6.5, 9, 10, 12, 13) and adult’s 01015 (HK$385, sizes 4–10 incl. half sizes).</p>` },
     "shoes-heel": { title:"Black plain mid-heel court shoes", desc:"Venture / Rover / Leader (female)", icon:"👠", img:"assets/items/shoes-heel.svg", buy:"any",
       detail:`<h4>Black plain mid-heel court shoes</h4><p><strong>Official specification:</strong> black, plain, no laces, mid heel. Buy them at any shoe shop.</p>
         <div class="warn">Girls moving up from Scout to Venture: lace-up shoes are <strong>no longer acceptable</strong> — they must be replaced with court shoes.</div>` },
@@ -183,75 +184,76 @@ const LOCALE_EN = {
           <li>Region + District badges: side by side 2 cm below the Group badge on the right sleeve, 1 cm apart (<strong>Region badge towards the front / chest, District badge towards the back</strong>; on smaller shirts spacing may scale down, never up)</li>
         </ul>
         <p>The Membership Badge and Hong Kong Badge are bought at the Scout Shop; Region, District and Group badges are usually bought or presented through the Group. Badges in good condition can be carried over when moving up (same Group, same District).</p>
-        <div class="tip">They must be sewn on with thread — no glue and no safety pins. <a href="#badge-placement-guide" onclick="openBadgeGuide(event)" style="display:inline-block;margin-left:.4rem;color:var(--scout-green);font-weight:700;text-decoration:underline">View Uniform Handbook cm sewing diagram →</a></div>` },
+        <div class="tip">They must be sewn on with thread — no glue and no safety pins. <a href="#badge-placement-guide" onclick="openBadgeGuide(event)" style="display:inline-block;margin-left:.4rem;color:var(--scout-green);font-weight:700;text-decoration:underline">View Uniform Handbook cm sewing diagram →</a> <a class="scout3d-inline-link" data-scout3d-link href="https://scout3d-gamma.vercel.app/" target="_blank" rel="noopener">View 3D badge placement in SCOUT3D ↗</a></div>` },
     "patrol-badge": { title:"Patrol badge", desc:"Scout Section · issued by the Group / sold at the Scout Shop", icon:"🐾", buy:"group-or-supply",
       detail:`<h4>Patrol badge</h4><p>Only the <strong>Scout Section</strong> has patrol badges (the Association’s Scout uniform badge list includes the patrol badge; Venture and Rover do not).</p>
-        <p>According to the appendix of the Scout Training Scheme, patrol badges are sold at the Scout Shop and no documents need to be produced; some Groups also present them directly. Worn on the <strong>right sleeve</strong> (below the Region and District badges).</p>` },
+        <p>According to the appendix of the Scout Training Scheme, patrol badges are sold at the Scout Shop and no documents need to be produced; some Groups also present them directly. Worn on the <strong>right sleeve</strong> (below the Region and District badges). <a class="scout3d-inline-link" data-scout3d-link href="https://scout3d-gamma.vercel.app/" target="_blank" rel="noopener">Pick a patrol in SCOUT3D to inspect the right sleeve in 3D ↗</a></p>` },
     "badges-leader": { title:"Basic badges (Leaders)", desc:"Membership Badge, Hong Kong Badge, Hong Kong shoulder badge / Group badge, HQ / Region / District badge", icon:"🎖️", buy:"mixed",
       detail:`<h4>Basic badges (Leader’s ordinary uniform)</h4><p>The Association website lists the badges for the Leader’s ordinary uniform (No. 3) as: <strong>World Scout Membership Badge, Hong Kong Badge, Hong Kong shoulder badge / Group badge, HQ / Region / District badge and rank epaulettes</strong> (adult members wear the Hong Kong Badge in the centre of the right breast pocket).</p>
         <p>Moving up from a youth Section: the World Scout Membership Badge and Hong Kong Badge can be carried over; the Group / District / Region badge depends on your service unit — check with your Group.</p>
-        <div class="tip">Holders of the Dragon Scout Award / Baden-Powell Award may wear the corresponding <strong>Leader’s insignia</strong> for life after becoming a Leader. A Leader <strong>keeps only 1 Section top award insignia</strong> (if you hold several, wear the highest: Dragon Scout ＞ Baden-Powell ＞ Chief Scout’s ＞ Golden Bauhinia). <a href="#badge-placement-guide" onclick="openBadgeGuide(event)" style="display:inline-block;margin-left:.4rem;color:var(--scout-green);font-weight:700;text-decoration:underline">View Uniform Handbook cm sewing diagram →</a></div>` },
+        <div class="tip">Holders of the Dragon Scout Award / Baden-Powell Award may wear the corresponding <strong>Leader’s insignia</strong> for life after becoming a Leader. A Leader <strong>keeps only 1 Section top award insignia</strong> (if you hold several, wear the highest: Dragon Scout ＞ Baden-Powell ＞ Chief Scout’s ＞ Golden Bauhinia). <a href="#badge-placement-guide" onclick="openBadgeGuide(event)" style="display:inline-block;margin-left:.4rem;color:var(--scout-green);font-weight:700;text-decoration:underline">View Uniform Handbook cm sewing diagram →</a> <a class="scout3d-inline-link" data-scout3d-link href="https://scout3d-gamma.vercel.app/" target="_blank" rel="noopener">View 3D badge placement in SCOUT3D ↗</a></div>` },
     "epaulette-rank": { title:"Rank epaulettes", desc:"Leaders · depends on the rank appointed", icon:"🎗️", buy:"check",
-      detail:`<h4>Rank epaulettes</h4><p>Worn on both shoulder straps; the design depends on the rank to which you are appointed (Probationary Leader / Assistant Leader / Leader / Commissioner and so on). Ask your Group which ones to buy after appointment.</p>` }
+      detail:`<h4>Rank epaulettes</h4><p>Worn on both shoulder straps; the design depends on the rank to which you are appointed (Probationary Leader / Assistant Leader / Leader / Commissioner and so on). Ask your Group which ones to buy after appointment. <a class="scout3d-inline-link" data-scout3d-link href="https://scout3d-gamma.vercel.app/" target="_blank" rel="noopener">Pick your rank in SCOUT3D to check shoulder placement in 3D ↗</a></p>` }
   },
 
-  /* ── Scout Shop (hkscoutshop.org.hk) product names ── */
+  /* ── Scout Shop (store.scout.org.hk) product names ── */
   SHOP: {
     /* Headwear */
-    "cap-cub-m":        { id:377,  n:1, code:"01171", name:"Cub Scout cap (boys)", price:50 },
-    "cap-cub-f":        { id:378,  n:1, code:"01172", name:"Cub Scout cap (girls)", price:50 },
-    "beret-green":      { id:3532, n:0, code:"01181", name:"Dark green beret (oval)", price:80, alt:[{id:322,n:0,name:"Dark green beret"}] },
-    "beret-maroon":     { id:313,  n:0, code:"01019", name:"Venture Scout maroon beret", price:85, alt:[{id:3533,n:0,code:"01182",name:"Venture Scout maroon beret (oval)",price:85}] },
-    "beret-greyblue":   { id:316,  n:0, code:"01024", name:"Air Scout grey-blue beret", price:85, alt:[{id:3534,n:0,code:"01183",name:"Air Scout grey-blue beret (oval)",price:85}] },
-    "cap-sea-scout":    { id:317,  n:0, code:"1025",  name:"Sea Scout white-top cap", price:259, extra:[{id:1843,n:0,code:"01033",name:"Sea Scout cap band",price:12}] },
-    "cap-sea-leader-m": { id:318,  n:1, code:"1026",  name:"Sea Scout white-top cap (male Leaders)", price:415 },
-    "cap-sea-leader-f": { id:319,  n:1, code:"1027",  name:"Sea Scout white-top cap (female Leaders)", price:289 },
-    "hat-leader-f":     { id:3086, n:0, code:"01136", name:"Green female Leader’s dress hat", price:239 },
+    "cap-cub-m":        { id:168,  code:"01171", name:"Boys’ Cub Scout cloth cap", price:50, sizes:"S–XL" },
+    "cap-cub-f":        { id:170,  code:"01172", name:"Girls’ Cub Scout cloth cap", price:50, sizes:"S–XL" },
+    "beret-green":      { id:172,  code:"01181", name:"Scout dark green beret", price:80, sizes:"XS–XXL" },
+    "beret-maroon":     { id:174,  code:"01182", name:"Venture Scout maroon beret", price:85, sizes:"S–XXL" },
+    "beret-greyblue":   { id:176,  code:"01183", name:"Air Scout grey-blue beret", price:85, sizes:"S–XL" },
+    "cap-sea-scout":    { id:30,   code:"01025", name:"Sea Scout cap", price:259, sizes:"52–56, 58, 60 cm", extra:[{id:40,code:"01033",name:"Sea Scout cap band",price:12}] },
+    "cap-sea-leader-m": { id:32,   code:"01026", name:"Sea Scout cap (male Leaders)", price:415, sizes:"53–56, 58–60 cm" },
+    "cap-sea-leader-f": { id:34,   code:"01027", name:"Sea Scout cap (female Leaders)", price:289, sizes:"52–56, 58–60 cm" },
+    "hat-leader-f":     { id:140,  code:"01136", name:"Dark green female Leader’s uniform dress hat", price:239, sizes:"S–XL" },
     /* Cap badges */
-    "capbadge-scout":       { id:314,  n:0, code:"01020", name:"Scout cap badge", price:9 },
-    "capbadge-venture-sea": { id:1845, n:0, code:"1035",  name:"Venture Sea Scout cap badge", price:6 },
-    "capbadge-sea-leader":  { id:1844, n:0, code:"01034", name:"Sea Scout Leader cap badge", price:95 },
-    "capbadge-rank":        { id:3507,  n:0, code:"07332", name:"Green Scout Leader cap badge (with pin fitting)", price:49,
-      alt:[{id:3506,n:0,code:"07331",name:"Red Assistant Scout Leader cap badge",price:49},{id:3508,n:0,code:"07333",name:"Light blue Group Scout Leader cap badge",price:49},
-           {id:3509,n:0,code:"07334",name:"Grey HQ / Region / District Leader cap badge",price:49},{id:410,n:0,code:"07072",name:"Green Scout Leader cap badge (cloth)",price:33}] },
+    "capbadge-scout":       { id:22,   code:"01020", name:"Scout cap badge", price:9, noImg:true },
+    "capbadge-venture-sea": { id:44,   code:"01035", name:"Venture Sea Scout cap badge", price:6 },
+    "capbadge-sea-leader":  { id:42,   code:"01034", name:"Sea Scout Leader cap badge", price:95 },
+    "capbadge-rank":        { id:1320, code:"07332", name:"Green Scout Leader cap badge (with pin fitting)", price:49,
+      alt:[{id:1318,code:"07331",name:"Red Assistant Scout Leader cap badge",price:49},{id:1322,code:"07333",name:"Light blue Group Scout Leader cap badge",price:49},
+           {id:1324,code:"07334",name:"Grey HQ / Region / District Leader cap badge",price:49},{id:1026,code:"07072",name:"Green Scout Leader cap badge (cloth)",price:33}] },
     /* Shirts */
-    "shirt-beige":     { id:369, n:2, code:"01151", name:"Beige short-sleeve shirt", price:95, alt:[{id:370,n:2,code:"01152",name:"Ladies’ beige short-sleeve shirt",price:95}] },
-    "shirt-white":     { id:334, n:2, code:"01069", name:"Sea Scout white short-sleeve shirt", price:109 },
-    "shirt-lightblue": { id:341, n:2, code:"01076", name:"Air Scout light blue short-sleeve shirt", price:175 },
+    "shirt-beige":     { id:152, code:"01151", name:"Beige short-sleeve shirt (men’s)", price:95, sizes:'11"–18" (0.5" steps)', alt:[{id:154,code:"01152",name:"Beige short-sleeve shirt (ladies’)",price:95,sizes:'11.5"–16.5" (0.5" steps)'}] },
+    "shirt-white":     { id:72,  code:"01069", name:"Sea Scout white short-sleeve shirt", price:109, sizes:'13"–17.5" (0.5" steps)' },
+    "shirt-lightblue": { id:86,  code:"01076", name:"Air Scout light blue short-sleeve shirt", price:175, sizes:'13"–17.5" (0.5" steps)' },
     /* Trousers / skirts */
-    "shorts-olive":    { id:373, n:0, code:"01155", name:"Olive green shorts", price:79 },
-    "shorts-navy":     { id:335, n:0, code:"01070", name:"Navy blue shorts", price:129 },
-    "culottes-olive":  { id:374, n:2, code:"01156", name:"Olive green culottes (inverted pleats)", price:79 },
-    "culottes-navy":   { id:339, n:2, code:"01074", name:"Navy blue culottes (inverted pleats)", price:129 },
-    "trousers-olive":  { id:375, n:2, code:"01157", name:"Olive green trousers", price:119, alt:[{id:376,n:2,code:"01158",name:"Ladies’ olive green trousers",price:119}] },
-    "trousers-navy":   { id:340, n:0, code:"01075", name:"Navy blue trousers", price:149 },
-    "trousers-olive-f":{ id:376, n:2, code:"01158", name:"Ladies’ olive green trousers", price:119 },
-    "skirt-olive":     { id:328, n:2, code:"01051", name:"Olive green skirt", price:89 },
-    "skirt-navy":      { id:345, n:2, code:"01080", name:"Navy blue skirt", price:96 },
+    "shorts-olive":    { id:160, code:"01155", name:"Olive green shorts", price:79, sizes:'20"–42" (1" steps)' },
+    "shorts-navy":     { id:74,  code:"01070", name:"Navy blue shorts", price:129, sizes:'25"–40" (1" steps)' },
+    "culottes-olive":  { id:162, code:"01156", name:"Olive green culottes (inverted pleats)", price:79, sizes:'18"–42" (1" steps)' },
+    "culottes-navy":   { id:82,  code:"01074", name:"Navy blue culottes (inverted pleats)", price:129, sizes:'24"–36" (1" steps)' },
+    "trousers-olive":  { id:164, code:"01157", name:"Olive green trousers (men’s)", price:119, sizes:'24"–42" (1" steps)', alt:[{id:166,code:"01158",name:"Olive green trousers (ladies’)",price:119,sizes:'24"–40" (1" steps)'}] },
+    "trousers-navy":   { id:84,  code:"01075", name:"Navy blue trousers", price:149, sizes:'26"–40" (1" steps)' },
+    "trousers-olive-f":{ id:166, code:"01158", name:"Olive green trousers (ladies’)", price:119, sizes:'24"–40" (1" steps)' },
+    "skirt-olive":     { id:64,  code:"01051", name:"Olive green skirt", price:89, sizes:'25"–38" (1" steps)' },
+    "skirt-navy":      { id:94,  code:"01080", name:"Navy blue skirt", price:96, sizes:'25"–38" (1" steps)' },
     /* Belt / socks */
-    "belt":             { id:3549, n:0, code:"01008", name:"Full-grain leather belt", price:200 },
-    "socks-long-olive": { id:310,  n:0, code:"01012", name:"Dark olive green cotton long socks", price:30, alt:[{id:3050,n:0,code:"01013",name:"Dark olive green wool long socks",price:42}] },
-    "socks-long-navy":  { id:312,  n:0, code:"01016", name:"Navy blue cotton long socks", price:30 },
-    "socks-short-black":{ id:311,  n:0, code:"01014", name:"Black cotton short socks", price:15 },
+    "belt":             { id:6,  code:"01008", name:"Brown full-grain leather uniform belt", price:200, sizes:'24"–48" (2" steps)', alt:[{id:4,code:"01006",name:"Brown uniform belt",price:65,sizes:'22"–46" (2" steps)'}] },
+    "socks-long-olive": { id:10, code:"01012", name:"Dark green cotton long socks", price:30, sizes:"S–XXL", alt:[{id:12,code:"01013",name:"Dark green wool long socks",price:42,sizes:"S–XXL"}] },
+    "socks-long-navy":  { id:18, code:"01016", name:"Navy blue cotton long socks", price:30, sizes:"M–XXL" },
+    "socks-short-black":{ id:14, code:"01014", name:"Black cotton short socks", price:15, sizes:"L" },
     /* Neckerchief / woggle */
-    "scarf":        { id:391,  n:0, code:"07010", name:"Hong Kong Scout green neckerchief", price:55, note:"Group scarves are normally presented by the Group; the Scout Shop only sells the Association green neckerchief." },
-    "woggle-scout": { id:3489, n:0, code:"01031", name:"Full-grain leather woggle (adjustable)", price:19 },
-    "woggle-cub":   { id:333,  n:0, code:"01062", name:"Cub Scout plastic woggle", price:4 },
+    "scarf":        { id:934, code:"07010", name:"Hong Kong Scout green neckerchief", price:55, sizes:"S / M / L", note:"Group scarves are normally presented by the Group; the Scout Shop only sells the Association green neckerchief." },
+    "woggle-scout": { id:36,  code:"01031", name:"Full-grain leather woggle (adjustable)", price:19 },
+    "woggle-cub":   { id:70,  code:"01062", name:"Cub Scout plastic woggle", price:4 },
     /* Neckties (2026 scheme: Venture / Rover ceremonial dress; also Leader No. 4 tie uniform) */
-    "tie-navy":   { id:336, n:2, code:"01071", name:"Navy blue tie", price:39 },
-    "tie-black":  { id:337, n:1, code:"01072", name:"Black tie", price:39 },
-    "tie-maroon": { id:338, n:1, code:"01073", name:"Maroon tie", price:39 },
-    "tie-green":  { id:393, n:1, code:"07012", name:"Dark green tie", price:39 },
+    "tie-navy":   { id:76,  code:"01071", name:"Navy blue necktie", price:39 },
+    "tie-black":  { id:78,  code:"01072", name:"Black necktie", price:39 },
+    "tie-maroon": { id:80,  code:"01073", name:"Maroon necktie", price:39 },
+    "tie-green":  { id:936, code:"07012", name:"Dark green necktie", price:39 },
     /* Grasshopper Scout */
-    "gh-clothes":   { id:3084, n:0, name:"Grasshopper Scout activity shirt", price:75, note:"If the Group arranges its own uniform dress, the Group’s arrangement prevails." },
+    "gh-clothes":   { id:2682, code:"91147", name:"Grasshopper Scout activity shirt", price:75, sizes:"100–160 cm (10 cm steps)", note:"If the Group arranges its own uniform dress, the Group’s arrangement prevails." },
     /* Badges */
-    "badges-youth":  { id:1846, n:0, code:"01037", name:"World Scout Membership Badge", price:6,
-      extra:[{id:1847,n:0,code:"01038",name:"Hong Kong Badge",price:6},{id:684,n:0,code:"23054",name:"Hong Kong Island Region badge (example)",price:2.5},{id:689,n:0,code:"23104",name:"Islands District badge (example)",price:6.5}] },
-    "badges-leader": { id:1846, n:0, code:"01037", name:"World Scout Membership Badge", price:6,
-      extra:[{id:1847,n:0,code:"01038",name:"Hong Kong Badge",price:6},{id:406,n:0,code:"07040",name:"Hong Kong headquarters badge",price:7.5}] },
-    "patrol-badge":  { id:385, n:0, code:"04076", name:"Scout patrol colour badge", price:3.5 },
-    "epaulette-rank":{ id:400, n:0, code:"07311", name:"Green Scout Leader epaulettes", price:33,
-      alt:[{id:401,n:0,code:"07312",name:"Red Assistant Scout Leader epaulettes",price:33},{id:405,n:0,code:"07310",name:"Light blue Group Scout Leader epaulettes",price:33},{id:403,n:0,code:"07309",name:"Grey HQ / Region / District Leader epaulettes",price:33}] }
+    "badges-youth":  { id:46, code:"01037", name:"Membership Badge", price:6,
+      extra:[{id:48,code:"01038",name:"Hong Kong Badge",price:6},{id:1914,code:"23054",name:"Hong Kong Island Region badge (example)",price:2.5},{id:1954,code:"23104",name:"Islands District badge (example)",price:6.5}] },
+    "badges-leader": { id:46, code:"01037", name:"Membership Badge", price:6,
+      extra:[{id:48,code:"01038",name:"Hong Kong Badge",price:6},{id:964,code:"07040",name:"Hong Kong HQ badge",price:7.5}] },
+    "patrol-badge":  { id:768, code:"04504", name:"Scout patrol colour badge: Bull (example)", price:3.5,
+      note:'Separate SKUs by patrol animal (04504–04519, all HK$3.5); <a href="https://store.scout.org.hk/products?search=%E9%9A%8A%E8%89%B2%E7%AB%A0" target="_blank" rel="noopener">browse all 16 patrol colour badges ↗</a>' },
+    "epaulette-rank":{ id:1304, code:"07311", name:"Green Scout Leader epaulettes", price:33,
+      alt:[{id:1306,code:"07312",name:"Red Assistant Scout Leader epaulettes",price:33},{id:1302,code:"07310",name:"Light blue Group Scout Leader epaulettes",price:33},{id:1300,code:"07309",name:"Grey HQ / Region / District Leader epaulettes",price:33}] }
   },
 
   /* ── Grasshopper Scout (simple tidy meeting dress; Groups may arrange their own) ── */
@@ -266,7 +268,7 @@ const LOCALE_EN = {
         <li><strong>Socks</strong>: plain-coloured short or long socks</li>
         <li><strong>Hat (optional)</strong>: plain-coloured wide-brimmed sun hat or peaked cap</li>
         <li><strong>Neckerchief</strong>: invested Grasshopper Scouts wear the Group scarf (with a colour woggle)</li>
-        <li><strong>Badges</strong>: the Grasshopper Scout membership badge on the left chest after investiture; progress badges on the left sleeve</li>
+        <li><strong>Badges</strong>: the Grasshopper Scout membership badge on the left chest after investiture; progress badges on the left sleeve <a class="scout3d-inline-link" data-scout3d-link href="https://scout3d-gamma.vercel.app/" target="_blank" rel="noopener">View 3D placement in SCOUT3D ↗</a></li>
       </ul>
       <div class="tip">The Group scarf and the Grasshopper Scout membership badge may only be worn <strong>after investiture</strong>.</div>
       <div class="warn">Apart from a colour woggle, Grasshopper Scouts may not use uniform accessories from other Sections (for example belts or uniform caps).</div>`
@@ -538,11 +540,12 @@ const LOCALE_EN = {
     shopBoxTitle: "Official Scout Shop products",
     shopCode: (code) => code ? ` (code ${code})` : "",
     shopPrice: (p) => p != null ? ` HK$${p}` : "",
+    shopSizes: (s) => s ? ` · sizes: ${s}` : "",
     shopAlts: "Other models: ",
     shopAltSep: ", ",
-    shopPriceNote: "2026-09 listed prices; in-store prices prevail.",
+    shopPriceNote: "2026-11 listed prices and sizes; subject to stock.",
 
-    budgetGrasshopper: `Grasshopper Scouts follow <strong>the Group’s arrangement</strong>: the activity shirt is sold at the <a href="https://www.hkscoutshop.org.hk/" target="_blank" rel="noopener">Scout Shop</a> (HK$75); plain clothing and sports shoes can be bought anywhere.`,
+    budgetGrasshopper: `Grasshopper Scouts follow <strong>the Group’s arrangement</strong>: the activity shirt is sold at the <a href="https://store.scout.org.hk/" target="_blank" rel="noopener">Scout Shop</a> (HK$75); plain clothing and sports shoes can be bought anywhere.`,
     priceIncluded: "Supplied with the cap — no separate purchase",
     priceDependsGroup: "Depends on the Group’s arrangement",
     priceOfficial: (p) => `HK$${p}`,
@@ -554,7 +557,7 @@ const LOCALE_EN = {
     budgetColItem: "Item", budgetColPrice: "Approximate price",
     budgetTotal: "Total (excluding items presented by the Group)",
     budgetOptionalNote: "“Optional” items (the Venture / Rover ceremonial necktie) are not counted in the total — follow your Group’s rules.",
-    budgetFootNote: "Coded items show 2026-09 Scout Shop prices; others are estimates. Shoes, short socks and pantyhose can be bought anywhere.",
+    budgetFootNote: "Coded items show 2026-11 Scout Shop prices; others are estimates. Shoes, short socks and pantyhose can be bought anywhere.",
 
     officialRefTitle: (name) => `${name} official uniform reference`,
     officialRefDesc: "",
@@ -598,7 +601,63 @@ const LOCALE_EN = {
     reportLink: "Report an issue / feedback to SCOUT ADMIN ↗",
     supportLink: "❤️ Like / Save",
     supportLinkAria: "Open this app’s SCOUT APP STORE page in a new tab to like or save it",
-    langToggleAria: "切換至中文介面"
+    langToggleAria: "切換至中文介面",
+
+    scout3dPreviewCta: "View 3D uniform & badge placement in SCOUT3D ↗",
+    scout3dPreviewNote: (cue) => `Rotate 360°, zoom, and tap any badge for handbook page citations (once open, ${cue}).`,
+    scout3dBoardTitle: "SCOUT3D 360° 3D Uniform & Badge Viewer",
+    scout3dBoardLead: "Companion interactive 3D model by the same author: switch front, back, left and right views, zoom in on every badge, pick from 44 District badges, 32 Scout patrols and activity/proficiency badges, and check Uniform Handbook page numbers.",
+    scout3dBoardCta: (label) => `Open SCOUT3D for ${label} ↗`,
+    scout3dBoardMatched: (label, cue) => `Matches your selection: <strong>${label}</strong> (once open, ${cue})`,
+    scout3dStepCue: (secName, branchName, genderText, bottomText, hasBranch, isLeader, isTrousers) => {
+      const steps = [`select <strong>${secName}</strong> at the top`];
+      const outfitBits = [];
+      if (hasBranch) outfitBits.push(`variant <strong>${branchName}</strong>`);
+      outfitBits.push(`<strong>${genderText}</strong>`);
+      if (isLeader && isTrousers) outfitBits.push("<strong>No. 6 (Female Trousers Uniform)</strong>");
+      else if (bottomText) outfitBits.push(`<strong>${bottomText}</strong>`);
+      if (outfitBits.length) steps.push(`under <strong>Outfit</strong> choose ${outfitBits.join(", ")}`);
+      return steps.join(", then ");
+    }
+  },
+
+  SCOUT3D_MAP: {
+    grasshopper: [
+      { view: "Front · Left chest", text: "Grasshopper Membership Badge (after investiture); Group scarf with colour woggle" },
+      { view: "Wearer’s left sleeve", text: "Progress Badges 1–4 (red / brown / blue / green 2×2 grid) & Little Grasshopper Award" },
+      { view: "Wearer’s right sleeve", text: "Group badge & District badge (or Meritorious Group badge, per Group)" },
+      { view: "Front · Right chest", text: "Commemorative event badge (during Association-approved period)" }
+    ],
+    cub: [
+      { view: "Front · Left pocket", text: "World Scout Membership Badge (pocket centre, after investiture); Hong Kong Badge (3 cm above flap) + service stars" },
+      { view: "Front · Right pocket", text: "Cub progressive / Golden Bauhinia Award (pocket centre); Scout Link, faith & commemorative badges (above flap)" },
+      { view: "Wearer’s left sleeve", text: "4 Core Area badges (upper diamond) + up to 11 Activity badges (lower hexagons)" },
+      { view: "Wearer’s right sleeve", text: "Group badge (2 cm below shoulder seam); Region (towards chest) + District (towards back) side by side, 1 cm apart" }
+    ],
+    scout: [
+      { view: "Front · Left pocket", text: "World Scout Membership Badge + Sixer/Patrol Leader stripes (centre & below); Hong Kong Badge + service stars (3 cm above flap)" },
+      { view: "Front · Right pocket", text: "Pathfinder to Chief Scout’s Award (pocket centre); Golden Bauhinia insignia & Venture Link badge (above flap)" },
+      { view: "Wearer’s left sleeve", text: "Proficiency badges in diamonds from cuff upward (wear sash if over 12; omitted on sweater)" },
+      { view: "Wearer’s right sleeve", text: "Group badge, Region (towards chest) + District (towards back) side by side, Patrol badge below, and Meritorious Group badge" }
+    ],
+    venture: [
+      { view: "Shoulder straps", text: "Venture Scout epaulettes (slipped onto both shoulder straps once earned, square end near shoulder)" },
+      { view: "Front · Pockets", text: "Left pocket: Membership + HK Badge / stars; Right pocket: Venture / Dragon Scout Award (centre) + prior top award insignia (above flap)" },
+      { view: "Wearer’s left sleeve", text: "4 Stage badges & gold cords, Venture First Aid, Life Saving cloth badge & AYP awards" },
+      { view: "Wearer’s right sleeve", text: "Group badge, Region (towards chest) + District (towards back) side by side & Active Citizen / WOSM badges" }
+    ],
+    rover: [
+      { view: "Shoulder straps", text: "Rover Scout epaulettes (slipped onto both shoulder straps, square end near shoulder)" },
+      { view: "Front · Pockets", text: "Left pocket: Membership + HK Badge / stars; Right pocket: Rover / Baden-Powell Award (centre) + prior top award insignia (above flap)" },
+      { view: "Wearer’s left sleeve", text: "AYP Gold / Silver, First Aid, Life Saving cloth badge & Community Involvement badge" },
+      { view: "Wearer’s right sleeve", text: "Group badge, Region (towards chest) + District (towards back) side by side, Earth Tribe & Active Citizen badges" }
+    ],
+    leader: [
+      { view: "Shoulder straps", text: "Rank epaulettes on both straps; Hong Kong shoulder title outside Groups (Groups wear Group badge on right sleeve)" },
+      { view: "Front · Pockets", text: "Left pocket: Membership Badge (plus optional cloth name tag); Right pocket: Hong Kong Badge (centre) + at most 1 prior top award insignia" },
+      { view: "Wearer’s right sleeve", text: "Group badge (or HK shoulder title); AHQ / Region (towards chest) + District (towards back) badges; optional ‘R’ retired pin" },
+      { view: "Collar & neck", text: "Group / Association / Gilwell scarf + Wood Badge; medals, ribbons (above right pocket) & Commissioner’s commendation cord for formal dress" }
+    ]
   },
 
   /* ── Static text in index.html (matched on the trimmed text node) ── */
@@ -660,7 +719,7 @@ const LOCALE_EN = {
     "星期日": "Sunday",
     "公眾假期": "Public holidays",
     "休息": "Closed",
-    "特別營業安排以供應社官網「最新消息」為準。": "Special opening arrangements follow the “Latest news” page of the Scout Shop website.",
+    "特別營業安排以供應社官網公布為準。": "Special opening arrangements follow announcements on the Scout Shop website.",
     "購買流程 SOP": "Buying procedure — SOP",
     "先向": "First ask your",
     "所屬旅團領袖": "Group Leader",
@@ -766,7 +825,7 @@ const LOCALE_EN = {
     "或": " or ",
     "全新全購": "full new purchase",
     "顯示。唔使睇其他支部嘅全套意思。": " you selected above. There is no need to look at the complete set for other Sections.",
-    "⚠️ 約略價（2026 年 9 月）。實際以": "⚠️ Approximate prices (September 2026). The",
+    "⚠️ 約略價（2026 年 11 月）。實際以": "⚠️ Approximate prices (November 2026). The",
     "為準。": " has the final say.",
     "💡 家長只需記：": "💡 Parents only need to remember:",
     "升團 = 只買清單入面「需購買」嗰幾件；全新加入 = 全購該支部制服。沿用嘅唔使再買。": "Moving up = only buy the few items marked “To buy”; joining fresh = buy the whole uniform for that Section. Anything carried over does not need buying again.",
@@ -1125,7 +1184,7 @@ const LOCALE_EN = {
     /* 領呔（2026 新綱要：深資／樂行典禮儀式・可選） */
 
     /* Footer */
-    "© 2026 SCOUT SYSTEM · v2.2.2": "© 2026 SCOUT SYSTEM · v2.2.2",
+    "© 2026 SCOUT SYSTEM · v2.2.4": "© 2026 SCOUT SYSTEM · v2.2.4",
     "為準；活動服可於供應社購買，單色衣物及運動鞋自行選購。": "; the activity shirt is sold at the Scout Shop, while plain clothing and sports shoes can be bought anywhere.",
     "戴）": " worn)",
     "具體要視衣服大小，細碼恤衫間距可能會變小（不會變大），以置中、不超袋闊及袖幅為準；必須用線縫牢（勿用膠水或扣針）。": "Depending on shirt size, spacing on smaller shirts may become smaller (never larger) — keep badges centred within pocket and sleeve width, and sew firmly with thread (never glue or pins).",
@@ -1157,6 +1216,24 @@ const LOCALE_EN = {
     "帶備": "bring ",
     "集會皮鞋及長襪": "meeting shoes and long socks",
     "同場試穿，一次過確認褲長、裙長及鞋位。": " to check trouser / skirt length and shoe fit together.",
+    "供應社常規尺碼範圍（2026-11）": "Standard Scout Shop size ranges (2026-11)",
+    "類別": "Category",
+    "網店可選尺碼": "Available sizes online",
+    "幼童軍布帽": "Cub Scout cloth caps",
+    "軟帽／女領袖禮帽": "Berets / female Leader’s dress hat",
+    "深綠 XS–XXL；棗紅 S–XXL；灰藍／禮帽 S–XL": "Dark green XS–XXL; maroon S–XXL; grey-blue / dress hat S–XL",
+    "海童軍白頂帽": "Sea Scout white-top caps",
+    "52–56、58、60 cm（領袖另設 59 cm）": "52–56, 58, 60 cm (Leaders also have 59 cm)",
+    "短袖恤衫（領圍）": "Short-sleeve shirts (collar)",
+    "杏色男 11\"–18\"、女 11.5\"–16.5\"；白／淺藍 13\"–17.5\"（每 0.5\"）": "Beige men’s 11\"–18\", ladies’ 11.5\"–16.5\"; white / light blue 13\"–17.5\" (0.5\" steps)",
+    "短褲／裙褲（腰圍）": "Shorts / culottes (waist)",
+    "橄欖綠短褲 20\"–42\"、裙褲 18\"–42\"；深藍短褲 25\"–40\"、裙褲 24\"–36\"": "Olive green shorts 20\"–42\", culottes 18\"–42\"; navy shorts 25\"–40\", culottes 24\"–36\"",
+    "長褲／半截裙（腰圍）": "Trousers / skirts (waist)",
+    "橄欖綠男褲 24\"–42\"、女褲 24\"–40\"；深藍褲 26\"–40\"；半截裙 25\"–38\"": "Olive green men’s trousers 24\"–42\", ladies’ 24\"–40\"; navy trousers 26\"–40\"; skirts 25\"–38\"",
+    "皮帶／襪／綠領巾": "Belts / socks / green neckerchief",
+    "皮帶 24\"–48\"（基礎款 22\"–46\"，每 2\"）；長襪 S–XXL（深藍 M–XXL）；黑短襪 L；綠領巾 S / M / L": "Belts 24\"–48\" (standard 22\"–46\", 2\" steps); long socks S–XXL (navy M–XXL); black short socks L; green neckerchief S / M / L",
+    "黑色制服皮鞋（供應社款）": "Black uniform leather shoes (Scout Shop)",
+    "童裝 1–6.5、9、10、12、13 碼（HK$245）；成人 4–10 碼設半碼（HK$385）": "Children’s sizes 1–6.5, 9, 10, 12, 13 (HK$245); adult’s sizes 4–10 incl. half sizes (HK$385)",
     "恤衫（杏色／白色／淺藍色）": "Shirts (beige / white / light blue)",
     "長褲 / 短褲 / 裙褲 / 半截裙": "Trousers / shorts / culottes / skirt",
     "軟帽 / 鴨舌帽": "Berets / peaked caps",
@@ -1164,7 +1241,7 @@ const LOCALE_EN = {
     "黑色皮鞋": "Black leather shoes",
     "長襪 / 短襪": "Long socks / short socks",
     "預算參考": "Budget guide",
-    "2026 年 9 月參考價，實際以": "September 2026 reference prices; check the ",
+    "2026 年 11 月參考價，實際以": "November 2026 reference prices; check the ",
     "供應社": "Scout Shop",
     "為準。": " for current prices.",
     "有需要可向旅團查詢": "Ask your Group about the ",

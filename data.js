@@ -72,7 +72,7 @@ const ITEMS = {
   /* ── 帽章 ── */
   "capbadge-cub": { title:"幼童軍帽章", desc:"布質帽章，已隨帽縫上（毋須另購）", icon:"🎖️", buy:"included",
     detail:`<h4>幼童軍帽章</h4><p>《儀容與制服手冊》第 98 頁列明：幼童軍帽章是<strong>布質帽章，已縫於帽冠上</strong>，佩戴時朝正前方；不是另配的金屬帽章。</p>
-      <div class="tip">供應社的「男／女幼童軍帽」（編號 01171／01172，HK$50）已<strong>連帽章</strong>出售，毋須另購帽章；如布章損壞，請向旅團或供應社查詢。</div>` },
+      <div class="tip">供應社的「男／女幼童軍布帽」（編號 01171／01172，HK$50）已<strong>連帽章</strong>出售，毋須另購帽章；如布章損壞，請向旅團或供應社查詢。</div>` },
   "capbadge-scout": { title:"童軍帽章", desc:"童軍／深資／樂行同用", icon:"🎖️", buy:"supply",
     detail:`<h4>童軍帽章</h4><p>根據總會官網，童軍、深資童軍（陸／空）、樂行童軍（陸／空）的軟帽全部是「連<strong>童軍帽章</strong>」。</p>
       <div class="tip">即是說：由童軍升深資、深資升樂行，<strong>帽章可以沿用</strong>，只需換帽。</div>` },
@@ -137,7 +137,8 @@ const ITEMS = {
 
   /* ── 皮鞋 ── */
   "shoes-lace": { title:"黑色無花紋綁帶皮鞋", desc:"男性各支部／幼童軍及童軍女團員", icon:"👞", img:"assets/items/shoes-lace.svg", buy:"any",
-    detail:`<h4>黑色綁帶皮鞋</h4><p><strong>官方規格：</strong>黑色、無花紋、綁帶。合規格的學校皮鞋可以用。集會前要擦亮。</p>` },
+    detail:`<h4>黑色綁帶皮鞋</h4><p><strong>官方規格：</strong>黑色、無花紋、綁帶。合規格的學校皮鞋可以用。集會前要擦亮。</p>
+      <p class="cite">供應社亦售黑色制服皮鞋：童裝 01021（HK$245，1–6.5、9、10、12、13 碼）及成人 01015（HK$385，4–10 碼設半碼）。</p>` },
   "shoes-heel": { title:"黑色非綁帶中跟皮鞋", desc:"深資／樂行／領袖女性", icon:"👠", img:"assets/items/shoes-heel.svg", buy:"any",
     detail:`<h4>黑色非綁帶中跟皮鞋</h4><p><strong>官方規格：</strong>黑色、無花紋、非綁帶、中跟。自行到鞋店購買。</p>
       <div class="warn">由童軍升深資的女團員：綁帶皮鞋<strong>不合規格</strong>，要換中跟鞋。</div>` },
@@ -177,89 +178,92 @@ const ITEMS = {
         <li>地域章＋區章：右袖旅章下方 2 厘米左右並排、相距 1 厘米（<strong>地域章在前／向胸口，區章在後／向背後</strong>；具體視衣服大小，細碼衫間距可能會變小，不會變大）</li>
       </ul>
       <p>會員章、香港章在供應社購買；地域章、區章、旅章多數由旅團代購或頒發。升團時徽章如狀況良好可沿用（同一旅同一區）。</p>
-      <div class="tip">必須用線縫牢，不可用膠水或扣針。<a href="#badge-placement-guide" onclick="openBadgeGuide(event)" style="display:inline-block;margin-left:.4rem;color:var(--scout-green);font-weight:700;text-decoration:underline">查看《儀容與制服手冊》釘章位置圖解 →</a></div>` },
+      <div class="tip">必須用線縫牢，不可用膠水或扣針。<a href="#badge-placement-guide" onclick="openBadgeGuide(event)" style="display:inline-block;margin-left:.4rem;color:var(--scout-green);font-weight:700;text-decoration:underline">查看《儀容與制服手冊》釘章位置圖解 →</a> <a class="scout3d-inline-link" data-scout3d-link href="https://scout3d-gamma.vercel.app/" target="_blank" rel="noopener">在 SCOUT3D 睇 3D 釘章示範 ↗</a></div>` },
   "patrol-badge": { title:"小隊章", desc:"童軍支部・由旅團頒發／供應社購買", icon:"🐾", buy:"group-or-supply",
     detail:`<h4>小隊章</h4><p>只有<strong>童軍支部</strong>有小隊章（總會官網童軍制服徽章列表包括小隊章；深資／樂行沒有）。</p>
-      <p>根據《童軍訓練綱要》附錄，小隊章在供應社發售，購買時毋須出示文件；亦有旅團會直接頒發。佩戴在<strong>右袖</strong>（地域章及區章下方）。</p>` },
+      <p>根據《童軍訓練綱要》附錄，小隊章在供應社發售，購買時毋須出示文件；亦有旅團會直接頒發。佩戴在<strong>右袖</strong>（地域章及區章下方）。<a class="scout3d-inline-link" data-scout3d-link href="https://scout3d-gamma.vercel.app/" target="_blank" rel="noopener">在 SCOUT3D 選小隊睇右袖 3D 位置 ↗</a></p>` },
   "badges-leader": { title:"領袖基本徽章", desc:"會員章、香港章、香港肩章／旅章、總會總部章／地域章／區章", icon:"🎖️", buy:"mixed",
     detail:`<h4>基本徽章（領袖常規制服）</h4><p>總會官網領袖常規制服（編號 3）徽章：<strong>世界童軍會員章、香港章、香港肩章／旅章、總會總部章／地域章／區章、職級肩章</strong>（成年成員香港章佩戴於右胸袋中央）。</p>
       <p>由青少年支部升任：世界童軍會員章、香港章可沿用；旅章／區章／地域章視乎服務單位，向旅團查詢。</p>
-      <div class="tip">榮譽童軍獎章／貝登堡獎章持有人成為領袖後，可終身佩戴相應的<strong>領袖標誌</strong>。領袖<strong>只保留 1 個支部最高獎章標誌</strong>（同時有幾個就用最高級：榮譽童軍 ＞ 貝登堡 ＞ 總領袖 ＞ 金紫荊）。<a href="#badge-placement-guide" onclick="openBadgeGuide(event)" style="display:inline-block;margin-left:.4rem;color:var(--scout-green);font-weight:700;text-decoration:underline">查看《儀容與制服手冊》釘章位置圖解 →</a></div>` },
+      <div class="tip">榮譽童軍獎章／貝登堡獎章持有人成為領袖後，可終身佩戴相應的<strong>領袖標誌</strong>。領袖<strong>只保留 1 個支部最高獎章標誌</strong>（同時有幾個就用最高級：榮譽童軍 ＞ 貝登堡 ＞ 總領袖 ＞ 金紫荊）。<a href="#badge-placement-guide" onclick="openBadgeGuide(event)" style="display:inline-block;margin-left:.4rem;color:var(--scout-green);font-weight:700;text-decoration:underline">查看《儀容與制服手冊》釘章位置圖解 →</a> <a class="scout3d-inline-link" data-scout3d-link href="https://scout3d-gamma.vercel.app/" target="_blank" rel="noopener">在 SCOUT3D 睇 3D 釘章示範 ↗</a></div>` },
   "epaulette-rank": { title:"職級肩章", desc:"領袖・視乎委任職級", icon:"🎗️", buy:"check",
-    detail:`<h4>職級肩章</h4><p>戴於兩肩肩帶，款式視乎獲委任的職級（見習領袖／助理領袖／領袖／總監等）。獲委任後向旅團查詢應購買哪款。</p>` }
+    detail:`<h4>職級肩章</h4><p>戴於兩肩肩帶，款式視乎獲委任的職級（見習領袖／助理領袖／領袖／總監等）。獲委任後向旅團查詢應購買哪款。<a class="scout3d-inline-link" data-scout3d-link href="https://scout3d-gamma.vercel.app/" target="_blank" rel="noopener">在 SCOUT3D 選職級睇肩章 3D 位置 ↗</a></p>` }
 };
 
 /* ===========================================================
-   香港童軍物品供應社 (SCOUT SHOP, hkscoutshop.org.hk) 官方產品資料
-   ─ 產品編號、零售價、官方產品相（資料擷取日期：2026-09-05）
-   圖片直接引用供應社網站 files/mid/<id>_<n>.jpg（中圖）／files/thum/（細圖）；
+   香港童軍物品供應社 (SCOUT SHOP, store.scout.org.hk) 官方產品資料
+   ─ 產品編號、零售價、官方產品相（資料擷取日期：2026-11-20）
+   圖片直接引用供應社圖片伺服器 ssmsuat.scout.org.hk/images/<code>/01.png；
    已核對的帽章等參考圖直接從本地載入；不再以自製徽章圖代替失效的官方圖片。
    =========================================================== */
-const SHOP_BASE = "https://www.hkscoutshop.org.hk/";
+const SHOP_BASE = "https://store.scout.org.hk/";
+const SHOP_IMG_BASE = "https://ssmsuat.scout.org.hk/images/";
 const SHOP = {
   /* 帽 */
-  "cap-cub-m":        { id:377,  n:1, code:"01171", name:"男幼童軍帽", price:50 },
-  "cap-cub-f":        { id:378,  n:1, code:"01172", name:"女幼童軍帽", price:50 },
-  "beret-green":      { id:3532, n:0, code:"01181", name:"深綠色軟帽(欖形)", price:80, alt:[{id:322,n:0,name:"深綠色軟帽"}] },
-  "beret-maroon":     { id:313,  n:0, code:"01019", name:"深資童軍棗紅色軟帽", price:85, alt:[{id:3533,n:0,code:"01182",name:"深資童軍棗紅色軟帽(欖形)",price:85}] },
-  "beret-greyblue":   { id:316,  n:0, code:"01024", name:"空童軍灰藍色軟帽", price:85, alt:[{id:3534,n:0,code:"01183",name:"空童軍灰藍色軟帽(欖形)",price:85}] },
-  "cap-sea-scout":    { id:317,  n:0, code:"1025",  name:"海童軍白頂帽", price:259, extra:[{id:1843,n:0,code:"01033",name:"海童軍帽帶",price:12}] },
-  "cap-sea-leader-m": { id:318,  n:1, code:"1026",  name:"海童軍男領袖白頂帽", price:415 },
-  "cap-sea-leader-f": { id:319,  n:1, code:"1027",  name:"海童軍女領袖白頂帽", price:289 },
-  "hat-leader-f":     { id:3086, n:0, code:"01136", name:"綠色女領袖制服禮帽", price:239 },
+  "cap-cub-m":        { id:168,  code:"01171", name:"男幼童軍布帽", price:50, sizes:"S–XL" },
+  "cap-cub-f":        { id:170,  code:"01172", name:"女幼童軍布帽", price:50, sizes:"S–XL" },
+  "beret-green":      { id:172,  code:"01181", name:"童軍深綠色軟帽", price:80, sizes:"XS–XXL" },
+  "beret-maroon":     { id:174,  code:"01182", name:"深資童軍棗紅色軟帽", price:85, sizes:"S–XXL" },
+  "beret-greyblue":   { id:176,  code:"01183", name:"空童軍灰藍色軟帽", price:85, sizes:"S–XL" },
+  "cap-sea-scout":    { id:30,   code:"01025", name:"海童軍帽", price:259, sizes:"52–56、58、60 cm", extra:[{id:40,code:"01033",name:"海童軍帽帶",price:12}] },
+  "cap-sea-leader-m": { id:32,   code:"01026", name:"海童軍男領袖帽", price:415, sizes:"53–56、58–60 cm" },
+  "cap-sea-leader-f": { id:34,   code:"01027", name:"海童軍女領袖帽", price:289, sizes:"52–56、58–60 cm" },
+  "hat-leader-f":     { id:140,  code:"01136", name:"深綠色女領袖制服禮帽", price:239, sizes:"S–XL" },
   /* 帽章 */
-  "capbadge-scout":       { id:314,  n:0, code:"01020", name:"童軍帽章", price:9 },
-  "capbadge-venture-sea": { id:1845, n:0, code:"1035",  name:"深資海童軍帽章", price:6 },
-  "capbadge-sea-leader":  { id:1844, n:0, code:"01034", name:"海童軍領袖帽章", price:95 },
-  "capbadge-rank":        { id:3507, n:0, code:"07332", name:"綠色團長帽章 (刺馬針配膠帽)", price:49,
-    alt:[{id:3506,n:0,code:"07331",name:"紅色副團長帽章",price:49},{id:3508,n:0,code:"07333",name:"淺藍色旅長帽章",price:49},
-         {id:3509,n:0,code:"07334",name:"灰色總部/地域/區領袖帽章",price:49},{id:410,n:0,code:"07072",name:"綠色團長帽章(布章)",price:33}] },
+  "capbadge-scout":       { id:22,   code:"01020", name:"童軍帽章", price:9, noImg:true },
+  "capbadge-venture-sea": { id:44,   code:"01035", name:"深資海童軍帽章", price:6 },
+  "capbadge-sea-leader":  { id:42,   code:"01034", name:"海童軍領袖帽章", price:95 },
+  "capbadge-rank":        { id:1320, code:"07332", name:"綠色團長帽章 (刺馬針配膠帽)", price:49,
+    alt:[{id:1318,code:"07331",name:"紅色副團長帽章",price:49},{id:1322,code:"07333",name:"淺藍色旅長帽章",price:49},
+         {id:1324,code:"07334",name:"灰色總部／地域／區領袖帽章",price:49},{id:1026,code:"07072",name:"綠色團長帽章（布章）",price:33}] },
   /* 恤衫 */
-  "shirt-beige":     { id:369, n:2, code:"01151", name:"杏色短袖恤衫", price:95, alt:[{id:370,n:2,code:"01152",name:"女裝杏色短袖恤衫",price:95}] },
-  "shirt-white":     { id:334, n:2, code:"01069", name:"海童軍白色短袖恤衫", price:109 },
-  "shirt-lightblue": { id:341, n:2, code:"01076", name:"空童軍淺藍色短袖恤衫", price:175 },
+  "shirt-beige":     { id:152, code:"01151", name:"杏色短袖恤衫（男裝）", price:95, sizes:'11"–18"（每 0.5"）', alt:[{id:154,code:"01152",name:"杏色短袖恤衫（女裝）",price:95,sizes:'11.5"–16.5"（每 0.5"）'}] },
+  "shirt-white":     { id:72,  code:"01069", name:"海童軍白色短袖恤衫", price:109, sizes:'13"–17.5"（每 0.5"）' },
+  "shirt-lightblue": { id:86,  code:"01076", name:"空童軍淺藍色短袖恤衫", price:175, sizes:'13"–17.5"（每 0.5"）' },
   /* 褲 / 裙 */
-  "shorts-olive":    { id:373, n:0, code:"01155", name:"草青色短褲", price:79 },
-  "shorts-navy":     { id:335, n:0, code:"01070", name:"深藍色短褲", price:129 },
-  "culottes-olive":  { id:374, n:2, code:"01156", name:"草青色弓字褶裙褲", price:79 },
-  "culottes-navy":   { id:339, n:2, code:"01074", name:"深藍色弓字褶裙褲", price:129 },
-  "trousers-olive":  { id:375, n:2, code:"01157", name:"草青色長褲", price:119, alt:[{id:376,n:2,code:"01158",name:"草青色女裝長褲",price:119}] },
-  "trousers-olive-f":{ id:376, n:2, code:"01158", name:"草青色女裝長褲", price:119 },
-  "trousers-navy":   { id:340, n:0, code:"01075", name:"深藍色長褲", price:149 },
-  "skirt-olive":     { id:328, n:2, code:"01051", name:"草青色半截裙", price:89 },
-  "skirt-navy":      { id:345, n:2, code:"01080", name:"深藍色半截裙", price:96 },
+  "shorts-olive":    { id:160, code:"01155", name:"橄欖綠色短褲", price:79, sizes:'20"–42"（每 1"）' },
+  "shorts-navy":     { id:74,  code:"01070", name:"深藍色短褲", price:129, sizes:'25"–40"（每 1"）' },
+  "culottes-olive":  { id:162, code:"01156", name:"橄欖綠色弓字褶裙褲", price:79, sizes:'18"–42"（每 1"）' },
+  "culottes-navy":   { id:82,  code:"01074", name:"深藍色弓字褶裙褲", price:129, sizes:'24"–36"（每 1"）' },
+  "trousers-olive":  { id:164, code:"01157", name:"橄欖綠色長褲（男裝）", price:119, sizes:'24"–42"（每 1"）', alt:[{id:166,code:"01158",name:"橄欖綠色長褲（女裝）",price:119,sizes:'24"–40"（每 1"）'}] },
+  "trousers-olive-f":{ id:166, code:"01158", name:"橄欖綠色長褲（女裝）", price:119, sizes:'24"–40"（每 1"）' },
+  "trousers-navy":   { id:84,  code:"01075", name:"深藍色長褲", price:149, sizes:'26"–40"（每 1"）' },
+  "skirt-olive":     { id:64,  code:"01051", name:"橄欖綠色半截裙", price:89, sizes:'25"–38"（每 1"）' },
+  "skirt-navy":      { id:94,  code:"01080", name:"深藍色半截裙", price:96, sizes:'25"–38"（每 1"）' },
   /* 皮帶 / 襪 */
-  "belt":             { id:3549, n:0, code:"01008", name:"頭層皮皮帶", price:200 },
-  "socks-long-olive": { id:310,  n:0, code:"01012", name:"深草青色棉質長襪", price:30, alt:[{id:3050,n:0,code:"01013",name:"深草青色羊毛長襪",price:42}] },
-  "socks-long-navy":  { id:312,  n:0, code:"01016", name:"深藍色棉質長襪", price:30 },
-  "socks-short-black":{ id:311,  n:0, code:"01014", name:"黑色棉質短襪", price:15 },
+  "belt":             { id:6,  code:"01008", name:"棕色頭層皮制服皮帶", price:200, sizes:'24"–48"（每 2"）', alt:[{id:4,code:"01006",name:"棕色制服皮帶",price:65,sizes:'22"–46"（每 2"）'}] },
+  "socks-long-olive": { id:10, code:"01012", name:"深綠色棉質長襪", price:30, sizes:"S–XXL", alt:[{id:12,code:"01013",name:"深綠色羊毛長襪",price:42,sizes:"S–XXL"}] },
+  "socks-long-navy":  { id:18, code:"01016", name:"深藍色棉質長襪", price:30, sizes:"M–XXL" },
+  "socks-short-black":{ id:14, code:"01014", name:"黑色棉質短襪", price:15, sizes:"L" },
   /* 領巾 / 巾圈 */
-  "scarf":        { id:391,  n:0, code:"07010", name:"香港童軍綠色領巾", price:55, note:"旅巾通常由旅團頒發；供應社只售總會綠色領巾。" },
-  "woggle-scout": { id:3489, n:0, code:"01031", name:"頭層皮巾圈 (可調校大小)", price:19 },
-  "woggle-cub":   { id:333,  n:0, code:"01062", name:"幼童軍塑膠巾圈", price:4 },
+  "scarf":        { id:934, code:"07010", name:"香港童軍綠色領巾", price:55, sizes:"S / M / L", note:"旅巾通常由旅團頒發；供應社只售總會綠色領巾。" },
+  "woggle-scout": { id:36,  code:"01031", name:"頭層皮巾圈 (可調校大小)", price:19 },
+  "woggle-cub":   { id:70,  code:"01062", name:"幼童軍塑膠巾圈", price:4 },
   /* 領呔（2026 新綱要：深資／樂行典禮儀式；領袖編號 4 領帶制服亦用） */
-  "tie-navy":   { id:336, n:2, code:"01071", name:"深藍色呔", price:39 },
-  "tie-black":  { id:337, n:1, code:"01072", name:"黑色呔", price:39 },
-  "tie-maroon": { id:338, n:1, code:"01073", name:"棗紅色呔", price:39 },
-  "tie-green":  { id:393, n:1, code:"07012", name:"深綠色呔", price:39 },
+  "tie-navy":   { id:76,  code:"01071", name:"深藍色領呔", price:39 },
+  "tie-black":  { id:78,  code:"01072", name:"黑色領呔", price:39 },
+  "tie-maroon": { id:80,  code:"01073", name:"棗紅色領呔", price:39 },
+  "tie-green":  { id:936, code:"07012", name:"深綠色領呔", price:39 },
   /* 小童軍 */
-  "gh-clothes":   { id:3084, n:0, name:"小童軍活動服", price:75, note:"旅團如安排自家統一服飾，以旅團安排為準。" },
+  "gh-clothes":   { id:2682, code:"91147", name:"小童軍活動服", price:75, sizes:"100–160 cm（每 10 cm）", note:"旅團如安排自家統一服飾，以旅團安排為準。" },
   /* 徽章 */
-  "badges-youth":  { id:1846, n:0, code:"01037", name:"世界童軍會員章", price:6,
-    extra:[{id:1847,n:0,code:"01038",name:"香港章",price:6},{id:684,n:0,code:"23054",name:"港島地域章（例）",price:2.5},{id:689,n:0,code:"23104",name:"離島區區章（例）",price:6.5}] },
-  "badges-leader": { id:1846, n:0, code:"01037", name:"世界童軍會員章", price:6,
-    extra:[{id:1847,n:0,code:"01038",name:"香港章",price:6},{id:406,n:0,code:"07040",name:"香港總會總部章",price:7.5}] },
-  "patrol-badge":  { id:385, n:0, code:"04076", name:"童軍隊色章", price:3.5 },
-  "epaulette-rank":{ id:400, n:0, code:"07311", name:"綠色團長肩章", price:33,
-    alt:[{id:401,n:0,code:"07312",name:"紅色副團長肩章",price:33},{id:405,n:0,code:"07310",name:"淺藍色旅長肩章",price:33},{id:403,n:0,code:"07309",name:"灰色總部/地域/區領袖肩章",price:33}] }
+  "badges-youth":  { id:46, code:"01037", name:"會員章", price:6,
+    extra:[{id:48,code:"01038",name:"香港章",price:6},{id:1914,code:"23054",name:"港島地域章（例）",price:2.5},{id:1954,code:"23104",name:"離島區區章（例）",price:6.5}] },
+  "badges-leader": { id:46, code:"01037", name:"會員章", price:6,
+    extra:[{id:48,code:"01038",name:"香港章",price:6},{id:964,code:"07040",name:"香港總會總部章",price:7.5}] },
+  "patrol-badge":  { id:768, code:"04504", name:"童軍隊色章：牡牛（例）", price:3.5,
+    note:'各款小隊動物分別編號（04504–04519，全部 HK$3.5）；<a href="https://store.scout.org.hk/products?search=%E9%9A%8A%E8%89%B2%E7%AB%A0" target="_blank" rel="noopener">瀏覽全部 16 款隊色章 ↗</a>' },
+  "epaulette-rank":{ id:1304, code:"07311", name:"綠色團長肩章", price:33,
+    alt:[{id:1306,code:"07312",name:"紅色副團長肩章",price:33},{id:1302,code:"07310",name:"淺藍色旅長肩章",price:33},{id:1300,code:"07309",name:"灰色總部／地域／區領袖肩章",price:33}] }
 };
-// 服務年星 (01120, id 357, $3.5)、隊長章 (01122, id 359, $5) 亦在供應社「識別章」分類發售。
-function shopImg(p, size){ return p ? `${SHOP_BASE}files/${size || "mid"}/${p.id}_${p.n || 0}.jpg` : null; }
-function shopUrl(p){ return p ? `${SHOP_BASE}index.php?p=6&id=${p.id}` : null; }
+// 服務年星徽章 (01120, /products/120, $3.5)、副隊長章 (01121, /products/122, $5)、隊長章 (01122, /products/124, $5)、團隊長章 (01123, /products/126, $5)、小童軍團員章 (02006, /products/188, $5) 亦在供應社產品目錄。
+function shopImg(p){ return (p && !p.noImg && p.code) ? `${SHOP_IMG_BASE}${p.code}/01.png` : null; }
+function shopUrl(p){ return !p ? null : p.id ? `${SHOP_BASE}products/${p.id}` : SHOP_BASE; }
 function shopInfo(itemId){
   const p = L().SHOP[itemId];
   if(!p) return null;
-  return { ...p, img: shopImg(p), thumb: shopImg(p, "thum"), url: shopUrl(p) };
+  const img = shopImg(p);
+  return { ...p, img, thumb: img, url: shopUrl(p) };
 }
 
 /* ===========================================================
@@ -328,7 +332,7 @@ const GRASSHOPPER_ITEM = {
       <li><strong>襪</strong>：單色、短襪或長襪</li>
       <li><strong>帽（非必須）</strong>：單色、闊邊漁夫帽或鴨咀帽</li>
       <li><strong>領巾</strong>：已宣誓小童軍佩戴旅巾（連顏色巾圈）</li>
-      <li><strong>徽章</strong>：小童軍團員章戴上衣左胸前（宣誓後）；進步獎章戴左袖</li>
+      <li><strong>徽章</strong>：小童軍團員章戴上衣左胸前（宣誓後）；進步獎章戴左袖 <a class="scout3d-inline-link" data-scout3d-link href="https://scout3d-gamma.vercel.app/" target="_blank" rel="noopener">在 SCOUT3D 睇 3D 位置 ↗</a></li>
     </ul>
     <div class="tip">旅巾、小童軍團員章須待<strong>宣誓後</strong>才可佩戴。</div>
     <div class="warn">除顏色巾圈外，小童軍不可使用其他支部制服配件（例如皮帶、制服帽）。</div>`
@@ -370,6 +374,15 @@ function applyLowerBodyChoice(ids, section, branch, gender, choice){
   return ids.map(id => swap[id] || id);
 }
 
+function renderShopBox(shop, t){
+  if(!shop) return "";
+  const row = (x) => `<li><a href="${shopUrl(x)}" target="_blank" rel="noopener">${x.name}</a>${t.shopCode(x.code)}${t.shopPrice(x.price)}${x.sizes ? t.shopSizes(x.sizes) : ""}</li>`;
+  return `<div class="shop-box"><strong>${t.shopBoxTitle}</strong><ul>${row(shop)}${(shop.extra || []).map(row).join("")}</ul>`
+    + ((shop.alt && shop.alt.length) ? `<p class="cite">${t.shopAlts}${shop.alt.map(x => `<a href="${shopUrl(x)}" target="_blank" rel="noopener">${x.name}</a>${t.shopPrice(x.price)}${x.sizes ? t.shopSizes(x.sizes) : ""}`).join(t.shopAltSep)}</p>` : "")
+    + (shop.note ? `<p class="cite">${shop.note}</p>` : "")
+    + `<p class="cite">${t.shopPriceNote}</p></div>`;
+}
+
 // 取得升團來源（支部、類型）
 function buildChecklist(opts){
   const { section, branch, gender, mode, fromSection, fromBranch } = opts;
@@ -377,7 +390,10 @@ function buildChecklist(opts){
   if(section === "grasshopper"){
     const gh = Object.assign({}, loc.GRASSHOPPER_ITEM);
     const ghShop = shopInfo("gh-clothes");
-    if(ghShop){ gh.shop = ghShop; gh.shopImg = ghShop.img; gh.shopUrl = ghShop.url; }
+    if(ghShop){
+      gh.shop = ghShop; gh.shopImg = ghShop.img; gh.shopUrl = ghShop.url;
+      gh.detail = (gh.detail || "") + renderShopBox(ghShop, t);
+    }
     return [gh];
   }
   const spec = getSpec(section, branch, gender) || [];
@@ -426,14 +442,7 @@ function buildChecklist(opts){
 
     const buyLabel = t.buyLabels[it.buy] || "";
     const shop = shopInfo(id);
-    let shopHtml = "";
-    if(shop){
-      const row = (x) => `<li><a href="${shopUrl(x)}" target="_blank" rel="noopener">${x.name}</a>${t.shopCode(x.code)}${t.shopPrice(x.price)}</li>`;
-      shopHtml = `<div class="shop-box"><strong>${t.shopBoxTitle}</strong><ul>${row(shop)}${(shop.extra || []).map(row).join("")}</ul>`
-        + ((shop.alt && shop.alt.length) ? `<p class="cite">${t.shopAlts}${shop.alt.map(x => `<a href="${shopUrl(x)}" target="_blank" rel="noopener">${x.name}</a>${t.shopPrice(x.price)}`).join(t.shopAltSep)}</p>` : "")
-        + (shop.note ? `<p class="cite">${shop.note}</p>` : "")
-        + `<p class="cite">${t.shopPriceNote}</p></div>`;
-    }
+    const shopHtml = renderShopBox(shop, t);
     return {
       id, title: it.title, desc: it.desc, icon: it.icon, img: it.img, optional: !!it.optional, reference: itemReference(id, gender), status,
       shop, shopImg: shop ? shop.img : null, shopThumb: shop ? shop.thumb : null, shopUrl: shop ? shop.url : null,
@@ -840,12 +849,13 @@ const LOCALES = {
     shopBoxTitle: "供應社官方產品",
     shopCode: (code) => code ? `（編號 ${code}）` : "",
     shopPrice: (p) => p != null ? ` HK$${p}` : "",
+    shopSizes: (s) => s ? ` · 尺碼：${s}` : "",
     shopAlts: "其他款式：",
     shopAltSep: "、",
-    shopPriceNote: "2026-09 標示價，以店內為準。",
+    shopPriceNote: "2026-11 標示價及可選尺碼，以網店庫存為準。",
 
     /* ── 預算 ── */
-    budgetGrasshopper: `小童軍以<strong>旅團安排</strong>為準：活動服可於<a href="https://www.hkscoutshop.org.hk/" target="_blank" rel="noopener">供應社</a>購買（HK$75），單色衣物及運動鞋自行選購。`,
+    budgetGrasshopper: `小童軍以<strong>旅團安排</strong>為準：活動服可於<a href="https://store.scout.org.hk/" target="_blank" rel="noopener">供應社</a>購買（HK$75），單色衣物及運動鞋自行選購。`,
     priceIncluded: "已連帽，毋須另購",
     priceDependsGroup: "視乎旅團安排",
     priceOfficial: (p) => `HK$${p}`,
@@ -856,7 +866,7 @@ const LOCALES = {
     budgetHead: (mode) => `<strong>${mode}</strong>明細：`,
     budgetColItem: "物品", budgetColPrice: "約略價錢",
     budgetTotal: "合計（不含旅團頒發項目）",
-    budgetFootNote: "標編號者為 2026-09 標價，其餘為估算；皮鞋、短襪、襪褲可自行選購。",
+    budgetFootNote: "標編號者為 2026-11 標價，其餘為估算；皮鞋、短襪、襪褲可自行選購。",
     budgetOptionalNote: "「可選」項目（深資／樂行典禮領呔）不計入合計，以旅團規定為準。",
 
     /* ── 官方制服參考圖 ── */
@@ -905,11 +915,90 @@ const LOCALES = {
     reportLink: "向 SCOUT ADMIN 回報問題／意見 ↗",
     supportLink: "❤️ 讚好／收藏",
     supportLinkAria: "前往主站讚好或收藏此程式（開新分頁）",
-    langToggleAria: "Switch to English"
+    langToggleAria: "Switch to English",
+
+    /* ── SCOUT3D 立體制服及徽章整合 ── */
+    scout3dPreviewCta: "在 SCOUT3D 睇 3D 制服及釘章位置 ↗",
+    scout3dPreviewNote: (cue) => `360° 旋轉制服並點選任何徽章查看手冊頁碼（開啟後${cue}）。`,
+    scout3dBoardTitle: "SCOUT3D 360° 立體制服及徽章預覽",
+    scout3dBoardLead: "同站作者製作嘅互動 3D 模型：可切換正面、背面、左右兩側，放大睇清徽章擺位，亦可自選全港 44 區章、32 隊小隊章及活動／專科章並查看《儀容與制服手冊》頁碼。",
+    scout3dBoardCta: (label) => `開啟 SCOUT3D 查看 ${label} 3D 擺位 ↗`,
+    scout3dBoardMatched: (label, cue) => `已對應目前選擇：<strong>${label}</strong>（開啟後${cue}）`,
+    scout3dStepCue: (secName, branchName, genderText, bottomText, hasBranch, isLeader, isTrousers) => {
+      const steps = [`於頂部選「<strong>${secName}</strong>」`];
+      const outfitBits = [];
+      if (hasBranch) outfitBits.push(`款式選「<strong>${branchName}</strong>」`);
+      outfitBits.push(`性別選「<strong>${genderText}</strong>」`);
+      if (isLeader && isTrousers) outfitBits.push("制服編號選「<strong>編號 6（女長褲制服）</strong>」");
+      else if (bottomText) outfitBits.push(`下身選「<strong>${bottomText}</strong>」`);
+      if (outfitBits.length) steps.push(`於「服裝」分頁${outfitBits.join("、")}`);
+      return steps.join("，再");
+    }
   }
 }
 
 };
+
+/* ===========================================================
+   SCOUT3D (https://scout3d-gamma.vercel.app) 整合工具與四面擺位速查
+   =========================================================== */
+const SCOUT3D_BASE_URL = "https://scout3d-gamma.vercel.app/";
+function scout3dUrl(opts = {}){
+  const section = SECTIONS[opts.section] ? opts.section : "cub";
+  const branch = opts.branch || "land";
+  const gender = opts.gender === "female" ? "girl" : "boy";
+  const lang = (opts.lang || (typeof LANG !== "undefined" ? LANG : "zh-HK")) === "en" ? "en" : "zh";
+  const params = [`section=${encodeURIComponent(section)}`];
+  if (SECTIONS[section].hasBranch && ["land", "sea", "air"].includes(branch)) {
+    params.push(`variant=${encodeURIComponent(branch)}`);
+  }
+  params.push(`gender=${encodeURIComponent(gender)}`);
+  if (hasLowerBodyChoice(section, branch, opts.gender === "female" ? "female" : "male")) {
+    params.push(`bottom=${encodeURIComponent(opts.bottom === "trousers" ? "trousers" : "skirt")}`);
+  }
+  params.push(`lang=${encodeURIComponent(lang)}`);
+  return `${SCOUT3D_BASE_URL}?${params.join("&")}`;
+}
+
+const SCOUT3D_MAP_ZH = {
+  grasshopper: [
+    { view: "正面・左胸", text: "小童軍團員章（宣誓後佩戴）；旅巾配顏色巾圈" },
+    { view: "左側袖（穿著者）", text: "進步獎章 1–4 步（紅／啡／藍／綠 2×2 格）及小草蜢獎章" },
+    { view: "右側袖（穿著者）", text: "旅章及區章（或優異旅團章，視乎旅團安排）" },
+    { view: "正面・右胸", text: "大型活動紀念章（按總會通告期內佩戴）" }
+  ],
+  cub: [
+    { view: "正面・左胸袋", text: "世界童軍會員章（袋中央，宣誓後）；香港章（袋蓋上 3 cm）＋服務年星" },
+    { view: "正面・右胸袋", text: "幼童軍進度性／金紫荊獎章（袋中央）；童軍先修章、宗教及紀念章（袋蓋上）" },
+    { view: "左側袖（穿著者）", text: "4 核心範疇章（上方菱形）＋ 最多 11 個活動徽章（下方六角形）" },
+    { view: "右側袖（穿著者）", text: "旅章（肩縫下 2 cm）；地域章（向胸）＋區章（向背）並排相距 1 cm；優異旅團章" }
+  ],
+  scout: [
+    { view: "正面・左胸袋", text: "世界童軍會員章＋隊長／副隊長章（袋中央及下方）；香港章＋服務年星（袋蓋上 3 cm）" },
+    { view: "正面・右胸袋", text: "探索至總領袖獎章（袋中央）；金紫荊標誌及深資童軍先修章（袋蓋上）" },
+    { view: "左側袖（穿著者）", text: "專科徽章（由袖口菱形向上排起；多於 12 個可改配專章帶，著毛衣不戴）" },
+    { view: "右側袖（穿著者）", text: "旅章、地域章（向胸）＋區章（向背）並排、小隊章（其下方）及優異旅團章" }
+  ],
+  venture: [
+    { view: "雙肩肩帶", text: "深資童軍肩章（考獲後套於雙肩肩帶，方頭近膊頭）" },
+    { view: "正面・胸袋", text: "左胸：會員章＋香港章／年星；右胸：深資／榮譽童軍獎章（中央）＋舊最高獎章標誌（蓋上）" },
+    { view: "左側袖（穿著者）", text: "四個新段章及金帶、深資急救章、拯溺布章及香港青年獎勵計劃徽章" },
+    { view: "右側袖（穿著者）", text: "旅章、地域章（向胸）＋區章（向背）並排及積極公民／WOSM 徽章" }
+  ],
+  rover: [
+    { view: "雙肩肩帶", text: "樂行童軍肩章（套於雙肩肩帶，方頭近膊頭）" },
+    { view: "正面・胸袋", text: "左胸：會員章＋香港章／年星；右胸：樂行／貝登堡獎章（中央）＋舊最高獎章標誌（蓋上）" },
+    { view: "左側袖（穿著者）", text: "香港青年獎勵計劃金／銀章、急救章、拯溺布章及社區參與章" },
+    { view: "右側袖（穿著者）", text: "旅章、地域章（向胸）＋區章（向背）並排、地球部落及積極公民徽章" }
+  ],
+  leader: [
+    { view: "雙肩肩帶", text: "職級肩章（兩肩）；旅級以外加香港肩章（或旅級於右袖戴旅章）" },
+    { view: "正面・胸袋", text: "左胸：會員章（及可選布質名牌）；右胸：香港章（袋中央）＋最多 1 個舊最高獎章標誌" },
+    { view: "右側袖（穿著者）", text: "旅章（或香港肩章）；總會總部章／地域章（向胸）＋區章（向背）；「R」退休別針" },
+    { view: "領巾／頸部", text: "旅巾／會巾／基維爾領巾＋木章；典禮另設勳章、勳條（右胸袋上）及嘉許笛繩" }
+  ]
+};
+LOCALES["zh-HK"].SCOUT3D_MAP = SCOUT3D_MAP_ZH;
 
 /* ═══════════ 語言狀態 / Language state ═══════════ */
 let LANG = "zh-HK";

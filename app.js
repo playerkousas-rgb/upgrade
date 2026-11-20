@@ -362,7 +362,59 @@ function applyVisibility(){
   });
   updatePartControls();
 }
-function refresh(){ renderControls(); applyVisibility(); render(); renderBudget(); renderOfficialPhoto(); }
+function scout3dContext(){
+  const t = UI(), loc = L();
+  const sec = loc.SECTIONS[currentSection];
+  const hasBranch = !!sec.hasBranch;
+  const isLeader = currentSection === "leader";
+  const hasBottom = hasLowerBodyChoice(currentSection, currentBranch, currentGender);
+  const isTrousers = hasBottom && currentBottom === "trousers";
+  const branchName = hasBranch ? loc.BRANCHES[currentBranch].name : "";
+  const genderLabel = currentGender === "male"
+    ? (isLeader ? t.genderLeaderMale : t.genderMemberMale)
+    : (isLeader ? t.genderLeaderFemale : t.genderMemberFemale);
+  const scout3dGender = isLeader
+    ? (currentGender === "male" ? t.male : t.female)
+    : (LANG === "en" ? (currentGender === "female" ? "Girl" : "Boy") : (currentGender === "female" ? "女孩" : "男孩"));
+  const bottomText = hasBottom ? (isTrousers ? t.lowerBodyTrousers : t.lowerBodySkirt) : "";
+  const presetParts = [sec.name];
+  if (hasBranch) presetParts.push(branchName);
+  presetParts.push(genderLabel);
+  if (hasBottom) presetParts.push(bottomText);
+  const presetLabel = presetParts.join(t.nameSep);
+  const url = scout3dUrl({
+    section: currentSection,
+    branch: currentBranch,
+    gender: currentGender,
+    bottom: currentBottom,
+    lang: LANG
+  });
+  const cue = t.scout3dStepCue(sec.name, branchName, scout3dGender, bottomText, hasBranch, isLeader, isTrousers);
+  return { url, presetLabel, cue };
+}
+
+function renderScout3dPanel(){
+  const el = $("scout3d-badge-panel");
+  if(!el) return;
+  const t = UI(), loc = L();
+  const ctx = scout3dContext();
+  const angles = (loc.SCOUT3D_MAP && loc.SCOUT3D_MAP[currentSection]) || [];
+  el.innerHTML = `
+    <div class="scout3d-panel-head">
+      <h3>${t.scout3dBoardTitle}</h3>
+      <span class="scout3d-preset">${escapeHtml(ctx.presetLabel)}</span>
+    </div>
+    <p class="scout3d-panel-lead">${t.scout3dBoardLead}</p>
+    <div class="scout3d-angles">
+      ${angles.map(a => `<div class="scout3d-angle-card"><strong>${escapeHtml(a.view)}</strong><span>${escapeHtml(a.text)}</span></div>`).join("")}
+    </div>
+    <div class="scout3d-panel-foot">
+      <a class="scout3d-btn" href="${escapeHtml(ctx.url)}" target="_blank" rel="noopener">${escapeHtml(t.scout3dBoardCta(ctx.presetLabel))}</a>
+      <span class="cite">${t.scout3dBoardMatched(escapeHtml(ctx.presetLabel), ctx.cue)}</span>
+    </div>`;
+}
+
+function refresh(){ renderControls(); applyVisibility(); render(); renderBudget(); renderOfficialPhoto(); renderScout3dPanel(); }
 
 /* ===========================================================
    圖片：來源標示跟隨實際圖片；失敗時保留來源連結，不循環、不用空 src。
@@ -443,6 +495,7 @@ function render(){
 
   // 預覽
   const photo = officialPhoto(currentSection, currentBranch, currentGender);
+  const s3d = scout3dContext();
   let imgHtml;
   if(currentSection === "grasshopper"){
     imgHtml = `<div class="placeholder" style="background:#fff3e3;border-color:#ff7a1a">🧒</div>`;
@@ -455,6 +508,10 @@ function render(){
       <p><strong>${modeLabel}</strong></p>
       <p>${t.sectionAge}${sec.age}</p>
       ${sec.note ? `<p style="font-size:.88rem;color:var(--scout-olive)">${sec.note}</p>` : ""}
+      <div class="scout3d-preview-box">
+        <a class="scout3d-preview-btn" href="${escapeHtml(s3d.url)}" target="_blank" rel="noopener">${escapeHtml(t.scout3dPreviewCta)}</a>
+        <p class="cite" style="margin:.35rem 0 0">${t.scout3dPreviewNote(s3d.cue)}</p>
+      </div>
     </div></div>`;
 
   // 統計
@@ -502,6 +559,7 @@ function render(){
     <div class="checklist-title"><span class="badge" data-section="${currentSection}">${sec.name}</span><span>${t.checklistTitle(modeLabel, branchLabel, genderLabel, list.length)}</span></div>
     ${listHTML}
     <div class="note">${t.checklistNote}</div>`;
+  $("checklist").querySelectorAll("[data-scout3d-link]").forEach(a => { a.href = s3d.url; });
 }
 
 function toggleItem(el){
