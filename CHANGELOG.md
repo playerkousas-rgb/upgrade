@@ -2,6 +2,15 @@
 
 > 格式跟 [Keep a Changelog](https://keepachangelog.com/)；每次交付檔改版號必須同步更新 `package.json`、`index.html`（`GENERATED`、`app-version`、`APP_VERSION`、頁尾）與本檔（V 規則）。
 
+## [2.3.0] - 2026-11-20
+
+### Changed
+- **全面轉為本機內建互動 3D 制服及基本章擺位圖**（移除所有對外部 `SCOUT3D` 網站之跳轉連結）：
+  - 新增零第三方依賴純 Canvas 2D 3D 繪製引擎 [`scout3d.js`](scout3d.js)（`Scout3D`），依香港童軍六支部身高比例、制服配色（小童軍橙衣灰褲、陸軍杏衣橄欖綠下身、海童軍白衫深藍下身、空童軍淺藍衫深藍下身）、帽款（幼童軍男女帽、海童軍白頂帽、各支部軟帽、女領袖金邊硬帽及編號 6 長褲制服改配深綠軟帽）與《儀容與制服手冊》厘米座標即時繪製 3D 立體模型。
+  - 只聚焦基本入團及升團徽章（帽章、會員章、香港章、旅章、地域章／區章、童軍小隊章、深資／樂行／領袖肩章及舊最高獎章標誌），省卻 44 區章或 32 隊小隊繁瑣選單，同時嚴守 `docs/out-of-scope/01-invented-insignia.md`，以幾何位置色塊示意而不偽造官方徽號圖樣。
+  - 於步驟 ③ `#preview` 加入可在本頁展開之 3D 預覽抽屜（含小童軍適用）、於 `#part-badges` `#scout3d-badge-panel` 嵌入完整互動 3D 面板及可點擊切換視角的 4 面擺位卡片，並將清單內 `data-scout3d-focus` 按鈕改為頁內直接轉向並鎖定對應基本徽章。
+  - 更新 `build-site.mjs`、`scripts/check.js`、`scripts/lint.js`、`.github/workflows/verify-live.yml`、`tests/guard.test.mjs`、`scripts/smoke.js` 與中英雙語語言包。
+
 ## [2.2.4] - 2026-11-20
 
 ### Added

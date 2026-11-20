@@ -33,7 +33,7 @@ if (!exists(".vercelignore")) {
     if (viRaw.includes(mustBlock)) ok(`.vercelignore 擋住「${mustBlock}」`);
     else bad(`.vercelignore 漏擋「${mustBlock}」`);
   }
-  for (const mustKeep of ["package.json", "build-site.mjs", "scripts/", "DESIGN.md", "CHANGELOG.md", "icons/", "assets/", "index.html", "app.js", "data.js", "locale-en.js", "manifest.webmanifest", "store_gate_v1.0.js"]) {
+  for (const mustKeep of ["package.json", "build-site.mjs", "scripts/", "DESIGN.md", "CHANGELOG.md", "icons/", "assets/", "index.html", "app.js", "data.js", "locale-en.js", "scout3d.js", "manifest.webmanifest", "store_gate_v1.0.js"]) {
     const blocked = lines.some((pat) => {
       if (pat === "*.md" && mustKeep.endsWith(".md")) return true;
       const cleanPat = pat.replace(/\/$/, "");
@@ -180,7 +180,7 @@ else ok(`G11 圖標標準 9 檔齊全、尺寸無誤、合計 ${(iconBytes / 102
 /* ── 6) 設計 house rules（DESIGN.md + design-review 反 slop） ───────────── */
 const designProblems = [];
 if (!exists("DESIGN.md")) designProblems.push("缺 DESIGN.md（設計語言唯一真理）");
-const uiSource = [html, read("app.js")].join("\n");
+const uiSource = [html, read("app.js"), read("scout3d.js")].join("\n");
 const gradientHits = (uiSource.match(/(linear|radial|conic)-gradient\(/g) || []).length;
 if (gradientHits) designProblems.push(`UI 仍有 ${gradientHits} 處 CSS gradient（DESIGN.md 規定一律用實色表面）`);
 const eyebrowHits = (uiSource.match(/eyebrow|text-transform:\s*uppercase/g) || []).length;

@@ -184,16 +184,16 @@ const LOCALE_EN = {
           <li>Region + District badges: side by side 2 cm below the Group badge on the right sleeve, 1 cm apart (<strong>Region badge towards the front / chest, District badge towards the back</strong>; on smaller shirts spacing may scale down, never up)</li>
         </ul>
         <p>The Membership Badge and Hong Kong Badge are bought at the Scout Shop; Region, District and Group badges are usually bought or presented through the Group. Badges in good condition can be carried over when moving up (same Group, same District).</p>
-        <div class="tip">They must be sewn on with thread — no glue and no safety pins. <a href="#badge-placement-guide" onclick="openBadgeGuide(event)" style="display:inline-block;margin-left:.4rem;color:var(--scout-green);font-weight:700;text-decoration:underline">View Uniform Handbook cm sewing diagram →</a> <a class="scout3d-inline-link" data-scout3d-link href="https://scout3d-gamma.vercel.app/" target="_blank" rel="noopener">View 3D badge placement in SCOUT3D ↗</a></div>` },
+        <div class="tip">They must be sewn on with thread — no glue and no safety pins. <a href="#badge-placement-guide" onclick="openBadgeGuide(event)" style="display:inline-block;margin-left:.4rem;color:var(--scout-green);font-weight:700;text-decoration:underline">View Uniform Handbook cm sewing diagram →</a> <button type="button" class="scout3d-inline-link" data-scout3d-focus="hongKong" onclick="focusScout3dBadge('hongKong')">Inspect in 3D uniform view ↓</button></div>` },
     "patrol-badge": { title:"Patrol badge", desc:"Scout Section · issued by the Group / sold at the Scout Shop", icon:"🐾", buy:"group-or-supply",
       detail:`<h4>Patrol badge</h4><p>Only the <strong>Scout Section</strong> has patrol badges (the Association’s Scout uniform badge list includes the patrol badge; Venture and Rover do not).</p>
-        <p>According to the appendix of the Scout Training Scheme, patrol badges are sold at the Scout Shop and no documents need to be produced; some Groups also present them directly. Worn on the <strong>right sleeve</strong> (below the Region and District badges). <a class="scout3d-inline-link" data-scout3d-link href="https://scout3d-gamma.vercel.app/" target="_blank" rel="noopener">Pick a patrol in SCOUT3D to inspect the right sleeve in 3D ↗</a></p>` },
+        <p>According to the appendix of the Scout Training Scheme, patrol badges are sold at the Scout Shop and no documents need to be produced; some Groups also present them directly. Worn on the <strong>right sleeve</strong> (below the Region and District badges). <button type="button" class="scout3d-inline-link" data-scout3d-focus="patrol" onclick="focusScout3dBadge('patrol')">Focus right-sleeve patrol badge in 3D ↓</button></p>` },
     "badges-leader": { title:"Basic badges (Leaders)", desc:"Membership Badge, Hong Kong Badge, Hong Kong shoulder badge / Group badge, HQ / Region / District badge", icon:"🎖️", buy:"mixed",
       detail:`<h4>Basic badges (Leader’s ordinary uniform)</h4><p>The Association website lists the badges for the Leader’s ordinary uniform (No. 3) as: <strong>World Scout Membership Badge, Hong Kong Badge, Hong Kong shoulder badge / Group badge, HQ / Region / District badge and rank epaulettes</strong> (adult members wear the Hong Kong Badge in the centre of the right breast pocket).</p>
         <p>Moving up from a youth Section: the World Scout Membership Badge and Hong Kong Badge can be carried over; the Group / District / Region badge depends on your service unit — check with your Group.</p>
-        <div class="tip">Holders of the Dragon Scout Award / Baden-Powell Award may wear the corresponding <strong>Leader’s insignia</strong> for life after becoming a Leader. A Leader <strong>keeps only 1 Section top award insignia</strong> (if you hold several, wear the highest: Dragon Scout ＞ Baden-Powell ＞ Chief Scout’s ＞ Golden Bauhinia). <a href="#badge-placement-guide" onclick="openBadgeGuide(event)" style="display:inline-block;margin-left:.4rem;color:var(--scout-green);font-weight:700;text-decoration:underline">View Uniform Handbook cm sewing diagram →</a> <a class="scout3d-inline-link" data-scout3d-link href="https://scout3d-gamma.vercel.app/" target="_blank" rel="noopener">View 3D badge placement in SCOUT3D ↗</a></div>` },
+        <div class="tip">Holders of the Dragon Scout Award / Baden-Powell Award may wear the corresponding <strong>Leader’s insignia</strong> for life after becoming a Leader. A Leader <strong>keeps only 1 Section top award insignia</strong> (if you hold several, wear the highest: Dragon Scout ＞ Baden-Powell ＞ Chief Scout’s ＞ Golden Bauhinia). <a href="#badge-placement-guide" onclick="openBadgeGuide(event)" style="display:inline-block;margin-left:.4rem;color:var(--scout-green);font-weight:700;text-decoration:underline">View Uniform Handbook cm sewing diagram →</a> <button type="button" class="scout3d-inline-link" data-scout3d-focus="hongKong" onclick="focusScout3dBadge('hongKong')">Inspect in 3D uniform view ↓</button></div>` },
     "epaulette-rank": { title:"Rank epaulettes", desc:"Leaders · depends on the rank appointed", icon:"🎗️", buy:"check",
-      detail:`<h4>Rank epaulettes</h4><p>Worn on both shoulder straps; the design depends on the rank to which you are appointed (Probationary Leader / Assistant Leader / Leader / Commissioner and so on). Ask your Group which ones to buy after appointment. <a class="scout3d-inline-link" data-scout3d-link href="https://scout3d-gamma.vercel.app/" target="_blank" rel="noopener">Pick your rank in SCOUT3D to check shoulder placement in 3D ↗</a></p>` }
+      detail:`<h4>Rank epaulettes</h4><p>Worn on both shoulder straps; the design depends on the rank to which you are appointed (Probationary Leader / Assistant Leader / Leader / Commissioner and so on). Ask your Group which ones to buy after appointment. <button type="button" class="scout3d-inline-link" data-scout3d-focus="epaulette" onclick="focusScout3dBadge('epaulette')">Focus shoulder epaulettes in 3D ↓</button></p>` }
   },
 
   /* ── Scout Shop (store.scout.org.hk) product names ── */
@@ -268,7 +268,7 @@ const LOCALE_EN = {
         <li><strong>Socks</strong>: plain-coloured short or long socks</li>
         <li><strong>Hat (optional)</strong>: plain-coloured wide-brimmed sun hat or peaked cap</li>
         <li><strong>Neckerchief</strong>: invested Grasshopper Scouts wear the Group scarf (with a colour woggle)</li>
-        <li><strong>Badges</strong>: the Grasshopper Scout membership badge on the left chest after investiture; progress badges on the left sleeve <a class="scout3d-inline-link" data-scout3d-link href="https://scout3d-gamma.vercel.app/" target="_blank" rel="noopener">View 3D placement in SCOUT3D ↗</a></li>
+        <li><strong>Badges</strong>: the Grasshopper Scout membership badge on the left chest after investiture; progress badges on the left sleeve <button type="button" class="scout3d-inline-link" data-scout3d-focus="membership" onclick="focusScout3dBadge('membership')">Open built-in 3D view ↓</button></li>
       </ul>
       <div class="tip">The Group scarf and the Grasshopper Scout membership badge may only be worn <strong>after investiture</strong>.</div>
       <div class="warn">Apart from a colour woggle, Grasshopper Scouts may not use uniform accessories from other Sections (for example belts or uniform caps).</div>`
@@ -603,60 +603,216 @@ const LOCALE_EN = {
     supportLinkAria: "Open this app’s SCOUT APP STORE page in a new tab to like or save it",
     langToggleAria: "切換至中文介面",
 
-    scout3dPreviewCta: "View 3D uniform & badge placement in SCOUT3D ↗",
-    scout3dPreviewNote: (cue) => `Rotate 360°, zoom, and tap any badge for handbook page citations (once open, ${cue}).`,
-    scout3dBoardTitle: "SCOUT3D 360° 3D Uniform & Badge Viewer",
-    scout3dBoardLead: "Companion interactive 3D model by the same author: switch front, back, left and right views, zoom in on every badge, pick from 44 District badges, 32 Scout patrols and activity/proficiency badges, and check Uniform Handbook page numbers.",
-    scout3dBoardCta: (label) => `Open SCOUT3D for ${label} ↗`,
-    scout3dBoardMatched: (label, cue) => `Matches your selection: <strong>${label}</strong> (once open, ${cue})`,
-    scout3dStepCue: (secName, branchName, genderText, bottomText, hasBranch, isLeader, isTrousers) => {
-      const steps = [`select <strong>${secName}</strong> at the top`];
-      const outfitBits = [];
-      if (hasBranch) outfitBits.push(`variant <strong>${branchName}</strong>`);
-      outfitBits.push(`<strong>${genderText}</strong>`);
-      if (isLeader && isTrousers) outfitBits.push("<strong>No. 6 (Female Trousers Uniform)</strong>");
-      else if (bottomText) outfitBits.push(`<strong>${bottomText}</strong>`);
-      if (outfitBits.length) steps.push(`under <strong>Outfit</strong> choose ${outfitBits.join(", ")}`);
-      return steps.join(", then ");
-    }
+    scout3dToggleOpen: "Open 3D uniform & badge placement here ▼",
+    scout3dToggleClose: "Hide 3D uniform preview ▲",
+    scout3dPreviewNote: "Rendered live on this page: drag 360° and tap any basic badge for Handbook placement — no external links.",
+    scout3dBoardTitle: "Interactive 3D Uniform & Basic Badge Viewer (Built-in)",
+    scout3dBoardLead: "Rendered directly on this page using Section proportions and Uniform Handbook cm measurements. Focuses strictly on essential joining and moving-up badges (no district/region menus). Drag 360°, switch views, or click any badge to inspect placement and buying status.",
+    scout3dViewFront: "Front",
+    scout3dViewLeft: "Left pocket / sleeve",
+    scout3dViewRight: "Right pocket / sleeve",
+    scout3dViewShoulders: "Shoulders",
+    scout3dViewBack: "Back",
+    scout3dViewsAria: "3D view angle selector",
+    scout3dToggleBadges: "Basic badges",
+    scout3dToggleTie: "Ceremonial tie",
+    scout3dCanvasAria: "Interactive 3D Scout uniform and basic badge placement canvas; drag or use arrow keys to rotate",
+    scout3dZoomIn: "Zoom in",
+    scout3dZoomOut: "Zoom out",
+    scout3dZoomReset: "Reset view",
+    scout3dZoomResetShort: "Reset",
+    scout3dDragHint: "Drag to rotate 360° · Click any badge",
+    scout3dBadgesHeading: "Basic badge positions (click to focus)",
+    scout3dWhereLabel: "Placement: ",
+    scout3dSizeLabel: "Handbook size: ",
+    scout3dEmptyInspector: "No basic badges apply to this selection.",
+    scout3dDirFront: "Front",
+    scout3dDirBack: "Back",
+    scout3dDirWearerLeft: "Wearer’s left",
+    scout3dDirWearerRight: "Wearer’s right",
+    scout3dDisclaimer: "Schematic 3D geometric placement markers only — contains no official HKSA artwork. Refer to the Uniform Handbook or physical badges at the Scout Shop for embroidery artwork and small-size shirt spacing."
+  },
+
+  SCOUT3D_BADGES: {
+    grasshopper: [
+      { id: "membership", code: "MEM", name: "Grasshopper Membership Badge", mount: "torso", side: "left", anchor: "chest", shape: "circle", wCm: 5.0, hCm: 5.0, color: "#ff7a1a", view: "front", sizeLabel: "Ø 5 cm",
+        where: "Left chest (Grasshopper Guide, p. 10)",
+        rule: "Worn only after investiture; kept on the left chest when wearing a Group activity shirt.", itemIds: ["gh-clothes"] },
+      { id: "progress", code: "1–4", name: "Progress Badges (Steps 1–4)", mount: "sleeveL", anchor: "cuff", shape: "grid", wCm: 4.0, hCm: 4.0, color: "#2e7d4f", view: "left", sizeLabel: "2 × 2 cm each (2×2 grid)",
+        where: "Wearer’s left sleeve, starting ~0.3 cm above the cuff (red / brown / blue / green)",
+        rule: "Presented by the Group as earned; worn on the Group scarf if sewn onto casual clothes is impractical.", itemIds: ["gh-clothes"] },
+      { id: "troop", code: "GRP", name: "Group Badge (if used)", mount: "sleeveR", anchor: "troop", shape: "rect", wCm: 9.0, hCm: 2.2, color: "#1B4332", view: "right", sizeLabel: "9 × 2.2 cm",
+        where: "Wearer’s right sleeve, centred 2 cm below shoulder seam",
+        rule: "Depends on whether your Group uses uniform badges on Grasshopper shirts.", itemIds: ["gh-clothes"] },
+      { id: "district", code: "DIST", name: "District Badge (if used)", mount: "sleeveR", anchor: "districtSolo", shape: "rect", wCm: 3.8, hCm: 5.0, color: "#1e4293", view: "right", sizeLabel: "3.8 × 5 cm",
+        where: "Wearer’s right sleeve, centred 2 cm below the Group badge",
+        rule: "Group dress rules prevail; no other Section uniform accessories except a colour woggle.", itemIds: ["gh-clothes"] }
+    ],
+    cub: [
+      { id: "capbadge", code: "CAP", name: "Cub Cloth Cap Badge", mount: "head", shape: "rect", wCm: 3.2, hCm: 2.5, color: "#f0cc1e", view: "front", sizeLabel: "Pre-sewn on cap crown",
+        where: "Centre front crown of boys’ peaked cap / girls’ round hat",
+        rule: "Scout Shop Cub hats already include the sewn cloth badge — check with your Group before ordering separately.", itemIds: ["capbadge-cub"] },
+      { id: "membership", code: "MEM", name: "World Scout Membership Badge", mount: "torso", side: "left", anchor: "centre", shape: "circle", wCm: 4.0, hCm: 4.0, color: "#5b3fa0", view: "front", sizeLabel: "Ø 4 cm",
+        where: "Centre of left breast pocket (below flap)",
+        rule: "Worn only after investiture; the same purple world badge stays in this spot up to Leader.", itemIds: ["badges-youth"] },
+      { id: "hongKong", code: "HK", name: "Hong Kong Badge", mount: "torso", side: "left", anchor: "aboveFlap", gapCm: 3.0, shape: "rect", wCm: 4.0, hCm: 5.6, color: "#c43b3b", view: "front", sizeLabel: "4 × 5.6 cm",
+        where: "3 cm above the left breast pocket flap, centred (service stars go below it)",
+        rule: "Same uniform position across all youth Sections from April 2023 (scale gap slightly on small shirts).", itemIds: ["badges-youth"] },
+      { id: "troop", code: "GRP", name: "Group Badge", mount: "sleeveR", anchor: "troop", shape: "rect", wCm: 9.0, hCm: 2.2, color: "#1B4332", view: "right", sizeLabel: "9 × 2.2 cm",
+        where: "Wearer’s right sleeve, centred 2 cm below shoulder seam",
+        rule: "Represents your Scout Group; issued or bulk-ordered by the Group.", itemIds: ["badges-youth"] },
+      { id: "region", code: "REG", name: "Region Badge", mount: "sleeveR", anchor: "region", shape: "rect", wCm: 3.8, hCm: 5.0, color: "#603239", view: "right", sizeLabel: "3.8 × 5 cm",
+        where: "Wearer’s right sleeve, 2 cm below Group badge, front side (towards chest)",
+        rule: "Placed side-by-side 1 cm from the District badge (never stacked vertically).", itemIds: ["badges-youth"] },
+      { id: "district", code: "DIST", name: "District Badge", mount: "sleeveR", anchor: "district", shape: "rect", wCm: 3.8, hCm: 5.0, color: "#1e4293", view: "right", sizeLabel: "3.8 × 5 cm",
+        where: "Wearer’s right sleeve, 2 cm below Group badge, rear side (towards back)",
+        rule: "Placed side-by-side 1 cm from the Region badge; kept when moving up in the same District.", itemIds: ["badges-youth"] },
+      { id: "progress", code: "PROG", name: "Cub Progressive & Core Zone", mount: "torso", side: "right", anchor: "centre", shape: "circle", wCm: 4.0, hCm: 4.0, color: "#5a8f3a", view: "front", sizeLabel: "Right pocket / left sleeve",
+        where: "Centre of right pocket (progressive / Golden Bauhinia); left sleeve reserved for core & activity badges",
+        rule: "Leave blank when joining — sewn progressively as awards are earned.", itemIds: [] }
+    ],
+    scout: [
+      { id: "capbadge", code: "CAP", name: "Scout Cap Badge", mount: "head", shape: "circle", wCm: 2.8, hCm: 2.8, color: "#cfd3d8", view: "front", sizeLabel: "Metal cap badge (Sea: cap tally/badge)",
+        where: "Left side of Land/Air beret above left eye; front of Sea white-top cap",
+        rule: "Moving up from Cub requires a new cap and Scout cap badge.", itemIds: ["capbadge-scout", "cap-sea-scout"] },
+      { id: "membership", code: "MEM", name: "World Scout Membership Badge", mount: "torso", side: "left", anchor: "centre", shape: "circle", wCm: 4.0, hCm: 4.0, color: "#5b3fa0", view: "front", sizeLabel: "Ø 4 cm",
+        where: "Centre of left breast pocket (kept when moving up)",
+        rule: "Carry over your existing Membership Badge if moving up in the same Group.", itemIds: ["badges-youth"] },
+      { id: "hongKong", code: "HK", name: "Hong Kong Badge", mount: "torso", side: "left", anchor: "aboveFlap", gapCm: 3.0, shape: "rect", wCm: 4.0, hCm: 5.6, color: "#c43b3b", view: "front", sizeLabel: "4 × 5.6 cm",
+        where: "3 cm above left pocket flap, centred (service stars underneath)",
+        rule: "Same badge design as Cub Scout; transfer or replace if switching to a Sea/Air shirt.", itemIds: ["badges-youth"] },
+      { id: "troop", code: "GRP", name: "Group Badge", mount: "sleeveR", anchor: "troop", shape: "rect", wCm: 9.0, hCm: 2.2, color: "#1B4332", view: "right", sizeLabel: "9 × 2.2 cm",
+        where: "Wearer’s right sleeve, centred 2 cm below shoulder seam",
+        rule: "Keep in the same Group; replace only if changing to a Sea/Air Group.", itemIds: ["badges-youth"] },
+      { id: "region", code: "REG", name: "Region Badge", mount: "sleeveR", anchor: "region", shape: "rect", wCm: 3.8, hCm: 5.0, color: "#603239", view: "right", sizeLabel: "3.8 × 5 cm",
+        where: "Wearer’s right sleeve, 2 cm below Group badge, front side (towards chest)",
+        rule: "Side-by-side 1 cm from District badge.", itemIds: ["badges-youth"] },
+      { id: "district", code: "DIST", name: "District Badge", mount: "sleeveR", anchor: "district", shape: "rect", wCm: 3.8, hCm: 5.0, color: "#1e4293", view: "right", sizeLabel: "3.8 × 5 cm",
+        where: "Wearer’s right sleeve, 2 cm below Group badge, rear side (towards back)",
+        rule: "Side-by-side 1 cm from Region badge.", itemIds: ["badges-youth"] },
+      { id: "patrol", code: "PTR", name: "Patrol Badge", mount: "sleeveR", anchor: "patrol", shape: "rect", wCm: 4.0, hCm: 1.6, color: "#0a5c36", view: "right", sizeLabel: "4 × 1.6 cm",
+        where: "Wearer’s right sleeve, 3 cm above cuff seam (below Region & District)",
+        rule: "Exclusive to the Scout Section; issued by your Group or bought at the Scout Shop once assigned a patrol.", itemIds: ["patrol-badge"] },
+      { id: "highestEmblem", code: "EMB", name: "Prior Top Award Insignia (Move-up)", mount: "torso", side: "right", anchor: "aboveFlapTight", shape: "rect", wCm: 3.0, hCm: 2.0, color: "#d8b23a", view: "front", sizeLabel: "Cloth miniature emblem",
+        where: "Above right pocket flap (remove the Cub Golden Bauhinia Award itself)",
+        rule: "Scouts who earned the Cub Golden Bauhinia Award replace the main badge with its miniature insignia above the right flap.", itemIds: [] }
+    ],
+    venture: [
+      { id: "capbadge", code: "CAP", name: "Venture / Scout Cap Badge", mount: "head", shape: "circle", wCm: 2.8, hCm: 2.8, color: "#cfd3d8", view: "front", sizeLabel: "Land/Air keep Scout badge; Sea uses Sea Venture badge",
+        where: "Above left eye on maroon/grey-blue beret; front of Sea white-top cap",
+        rule: "Land & Air Ventures keep the silver Scout cap badge; Sea Ventures buy the white-top cap and Venture Sea badge.", itemIds: ["capbadge-scout", "capbadge-venture-sea"] },
+      { id: "epaulette", code: "EPA", name: "Venture Scout Epaulettes", mount: "shoulder", shape: "rect", wCm: 9.0, hCm: 3.8, color: "#7a1f2b", view: "shoulders", sizeLabel: "9 × 3.8 cm",
+        where: "Both shoulder straps (square end at shoulder seam, rounded end towards collar)",
+        rule: "Earned prerequisite before Venture progressive awards — leave blank until completed.", itemIds: [] },
+      { id: "membership", code: "MEM", name: "World Scout Membership Badge", mount: "torso", side: "left", anchor: "centre", shape: "circle", wCm: 4.0, hCm: 4.0, color: "#5b3fa0", view: "front", sizeLabel: "Ø 4 cm",
+        where: "Centre of left breast pocket",
+        rule: "Carried over when moving up from Scout.", itemIds: ["badges-youth"] },
+      { id: "hongKong", code: "HK", name: "Hong Kong Badge", mount: "torso", side: "left", anchor: "aboveFlap", gapCm: 3.0, shape: "rect", wCm: 4.0, hCm: 5.6, color: "#c43b3b", view: "front", sizeLabel: "4 × 5.6 cm",
+        where: "3 cm above left pocket flap, centred",
+        rule: "Carried over when moving up.", itemIds: ["badges-youth"] },
+      { id: "troop", code: "GRP", name: "Group Badge", mount: "sleeveR", anchor: "troop", shape: "rect", wCm: 9.0, hCm: 2.2, color: "#1B4332", view: "right", sizeLabel: "9 × 2.2 cm",
+        where: "Wearer’s right sleeve, centred 2 cm below shoulder seam",
+        rule: "Note: Venture Scouts do NOT wear the Scout patrol badge or Scout proficiency badges — remove them on moving up.", itemIds: ["badges-youth"] },
+      { id: "region", code: "REG", name: "Region Badge", mount: "sleeveR", anchor: "region", shape: "rect", wCm: 3.8, hCm: 5.0, color: "#603239", view: "right", sizeLabel: "3.8 × 5 cm",
+        where: "Wearer’s right sleeve, 2 cm below Group badge, front side (towards chest)",
+        rule: "Side-by-side 1 cm from District badge.", itemIds: ["badges-youth"] },
+      { id: "district", code: "DIST", name: "District Badge", mount: "sleeveR", anchor: "district", shape: "rect", wCm: 3.8, hCm: 5.0, color: "#1e4293", view: "right", sizeLabel: "3.8 × 5 cm",
+        where: "Wearer’s right sleeve, 2 cm below Group badge, rear side (towards back)",
+        rule: "Side-by-side 1 cm from Region badge.", itemIds: ["badges-youth"] },
+      { id: "highestEmblem", code: "EMB", name: "Prior Top Award Insignia", mount: "torso", side: "right", anchor: "aboveFlapTight", shape: "rect", wCm: 3.6, hCm: 2.0, color: "#d8b23a", view: "front", sizeLabel: "Single or paired insignia",
+        where: "Above right pocket flap (remove the Chief Scout’s Award itself)",
+        rule: "Youth members may wear both Golden Bauhinia and Chief Scout’s insignia side by side above the right flap.", itemIds: [] }
+    ],
+    rover: [
+      { id: "capbadge", code: "CAP", name: "Rover / Sea / Air Cap Badge", mount: "head", shape: "circle", wCm: 2.8, hCm: 2.8, color: "#cfd3d8", view: "front", sizeLabel: "Land/Air keep Scout badge; Sea matches Venture Sea",
+        where: "Above left eye on dark green/grey-blue beret; front of Sea white-top cap",
+        rule: "Land Rovers switch from maroon beret to dark green beret and transfer their Scout cap badge.", itemIds: ["capbadge-scout", "capbadge-rover-sea"] },
+      { id: "epaulette", code: "EPA", name: "Rover Scout Epaulettes", mount: "shoulder", shape: "rect", wCm: 9.0, hCm: 3.8, color: "#0a3a5c", view: "shoulders", sizeLabel: "9 × 3.8 cm",
+        where: "Both shoulder straps (after completing Rover induction)",
+        rule: "Remove Venture epaulettes and Venture stage badges when moving up to Rover.", itemIds: [] },
+      { id: "membership", code: "MEM", name: "World Scout Membership Badge", mount: "torso", side: "left", anchor: "centre", shape: "circle", wCm: 4.0, hCm: 4.0, color: "#5b3fa0", view: "front", sizeLabel: "Ø 4 cm",
+        where: "Centre of left breast pocket",
+        rule: "Global purple membership badge.", itemIds: ["badges-youth"] },
+      { id: "hongKong", code: "HK", name: "Hong Kong Badge", mount: "torso", side: "left", anchor: "aboveFlap", gapCm: 3.0, shape: "rect", wCm: 4.0, hCm: 5.6, color: "#c43b3b", view: "front", sizeLabel: "4 × 5.6 cm",
+        where: "3 cm above left pocket flap, centred",
+        rule: "Kept on moving up.", itemIds: ["badges-youth"] },
+      { id: "troop", code: "GRP", name: "Group Badge", mount: "sleeveR", anchor: "troop", shape: "rect", wCm: 9.0, hCm: 2.2, color: "#1B4332", view: "right", sizeLabel: "9 × 2.2 cm",
+        where: "Wearer’s right sleeve, centred 2 cm below shoulder seam",
+        rule: "Kept in the same Group.", itemIds: ["badges-youth"] },
+      { id: "region", code: "REG", name: "Region Badge", mount: "sleeveR", anchor: "region", shape: "rect", wCm: 3.8, hCm: 5.0, color: "#603239", view: "right", sizeLabel: "3.8 × 5 cm",
+        where: "Wearer’s right sleeve, 2 cm below Group badge, front side (towards chest)",
+        rule: "Side-by-side 1 cm from District badge.", itemIds: ["badges-youth"] },
+      { id: "district", code: "DIST", name: "District Badge", mount: "sleeveR", anchor: "district", shape: "rect", wCm: 3.8, hCm: 5.0, color: "#1e4293", view: "right", sizeLabel: "3.8 × 5 cm",
+        where: "Wearer’s right sleeve, 2 cm below Group badge, rear side (towards back)",
+        rule: "Side-by-side 1 cm from Region badge.", itemIds: ["badges-youth"] },
+      { id: "highestEmblem", code: "EMB", name: "Prior Top Award Insignia", mount: "torso", side: "right", anchor: "aboveFlapTight", shape: "rect", wCm: 3.6, hCm: 2.0, color: "#d8b23a", view: "front", sizeLabel: "Paired or single insignia",
+        where: "Above right pocket flap (remove the Dragon Scout Award itself)",
+        rule: "Replace the Dragon Scout Award with its insignia above the right flap.", itemIds: [] }
+    ],
+    leader: [
+      { id: "capbadge", code: "RANK", name: "Leader Rank Cap Badge", mount: "head", shape: "circle", wCm: 2.8, hCm: 3.6, color: "#d8b23a", view: "front", sizeLabel: "Colour by rank (green / red / light blue / grey)",
+        where: "Male beret above left eye; Female No. 3 peaked hat right side; Female No. 6 trousers beret above left eye; Sea white cap front",
+        rule: "Must match your appointed Leader rank — never reuse the youth silver Scout cap badge.", itemIds: ["capbadge-rank", "capbadge-sea-leader"] },
+      { id: "epaulette", code: "EPA", name: "Rank Epaulettes", mount: "shoulder", shape: "rect", wCm: 4.6, hCm: 3.65, color: "#3a3a3a", view: "shoulders", sizeLabel: "4.6 × 3.65 cm",
+        where: "Both shoulder straps near outer shoulder seam (emblem facing collar)",
+        rule: "Issued/bought according to appointment rank; HQ / Region / District Leaders add Hong Kong shoulder titles.", itemIds: ["epaulette-rank"] },
+      { id: "membership", code: "MEM", name: "World Scout Membership Badge", mount: "torso", side: "left", anchor: "centre", shape: "circle", wCm: 4.0, hCm: 4.0, color: "#5b3fa0", view: "front", sizeLabel: "Ø 4 cm",
+        where: "Centre of left breast pocket (kept when promoted)",
+        rule: "Left pocket flap area above is reserved for name tag / commendation; Hong Kong Badge moves to the right pocket!", itemIds: ["badges-leader"] },
+      { id: "hongKong", code: "HK", name: "Hong Kong Badge (Leader: RIGHT Pocket!)", mount: "torso", side: "right", anchor: "centre", shape: "rect", wCm: 4.0, hCm: 5.6, color: "#c43b3b", view: "front", sizeLabel: "4 × 5.6 cm",
+        where: "Centre of RIGHT breast pocket (differs from youth left pocket!)",
+        rule: "Key adult uniform rule: Leaders wear the Hong Kong Badge centred on the RIGHT pocket instead of above the left flap.", itemIds: ["badges-leader"] },
+      { id: "troop", code: "GRP", name: "Group Badge (or HQ Title)", mount: "sleeveR", anchor: "troop", shape: "rect", wCm: 9.0, hCm: 2.2, color: "#1B4332", view: "right", sizeLabel: "9 × 2.2 cm",
+        where: "Wearer’s right sleeve, centred 2 cm below shoulder seam",
+        rule: "Group Leaders wear the Group badge here; HQ / Region / District Leaders wear HK shoulder titles instead.", itemIds: ["badges-leader"] },
+      { id: "region", code: "REG", name: "Region Badge", mount: "sleeveR", anchor: "region", shape: "rect", wCm: 3.8, hCm: 5.0, color: "#603239", view: "right", sizeLabel: "3.8 × 5 cm",
+        where: "Wearer’s right sleeve, 2 cm below Group badge, front side (towards chest)",
+        rule: "Side-by-side 1 cm from District badge (depends on service unit).", itemIds: ["badges-leader"] },
+      { id: "district", code: "DIST", name: "District Badge", mount: "sleeveR", anchor: "district", shape: "rect", wCm: 3.8, hCm: 5.0, color: "#1e4293", view: "right", sizeLabel: "3.8 × 5 cm",
+        where: "Wearer’s right sleeve, 2 cm below Group badge, rear side (towards back)",
+        rule: "Side-by-side 1 cm from Region badge.", itemIds: ["badges-leader"] },
+      { id: "highestEmblem", code: "1 MAX", name: "Prior Top Award Insignia (Max 1)", mount: "torso", side: "right", anchor: "aboveFlapTight", shape: "rect", wCm: 3.2, hCm: 2.0, color: "#d8b23a", view: "front", sizeLabel: "Keep highest 1 only",
+        where: "Above right pocket flap (maximum 1 insignia for Leaders)",
+        rule: "Precedence: Dragon Scout ＞ Baden-Powell ＞ Chief Scout’s ＞ Golden Bauhinia.", itemIds: [] }
+    ]
   },
 
   SCOUT3D_MAP: {
     grasshopper: [
-      { view: "Front · Left chest", text: "Grasshopper Membership Badge (after investiture); Group scarf with colour woggle" },
-      { view: "Wearer’s left sleeve", text: "Progress Badges 1–4 (red / brown / blue / green 2×2 grid) & Little Grasshopper Award" },
-      { view: "Wearer’s right sleeve", text: "Group badge & District badge (or Meritorious Group badge, per Group)" },
-      { view: "Front · Right chest", text: "Commemorative event badge (during Association-approved period)" }
+      { view: "Front · Left chest", text: "Grasshopper Membership Badge (after investiture); Group scarf with colour woggle", focusView: "front" },
+      { view: "Wearer’s left sleeve", text: "Progress Badges 1–4 (red / brown / blue / green 2×2 grid) & Little Grasshopper Award", focusView: "left" },
+      { view: "Wearer’s right sleeve", text: "Group badge & District badge (per Group dress arrangement)", focusView: "right" },
+      { view: "Back · Neckerchief", text: "Group scarf draped behind the collar; no other Section accessories except colour woggle", focusView: "back" }
     ],
     cub: [
-      { view: "Front · Left pocket", text: "World Scout Membership Badge (pocket centre, after investiture); Hong Kong Badge (3 cm above flap) + service stars" },
-      { view: "Front · Right pocket", text: "Cub progressive / Golden Bauhinia Award (pocket centre); Scout Link, faith & commemorative badges (above flap)" },
-      { view: "Wearer’s left sleeve", text: "4 Core Area badges (upper diamond) + up to 11 Activity badges (lower hexagons)" },
-      { view: "Wearer’s right sleeve", text: "Group badge (2 cm below shoulder seam); Region (towards chest) + District (towards back) side by side, 1 cm apart" }
+      { view: "Front · Left pocket", text: "World Scout Membership Badge (pocket centre, after investiture); Hong Kong Badge (3 cm above flap) + service stars", focusView: "front" },
+      { view: "Front · Right pocket", text: "Cub progressive / Golden Bauhinia Award (pocket centre); Scout Link badge (above flap)", focusView: "front" },
+      { view: "Wearer’s left sleeve", text: "4 Core Area badges (upper) + Activity badges (lower), left blank on joining", focusView: "left" },
+      { view: "Wearer’s right sleeve", text: "Group badge (2 cm below shoulder seam); Region (towards chest) + District (towards back) side by side, 1 cm apart", focusView: "right" }
     ],
     scout: [
-      { view: "Front · Left pocket", text: "World Scout Membership Badge + Sixer/Patrol Leader stripes (centre & below); Hong Kong Badge + service stars (3 cm above flap)" },
-      { view: "Front · Right pocket", text: "Pathfinder to Chief Scout’s Award (pocket centre); Golden Bauhinia insignia & Venture Link badge (above flap)" },
-      { view: "Wearer’s left sleeve", text: "Proficiency badges in diamonds from cuff upward (wear sash if over 12; omitted on sweater)" },
-      { view: "Wearer’s right sleeve", text: "Group badge, Region (towards chest) + District (towards back) side by side, Patrol badge below, and Meritorious Group badge" }
+      { view: "Front · Left pocket", text: "World Scout Membership Badge (pocket centre); Hong Kong Badge + service stars (3 cm above flap)", focusView: "front" },
+      { view: "Front · Right pocket", text: "Pathfinder to Chief Scout’s Award (pocket centre); Golden Bauhinia insignia (above flap)", focusView: "front" },
+      { view: "Wearer’s left sleeve", text: "Proficiency badges in diamonds from cuff upward (wear sash if over 12)", focusView: "left" },
+      { view: "Wearer’s right sleeve", text: "Group badge, Region (towards chest) + District (towards back) side by side & Patrol badge (3 cm above cuff)", focusView: "right" }
     ],
     venture: [
-      { view: "Shoulder straps", text: "Venture Scout epaulettes (slipped onto both shoulder straps once earned, square end near shoulder)" },
-      { view: "Front · Pockets", text: "Left pocket: Membership + HK Badge / stars; Right pocket: Venture / Dragon Scout Award (centre) + prior top award insignia (above flap)" },
-      { view: "Wearer’s left sleeve", text: "4 Stage badges & gold cords, Venture First Aid, Life Saving cloth badge & AYP awards" },
-      { view: "Wearer’s right sleeve", text: "Group badge, Region (towards chest) + District (towards back) side by side & Active Citizen / WOSM badges" }
+      { view: "Shoulders", text: "Venture Scout epaulettes (slipped onto both shoulder straps once earned, square end near shoulder)", focusView: "shoulders" },
+      { view: "Front · Pockets", text: "Left pocket: Membership + HK Badge; Right pocket: Venture / Dragon Scout Award (centre) + prior top award insignia (above flap)", focusView: "front" },
+      { view: "Wearer’s left sleeve", text: "4 Stage badges & gold cords, Venture First Aid & AYP awards", focusView: "left" },
+      { view: "Wearer’s right sleeve", text: "Group badge, Region (towards chest) + District (towards back) side by side (no Patrol badge)", focusView: "right" }
     ],
     rover: [
-      { view: "Shoulder straps", text: "Rover Scout epaulettes (slipped onto both shoulder straps, square end near shoulder)" },
-      { view: "Front · Pockets", text: "Left pocket: Membership + HK Badge / stars; Right pocket: Rover / Baden-Powell Award (centre) + prior top award insignia (above flap)" },
-      { view: "Wearer’s left sleeve", text: "AYP Gold / Silver, First Aid, Life Saving cloth badge & Community Involvement badge" },
-      { view: "Wearer’s right sleeve", text: "Group badge, Region (towards chest) + District (towards back) side by side, Earth Tribe & Active Citizen badges" }
+      { view: "Shoulders", text: "Rover Scout epaulettes (slipped onto both shoulder straps, square end near shoulder)", focusView: "shoulders" },
+      { view: "Front · Pockets", text: "Left pocket: Membership + HK Badge; Right pocket: Rover / Baden-Powell Award (centre) + prior top award insignia (above flap)", focusView: "front" },
+      { view: "Wearer’s left sleeve", text: "AYP Gold / Silver, First Aid & Community Involvement badge", focusView: "left" },
+      { view: "Wearer’s right sleeve", text: "Group badge, Region (towards chest) + District (towards back) side by side", focusView: "right" }
     ],
     leader: [
-      { view: "Shoulder straps", text: "Rank epaulettes on both straps; Hong Kong shoulder title outside Groups (Groups wear Group badge on right sleeve)" },
-      { view: "Front · Pockets", text: "Left pocket: Membership Badge (plus optional cloth name tag); Right pocket: Hong Kong Badge (centre) + at most 1 prior top award insignia" },
-      { view: "Wearer’s right sleeve", text: "Group badge (or HK shoulder title); AHQ / Region (towards chest) + District (towards back) badges; optional ‘R’ retired pin" },
-      { view: "Collar & neck", text: "Group / Association / Gilwell scarf + Wood Badge; medals, ribbons (above right pocket) & Commissioner’s commendation cord for formal dress" }
+      { view: "Shoulders", text: "Rank epaulettes on both straps; Hong Kong shoulder title outside Groups", focusView: "shoulders" },
+      { view: "Front · Pockets", text: "Left pocket: Membership Badge; Right pocket: Hong Kong Badge (CENTRE!) + at most 1 prior top award insignia", focusView: "front" },
+      { view: "Wearer’s right sleeve", text: "Group badge (or HK shoulder title); AHQ / Region (towards chest) + District (towards back) badges", focusView: "right" },
+      { view: "Back · Scarf & hat", text: "Group / Association / Gilwell scarf triangle (Female No. 3 peaked hat; No. 6 trousers switches to green beret)", focusView: "back" }
     ]
   },
 

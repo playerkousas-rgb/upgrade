@@ -33,11 +33,11 @@ function checkSyntax(file) {
   }
 }
 
-for (const jsFile of ["app.js", "data.js", "locale-en.js", "store_gate_v1.0.js", "scripts/check.js", "scripts/lint.js", "scripts/to-avif.js", "build-site.mjs"]) {
+for (const jsFile of ["app.js", "data.js", "locale-en.js", "scout3d.js", "store_gate_v1.0.js", "scripts/check.js", "scripts/lint.js", "scripts/to-avif.js", "build-site.mjs"]) {
   if (fs.existsSync(path.join(ROOT, jsFile))) checkSyntax(jsFile);
 }
 
-const sourceFiles = ["index.html", "app.js", "data.js", "locale-en.js", "manifest.webmanifest", "store_gate_v1.0.js"];
+const sourceFiles = ["index.html", "app.js", "data.js", "locale-en.js", "scout3d.js", "manifest.webmanifest", "store_gate_v1.0.js"];
 const referencedAssets = new Set();
 const referencedIcons = new Set();
 

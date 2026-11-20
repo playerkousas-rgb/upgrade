@@ -318,18 +318,31 @@ function startServer() {
   check(langBtn && langBtn.textContent === '中文', '英文介面時語言掣顯示「中文」');
   check(window.localStorage.getItem('scout-guide-lang-v1') === 'en', '語言設定已寫入 localStorage');
   check(
-    d.querySelector('#preview .scout3d-preview-btn')?.getAttribute('href') === 'https://scout3d-gamma.vercel.app/?section=cub&gender=boy&lang=en',
-    '英文版步驟 ③ SCOUT3D 預覽連結帶入 section=cub&gender=boy&lang=en'
+    d.querySelector('#preview .scout3d-preview-btn')?.tagName === 'BUTTON' &&
+    d.querySelector('#preview .scout3d-preview-btn')?.textContent.includes('3D'),
+    '英文版步驟 ③ 本機 3D 預覽切換掣已翻譯'
   );
   check(
-    d.querySelector('#scout3d-badge-panel .scout3d-btn')?.getAttribute('href') === 'https://scout3d-gamma.vercel.app/?section=cub&gender=boy&lang=en' &&
-    d.querySelectorAll('#scout3d-badge-panel .scout3d-angle-card').length === 4,
-    '英文版徽章擺位面板顯示 4 面擺位卡與情境連動連結'
+    !!d.querySelector('#scout3d-badge-panel canvas.scout3d-canvas') &&
+    d.querySelectorAll('#scout3d-badge-panel .scout3d-angle-card').length === 4 &&
+    d.querySelectorAll('#scout3d-badge-panel .scout3d-pill').length >= 6,
+    '英文版徽章擺位面板掛載本機 3D canvas、視角卡與基本章選擇器'
   );
   check(
-    d.querySelector('#checklist [data-scout3d-link]')?.getAttribute('href') === 'https://scout3d-gamma.vercel.app/?section=cub&gender=boy&lang=en',
-    '清單內 data-scout3d-link 已同步覆寫為當前情境連結'
+    !!d.querySelector('#checklist [data-scout3d-focus="hongKong"]'),
+    '清單內 data-scout3d-focus 按鈕已改為頁內對準 3D 徽章'
   );
+  check(
+    !d.body.innerHTML.includes('scout3d-gamma.vercel.app'),
+    '整頁無任何連往 scout3d-gamma.vercel.app 的外站連結'
+  );
+  window.toggleScout3dPreview();
+  check(
+    !d.getElementById('scout3d-preview-drawer').hidden &&
+    !!d.querySelector('#scout3d-preview-drawer canvas.scout3d-canvas'),
+    '英文版點選預覽按鈕即於 #preview 內展開 3D 制服抽屜'
+  );
+  window.toggleScout3dPreview();
 
   // 靜態 HTML 覆蓋率：切到英文後仍然有中文的純文字（只容許已知的網址／時間／符號）
   const ALLOWED = ['store.scout.org.hk ↗', '11:30 – 19:30', '11:00 – 19:00', '10:00 – 18:00',
@@ -355,8 +368,8 @@ function startServer() {
   window.setGender('female');
   window.setBottom('trousers');
   check(
-    d.querySelector('#preview .scout3d-preview-btn')?.getAttribute('href') === 'https://scout3d-gamma.vercel.app/?section=venture&variant=land&gender=girl&bottom=trousers&lang=en',
-    '英文版深資女裝長褲 SCOUT3D 連結帶入 variant=land&gender=girl&bottom=trousers'
+    d.querySelector('#scout3d-badge-panel .scout3d-preset')?.textContent.includes('Trousers'),
+    '英文版深資女裝長褲 3D 面板預設標籤同步更新為 Trousers'
   );
   const enTrousers = d.querySelector('#checklist [data-item-id="trousers-olive-f"]');
   check(!!enTrousers && enTrousers.textContent.indexOf('Ladies’') !== -1, '英文版女裝長褲有英文名稱');
@@ -378,9 +391,17 @@ function startServer() {
   check($('expand-all-parts').textContent === '全部展開', '開合工具列還原');
   check(d.querySelector('#badge-timeline').textContent.indexOf('獎章歷程') !== -1, '獎章歷程圖還原');
   check(
-    d.querySelector('#preview .scout3d-preview-btn')?.getAttribute('href')?.includes('lang=zh'),
-    '切回中文後 SCOUT3D 連結切回 lang=zh'
+    d.querySelector('#preview .scout3d-preview-btn')?.textContent.includes('3D 制服'),
+    '切回中文後 3D 預覽切換掣同步還原中文'
   );
+  window.selectSection('grasshopper');
+  window.focusScout3dBadge('membership');
+  check(
+    !d.getElementById('scout3d-preview-drawer').hidden &&
+    d.querySelector('#scout3d-preview-drawer .scout3d-inspect-head')?.textContent.includes('小童軍團員章'),
+    '小童軍點擊基本章對準會在 #preview 抽屜展開 3D 並鎖定小童軍團員章'
+  );
+  window.selectSection('cub');
 
   console.log('');
   if (windowErrors.length) fail(`執行期間錯誤:${windowErrors.slice(0, 3).join(' | ')}`);

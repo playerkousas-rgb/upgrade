@@ -11,10 +11,11 @@ const read = (p) => readFileSync(join(ROOT, p), 'utf8');
 function loadDataSandbox(lang = 'zh-HK') {
   const ctx = { console };
   ctx.globalThis = ctx;
+  ctx.window = ctx;
   vm.createContext(ctx);
   vm.runInContext(
-    `${read('data.js')}\n${read('locale-en.js')}\nLANG = ${JSON.stringify(lang)};\n` +
-    `this.__api = { SECTIONS, BRANCHES, ITEMS, SHOP, SHOP_BASE, SHOP_IMG_BASE, shopUrl, shopImg, shopInfo, UNIFORM_SPEC, LOCALES, buildChecklist, hasLowerBodyChoice, applyLowerBodyChoice, getSpec, officialPhoto, itemImageSources, SCOUT3D_BASE_URL, scout3dUrl, SCOUT3D_MAP_ZH, setLang: (l) => { LANG = l; } };`,
+    `${read('data.js')}\n${read('locale-en.js')}\n${read('scout3d.js')}\nLANG = ${JSON.stringify(lang)};\n` +
+    `this.__api = { SECTIONS, BRANCHES, ITEMS, SHOP, SHOP_BASE, SHOP_IMG_BASE, shopUrl, shopImg, shopInfo, UNIFORM_SPEC, LOCALES, buildChecklist, hasLowerBodyChoice, applyLowerBodyChoice, getSpec, officialPhoto, itemImageSources, SCOUT3D_BADGES_ZH, SCOUT3D_MAP_ZH, Scout3D: globalThis.Scout3D, setLang: (l) => { LANG = l; } };`,
     ctx
   );
   return ctx.__api;
@@ -199,40 +200,64 @@ test('Scout Shop migration: store.scout.org.hk URLs, 5-digit codes, CDN images, 
   assert.match(read('index.html'), /https:\/\/store\.scout\.org\.hk\/shopping-guide\/stores/);
 });
 
-test('SCOUT3D integration: context-aware URLs, 6-section placement map, and English parity', () => {
+test('Native 3D uniform & basic badge viewer: zero external SCOUT3D links, valid 3D geometry, and bilingual parity', () => {
   const api = loadDataSandbox('zh-HK');
-  assert.equal(api.SCOUT3D_BASE_URL, 'https://scout3d-gamma.vercel.app/');
 
-  assert.equal(
-    api.scout3dUrl({ section: 'cub', gender: 'male', lang: 'zh-HK' }),
-    'https://scout3d-gamma.vercel.app/?section=cub&gender=boy&lang=zh'
-  );
-  assert.equal(
-    api.scout3dUrl({ section: 'scout', branch: 'sea', gender: 'female', lang: 'en' }),
-    'https://scout3d-gamma.vercel.app/?section=scout&variant=sea&gender=girl&lang=en'
-  );
-  assert.equal(
-    api.scout3dUrl({ section: 'venture', branch: 'air', gender: 'female', bottom: 'trousers', lang: 'zh-HK' }),
-    'https://scout3d-gamma.vercel.app/?section=venture&variant=air&gender=girl&bottom=trousers&lang=zh'
-  );
-  assert.equal(
-    api.scout3dUrl({ section: 'leader', branch: 'land', gender: 'female', bottom: 'skirt', lang: 'en' }),
-    'https://scout3d-gamma.vercel.app/?section=leader&variant=land&gender=girl&bottom=skirt&lang=en'
-  );
+  for (const file of ['index.html', 'app.js', 'data.js', 'locale-en.js', 'scout3d.js', 'README.md']) {
+    assert.ok(!read(file).includes('scout3d-gamma.vercel.app'), `${file} must not link externally to scout3d-gamma.vercel.app`);
+  }
+  assert.ok(api.Scout3D && typeof api.Scout3D.createViewer === 'function', 'Scout3D.createViewer must be exported');
+  assert.equal(typeof api.Scout3D.buildScene, 'function');
+  assert.deepEqual(Object.keys(api.Scout3D.CAMERA_PRESETS).sort(), ['back', 'front', 'left', 'right', 'shoulders']);
 
+  // Verify 6 sections x branches x genders x bottoms generate polygons & badge patches without NaN
   for (const sec of Object.keys(api.SECTIONS)) {
+    const zhBadges = api.LOCALES['zh-HK'].SCOUT3D_BADGES[sec] || [];
+    const enBadges = api.LOCALES.en.SCOUT3D_BADGES[sec] || [];
+    assert.deepEqual(enBadges.map(b => b.id), zhBadges.map(b => b.id), `en/zh SCOUT3D_BADGES ids mismatch for ${sec}`);
     assert.equal(api.LOCALES['zh-HK'].SCOUT3D_MAP[sec]?.length, 4, `zh-HK SCOUT3D_MAP[${sec}] must have 4 views`);
     assert.equal(api.LOCALES.en.SCOUT3D_MAP[sec]?.length, 4, `en SCOUT3D_MAP[${sec}] must have 4 views`);
     for (const card of api.LOCALES.en.SCOUT3D_MAP[sec]) {
       assert.ok(!/[\u3400-\u9FFF]/.test(`${card.view}${card.text}`), `en SCOUT3D_MAP[${sec}] must contain no CJK`);
     }
+    for (const badge of enBadges) {
+      assert.ok(!/[\u3400-\u9FFF]/.test(`${badge.code}${badge.name}${badge.where}${badge.sizeLabel || ''}${badge.rule}`), `en SCOUT3D_BADGES[${sec}].${badge.id} must contain no CJK`);
+    }
+
+    const branches = api.SECTIONS[sec].hasBranch ? ['land', 'sea', 'air'] : ['land'];
+    for (const branch of branches) {
+      for (const gender of ['male', 'female']) {
+        const scene = api.Scout3D.buildScene({ section: sec, branch, gender, bottom: 'skirt' }, zhBadges, { showBadges: true });
+        assert.ok(scene.polys.length > 20, `${sec}/${branch}/${gender} must build 3D polygons`);
+        const badgePolys = scene.polys.filter(p => p.kind === 'badge');
+        assert.ok(badgePolys.length >= zhBadges.length, `${sec}/${branch}/${gender} must render all basic badge patches`);
+        for (const p of scene.polys) {
+          for (const pt of p.pts) {
+            assert.ok(Number.isFinite(pt[0]) && Number.isFinite(pt[1]) && Number.isFinite(pt[2]), `${sec} non-finite coordinate`);
+          }
+        }
+      }
+    }
   }
 
+  // Verify Hong Kong Badge swaps from wearer's left (+X) in youth Sections to wearer's right (-X) in Leader
+  const cubScene = api.Scout3D.buildScene({ section: 'cub', branch: 'land', gender: 'male' }, api.LOCALES['zh-HK'].SCOUT3D_BADGES.cub);
+  const cubHk = cubScene.polys.find(p => p.kind === 'badge' && p.badge.id === 'hongKong');
+  assert.ok(cubHk && cubHk.pts[0][0] > 0, 'Youth Hong Kong Badge must sit on wearer left chest (+X)');
+  const leaderScene = api.Scout3D.buildScene({ section: 'leader', branch: 'land', gender: 'male' }, api.LOCALES['zh-HK'].SCOUT3D_BADGES.leader);
+  const leaderHk = leaderScene.polys.find(p => p.kind === 'badge' && p.badge.id === 'hongKong');
+  assert.ok(leaderHk && leaderHk.pts[0][0] < 0, 'Leader Hong Kong Badge must sit on wearer right chest (-X)');
+
+  // Female Land Leader: skirt = No. 3 peaked hat ('hardHat'), trousers = No. 6 dark green beret
+  assert.equal(api.Scout3D.getPalette({ section: 'leader', branch: 'land', gender: 'female', bottom: 'skirt' }).hat, 'hardHat');
+  assert.equal(api.Scout3D.getPalette({ section: 'leader', branch: 'land', gender: 'female', bottom: 'trousers' }).hat, 'beret');
+
   for (const id of ['badges-youth', 'patrol-badge', 'badges-leader', 'epaulette-rank']) {
-    assert.match(api.LOCALES['zh-HK'].ITEMS[id].detail, /data-scout3d-link/);
-    assert.match(api.LOCALES.en.ITEMS[id].detail, /data-scout3d-link/);
+    assert.match(api.LOCALES['zh-HK'].ITEMS[id].detail, /data-scout3d-focus/);
+    assert.match(api.LOCALES.en.ITEMS[id].detail, /data-scout3d-focus/);
   }
-  assert.match(api.LOCALES['zh-HK'].GRASSHOPPER_ITEM.detail, /data-scout3d-link/);
-  assert.match(api.LOCALES.en.GRASSHOPPER_ITEM.detail, /data-scout3d-link/);
+  assert.match(api.LOCALES['zh-HK'].GRASSHOPPER_ITEM.detail, /data-scout3d-focus/);
+  assert.match(api.LOCALES.en.GRASSHOPPER_ITEM.detail, /data-scout3d-focus/);
   assert.match(read('index.html'), /id="scout3d-badge-panel"/);
+  assert.match(read('index.html'), /<script src="scout3d\.js"><\/script>/);
 });
