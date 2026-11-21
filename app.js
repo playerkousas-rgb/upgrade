@@ -90,9 +90,19 @@ function renderStaticText(){
   if(reportLink) reportLink.textContent = t.reportLink;
   const supportLink = $("storeSupportTop");
   if(supportLink){
-    supportLink.textContent = t.supportLink;
+    const supportLabel = $("storeSupportTopLabel");
+    if(supportLabel) supportLabel.textContent = t.supportBtn;
+    else supportLink.textContent = t.supportBtn;
     supportLink.setAttribute("aria-label", t.supportLinkAria);
     supportLink.setAttribute("title", t.supportLinkAria);
+  }
+  const supportPrompt = $("storeSupportPrompt");
+  if(supportPrompt) supportPrompt.textContent = t.supportPrompt;
+  const supportFoot = $("storeSupportFoot");
+  if(supportFoot){
+    supportFoot.textContent = t.supportFootBtn;
+    supportFoot.setAttribute("aria-label", t.supportLinkAria);
+    supportFoot.setAttribute("title", t.supportLinkAria);
   }
   applyStaticI18n();
 }

@@ -21,7 +21,7 @@
 
 - 用戶確認本 App 類型為「**專業工具／參考指南**」，今日入口為 **APP STORE + 圖書館**。依 SG19，圖書館靜默放行、不在攔截卡顯示；`portalIds` 仍只列 `appstore`。
 - 設定：`mode: 'entry-gate'`、`portalIds: ['appstore']`、`silentPortalIds: ['library']`、`allowStandalone: true`、`autoRedirectSeconds: 0`。不加入 `member`、`district` 或 `gemini`；`supportNudge` 關閉。
-- SG18 使用已核實 slug `upgrade`，由 `ScoutStoreGate.getAppStoreUrl('upgrade')` 產生詳情深層連結；不直連主站 Supabase、不自建 hearts/stars 請求。另以 GitHub API 檢視 `scout-circulars` 的 `main`（commit `ac6fef85cd4ea6c8ab8c9b0f36b35701870fa86c`）原始碼，其小工具入口輸出 `rel="noopener"`、保留跨站 Origin referrer；這只是 source code 核對，不代表 live deployment／真機驗收。本輪只改本 App repo，未改入口 repo。
+- SG18 使用已核實 slug `upgrade`（對照 `playerkousas-rgb/website` `migrations/20261116-app-slug-seed.sql`：`upgrade-ashen.vercel.app` → `upgrade`），依真理倉 2026-11-21 `docs/60`（全 App 必做，參考航空圖鑑 v0.37.0）同時提供頂欄 SVG 心形「讚好／收藏」掣（`#storeSupportTop`）及頁尾輕量提示列（`#storeSupportBar` / `#storeSupportFoot`），由 `ScoutStoreGate.getAppStoreUrl('upgrade')`（向下相容 `getPortal('appstore')`）產生詳情深層連結；未載入時維持 `hidden`，不直連主站 Supabase、不自建 hearts/stars 請求。另以 GitHub API 檢視 `scout-circulars` 的 `main`（commit `ac6fef85cd4ea6c8ab8c9b0f36b35701870fa86c`）原始碼，其小工具入口輸出 `rel="noopener"`、保留跨站 Origin referrer；這只是 source code 核對，不代表 live deployment／真機驗收。本輪只改本 App repo，未改入口 repo。
 - 閘門是 UX 層入口提示，不是登入或安全邊界。本 App 沒有 `/api` 或配額型第三方 API；PWA manifest 使用 `display: standalone`，未發現 Web Push／Service Worker。`vercel.json` 的 `outputDirectory` 為 `dist`；Vercel Dashboard 實際 Root Directory／部署狀態未核實。
 - 本機資料 keys：`scout_owned_v2`（「已有／已買」制服項目）、`scout_parts_v1`（章節開合）、`scout-guide-lang-v1`（語言偏好）。前者目前無匯出／備份；用戶確認它是低風險購物勾選清單並授權繼續，這次沒有更改／新增 localStorage key。提醒：iOS Safari 與主畫面 WebClip 可能使用分開的儲存容器；因本清單已由用戶判作低風險，本次不加匯出，列作後續建議。閘門按真理倉原碼使用 sessionStorage key `upgrade.store_pass`，不等同持久化清單。
 

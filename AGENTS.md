@@ -37,4 +37,5 @@
 ## 做完要留低
 
 - [CHANGELOG.md](CHANGELOG.md) 補一節版本紀錄；難逆轉架構取捨寫入 `docs/adr/`。
+- **SG18 讚好／收藏掣（所有 App 必做，2026-11-21 定案，見真理倉 [`docs/60`](https://github.com/playerkousas-rgb/readme/blob/main/docs/60-future-apps-support-button.md)）**：掣存在（`#storeSupportTop` / `#storeSupportBar` / `#storeSupportFoot`）、fail-safe `hidden`、`[hidden]{display:none}`、窄屏／列印／雙語同步需人手驗收並寫入 [CHANGELOG.md](CHANGELOG.md)（PREFLIGHT 靜態檢查驗唔到呢件事）。
 - 未能喺沙盒實測嘅項目（例如真機 iOS 主畫面圖標裁切、無 Chromium 下嘅視覺截圖）老實寫「待查／未核實」。

@@ -57,5 +57,6 @@ node scripts/preflight_v1.0.mjs . --json
 - **唔會自動觸發** `skills/promoted/` 兩份 SKILL.md；要靠 AGENT 主動讀 [`AGENTS.md`](AGENTS.md) 開工順序第 1 步。呢個 gate 只係驗 frontmatter／連結／UTF-8 **同埋每份有冇入 [`skills/CATALOG.md`](skills/CATALOG.md)**，唔係幫你執行 skill。
 - **唔會出圖、唔會計設計分**：無瀏覽器／screenshots／Chrome inspector，`design-review` 嘅 390/768/1440 望圖同 40/30/20/10 係 AGENT 要自己寫低嘅人手紀錄（或老實寫「做唔到」），唔係 script 自動生。
 - **唔會實測功能**：[docs/31 系統基本功能](https://github.com/playerkousas-rgb/readme/blob/main/docs/31-system-basics.md) 嘅忘記密碼／ADMIN 回報系統同收貨測試係 runtime 人手閘（本倉無登入系統，只按 `docs/31 §5` 接駁共用 `SCOUT ADMIN` 回報入口）；`ROUND n` critique、兩軸 review 報告都要 AGENT 自己寫。
+- **唔會驗 SG18 讚好／收藏掣**：2026-11-21 定案所有 App 必做（見真理倉 [docs/60](https://github.com/playerkousas-rgb/readme/blob/main/docs/60-future-apps-support-button.md)），但 PREFLIGHT 係靜態檢查，驗**唔到**掣有冇寫（`#storeSupportTop` / `#storeSupportBar` / `#storeSupportFoot` / `[hidden]{display:none}` / fail-safe）；交付前須人手逐件驗並寫入 `CHANGELOG.md`。
 - **唔會做全倉矛盾審計**：嗰支係真理倉先用嘅 `scripts/consistency_v1.0.mjs`（[docs/32](https://github.com/playerkousas-rgb/readme/blob/main/docs/32-consistency-audit.md)），唔係新 repo 開局 gate。
 - `--allow-placeholders` 會略過 `templates/`／`repo-starter/` 同 `LICENSE-MIT.txt`；唔好用佢嚟驗一個準備交付嘅 repo。

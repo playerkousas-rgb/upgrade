@@ -911,10 +911,13 @@ const LOCALES = {
     badgeSchemeSource: "查看官方綱要 ↗",
     viewDetails: "查看各章說明",
 
-    /* ── 語言掣 / 回報入口 / APP STORE 支持連結 ── */
+    /* ── 語言掣 / 回報入口 / APP STORE 支持連結（SG18） ── */
     reportLink: "向 SCOUT ADMIN 回報問題／意見 ↗",
-    supportLink: "❤️ 讚好／收藏",
+    supportBtn: "讚好／收藏",
+    supportLink: "讚好／收藏",
     supportLinkAria: "前往主站讚好或收藏此程式（開新分頁）",
+    supportPrompt: "覺得呢個工具有用？撳一下話我哋知，幫手留住佢喺書架：",
+    supportFootBtn: "前往主站讚好／收藏 ↗",
     langToggleAria: "Switch to English",
 
     /* ── 本機互動 3D 制服及基本章擺位預覽 ── */
