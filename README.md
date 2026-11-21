@@ -1,7 +1,7 @@
 # 童軍準備指南（Scout Uniform & Badge Guide）
 
 > 香港童軍各支部（小童軍至領袖）進團與升團制服準備、2026 新訓練綱要徽章歷程及過渡須知（中英雙語純靜態 PWA）。
-> 線上網址：<https://upgrade-ashen.vercel.app> · 當前版本：**v2.3.1**
+> 線上網址：<https://upgrade-ashen.vercel.app> · 當前版本：**v2.3.2**
 
 ---
 
@@ -29,9 +29,9 @@
    - **本機 3D 制服及基本章擺位圖（`scout3d.js`）**：零依賴純 Canvas 2D 立體投影引擎直接內建於本頁，不連外部網站、不另開分頁，並隨支部（小童軍至領袖）、陸／海／空、男女及 2026 女團員長褲／半截裙與典禮領呔切換即時重繪模型。支援 360° 拖曳旋轉、縮放、鍵盤方向鍵、五個快速視角（正面、左胸左袖、右胸右袖、雙肩、背面）及點選幾何位置色塊檢視基本入團／升團徽章手冊規格與「需購買／可沿用」狀態（嚴守 `01-invented-insignia.md`，不繪製偽官方徽號圖樣）。
 4. **繁體中文／英文即時切換 & 問題回報**
    - 右上角單鍵切換 `zh-HK`／`en`；頁頂直接連往共用 `SCOUT ADMIN` 問題／意見回報頁。
-5. **APP STORE 準入閘門 & 讚好／收藏回跳**
+5. **APP STORE 準入閘門 & 讚好／收藏回跳（SG18／`docs/60`）**
    - 由 APP STORE 進入，或由圖書館靜默進入；直接開網址會見到只有 APP STORE 按鈕的提示卡。已安裝主畫面 PWA 經 `allowStandalone` 放行。
-   - 頁首提供中英雙語「讚好／收藏」連結，透過真理倉 `ScoutStoreGate.getAppStoreUrl('upgrade')` 返回該程式詳情頁；不直連主站資料庫、不啟用 `supportNudge`。
+   - 依真理倉最新 `docs/60`（參考航空圖鑑 v0.37.0），頁首提供附 SVG 心形圖示之中英雙語「讚好／收藏」按鈕（`#storeSupportTop`），頁尾附輕量支持提示列（`#storeSupportBar` / `#storeSupportFoot`），均透過 `ScoutStoreGate.getAppStoreUrl('upgrade')` 返回主站詳情頁；未載入閘門時自動 fail-safe 隱藏，不直連主站資料庫、不啟用 `supportNudge`。
 
 ---
 

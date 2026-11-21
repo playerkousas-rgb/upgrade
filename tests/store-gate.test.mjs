@@ -100,7 +100,7 @@ test('SG/V1: vendored gate is byte-identical to the approved truth-repo v1.0 cop
   assert.equal(gate.VERSION, 'v1.0');
   assert.equal(
     createHash('sha256').update(gateSource).digest('hex'),
-    '45de189d68e9fbf64d560a4306987d1a03cd03f03e56dd24222a4343011e3d5b',
+    '5b222329392bc901482688b8a9296a4bf0488a929fe8b481a656cd915b5c6162',
   );
 });
 
@@ -159,46 +159,101 @@ test('SG3/SG19: direct URL shows one short APP STORE button, no redirect or blan
   assert.equal(env.timers.length, 0, 'autoRedirectSeconds=0 must leave the card in place');
 });
 
-test('SG7: standalone PWA launches directly; support link fails closed if helper is missing', () => {
+test('SG7: standalone PWA launches directly; support links fail closed if helper is missing', () => {
   assert.equal(JSON.parse(read('manifest.webmanifest')).display, 'standalone');
   const env = makeMockEnv({ standalone: true });
   const result = gate.initStoreGate(gateOptions, env.win);
   assert.equal(result.allowed, true);
   assert.equal(result.reason, 'standalone-pwa');
 
-  const anchor = { hidden: true, href: '', attrs: {}, setAttribute(k, v) { this.attrs[k] = v; } };
-  const document = { getElementById: (id) => id === 'storeSupportTop' ? anchor : null };
   const initMatch = indexHtml.match(/<script id="scout-store-support-init">([\s\S]*?)<\/script>/);
   assert.ok(initMatch, 'SG18 helper initializer must be present');
-  vm.runInNewContext(initMatch[1], { document });
-  assert.equal(anchor.hidden, true);
-  assert.equal(anchor.href, '', 'no stale or hard-coded link when ScoutStoreGate is absent');
 
+  const makeEls = () => ({
+    storeSupportTop: { hidden: true, href: '' },
+    storeSupportBar: { hidden: true },
+    storeSupportFoot: { href: '' },
+  });
+
+  // 1) Missing ScoutStoreGate: both top button and footer bar must stay hidden with empty href
+  const missingEls = makeEls();
   vm.runInNewContext(initMatch[1], {
-    document,
+    document: { getElementById: (id) => missingEls[id] || null },
+  });
+  assert.equal(missingEls.storeSupportTop.hidden, true);
+  assert.equal(missingEls.storeSupportTop.href, '', 'no stale or hard-coded link when ScoutStoreGate is absent');
+  assert.equal(missingEls.storeSupportBar.hidden, true);
+  assert.equal(missingEls.storeSupportFoot.href, '');
+
+  // 2) Standard ScoutStoreGate.getAppStoreUrl path
+  const okEls = makeEls();
+  vm.runInNewContext(initMatch[1], {
+    document: { getElementById: (id) => okEls[id] || null },
     ScoutStoreGate: { getAppStoreUrl: gate.getAppStoreUrl },
   });
-  assert.equal(anchor.href, 'https://scoutappstore.vercel.app/?app=upgrade');
-  assert.equal(anchor.hidden, false);
+  assert.equal(okEls.storeSupportTop.href, 'https://scoutappstore.vercel.app/?app=upgrade');
+  assert.equal(okEls.storeSupportTop.hidden, false);
+  assert.equal(okEls.storeSupportFoot.href, 'https://scoutappstore.vercel.app/?app=upgrade');
+  assert.equal(okEls.storeSupportBar.hidden, false);
+
+  // 3) Backwards-compatible ScoutStoreGate.getPortal('appstore') fallback (readme docs/60)
+  const fallbackEls = makeEls();
+  vm.runInNewContext(initMatch[1], {
+    document: { getElementById: (id) => fallbackEls[id] || null },
+    ScoutStoreGate: { getPortal: gate.getPortal },
+  });
+  assert.equal(fallbackEls.storeSupportTop.href, 'https://scoutappstore.vercel.app/?app=upgrade');
+  assert.equal(fallbackEls.storeSupportTop.hidden, false);
+  assert.equal(fallbackEls.storeSupportFoot.href, 'https://scoutappstore.vercel.app/?app=upgrade');
+  assert.equal(fallbackEls.storeSupportBar.hidden, false);
 });
 
-test('SG18: support CTA is bilingual, accessible, hidden in print, and responsive without a nudge', () => {
+test('SG18 (docs/60): top CTA + footer bar are bilingual, SVG-backed, accessible, hidden in print, and responsive without a nudge', () => {
   const localeContext = vm.createContext({});
   vm.runInContext(`${read('data.js')}\n${read('locale-en.js')}\nthis.__ui = { zh: LOCALES['zh-HK'].UI, en: LOCALES.en.UI };`, localeContext);
-  assert.equal(localeContext.__ui.zh.supportLink, '❤️ 讚好／收藏');
-  assert.equal(localeContext.__ui.en.supportLink, '❤️ Like / Save');
+  assert.equal(localeContext.__ui.zh.supportBtn, '讚好／收藏');
+  assert.equal(localeContext.__ui.en.supportBtn, 'Like / Save');
   assert.ok(localeContext.__ui.zh.supportLinkAria);
   assert.ok(localeContext.__ui.en.supportLinkAria);
+  assert.ok(localeContext.__ui.zh.supportPrompt);
+  assert.ok(localeContext.__ui.en.supportPrompt);
+  assert.ok(localeContext.__ui.zh.supportFootBtn);
+  assert.ok(localeContext.__ui.en.supportFootBtn);
+  for (const key of ['supportBtn', 'supportLinkAria', 'supportPrompt', 'supportFootBtn']) {
+    assert.ok(!/[\u3400-\u9FFF]/.test(localeContext.__ui.en[key]), `en.UI.${key} must contain no CJK`);
+  }
 
+  // Topbar button (inline SVG heart + span label, hidden by default)
   assert.match(indexHtml, /<a id="storeSupportTop" class="support-btn" target="_blank" rel="noopener" hidden/);
   assert.match(indexHtml, /aria-label="前往主站讚好或收藏此程式（開新分頁）" title="前往主站讚好或收藏此程式（開新分頁）"/);
-  assert.match(indexHtml, /\.support-btn\[hidden\]\s*\{\s*display:\s*none!important\s*\}/);
+  assert.match(indexHtml, /<a id="storeSupportTop"[\s\S]*?<svg[^>]*aria-hidden="true"[\s\S]*?<span id="storeSupportTopLabel" data-i18n="supportBtn">讚好／收藏<\/span><\/a>/);
+
+  // Footer lightweight support bar (hidden by default)
+  assert.match(indexHtml, /<div id="storeSupportBar" class="support-bar" hidden>/);
+  assert.match(indexHtml, /<span id="storeSupportPrompt" data-i18n="supportPrompt">/);
+  assert.match(indexHtml, /<a id="storeSupportFoot" class="support-foot-btn" target="_blank" rel="noopener"/);
+
+  // CSS rules: [hidden] display:none, focus-visible, >=40px touch target, narrow screen, print hidden
+  assert.match(indexHtml, /\.support-btn\[hidden\],\.support-bar\[hidden\]\s*\{\s*display:\s*none!important\s*\}/);
   assert.match(indexHtml, /\.support-btn:focus-visible/);
+  assert.match(indexHtml, /footer \.support-foot-btn:focus-visible/);
   assert.match(indexHtml, /\.support-btn\{[^}]*min-height:44px/s);
-  assert.match(indexHtml, /@media\(max-width:430px\)\{[^}]*\.header-actions[^}]*flex-direction:column/s);
-  assert.match(indexHtml, /@media print\{[^}]*\.support-btn[^}]*\}/);
-  assert.match(read('app.js'), /supportLink\.textContent = t\.supportLink/);
-  assert.match(read('app.js'), /supportLink\.setAttribute\("aria-label", t\.supportLinkAria\)/);
+  assert.match(indexHtml, /footer \.support-foot-btn\{[^}]*min-height:44px/s);
+  assert.match(indexHtml, /@media\(max-width:430px\)\{[\s\S]*?\.header-actions\{[^}]*flex-direction:column[\s\S]*?\.support-bar\{[^}]*flex-direction:column/);
+  assert.match(indexHtml, /@media print\{[^}]*\.support-btn,\.support-bar[^}]*\}/);
+
+  // App bilingual wiring preserves SVG by updating label span + updates footer bar
+  const appSource = read('app.js');
+  assert.match(appSource, /const supportLabel = \$\("storeSupportTopLabel"\)/);
+  assert.match(appSource, /supportLabel\.textContent = t\.supportBtn/);
+  assert.match(appSource, /supportLink\.setAttribute\("aria-label", t\.supportLinkAria\)/);
+  assert.match(appSource, /supportPrompt\.textContent = t\.supportPrompt/);
+  assert.match(appSource, /supportFoot\.textContent = t\.supportFootBtn/);
+
+  // Zero direct Supabase / bump_hearts / bump_stars calls (SG18 hard ban)
+  for (const file of ['index.html', 'app.js', 'data.js', 'locale-en.js']) {
+    assert.doesNotMatch(read(file), /bump_hearts|bump_stars|supabase/i, `${file} must never call main-site Supabase directly`);
+  }
 });
 
 test('S4/SG3: build and live verification both include the gate runtime', () => {

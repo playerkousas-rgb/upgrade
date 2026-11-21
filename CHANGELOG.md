@@ -2,6 +2,23 @@
 
 > 格式跟 [Keep a Changelog](https://keepachangelog.com/)；每次交付檔改版號必須同步更新 `package.json`、`index.html`（`GENERATED`、`app-version`、`APP_VERSION`、頁尾）與本檔（V 規則）。
 
+## [2.3.2] - 2026-11-21
+
+### Changed
+- **對齊真理倉 [`playerkousas-rgb/readme`](https://github.com/playerkousas-rgb/readme) 最新 SG18「讚好／收藏」掣規範（`docs/60-future-apps-support-button.md`，2026-11-21 定案，參考航空圖鑑 v0.37.0）**：
+  - **頂欄「讚好／收藏」掣（`#storeSupportTop`）**：由原生 Emoji 改為內嵌單色 SVG 心形圖示（沿用 `--accent` 金色，hover／focus 自動反白對齊 `DESIGN.md`）加 `<span id="storeSupportTopLabel" data-i18n="supportBtn">`，切換語言時保留 SVG 結構。
+  - **頁尾輕量提示列（`#storeSupportBar` + `#storeSupportFoot`）**：新增可選頁尾支持列（`覺得呢個工具有用？撳一下話我哋知，幫手留住佢喺書架：`＋`前往主站讚好／收藏 ↗`），與頂欄同用已核實 slug `upgrade`（對照 `playerkousas-rgb/website` `migrations/20261116-app-slug-seed.sql`：`upgrade-ashen.vercel.app` → `upgrade`）。
+  - **Fail-safe 接線與向下相容**：優先呼叫 `ScoutStoreGate.getAppStoreUrl('upgrade')`，向下相容 `ScoutStoreGate.getPortal('appstore')`；若閘門未載入或組唔到網址，頂欄掣與頁尾列均保持 `hidden`（CSS 強制 `.support-btn[hidden], .support-bar[hidden] { display: none !important; }`），不產生死連，亦不直連主站 Supabase、不開啟 `supportNudge`、不新增 `localStorage` key。
+  - **同步最新真理倉 `store_gate_v1.0.js`**（更新五個入口註釋，零邏輯改動）並擴充 `tests/store-gate.test.mjs` 驗證頂欄＋頁尾 fail-safe、雙語無殘留、`[hidden]`、窄屏與列印隱藏。
+  - **同步 `AGENTS.md`、`PREFLIGHT.md`、`SCOPE.md`、`README.md` 及 `docs/design-review.md`**，補入 `docs/60`（全 App 必做）與 PREFLIGHT 靜態檢查不涵蓋 SG18 之說明；修正 `locale-en.js` 頁尾版號翻譯。
+
+### Verified (SG18 人手驗收紀錄 — PREFLIGHT 靜態檢查唔涵蓋此項)
+- ✅ 掣存在：`#storeSupportTop`（inline SVG + `<span>`）及 `#storeSupportBar` / `#storeSupportFoot` 皆含 `target="_blank" rel="noopener"`、`aria-label`、`title`、≥44px 觸控高度與 `:focus-visible`。
+- ✅ Fail-safe `hidden`：`ScoutStoreGate` 缺席時頂欄掣與頁尾列保持 `hidden` 且 `href` 為空；載入後正確指向 `https://scoutappstore.vercel.app/?app=upgrade`（`tests/store-gate.test.mjs` 已驗證）。
+- ✅ CSS `[hidden]{display:none!important}`、窄屏 `max-width:430px` 堆疊、`@media print` 隱藏 `.support-btn` 及 `.support-bar`。
+- ✅ 雙語同步：`zh-HK`（`讚好／收藏`、`前往主站讚好／收藏 ↗`）↔ `en`（`Like / Save`、`Like / Save on APP STORE ↗`），英文介面零中文字串殘留。
+- ⬜ 待查／未核實：實機瀏覽器 390／768／1440 畫面截圖與點擊回跳 `scoutappstore.vercel.app/?app=upgrade` 真機實測（沙盒無預裝 Chromium）。
+
 ## [2.3.1] - 2026-11-20
 
 ### Fixed
