@@ -451,12 +451,26 @@ function scout3dViewerOpts(ctx){
   };
 }
 
+function scout3dArtworkOpts(ctx){
+  const opts = scout3dViewerOpts(ctx);
+  if(!Array.isArray(opts.badges)) return opts;
+  const picked = selectedDistrict();
+  opts.badges = opts.badges.map(b => {
+    if(b.id === "membership") return {...b, image: currentSection === "grasshopper" ? "assets/scout3d_badges/grasshopper_membership.png" : "assets/scout3d_badges/world_membership.png"};
+    if(b.id === "hongKong") return {...b, image: "assets/scout3d_badges/hong_kong_badge.png"};
+    if(b.id === "region" && picked) return {...b, name: picked.regionName, code: picked.regionName, image: picked.regionBadge};
+    if(b.id === "district" && picked) return {...b, name: picked.zh, code: picked.zh, image: picked.file};
+    return b;
+  });
+  return opts;
+}
+
 function mountScout3dPreview(){
   const drawer = $("scout3d-preview-drawer");
   if(!drawer || typeof Scout3D === "undefined") return null;
   const stage = drawer.querySelector(".scout3d-stage");
   if(!stage) return null;
-  const opts = scout3dViewerOpts(scout3dContext());
+  const opts = scout3dArtworkOpts(scout3dContext());
   if(scout3dPreviewViewer){
     scout3dPreviewViewer.update(opts);
     scout3dPreviewViewer.redraw();
@@ -561,13 +575,7 @@ function renderScout3dPanel(){
     `<button type="button" class="scout3d-angle-card" data-focus-view="${escapeHtml(a.focusView || "front")}"><strong>${escapeHtml(a.view)}</strong><span>${escapeHtml(a.text)}</span></button>`
   ).join("");
   if(typeof Scout3D !== "undefined"){
-    const opts = scout3dViewerOpts(ctx);
-    if(Array.isArray(opts.badges)) opts.badges = opts.badges.map(b => ({...b,
-      image: b.id === "membership" ? (currentSection === "grasshopper" ? "assets/scout3d_badges/grasshopper_membership.png" : "assets/scout3d_badges/world_membership.png") : b.id === "hongKong" ? "assets/scout3d_badges/hong_kong_badge.png" : b.image
-    }));
-    if(selectedHKDistrict && Array.isArray(opts.badges)){
-      opts.badges = opts.badges.map(b => b.id === "region" ? {...b, name: `${selectedDistrict()?.regionName || "地域"}`, code: `${selectedDistrict()?.regionName || "地域"}`, image: selectedDistrict()?.regionBadge} : b.id === "district" ? {...b, name: `${selectedDistrict()?.zh || "區章"}`, code: selectedDistrict()?.zh || "區章", image: selectedDistrict()?.file} : b);
-    }
+    const opts = scout3dArtworkOpts(ctx);
     const stage = el.querySelector(".scout3d-stage");
     if(scout3dPanelViewer) scout3dPanelViewer.update(opts);
     else scout3dPanelViewer = Scout3D.createViewer(stage, opts);
