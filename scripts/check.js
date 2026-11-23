@@ -37,7 +37,7 @@ for (const jsFile of ["app.js", "data.js", "locale-en.js", "scout3d.js", "store_
   if (fs.existsSync(path.join(ROOT, jsFile))) checkSyntax(jsFile);
 }
 
-const sourceFiles = ["index.html", "app.js", "data.js", "locale-en.js", "scout3d.js", "manifest.webmanifest", "store_gate_v1.0.js"];
+const sourceFiles = ["index.html", "app.js", "data.js", "locale-en.js", "scout3d.js", "manifest.webmanifest", "store_gate_v1.0.js", "scout3d-badge-data.js", "assets/scout3d_badges/districts.json"];
 const referencedAssets = new Set();
 const referencedIcons = new Set();
 
@@ -71,6 +71,7 @@ for (const icon of referencedIcons) {
   }
 }
 
+referencedAssets.add("assets/scout3d_badges/districts.json");
 const actualAssets = walk(path.join(ROOT, "assets")).filter(file => !file.endsWith("/README.md") && file !== "assets/README.md");
 for (const asset of actualAssets) {
   if (!referencedAssets.has(asset)) {
