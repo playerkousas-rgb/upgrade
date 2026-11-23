@@ -624,7 +624,7 @@ const LOCALE_EN = {
     scout3dZoomOut: "Zoom out",
     scout3dZoomReset: "Reset view",
     scout3dZoomResetShort: "Reset",
-    scout3dDragHint: "Drag to rotate 360° · Click any badge",
+    scout3dDragHint: "Drag to rotate · Pinch to zoom · Tap badges for details",
     scout3dBadgesHeading: "Basic badge positions (click to focus)",
     scout3dWhereLabel: "Placement: ",
     scout3dSizeLabel: "Handbook size: ",
