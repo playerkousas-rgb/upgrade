@@ -9,6 +9,7 @@
 
   const SHIRT_YOKE = 9;
   const BASE_H = 4.5;
+  const BADGE_TEXTURES = new Map();
 
   const COLOURS = {
     plinth: "#2a3038",
@@ -1174,6 +1175,17 @@
           const isSel = selectedBadgeId === b.id;
           const isHov = hoveredBadgeId === b.id;
           const fill = isSel || isHov ? mixHex(poly.color, "#f2791c", 0.35) : shadeRgb(poly.color, Math.min(1.08, light));
+          let texture = null;
+          if (b.image) {
+            texture = BADGE_TEXTURES.get(b.image);
+            if (!texture) {
+              texture = new Image();
+              texture.onload = () => drawFrame();
+              texture.onerror = () => { BADGE_TEXTURES.delete(b.image); };
+              texture.src = b.image;
+              BADGE_TEXTURES.set(b.image, texture);
+            }
+          }
           const drawn = drawAffinedPatch(ctx, proj[0], proj[1], proj[3], (c) => {
             c.beginPath();
             if (b.shape === "circle") {
@@ -1183,8 +1195,14 @@
             }
             c.fillStyle = fill;
             c.fill();
+            if (texture && texture.complete && texture.naturalWidth) {
+              c.save();
+              c.clip();
+              c.drawImage(texture, 0, 0, 1, 1);
+              c.restore();
+            }
 
-            if (b.shape === "grid") {
+            if (!texture && b.shape === "grid") {
               // 小童軍 2×2 進步獎章四色格（紅／啡／藍／綠）
               const gridCols = ["#2458a6", "#2e7d4f", "#c43b3b", "#7a4e2d"];
               for (let r = 0; r < 2; r++) {

@@ -507,6 +507,11 @@ function focusScout3dBadge(badgeId){
   if(target && typeof target.scrollIntoView === "function") target.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
+const SCOUT3D_REGIONS = (window.SCOUT3D_BADGE_DATA?.regions || []).filter(r => r.badge);
+const SCOUT3D_DISTRICTS = SCOUT3D_REGIONS.flatMap(r => r.districts.map(d => ({...d, regionName:r.zh, regionBadge:r.badge.file})));
+const selectedDistrict = () => SCOUT3D_DISTRICTS.find(d => d.id === selectedHKDistrict);
+let selectedHKDistrict = localStorage.getItem("upgrade-hk-district") || "";
+
 function renderScout3dPanel(){
   const el = $("scout3d-badge-panel");
   if(!el) return;
@@ -520,8 +525,18 @@ function renderScout3dPanel(){
         <span class="scout3d-preset"></span>
       </div>
       <p class="scout3d-panel-lead"></p>
+      <div class="scout3d-authentic-badges" aria-label="官方徽章圖樣"></div>
+      <label class="scout3d-district-picker">所屬區會： <select aria-label="選擇所屬區會"><option value="">請選擇區會</option>${SCOUT3D_REGIONS.map(r => `<optgroup label="${escapeHtml(r.zh)}">${r.districts.map(d => `<option value="${escapeHtml(d.id)}">${escapeHtml(d.zh)}</option>`).join("")}</optgroup>`).join("")}</select><span class="scout3d-region-label" aria-live="polite"></span></label>
       <div class="scout3d-stage"></div>
       <div class="scout3d-angles"></div>`;
+    const districtSelect = el.querySelector(".scout3d-district-picker select");
+    districtSelect.value = selectedHKDistrict;
+    districtSelect.addEventListener("change", () => {
+      selectedHKDistrict = districtSelect.value;
+      if(selectedHKDistrict) localStorage.setItem("upgrade-hk-district", selectedHKDistrict);
+      else localStorage.removeItem("upgrade-hk-district");
+      renderScout3dPanel();
+    });
     el.querySelector(".scout3d-angles").addEventListener("click", (ev) => {
       const card = ev.target.closest("[data-focus-view]");
       if(!card || !scout3dPanelViewer) return;
@@ -532,11 +547,27 @@ function renderScout3dPanel(){
   el.querySelector(".scout3d-panel-head h3").textContent = t.scout3dBoardTitle;
   el.querySelector(".scout3d-preset").textContent = ctx.presetLabel;
   el.querySelector(".scout3d-panel-lead").textContent = t.scout3dBoardLead;
+  const districtPicker = el.querySelector(".scout3d-district-picker");
+  if(districtPicker){
+    districtPicker.hidden = currentSection === "grasshopper";
+    const select = districtPicker.querySelector("select");
+    select.value = selectedHKDistrict;
+    const picked = selectedDistrict();
+    districtPicker.querySelector(".scout3d-region-label").textContent = picked ? `已配對：${picked.regionName}・${picked.zh}` : "選擇所屬區，配對地域章與區章";
+    const badgeStrip = el.querySelector(".scout3d-authentic-badges");
+    badgeStrip.innerHTML = picked ? `<figure><img src="${picked.regionBadge}" alt="${escapeHtml(picked.regionName)}地域章"><figcaption>${escapeHtml(picked.regionName)}</figcaption></figure><figure><img src="${picked.file}" alt="${escapeHtml(picked.zh)}"><figcaption>${escapeHtml(picked.zh)}</figcaption></figure>` : "";
+  }
   el.querySelector(".scout3d-angles").innerHTML = angles.map(a =>
     `<button type="button" class="scout3d-angle-card" data-focus-view="${escapeHtml(a.focusView || "front")}"><strong>${escapeHtml(a.view)}</strong><span>${escapeHtml(a.text)}</span></button>`
   ).join("");
   if(typeof Scout3D !== "undefined"){
     const opts = scout3dViewerOpts(ctx);
+    if(Array.isArray(opts.badges)) opts.badges = opts.badges.map(b => ({...b,
+      image: b.id === "membership" ? (currentSection === "grasshopper" ? "assets/scout3d_badges/grasshopper_membership.png" : "assets/scout3d_badges/world_membership.png") : b.id === "hongKong" ? "assets/scout3d_badges/hong_kong_badge.png" : b.image
+    }));
+    if(selectedHKDistrict && Array.isArray(opts.badges)){
+      opts.badges = opts.badges.map(b => b.id === "region" ? {...b, name: `${selectedDistrict()?.regionName || "地域"}`, code: `${selectedDistrict()?.regionName || "地域"}`, image: selectedDistrict()?.regionBadge} : b.id === "district" ? {...b, name: `${selectedDistrict()?.zh || "區章"}`, code: selectedDistrict()?.zh || "區章", image: selectedDistrict()?.file} : b);
+    }
     const stage = el.querySelector(".scout3d-stage");
     if(scout3dPanelViewer) scout3dPanelViewer.update(opts);
     else scout3dPanelViewer = Scout3D.createViewer(stage, opts);

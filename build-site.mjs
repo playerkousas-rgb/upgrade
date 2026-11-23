@@ -23,6 +23,7 @@ const ROOT_FILES = [
   'data.js',
   'locale-en.js',
   'scout3d.js',
+  'scout3d-badge-data.js',
   'manifest.webmanifest',
   'store_gate_v1.0.js',
 ];
@@ -52,13 +53,15 @@ for (const f of readdirSync(join(ROOT, 'icons')).sort()) {
   }
 }
 
-for (const sub of ['badges', 'items', 'reference']) {
-  const dir = join(ROOT, 'assets', sub);
-  for (const f of readdirSync(dir).sort()) {
-    if (RUNTIME_EXT.has(extname(f).toLowerCase())) {
-      ship(`assets/${sub}/${f}`);
+for (const sub of ['badges', 'items', 'reference', 'scout3d_badges']) {
+  const walk = (rel) => {
+    for (const entry of readdirSync(join(ROOT, rel), { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
+      const child = `${rel}/${entry.name}`;
+      if (entry.isDirectory()) walk(child);
+      else if (RUNTIME_EXT.has(extname(entry.name).toLowerCase())) ship(child);
     }
-  }
+  };
+  walk(`assets/${sub}`);
 }
 
 const LIMIT = 5 * 1024 * 1024;
