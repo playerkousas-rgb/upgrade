@@ -465,7 +465,7 @@ header p{margin:.22rem 0 0;color:rgba(255,255,255,.88);font-size:.92rem;line-hei
 .scout3d-preview-btn:hover,.scout3d-btn:hover{background:var(--scout-green);border-color:var(--scout-green)}
 .scout3d-preview-btn[aria-expanded="true"]{background:var(--surface-subtle);color:var(--scout-brand);border-color:var(--scout-brand)}
 .scout3d-preview-btn[aria-expanded="true"]:hover{background:#eaf3ed}
-.scout3d-preview-btn:focus-visible,.scout3d-btn:focus-visible,.scout3d-inline-link:focus-visible,.scout3d-view-btn:focus-visible,.scout3d-opt-btn:focus-visible,.scout3d-zoom-btn:focus-visible,.scout3d-pill:focus-visible,.scout3d-angle-card:focus-visible,.scout3d-canvas:focus-visible{
+.scout3d-preview-btn:focus-visible,.scout3d-btn:focus-visible,.scout3d-inline-link:focus-visible,.scout3d-view-btn:focus-visible,.scout3d-opt-btn:focus-visible,.scout3d-zoom-btn:focus-visible,.scout3d-pill:focus-visible,.scout3d-canvas:focus-visible{
   outline:3px solid var(--accent);outline-offset:2px;
 }
 .scout3d-preview-btn:active,.scout3d-btn:active{transform:scale(.985)}
@@ -478,22 +478,7 @@ header p{margin:.22rem 0 0;color:rgba(255,255,255,.88);font-size:.92rem;line-hei
   border:1px solid #d4dfd7;border-left:4px solid var(--scout-brand);border-radius:10px;text-align:left;
 }
 .scout3d-preview-drawer[hidden]{display:none}
-.scout3d-panel{
-  margin-top:.9rem;padding:1rem;background:#fff;
-  border:1px solid #d4dfd7;border-left:4px solid var(--scout-brand);border-radius:10px;
-}
-.scout3d-panel-head{
-  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;
-  margin-bottom:.45rem;
-}
-.scout3d-panel-head h3{margin:0;color:var(--scout-brand);font-size:1rem;font-weight:700}
-.scout3d-preset{
-  display:inline-block;padding:.18rem .65rem;border-radius:999px;
-  background:var(--surface-warm);border:1px solid #dfd6c1;color:var(--scout-brand);
-  font-size:.8rem;font-weight:700;
-}
-.scout3d-panel-lead{margin:.25rem 0 .7rem;font-size:.87rem;color:#3d4741;line-height:1.6}
-.scout3d-authentic-badges{display:flex;gap:.75rem;margin:.5rem 0;flex-wrap:wrap}.scout3d-authentic-badges:empty{display:none}.scout3d-authentic-badges figure{margin:0;width:88px;text-align:center;font-size:.72rem}.scout3d-authentic-badges img{width:76px;height:76px;object-fit:contain;background:#fff;border:1px solid #ddd;border-radius:6px}.scout3d-district-picker{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin:.6rem 0;font-size:.85rem}.scout3d-district-picker select{padding:.45rem;border:1px solid #9aa49b;border-radius:6px}.scout3d-region-label{color:#365441}
+.scout3d-district-picker{display:grid;grid-template-columns:1fr;gap:.35rem;margin:.8rem 0;font-size:.9rem;font-weight:650}.scout3d-district-picker input{width:100%;max-width:360px;min-height:42px;padding:.45rem .65rem;border:1px solid #9aa49b;border-radius:7px;background:#fff;font:inherit;font-weight:500}.scout3d-district-picker input:focus{outline:3px solid #b6d7c0;outline-offset:1px}.scout3d-region-label{font-size:.8rem;font-weight:500;color:#365441}
 .scout3d-toolbar{
   display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;
   margin:.45rem 0 .7rem;
@@ -564,22 +549,9 @@ header p{margin:.22rem 0 0;color:rgba(255,255,255,.88);font-size:.92rem;line-hei
 .scout3d-status-chip.need{background:#fff6e6;color:#995300;border:1px solid #f0d6a7}
 .scout3d-status-chip.have{background:#eef7e9;color:#2c6219;border:1px solid #c6e0b8}
 .scout3d-status-chip.check{background:#eaf4fa;color:#125678;border:1px solid #c1dced}
-.scout3d-angles{
-  display:grid;grid-template-columns:repeat(2,1fr);gap:.55rem;margin:.85rem 0 .3rem;
-}
-.scout3d-angle-card{
-  display:block;width:100%;font:inherit;cursor:pointer;
-  background:var(--surface-subtle);border:1px solid var(--line);border-radius:var(--radius-sm);
-  padding:.6rem .75rem;text-align:left;
-  transition:background-color .15s var(--ease-out),border-color .15s var(--ease-out);
-}
-.scout3d-angle-card:hover{background:#eef5ef;border-color:var(--scout-green)}
-.scout3d-angle-card.active{background:#e7f2ea;border-color:var(--scout-brand)}
-.scout3d-angle-card strong{display:block;font-size:.84rem;color:var(--scout-green);margin-bottom:.18rem}
-.scout3d-angle-card span{display:block;font-size:.83rem;color:var(--text);line-height:1.55;font-variant-numeric:tabular-nums}
 .scout3d-disclaimer{margin:.55rem 0 0;font-size:.78rem;color:var(--muted);line-height:1.55}
 @media(max-width:760px){.scout3d-grid{grid-template-columns:1fr}.scout3d-canvas{height:300px}}
-@media(max-width:680px){.scout3d-angles{grid-template-columns:1fr}.scout3d-btn,.scout3d-preview-btn{width:100%}.scout3d-view-btn,.scout3d-opt-btn{min-height:40px}}
+@media(max-width:680px){.scout3d-btn,.scout3d-preview-btn{width:100%}.scout3d-view-btn,.scout3d-opt-btn{min-height:40px}}
 @media(max-width:460px){.badge-grid{grid-template-columns:1fr}}
 
 .uniform-preview{width:100%;max-width:200px}
@@ -977,7 +949,6 @@ footer .support-foot-btn:active{transform:scale(.985)}
       <div id="summary"></div>
       <div id="checklist"></div>
       <p class="badge-guide-link" data-hide-for="grasshopper">釘章位置：<a href="#badge-placement-guide" onclick="openBadgeGuide(event)">手冊袖章及胸章厘米圖解 →</a></p>
-      <div id="official-photo-box"></div>
     </div>
   </details>
 
@@ -1333,7 +1304,6 @@ footer .support-foot-btn:active{transform:scale(.985)}
         <div class="badge-rule-box">
           <p><strong>尺寸微調：</strong>具體要視衣服大小，細碼恤衫間距可能會變小（不會變大），以置中、不超袋闊及袖幅為準；必須用線縫牢（勿用膠水或扣針）。</p>
         </div>
-        <div id="scout3d-badge-panel" class="scout3d-panel"></div>
       </section>
       <table class="size-table">
         <thead>

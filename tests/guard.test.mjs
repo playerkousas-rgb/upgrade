@@ -277,6 +277,10 @@ test('Native 3D uniform & basic badge viewer: zero external SCOUT3D links, valid
   }
   assert.match(api.LOCALES['zh-HK'].GRASSHOPPER_ITEM.detail, /data-scout3d-focus/);
   assert.match(api.LOCALES.en.GRASSHOPPER_ITEM.detail, /data-scout3d-focus/);
-  assert.match(read('index.html'), /id="scout3d-badge-panel"/);
+  assert.doesNotMatch(read('index.html'), /id="scout3d-badge-panel"/);
+  assert.doesNotMatch(read('index.html'), /id="official-photo-box"/);
+  assert.match(read('app.js'), /id="scout-district-select"/);
+  assert.match(read('app.js'), /list="scout-district-options"/);
+  assert.match(read('app.js'), /function scout3dArtworkOpts/);
   assert.match(read('index.html'), /<script src="scout3d\.js"><\/script>/);
 });
