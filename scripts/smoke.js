@@ -323,10 +323,10 @@ function startServer() {
     '英文版步驟 ③ 本機 3D 預覽切換掣已翻譯'
   );
   check(
-    !!d.querySelector('#scout3d-badge-panel canvas.scout3d-canvas') &&
-    d.querySelectorAll('#scout3d-badge-panel .scout3d-angle-card').length === 4 &&
-    d.querySelectorAll('#scout3d-badge-panel .scout3d-pill').length >= 6,
-    '英文版徽章擺位面板掛載本機 3D canvas、視角卡與基本章選擇器'
+    !!d.querySelector('#preview #scout-district-select') &&
+    d.querySelectorAll('#preview #scout-district-options option').length > 30 &&
+    !d.querySelector('#scout3d-badge-panel'),
+    '區會輸入框直接顯示，並移除重複 3D 面板'
   );
   check(
     !!d.querySelector('#checklist [data-scout3d-focus="hongKong"]'),
@@ -367,9 +367,10 @@ function startServer() {
   window.selectSection('venture');
   window.setGender('female');
   window.setBottom('trousers');
+  window.toggleScout3dPreview();
   check(
-    d.querySelector('#scout3d-badge-panel .scout3d-preset')?.textContent.includes('Trousers'),
-    '英文版深資女裝長褲 3D 面板預設標籤同步更新為 Trousers'
+    !!d.querySelector('#scout3d-preview-drawer canvas.scout3d-canvas') && d.querySelectorAll('#scout3d-preview-drawer .scout3d-pill').length >= 6,
+    '英文版深資女裝長褲更新於唯一 3D 預覽模型'
   );
   const enTrousers = d.querySelector('#checklist [data-item-id="trousers-olive-f"]');
   check(!!enTrousers && enTrousers.textContent.indexOf('Ladies’') !== -1, '英文版女裝長褲有英文名稱');
@@ -402,13 +403,13 @@ function startServer() {
     '小童軍點擊基本章對準會在 #preview 抽屜展開 3D 並鎖定小童軍團員章'
   );
   window.selectSection('cub');
-  check(!d.querySelector('#scout3d-badge-panel [data-badge-id="progress"]'), '幼童軍 3D 面板不含未考獲進度章');
+  check(!d.querySelector('#scout3d-preview-drawer [data-badge-id="progress"]'), '幼童軍唯一 3D 預覽不含未考獲進度章');
   window.selectSection('venture');
-  check(!d.querySelector('#scout3d-badge-panel [data-badge-id="epaulette"]'), '深資童軍剛升團／新加入 3D 面板不含未考獲深資肩章');
+  check(!d.querySelector('#scout3d-preview-drawer [data-badge-id="epaulette"]'), '深資童軍剛升團／新加入唯一 3D 預覽不含未考獲深資肩章');
   window.selectSection('rover');
-  check(!d.querySelector('#scout3d-badge-panel [data-badge-id="epaulette"]'), '樂行童軍剛升團／新加入 3D 面板不含未考獲樂行肩章');
+  check(!d.querySelector('#scout3d-preview-drawer [data-badge-id="epaulette"]'), '樂行童軍剛升團／新加入唯一 3D 預覽不含未考獲樂行肩章');
   window.selectSection('leader');
-  check(!!d.querySelector('#scout3d-badge-panel [data-badge-id="epaulette"]'), '成年領袖 3D 面板顯示委任職級肩章');
+  check(!!d.querySelector('#scout3d-preview-drawer [data-badge-id="epaulette"]'), '成年領袖唯一 3D 預覽顯示委任職級肩章');
   window.selectSection('cub');
 
   console.log('');

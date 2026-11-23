@@ -4,6 +4,10 @@
 
 ## [2.3.2] - 2026-11-21
 
+### Follow-up
+- 精簡預覽區：移除重複的徽章 3D 面板及第二份整套制服參考圖，只保留一個 3D 預覽和一張制服參考圖。
+- 將所屬區輸入／搜尋框放到制服預覽旁，支援中英文區名搜尋，並自動配對地域章、區章；選擇保存在本機。
+
 ### Changed
 - **對齊真理倉 [`playerkousas-rgb/readme`](https://github.com/playerkousas-rgb/readme) 最新 SG18「讚好／收藏」掣規範（`docs/60-future-apps-support-button.md`，2026-11-21 定案，參考航空圖鑑 v0.37.0）**：
   - **頂欄「讚好／收藏」掣（`#storeSupportTop`）**：由原生 Emoji 改為內嵌單色 SVG 心形圖示（沿用 `--accent` 金色，hover／focus 自動反白對齊 `DESIGN.md`）加 `<span id="storeSupportTopLabel" data-i18n="supportBtn">`，切換語言時保留 SVG 結構。

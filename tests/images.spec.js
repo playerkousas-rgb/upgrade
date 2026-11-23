@@ -152,7 +152,7 @@ test('every shipped reference is present, decodes, and has an attributed source'
   }
 });
 
-test('four exact uniform references survive blocked external images', async ({ page }) => {
+test('one exact uniform reference per selection survives blocked external images', async ({ page }) => {
   await page.goto(baseURL);
   for (const [section, branch, gender, file] of [
     ['cub', 'land', 'male', 'cub-male.avif'],
@@ -161,7 +161,7 @@ test('four exact uniform references survive blocked external images', async ({ p
     ['venture', 'air', 'male', 'venture-air-male.avif'],
   ]) {
     await choose(page, section, branch, gender);
-    for (const selector of ['#preview', '#official-photo-box']) {
+    for (const selector of ['#preview']) {
       const frame = page.locator(`${selector} .reference-image`);
       await frame.scrollIntoViewIfNeeded();
       await loaded(frame.locator('img'));
@@ -194,7 +194,7 @@ test('all uniform mappings match section, branch and gender; no land-only fallba
   expect(errors).toEqual([]);
   for (const [section, branch, gender] of [['scout', 'sea', 'male'], ['scout', 'air', 'female'], ['leader', 'sea', 'female']]) {
     await choose(page, section, branch, gender);
-    for (const selector of ['#preview', '#official-photo-box']) {
+    for (const selector of ['#preview']) {
       const frame = page.locator(`${selector} .reference-image`);
       await frame.scrollIntoViewIfNeeded();
       await expect(frame.locator('.image-unavailable')).toBeVisible();

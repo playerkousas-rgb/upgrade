@@ -141,7 +141,7 @@ function setAllParts(open){
   getVisibleParts().forEach(part => { part.open = open; });
   savePartStates();
   updatePartControls();
-  if(open && scout3dPanelViewer) scout3dPanelViewer.redraw();
+  if(open && scout3dPreviewViewer) scout3dPreviewViewer.redraw();
 }
 function initParts(){
   let saved = {};
@@ -156,7 +156,7 @@ function initParts(){
       if(event.target !== part) return; // 不處理內層 FAQ 等細項的事件。
       savePartStates();
       updatePartControls();
-      if(part.id === "part-badges" && part.open && scout3dPanelViewer) scout3dPanelViewer.redraw();
+      if(part.id === "part-badges" && part.open && scout3dPreviewViewer) scout3dPreviewViewer.redraw();
     });
   });
   $("expand-all-parts").addEventListener("click", () => setAllParts(true));
@@ -171,7 +171,7 @@ function openBadgeGuide(ev){
     part.open = true;
     savePartStates();
     updatePartControls();
-    if(scout3dPanelViewer) scout3dPanelViewer.redraw();
+    if(scout3dPreviewViewer) scout3dPreviewViewer.redraw();
     const target = $("badge-placement-guide") || part;
     if(target && typeof target.scrollIntoView === "function") target.scrollIntoView({ behavior: "smooth", block: "start" });
   }
@@ -375,7 +375,6 @@ function applyVisibility(){
   });
   updatePartControls();
 }
-let scout3dPanelViewer = null;
 let scout3dPreviewViewer = null;
 let scout3dPreviewOpen = false;
 let lastChecklist = [];
@@ -458,8 +457,8 @@ function scout3dArtworkOpts(ctx){
   opts.badges = opts.badges.map(b => {
     if(b.id === "membership") return {...b, image: currentSection === "grasshopper" ? "assets/scout3d_badges/grasshopper_membership.png" : "assets/scout3d_badges/world_membership.png"};
     if(b.id === "hongKong") return {...b, image: "assets/scout3d_badges/hong_kong_badge.png"};
-    if(b.id === "region" && picked) return {...b, name: picked.regionName, code: picked.regionName, image: picked.regionBadge};
-    if(b.id === "district" && picked) return {...b, name: picked.zh, code: picked.zh, image: picked.file};
+    if(b.id === "region" && picked) return {...b, name: LANG === "en" ? picked.regionEn : picked.regionName, code: LANG === "en" ? picked.regionEn : picked.regionName, image: picked.regionBadge};
+    if(b.id === "district" && picked) return {...b, name: LANG === "en" ? picked.en : picked.zh, code: LANG === "en" ? picked.en : picked.zh, image: picked.file};
     return b;
   });
   return opts;
@@ -496,93 +495,44 @@ function toggleScout3dPreview(){
 }
 
 function focusScout3dBadge(badgeId){
-  if(currentSection === "grasshopper"){
-    if(!scout3dPreviewOpen) toggleScout3dPreview();
-    else mountScout3dPreview();
-    if(scout3dPreviewViewer && badgeId) scout3dPreviewViewer.focusBadge(badgeId);
-    const drawer = $("scout3d-preview-drawer");
-    if(drawer && typeof drawer.scrollIntoView === "function") drawer.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    return;
-  }
-  const part = $("part-badges");
-  if(part){
-    part.open = true;
-    savePartStates();
-    updatePartControls();
-  }
-  if(scout3dPanelViewer){
-    scout3dPanelViewer.redraw();
-    if(badgeId) scout3dPanelViewer.focusBadge(badgeId);
-  }
-  if(scout3dPreviewOpen && scout3dPreviewViewer && badgeId){
-    scout3dPreviewViewer.focusBadge(badgeId);
-  }
-  const target = $("scout3d-badge-panel") || part;
-  if(target && typeof target.scrollIntoView === "function") target.scrollIntoView({ behavior: "smooth", block: "start" });
+  if(!scout3dPreviewOpen) toggleScout3dPreview();
+  else mountScout3dPreview();
+  if(scout3dPreviewViewer && badgeId) scout3dPreviewViewer.focusBadge(badgeId);
+  const drawer = $("scout3d-preview-drawer");
+  if(drawer && typeof drawer.scrollIntoView === "function") drawer.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
 const SCOUT3D_REGIONS = (window.SCOUT3D_BADGE_DATA?.regions || []).filter(r => r.badge);
-const SCOUT3D_DISTRICTS = SCOUT3D_REGIONS.flatMap(r => r.districts.map(d => ({...d, regionName:r.zh, regionBadge:r.badge.file})));
+const SCOUT3D_DISTRICTS = SCOUT3D_REGIONS.flatMap(r => r.districts.map(d => ({...d, regionName:r.zh, regionEn:r.en, regionBadge:r.badge.file})));
 const selectedDistrict = () => SCOUT3D_DISTRICTS.find(d => d.id === selectedHKDistrict);
 let selectedHKDistrict = localStorage.getItem("upgrade-hk-district") || "";
 
-function renderScout3dPanel(){
-  const el = $("scout3d-badge-panel");
-  if(!el) return;
-  const t = UI(), loc = L();
-  const ctx = scout3dContext();
-  const angles = (loc.SCOUT3D_MAP && loc.SCOUT3D_MAP[currentSection]) || [];
-  if(!el.querySelector(".scout3d-stage")){
-    el.innerHTML = `
-      <div class="scout3d-panel-head">
-        <h3></h3>
-        <span class="scout3d-preset"></span>
-      </div>
-      <p class="scout3d-panel-lead"></p>
-      <div class="scout3d-authentic-badges" aria-label="官方徽章圖樣"></div>
-      <label class="scout3d-district-picker">所屬區會： <select aria-label="選擇所屬區會"><option value="">請選擇區會</option>${SCOUT3D_REGIONS.map(r => `<optgroup label="${escapeHtml(r.zh)}">${r.districts.map(d => `<option value="${escapeHtml(d.id)}">${escapeHtml(d.zh)}</option>`).join("")}</optgroup>`).join("")}</select><span class="scout3d-region-label" aria-live="polite"></span></label>
-      <div class="scout3d-stage"></div>
-      <div class="scout3d-angles"></div>`;
-    const districtSelect = el.querySelector(".scout3d-district-picker select");
-    districtSelect.value = selectedHKDistrict;
-    districtSelect.addEventListener("change", () => {
-      selectedHKDistrict = districtSelect.value;
+function districtPickerMarkup(){
+  if(currentSection === "grasshopper") return "";
+  const picked = selectedDistrict();
+  const en = LANG === "en";
+  return `<div class="scout3d-district-picker">
+    <label for="scout-district-select">${en ? "Your Scout district" : "輸入或選擇所屬區會"}</label>
+    <input id="scout-district-select" list="scout-district-options" placeholder="${en ? "e.g. Wan Chai District" : "例如：灣仔區"}" value="${picked ? escapeHtml(en ? picked.en : picked.zh) : ""}" autocomplete="off">
+    <datalist id="scout-district-options">${SCOUT3D_DISTRICTS.map(d => `<option value="${escapeHtml(en ? d.en : d.zh)}">${escapeHtml(en ? d.regionEn : d.regionName)}</option>`).join("")}</datalist>
+    ${picked ? `<span class="scout3d-region-label">${en ? `Matched: ${escapeHtml(picked.regionEn)} · ${escapeHtml(picked.en)}` : `已配對：${escapeHtml(picked.regionName)}地域章＋${escapeHtml(picked.zh)}區章`}</span>` : `<span class="scout3d-region-label">${en ? "Type a district to match its region and district badges" : "輸入區名後會自動配對地域章及區章"}</span>`}
+  </div>`;
+}
+function bindDistrictPicker(){
+  const select = $("scout-district-select");
+  if(!select) return;
+  select.addEventListener("change", () => {
+    const match = SCOUT3D_DISTRICTS.find(d => d.id === select.value || d.zh === select.value || d.en === select.value);
+    selectedHKDistrict = match ? match.id : "";
+    try {
       if(selectedHKDistrict) localStorage.setItem("upgrade-hk-district", selectedHKDistrict);
       else localStorage.removeItem("upgrade-hk-district");
-      renderScout3dPanel();
-    });
-    el.querySelector(".scout3d-angles").addEventListener("click", (ev) => {
-      const card = ev.target.closest("[data-focus-view]");
-      if(!card || !scout3dPanelViewer) return;
-      scout3dPanelViewer.setCamera(card.getAttribute("data-focus-view"));
-      el.querySelectorAll(".scout3d-angle-card").forEach(c => c.classList.toggle("active", c === card));
-    });
-  }
-  el.querySelector(".scout3d-panel-head h3").textContent = t.scout3dBoardTitle;
-  el.querySelector(".scout3d-preset").textContent = ctx.presetLabel;
-  el.querySelector(".scout3d-panel-lead").textContent = t.scout3dBoardLead;
-  const districtPicker = el.querySelector(".scout3d-district-picker");
-  if(districtPicker){
-    districtPicker.hidden = currentSection === "grasshopper";
-    const select = districtPicker.querySelector("select");
-    select.value = selectedHKDistrict;
-    const picked = selectedDistrict();
-    districtPicker.querySelector(".scout3d-region-label").textContent = picked ? `已配對：${picked.regionName}・${picked.zh}` : "選擇所屬區，配對地域章與區章";
-    const badgeStrip = el.querySelector(".scout3d-authentic-badges");
-    badgeStrip.innerHTML = picked ? `<figure><img src="${picked.regionBadge}" alt="${escapeHtml(picked.regionName)}地域章"><figcaption>${escapeHtml(picked.regionName)}</figcaption></figure><figure><img src="${picked.file}" alt="${escapeHtml(picked.zh)}"><figcaption>${escapeHtml(picked.zh)}</figcaption></figure>` : "";
-  }
-  el.querySelector(".scout3d-angles").innerHTML = angles.map(a =>
-    `<button type="button" class="scout3d-angle-card" data-focus-view="${escapeHtml(a.focusView || "front")}"><strong>${escapeHtml(a.view)}</strong><span>${escapeHtml(a.text)}</span></button>`
-  ).join("");
-  if(typeof Scout3D !== "undefined"){
-    const opts = scout3dArtworkOpts(ctx);
-    const stage = el.querySelector(".scout3d-stage");
-    if(scout3dPanelViewer) scout3dPanelViewer.update(opts);
-    else scout3dPanelViewer = Scout3D.createViewer(stage, opts);
-  }
+    } catch(e){}
+    render();
+  });
 }
 
-function refresh(){ renderControls(); applyVisibility(); render(); renderBudget(); renderOfficialPhoto(); renderScout3dPanel(); }
+function refresh(){ renderControls(); applyVisibility(); render(); renderBudget(); }
 
 /* ===========================================================
    圖片：來源標示跟隨實際圖片；失敗時保留來源連結，不循環、不用空 src。
@@ -680,6 +630,7 @@ function render(){
       <p><strong>${modeLabel}</strong></p>
       <p>${t.sectionAge}${sec.age}</p>
       ${sec.note ? `<p style="font-size:.88rem;color:var(--scout-olive)">${sec.note}</p>` : ""}
+      ${districtPickerMarkup()}
       <div class="scout3d-preview-box">
         <button type="button" class="scout3d-preview-btn" aria-expanded="${scout3dPreviewOpen}" aria-controls="scout3d-preview-drawer" onclick="toggleScout3dPreview()">${escapeHtml(scout3dPreviewOpen ? t.scout3dToggleClose : t.scout3dToggleOpen)}</button>
         <p class="cite" style="margin:.35rem 0 0">${escapeHtml(t.scout3dPreviewNote)}</p>
@@ -687,6 +638,7 @@ function render(){
     </div>
     <div id="scout3d-preview-drawer" class="scout3d-preview-drawer"${scout3dPreviewOpen ? "" : " hidden"}><div class="scout3d-stage"></div></div>
   </div>`;
+  bindDistrictPicker();
   if(scout3dPreviewOpen) mountScout3dPreview();
 
   // 統計
@@ -788,18 +740,6 @@ function renderBudget(){
     <tfoot><tr><th>${t.budgetTotal}</th><th>${t.priceApprox(lo, hi)}</th></tr></tfoot></table>
     ${hasOptional ? `<p class="cite">${t.budgetOptionalNote}</p>` : ""}
     <p class="cite">${t.budgetFootNote}</p>`;
-}
-
-/* 官方整套制服參考圖（不是實物照片） */
-function renderOfficialPhoto(){
-  const el = $("official-photo-box");
-  if(!el) return;
-  if(currentSection === "grasshopper"){ el.innerHTML = ""; return; }
-  const t = UI(), loc = L();
-  const photo = officialPhoto(currentSection, currentBranch, currentGender);
-  const secName = loc.SECTIONS[currentSection].name + (loc.SECTIONS[currentSection].hasBranch ? t.nameSep + loc.BRANCHES[currentBranch].name : "");
-  el.innerHTML = `<div class="note"><strong style="display:block;margin-bottom:.4rem">${t.officialRefTitle(secName)}</strong>
-    ${renderReferenceImage(photo?.images || [], "uniform-full")}</div>`;
 }
 
 // 初始化
