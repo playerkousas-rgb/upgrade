@@ -1319,15 +1319,37 @@
     }
 
     // 指標拖曳旋轉 + 滾輪縮放 + 點擊選取徽章
+    const activePointers = new Map();
     let drag = null;
+    let pinchStart = null;
+    const pointerDistance = () => {
+      const points = [...activePointers.values()];
+      return points.length > 1 ? Math.hypot(points[0].x - points[1].x, points[0].y - points[1].y) : 0;
+    };
     canvas.addEventListener("pointerdown", (e) => {
       goal = null;
-      drag = { x: e.clientX, y: e.clientY, startX: e.clientX, startY: e.clientY, moved: false };
+      activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (activePointers.size === 1) {
+        drag = { x: e.clientX, y: e.clientY, startX: e.clientX, startY: e.clientY, moved: false };
+      } else if (activePointers.size === 2) {
+        if (drag) drag.moved = true;
+        pinchStart = { distance: pointerDistance(), zoom: cam.zoom };
+      }
       if (canvas.setPointerCapture) {
         try { canvas.setPointerCapture(e.pointerId); } catch (_) {}
       }
     });
     canvas.addEventListener("pointermove", (e) => {
+      if (activePointers.has(e.pointerId)) activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (activePointers.size > 1 && pinchStart) {
+        const distance = pointerDistance();
+        if (distance > 0 && pinchStart.distance > 0) {
+          cam.zoom = Math.max(0.75, Math.min(2.6, pinchStart.zoom * distance / pinchStart.distance));
+          activePreset = "";
+          drawFrame();
+        }
+        return;
+      }
       if (drag) {
         const dx = e.clientX - drag.x;
         const dy = e.clientY - drag.y;
@@ -1352,8 +1374,9 @@
         drawFrame();
       }
     });
-    canvas.addEventListener("pointerup", (e) => {
-      if (drag && !drag.moved) {
+    const endPointer = (e) => {
+      const wasPinching = activePointers.size > 1 || !!pinchStart;
+      if (drag && !drag.moved && !wasPinching) {
         const rect = canvas.getBoundingClientRect();
         const px = e.clientX - rect.left, py = e.clientY - rect.top;
         for (let i = hitBadges.length - 1; i >= 0; i--) {
@@ -1363,8 +1386,15 @@
           }
         }
       }
-      drag = null;
-    });
+      activePointers.delete(e.pointerId);
+      if (activePointers.size < 2) pinchStart = null;
+      const remaining = [...activePointers.values()][0];
+      drag = remaining ? { x: remaining.x, y: remaining.y, startX: remaining.x, startY: remaining.y, moved: true } : null;
+      drawFrame();
+    };
+    canvas.addEventListener("pointerup", endPointer);
+    canvas.addEventListener("pointercancel", endPointer);
+    canvas.addEventListener("lostpointercapture", endPointer);
     canvas.addEventListener("wheel", (e) => {
       e.preventDefault();
       goal = null;

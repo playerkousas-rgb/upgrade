@@ -208,6 +208,11 @@ test('Native 3D uniform & basic badge viewer: zero external SCOUT3D links, valid
   }
   assert.ok(api.Scout3D && typeof api.Scout3D.createViewer === 'function', 'Scout3D.createViewer must be exported');
   assert.equal(typeof api.Scout3D.buildScene, 'function');
+  const viewerSource = read('scout3d.js');
+  assert.match(viewerSource, /pointerDistance/);
+  assert.match(viewerSource, /pointercancel/);
+  assert.match(viewerSource, /cam\.zoom = Math\.max\(0\.75, Math\.min\(2\.6, pinchStart\.zoom \* distance \/ pinchStart\.distance\)\)/);
+  assert.match(read('index.html'), /\.scout3d-canvas\{display:block;width:100%;height:345px;touch-action:none;cursor:grab\}/);
   assert.deepEqual(Object.keys(api.Scout3D.CAMERA_PRESETS).sort(), ['back', 'front', 'left', 'right', 'shoulders']);
 
   // Verify 6 sections x branches x genders x bottoms generate polygons & badge patches without NaN

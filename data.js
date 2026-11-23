@@ -939,7 +939,7 @@ const LOCALES = {
     scout3dZoomOut: "縮小",
     scout3dZoomReset: "重設視角",
     scout3dZoomResetShort: "重設",
-    scout3dDragHint: "拖曳旋轉 360° · 點擊徽章看說明",
+    scout3dDragHint: "拖曳旋轉 · 雙指縮放 · 點擊徽章看說明",
     scout3dBadgesHeading: "基本章位置（點擊即轉向對準）",
     scout3dWhereLabel: "位置：",
     scout3dSizeLabel: "手冊尺寸：",
